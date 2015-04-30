@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Mvc;
-using DustedCodes.Blog.Config;
 using DustedCodes.Blog.Services;
 using DustedCodes.Blog.ViewModels;
 
