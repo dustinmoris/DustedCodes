@@ -20,17 +20,6 @@
 			</match>
 		</tracerFactory>
 
-		<tracerFactory name="NewRelic.Agent.Core.Tracer.Factories.Web.ASPProcessRequestTracerFactory" transactionNamingPriority="6">
-			<!-- ASP pages -->
-			<match assemblyName="System.Web" className="System.Web.UI.Page">
-				<exactMethodMatcher methodName="ProcessRequest" parameters="System.Boolean,System.Boolean" />
-			</match>
-			<!-- async ASP pages -->
-			<match assemblyName="System.Web" className="System.Web.UI.Page">
-				<exactMethodMatcher methodName="AsyncPageBeginProcessRequest" parameters="System.Web.HttpContext,System.AsyncCallback,System.Object" />
-			</match>
-		</tracerFactory>
-
 		<tracerFactory>
 			<match assemblyName="System.Web" className="System.Web.UI.Page">
 				<!--<exactMethodMatcher methodName="Render" parameters="System.Web.UI.HtmlTextWriter" />-->
