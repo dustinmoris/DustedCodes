@@ -147,6 +147,20 @@ namespace DustedCodes.Automation.Tests
             }
         }
 
+        [Test]
+        public void Can_Edit_Article_In_GitHub()
+        {
+            var homePage = Application.Startup();
+
+            var currentBlogPosts = homePage.GetCurrentBlogPosts();
+            var blogPostTitle = currentBlogPosts.First();
+
+            var blogPostPage = homePage.GoToBlogPost(blogPostTitle);
+            var gitHubEditPage = blogPostPage.GoToEditPage();
+
+            Assert.IsTrue(gitHubEditPage.IsAt(blogPostTitle));
+        }
+
         [TearDown]
         public void TearDown()
         {

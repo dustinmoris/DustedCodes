@@ -32,5 +32,13 @@ namespace DustedCodes.Automation.Framework.Pages
 
             return new HomePage();
         }
+
+        public GitHubEditPage GoToEditPage()
+        {
+            var editLink = Driver.Instance.FindElement(By.ClassName("edit-article"));
+            editLink.Click();
+
+            return new GitHubEditPage();
+        }
     }
 }
