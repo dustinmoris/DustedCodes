@@ -1,0 +1,50 @@
+﻿@model DustedCodes.Blog.ViewModels.Blog.ArticlePartialViewModel
+<article>
+    <header>
+        <h1>
+            @if (Model.RenderTitleAsLink)
+            {
+                <a href="@Model.PermalinkUrl">@Model.Title</a>
+            }
+            else
+            {
+                @Model.Title
+            }
+        </h1>
+        <div class="article-metadata">
+            <time datetime="@Model.ValidHtml5TPublishDateTime" class="icon fa-calendar">@Model.UserFriendlyPublishDateTime</time>
+            <address class="icon fa-user author">@Model.Author</address>
+            <a class="icon fa-pencil edit-article" href="@Model.EditArticleUrl">Edit</a>
+            <a class="icon fa-comments disqus-comment-count" href="@Model.PermalinkUrl#disqus_thread" data-disqus-identifier="@Model.Id">Comments</a>
+            @if (Model.HasTags)
+            {
+                <p class="icon fa-tags tags">
+                    @foreach (var tag in Model.Tags)
+                    {
+                        @Html.ActionLink(tag, "Tagged", "Blog", new { tag = tag }, new { @class = "tag" });
+                    }
+                </p>
+            }
+        </div>
+    </header>
+    @Html.Raw(Model.Content)
+    <footer>
+        <h1>Share it:</h1>
+        <a href="mailto:?subject=@Model.Title&amp;body=Check out this site @Model.PermalinkUrl."
+           title="Share by Email">
+            <i class="fa fa-envelope-o"></i>
+        </a>
+        <a href="@Model.TwitterShareUrl" onclick="dustedcodes.window.open('@Model.TwitterShareUrl'); return false;" title="Share on Twitter">
+            <i class="fa fa-twitter"></i>
+        </a>
+        <a href="@Model.GooglePlusShareUrl" onclick="dustedcodes.window.open('@Model.GooglePlusShareUrl'); return false;" title="Share on Google+">
+            <i class="fa fa-google-plus"></i>
+        </a>
+        <a href="@Model.FacebookShareUrl" onclick="dustedcodes.window.open('@Model.FacebookShareUrl'); return false;" title="Share on Facebook">
+            <i class="fa fa-facebook-f"></i>
+        </a>
+        <a href="@Model.YammerShareUrl" onclick="dustedcodes.window.open('@Model.YammerShareUrl'); return false;" title="Share on Yammer">
+            <i class="fa fa-yahoo"></i>
+        </a>
+    </footer>
+</article>

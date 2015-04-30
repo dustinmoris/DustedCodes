@@ -1,0 +1,119 @@
+﻿<!--
+    Published: 2015-03-19 23:28
+    LastEdited: 2015-03-19 23:28
+    Author: Dustin Moris Gorski
+    Title: Guard clauses without test coverage, a common TDD pitfall
+    Tags: tdd guard-clauses
+-->
+<p>Today I wanted to blog about a little bug which I often find in TDD-style written unit tests.</p>
+<p>This mistake is more likely to happen when you write your tests first.</p>
+
+<p>My demo starts with an empty unit test project. I start by initializing my subject under test, and then implementing the class to make my solution build:</p>
+<pre><code>namespace MyClassLibrary
+{
+    public class DomainClass { }
+
+    [TestFixture]
+    public class DomainClassTests
+    {
+        [Test]
+        public void Test1()
+        {
+            var sut = new DomainClass();
+        }
+    }
+}</code></pre>
+
+<p>In this example our method under test will execute a very typical piece of logic:</p>
+<ol>
+    <li>Accept an argument</li>
+    <li>Check if the argument is null and return early, otherwise proceed</li>
+    <li>Call into a dependency</li>
+    <li>Return a result</li>
+</ol>
+
+<p>Okay, let's finish the test to check for the argument first:</p>
+<pre><code>[TestFixture]
+public class DomainClassTests
+{
+    [Test]
+    public void DoSomeWork_With_Null_Input_Will_Return_Null()
+    {
+        // Arrange
+        var sut = new DomainClass();
+
+        // Act
+        var actual = sut.DoSomeWork(null);
+
+        // Assert
+        Assert.IsNull(actual);
+    }
+}</code></pre>
+
+<p>Make it compile, let the test fail and finally implement just enough to make it succeed:</p>
+<pre><code>public class DomainClass
+{
+    public object DoSomeWork(object arg)
+    {
+        return null;
+    }
+}</code></pre>
+<p><a href="http://www.ncrunch.net/">NCrunch</a> tells me everything is good. That was trivial.</p>
+
+<p><strong>However, at this stage developers often tend to implememnt more than is required by the test:</strong></p>
+<pre><code>public class DomainClass
+{
+    public object DoSomeWork(object arg)
+    {
+        // This guard clause has not been enforced by a particular unit test yet:
+        if (arg == null)
+            return null;
+        
+        return input;
+    }
+}</code></pre>
+
+<p>
+    It is very tempting to do a little bit more, because you might have an idea what the end result will look like. Additionally, if you comment the guard clause, your test will actually fail now! Everything seems to be legit, right?
+</p>
+
+<p>Unfortunately not, if you don't pay extra attention, then you are likely to introduce a bug in your unit tests.</p>
+<p>The danger comes when you get to implement the first dependency:</p>
+<pre><code>public object DoSomeWork(object arg)
+{
+    if (input == null)
+        return null;
+    
+    var result = _dependecy.ProcessData(arg);
+
+    return result;
+}</code></pre>
+<p>After the previous test went green for the first time, it probably never failed again. There was no incentive to change it anymore. But now, when you remove the guard clause, the test will continue to succeed:</p>
+<pre><code>public object DoSomeWork(object arg)
+{
+    // if (input == null)
+    //    return null;
+    
+    var result = _dependecy.ProcessData(arg);
+    return result;
+}</code></pre>
+<p>Why? Because your dependency didn't exist at the time when you wrote this test and therefore it hasn't been setup to return a value. By default the stub will return null and your test will lie to you that everything is okay.</p>
+<p>This is a common mistake I have noticed when code reviewing tests. It doesn't happen with guard clausses only. Another example is when you have more than one dependency and some null checks:</p>
+<pre><code>public object DoSomeWork()
+{
+    var data = _repository.GetData();
+
+    if (data == null)
+        return null;
+
+    var crunchedData = _dataCruncher.Crunch(data);
+
+    if (crunchedData == null)
+        return null;
+
+    // More work here...
+
+    return crunchedData;
+}</code></pre>
+<p>Same thing again, when I didn't pay attention to setup a default return value for the newly added dependency, then my first guard clause will not be covered by a unit test anymore.</p>
+<p>It is surely not the most critical bug, but it is still something worth to look out for during your next code review.</p>

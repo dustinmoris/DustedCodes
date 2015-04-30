@@ -1,0 +1,34 @@
+﻿@model DustedCodes.Blog.ViewModels.Blog.IndexViewModel
+
+@{
+    ViewBag.Title = "Blog";
+}
+
+@if (Model.Articles != null && Model.Articles.Any())
+{
+    foreach (var articleModel in Model.Articles)
+    {
+        @Html.Partial("_Article", articleModel)
+    }
+}
+else
+{
+    <div>
+        <p>No articles matchig your search query.</p>
+        <p>@Html.ActionLink("Return to all articles", "Index", "Blog")</p>
+    </div>
+}
+
+@section BeforeEndOfBody
+{
+    <script type="text/javascript">
+        var disqus_shortname = '@Model.DisqusShortname';
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(s);
+        }());
+    </script>
+}
