@@ -65,7 +65,7 @@ namespace DustedCodes.Automation.Tests
         {
             var homePage = Application.Startup();
 
-            var url = string.Format("{0}articles/hello-world", Application.RootUrl);
+            var url = string.Format("{0}articles/hello-world", AppConfig.RootUrl);
             homePage.GoToUrl(url);
 
             var blogPostPage = new BlogPostPage();
@@ -107,7 +107,7 @@ namespace DustedCodes.Automation.Tests
         {
             using (var httpClient = new HttpClient())
             {
-                var nonExistingUrl = string.Format("{0}this/path/does/not/exist", Application.RootUrl);
+                var nonExistingUrl = string.Format("{0}this/path/does/not/exist", AppConfig.RootUrl);
                 var result = await httpClient.GetAsync(new Uri(nonExistingUrl));
                 var content = await result.Content.ReadAsStringAsync();
 
@@ -122,7 +122,7 @@ namespace DustedCodes.Automation.Tests
         {
             using (var httpClient = new HttpClient())
             {
-                var badUrl = string.Format("{0}<script></script>", Application.RootUrl);
+                var badUrl = string.Format("{0}<script></script>", AppConfig.RootUrl);
                 var result = await httpClient.GetAsync(new Uri(badUrl));
                 var content = await result.Content.ReadAsStringAsync();
 
@@ -137,7 +137,7 @@ namespace DustedCodes.Automation.Tests
         {
             using (var httpClient = new HttpClient())
             {
-                var badUrl = string.Format("{0}newrelic", Application.RootUrl);
+                var badUrl = string.Format("{0}newrelic", AppConfig.RootUrl);
                 var result = await httpClient.GetAsync(new Uri(badUrl));
                 var content = await result.Content.ReadAsStringAsync();
 
@@ -151,14 +151,11 @@ namespace DustedCodes.Automation.Tests
         public void Can_Edit_Article_In_GitHub()
         {
             var homePage = Application.Startup();
-
-            var currentBlogPosts = homePage.GetCurrentBlogPosts();
-            var blogPostTitle = currentBlogPosts.First();
-
-            var blogPostPage = homePage.GoToBlogPost(blogPostTitle);
+            var blogPost = DataToValidate.BlogPosts.First();
+            var blogPostPage = homePage.GoToBlogPost(blogPost.Title);
             var gitHubEditPage = blogPostPage.GoToEditPage();
 
-            Assert.IsTrue(gitHubEditPage.IsAt(blogPostTitle));
+            Assert.IsTrue(gitHubEditPage.IsAt(blogPost.PermalinkId));
         }
 
         [TearDown]

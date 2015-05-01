@@ -2,13 +2,15 @@
 
 namespace DustedCodes.Automation.Framework.Pages
 {
-    public class GitHubEditPage
+    public class GitHubEditPage : GitHubPage
     {
-        public bool IsAt(string title)
+        public bool IsAt(string permalinkId)
         {
-            var filenameTextbox = Driver.Instance.FindElement(By.CssSelector("input[type=text][name=filename]"));
+            var filenameField = Driver.Instance.FindElement(By.CssSelector("input[type=text][name=filename]"));
 
-            return filenameTextbox.GetAttribute("value") == title;
+            var expectedFilename = string.Format("{0}.html", permalinkId);
+
+            return filenameField.GetAttribute("value") == expectedFilename;
         }
     }
 }

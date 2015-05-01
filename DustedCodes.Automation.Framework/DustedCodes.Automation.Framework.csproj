@@ -41,6 +41,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConfig.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Driver.cs" />
     <Compile Include="Extensions\WebElementExtensions.cs" />
@@ -50,6 +51,8 @@
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\BlogPostPage.cs" />
     <Compile Include="Pages\GitHubEditPage.cs" />
+    <Compile Include="Pages\GitHubLoginPage.cs" />
+    <Compile Include="Pages\GitHubPage.cs" />
     <Compile Include="Pages\HomePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

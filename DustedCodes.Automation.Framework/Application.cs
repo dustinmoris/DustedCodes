@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using DustedCodes.Automation.Framework.Pages;
+﻿using DustedCodes.Automation.Framework.Pages;
 
 namespace DustedCodes.Automation.Framework
 {
@@ -8,7 +7,7 @@ namespace DustedCodes.Automation.Framework
         public static HomePage Startup()
         {
             Driver.Init();
-            Driver.Instance.Navigate().GoToUrl(RootUrl);
+            Driver.Instance.Navigate().GoToUrl(AppConfig.RootUrl);
 
             return new HomePage();
         }
@@ -19,11 +18,6 @@ namespace DustedCodes.Automation.Framework
             {
                 Driver.Instance.Quit();
             }
-        }
-
-        public static string RootUrl
-        {
-            get { return ConfigurationManager.AppSettings["Root_Url"]; }
         }
     }
 }
