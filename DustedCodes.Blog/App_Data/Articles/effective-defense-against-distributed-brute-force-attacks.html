@@ -1,0 +1,76 @@
+﻿<!--
+    Published: 2015-05-01 00:35
+    LastEdited: 2015-05-01 00:35
+    Author: Dustin Moris Gorski
+    Title: Effective defense against distributed brute force attacks
+-->
+<p>Protecting against brute force attacks can be a tricky task.</p>
+<p>Recently I was curious if there are some best practice methods to protect your website against a distributed brute force attack and I found a lot of interesting solutions.</p>
+
+<h2>Lock an account after X failed login attempts</h2>
+<p>If a user reaches a certain limit of failed login attempts  the website locks down the account and refuses any further access.</p>
+<p>There are a several options to allow a genuine user to unlock his/her account again. Sending a link via email or using the password reset function seem to be two of the more popular ones.</p>
+<h3>Problems with this pattern</h3>
+<ul>
+    <li>Introduces a targeted DOS attack vulnerability. An attacker can easily lock out an account, either to just block the account from using the service or to force the user into the recovery path, where an attacker might have found further attack surfaces.</li>
+    <li>Doesn't protect against more sophisticated attacks (typically an attacker would pick the most common password an try it on all accounts, then pick the second most common, etc.)</li>
+    <li>Introduces a potential enumeration attack. An attacker can purposely provide a wrong password and determine if a certain email address/username exists if the account gets locked after a while.</li>
+</ul>
+
+<h2>Blocking IP Addresses with too many failed login attempts</h2>
+<p>This one is simple, if a certain IP address had too many failed login attempts, then further access from this IP address is denied.</p>
+<h3>Problems with this pattern</h3>
+<ul>
+    <li>It doesn't help against a distributed brute force attack.</li>
+    <li>Opens the door for another DOS attack.</li>
+    <li>There is a good chance that users behind a network will lock themselves out if enough users type a wrong password within a short time frame.</li>
+</ul>
+
+<h2>Whitelist-/Blacklisting IP Addresses</h2>
+<p>The idea is that a user can limit access to his account based on IP addresses. It can be as simple as setting one specific IP address, multiple addresses or more complex criteria like ranges within a subset of addresses.</p>
+<h3>Problems with this pattern</h3>
+<ul>
+    <li>Impractical for most websites or web services.</li>
+    <li>This pattern requires a user to put effort into security configuration instead of being secure by default.</li>
+    <li>Can become a maintenance nightmare.</li>
+</ul>
+
+<h2>Increase artificially the login time after each failed attempt</h2>
+<p>This one I found very creative. Each failed login attempt causes the next failed login request to take longer by a factor X. A successful login will proceed in normal speed at any point of time. This allows a website to throttle a distributed brute force attack while providing a normal user experience for a genuine user.</p>
+<h3>Problems with this pattern</h3>
+<ul>
+    <li>If a genuine user makes a mistake shortly after an attack, they might end up with a long response time.</li>
+    <li>The website ends up unnecessarily blocking a thread. This can result in a DOS attack again!?</li>
+</ul>
+
+<h2>Implement a challenge like a CAPTCHA</h2>
+<p>This appraoch is trying to stop automated bots from brute forcing an account by implementing a challenge, which supposedly can only be accomplished by a human. Captchas are a very popular solution, but there are many other creative approches to filter humans from machines.</p>
+<h3>Problems with this pattern</h3>
+<ul>
+    <li>Bad user experience for the geuine user.</li>
+    <li>Computer learning and social engineering make it a tough challenge to come up with a good filter.</li>
+</ul>
+
+<h2>Additional verification step</h2>
+<p>Digital signatures, two factor authentication and many other patterns require an additional step of verification. They are highly effective against brute force attacks, but have their own down sides and might be impractical for many web services.</p>
+
+<h2>Combination of patterns?</h2>
+<p>Quickly you will find that one pattern on it's own might not do the trick. I tried to think of a good combination of patterns and potential pros and cons attached to it and my best idea was the following:</p>
+<h3>Monitor natural fail rate + CAPTCHAs</h3>
+<p>The website needs to determine a natural rate of login failure over a certain period of time. Once this metric has been established it simply counts failed login attempts over this period. When the number of failed login attempts significantly deviates from the natural rate then a CAPTCHA will be displayed to all subsequent login attemps.</p>
+<p>If the rate recovers then the CAPTCHA will be hidden from the login screen again. A very transparent website could even show a notification to the user explaining why the CAPTCHA is being displayed and remind the user to set a strong password if not done yet.</p>
+<h4>Pros</h4>
+<ul>
+    <li>Effective against any type of brute force attack?</li>
+    <li>Good user experience.</li>
+</ul>
+<h4>Cons</h4>
+<ul>
+    <li>Might be difficult to establish the initial variables.</li>
+</ul>
+
+<h2>Strict password policy</h2>
+<p>Another very viable approach is to simply not fight a brute force attack. Make sure your users have strong passwords and make brute force attempts rather harmless.</p>
+<p>A good password policy is probably a good idea in any case. As always, security comes in layers.</p>
+
+<p>Does anyone else know another effective defense against distributed brute force attacks? I'd be interested in your feedback!</p>
