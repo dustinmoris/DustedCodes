@@ -1,4 +1,6 @@
 version: 1.0.0.{build}
+configuration: Release
+platform: Any CPU
 skip_tags: true
 assembly_info:
   patch: true
@@ -6,5 +8,11 @@ assembly_info:
   assembly_version: '{version}'
   assembly_file_version: '{version}'
   assembly_informational_version: '{version}'
+before_build:
+- nuget restore
 build:
   verbosity: normal
+test:
+  categories:
+    except:
+    - SmokeTests
