@@ -118,6 +118,7 @@
     <Content Include="App_Data\Articles\making-font-awesome-awesome-using-icons-without-i-tags.html" />
     <Content Include="App_Data\Articles\php-uk-conference-2015.html" />
     <Content Include="Content\Css\error.css" />
+    <Content Include="Content\Css\site.min.css" />
     <Content Include="Content\Css\site.css" />
     <Content Include="Content\Scripts\main.js" />
     <Content Include="ErrorPages\BadRequest.html" />
@@ -222,9 +223,11 @@
     <Content Include="newrelic\Extensions\extension.xsd">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\Css\error.min.css" />
     <None Include="newrelic\newrelic.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\dustedcodes.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
