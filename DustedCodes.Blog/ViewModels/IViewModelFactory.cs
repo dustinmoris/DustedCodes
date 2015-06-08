@@ -9,6 +9,6 @@ namespace DustedCodes.Blog.ViewModels
     {
         AboutViewModel CreateAboutViewModel();
         ArticleViewModel CreateArticleViewModel(Article article);
-        IndexViewModel CreateIndexViewModel(IEnumerable<Article> articles);
+        IndexViewModel CreateIndexViewModel(IEnumerable<Article> articles, int totalCount, int currentPage);
     }
 }
