@@ -166,10 +166,11 @@ namespace DustedCodes.Blog.Tests
         [Test]
         public async Task GetMostRecentAsync__With_Null_Cache__Reads_All_Articles()
         {
-            const int maxCount = 10;
+            const int page = 1;
+            const int pageSize = 10;
             _articleCache.Metadata.Returns((List<ArticleMetadata>)null);
 
-            await _sut.GetMostRecentAsync(maxCount);
+            await _sut.GetMostRecentAsync(page, pageSize);
 
             await Task.FromResult(_articleReader.Received(1).ReadAllAsync());
         }
@@ -177,10 +178,11 @@ namespace DustedCodes.Blog.Tests
         [Test]
         public async Task GetMostRecentAsync__With_Non_Null_Cache__Doesnt_Read_All_Articles()
         {
-            const int maxCount = 10;
+            const int page = 1;
+            const int pageSize = 10;
             _articleCache.Metadata.Returns(new List<ArticleMetadata>());
 
-            await _sut.GetMostRecentAsync(maxCount);
+            await _sut.GetMostRecentAsync(page, pageSize);
 
             await Task.FromResult(_articleReader.DidNotReceive().ReadAllAsync());
         }
@@ -188,7 +190,8 @@ namespace DustedCodes.Blog.Tests
         [Test]
         public async Task GetMostRecentAsync__With_Null_Cache__Sets_Cache_With_Result_From_Reader()
         {
-            const int maxCount = 10;
+            const int page = 1;
+            const int pageSize = 10;
             _articleCache.Metadata.Returns((List<ArticleMetadata>)null);
             var articles = new List<Article>
                 {
@@ -199,7 +202,7 @@ namespace DustedCodes.Blog.Tests
             _articleReader.ReadAllAsync().ReturnsForAnyArgs(Task.FromResult((IEnumerable<Article>)articles));
             var expectedMetadata = articles.Select(b => b.Metadata);
 
-            await _sut.GetMostRecentAsync(maxCount);
+            await _sut.GetMostRecentAsync(page, pageSize);
 
             Assert.IsTrue(expectedMetadata.SequenceEqual(_articleCache.Metadata));
         }
@@ -207,10 +210,11 @@ namespace DustedCodes.Blog.Tests
         [Test]
         public async Task GetMostRecentAsync__With_Empty_Cache__Doesnt_Read_Any_Articles()
         {
-            const int maxCount = 3;
+            const int page = 1;
+            const int pageSize = 3;
             _articleCache.Metadata.Returns(new List<ArticleMetadata>());
 
-            await _sut.GetMostRecentAsync(maxCount);
+            await _sut.GetMostRecentAsync(page, pageSize);
 
             await Task.FromResult(_articleReader.DidNotReceiveWithAnyArgs().ReadAsync(null));
         }
@@ -218,18 +222,20 @@ namespace DustedCodes.Blog.Tests
         [Test]
         public async Task GetMostRecentAsync__With_Empty_Cache__Returns_Empty_List_Of_Articles()
         {
-            const int maxCount = 3;
+            const int page = 1;
+            const int pageSize = 3;
             _articleCache.Metadata.Returns(new List<ArticleMetadata>());
 
-            var actual = await _sut.GetMostRecentAsync(maxCount);
+            var actual = await _sut.GetMostRecentAsync(page, pageSize);
 
             Assert.IsEmpty(actual);
         }
 
         [Test]
-        public async Task GetMostRecentAsync__With_More_Blog_Posts_Than_Max_Count__Reads_Correct_Number_Of_Articles_In_Descending_Order()
+        public async Task GetMostRecentAsync__With_More_Blog_Posts_Than_Page_Size__Reads_Correct_Number_Of_Articles_In_Descending_Order()
         {
-            const int maxCount = 3;
+            const int page = 1;
+            const int pageSize = 3;
             var cachedMetadata = new List<ArticleMetadata>
                 {
                     new ArticleMetadata {Id="1", PublishDateTime = DateTime.Now.AddDays(100)},
@@ -239,7 +245,7 @@ namespace DustedCodes.Blog.Tests
                 };
             _articleCache.Metadata.Returns(cachedMetadata);
 
-            await _sut.GetMostRecentAsync(maxCount);
+            await _sut.GetMostRecentAsync(page, pageSize);
 
             await Task.FromResult(_articleReader.ReceivedWithAnyArgs(3).ReadAsync(null));
             Received.InOrder(() =>
@@ -251,9 +257,10 @@ namespace DustedCodes.Blog.Tests
         }
 
         [Test]
-        public async Task GetMostRecentAsync__With_Less_Blog_Posts_Than_Max_Count__Reads_Correct_Number_Of_Articles_In_Descending_Order()
+        public async Task GetMostRecentAsync__When_Selecting_Second_Page__Reads_Correct_Number_Of_Articles_In_Descending_Order()
         {
-            const int maxCount = 10;
+            const int page = 2;
+            const int pageSize = 2;
             var cachedMetadata = new List<ArticleMetadata>
                 {
                     new ArticleMetadata {Id="1", PublishDateTime = DateTime.Now.AddDays(100)},
@@ -263,7 +270,31 @@ namespace DustedCodes.Blog.Tests
                 };
             _articleCache.Metadata.Returns(cachedMetadata);
 
-            await _sut.GetMostRecentAsync(maxCount);
+            await _sut.GetMostRecentAsync(page, pageSize);
+
+            await Task.FromResult(_articleReader.ReceivedWithAnyArgs(2).ReadAsync(null));
+            Received.InOrder(() =>
+            {
+                _articleReader.ReadAsync("4");
+                _articleReader.ReadAsync("2");
+            });
+        }
+
+        [Test]
+        public async Task GetMostRecentAsync__With_Less_Blog_Posts_Than_Page_Size__Reads_Correct_Number_Of_Articles_In_Descending_Order()
+        {
+            const int page = 1;
+            const int pageSize = 10;
+            var cachedMetadata = new List<ArticleMetadata>
+                {
+                    new ArticleMetadata {Id="1", PublishDateTime = DateTime.Now.AddDays(100)},
+                    new ArticleMetadata {Id="2", PublishDateTime = DateTime.Now.AddDays(5)},
+                    new ArticleMetadata {Id="3", PublishDateTime = DateTime.Now.AddDays(50)},
+                    new ArticleMetadata {Id="4", PublishDateTime = DateTime.Now.AddDays(30)}
+                };
+            _articleCache.Metadata.Returns(cachedMetadata);
+
+            await _sut.GetMostRecentAsync(page, pageSize);
 
             await Task.FromResult(_articleReader.ReceivedWithAnyArgs(4).ReadAsync(null));
             Received.InOrder(() =>
@@ -278,7 +309,8 @@ namespace DustedCodes.Blog.Tests
         [Test]
         public async Task GetMostRecentAsync__When_Finished_Reading_Articles__Returns_Result_From_Reader()
         {
-            const int maxCount = 10;
+            const int page = 1;
+            const int pageSize = 10;
             _articleCache.Metadata.Returns(
                 new List<ArticleMetadata>
                 {
@@ -301,7 +333,7 @@ namespace DustedCodes.Blog.Tests
                     articles.ElementAt(1)
                 };
 
-            var actual = await _sut.GetMostRecentAsync(maxCount);
+            var actual = await _sut.GetMostRecentAsync(page, pageSize);
 
             Assert.IsTrue(expected.SequenceEqual(actual));
         }

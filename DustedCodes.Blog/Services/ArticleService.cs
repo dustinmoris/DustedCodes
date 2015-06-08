@@ -13,9 +13,9 @@ namespace DustedCodes.Blog.Services
             _articleRepository = articleRepository;
         }
 
-        public async Task<IEnumerable<Article>> GetMostRecentAsync(int maxItemCount)
+        public async Task<IEnumerable<Article>> GetMostRecentAsync(int page, int pageSize)
         {
-            return await _articleRepository.GetMostRecentAsync(maxItemCount);
+            return await _articleRepository.GetMostRecentAsync(page, pageSize);
         }
 
         public async Task<IEnumerable<Article>> FindByTagAsync(string tag)

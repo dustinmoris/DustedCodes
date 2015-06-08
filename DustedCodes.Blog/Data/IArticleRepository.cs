@@ -7,7 +7,7 @@ namespace DustedCodes.Blog.Data
     {
         Task<Article> FindAsync(string articleId);
 
-        Task<IEnumerable<Article>> GetMostRecentAsync(int maxCount);
+        Task<IEnumerable<Article>> GetMostRecentAsync(int page, int pageSize);
 
         Task<IEnumerable<Article>> FindByTagAsync(string tag);
     }

@@ -18,7 +18,7 @@ namespace DustedCodes.Blog.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var articles = await _articleService.GetMostRecentAsync(10);
+            var articles = await _articleService.GetMostRecentAsync(1, 10);
 
             var viewModel = _viewModelFactory.CreateIndexViewModel(articles);
 

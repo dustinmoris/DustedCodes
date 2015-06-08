@@ -24,7 +24,9 @@ namespace DustedCodes.Blog.Services
 
         public async Task<SyndicationFeed> GetFeedAsync(string feedUrl, int maxItemCount)
         {
-            var articles = await _articleRepository.GetMostRecentAsync(maxItemCount);
+            const int page = 1;
+
+            var articles = await _articleRepository.GetMostRecentAsync(page, maxItemCount);
             
             _feedBuilder.SetFeedUrl(feedUrl);
             _feedBuilder.SetFeedTitle(_appConfig.BlogTitle);

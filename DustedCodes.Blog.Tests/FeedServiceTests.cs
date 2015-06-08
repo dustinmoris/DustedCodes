@@ -44,7 +44,7 @@ namespace DustedCodes.Blog.Tests
 
             _sut.GetFeedAsync(feedUrl, itemCount);
 
-            _articleRepository.ReceivedWithAnyArgs(1).GetMostRecentAsync(0);
+            _articleRepository.ReceivedWithAnyArgs(1).GetMostRecentAsync(0, 0);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace DustedCodes.Blog.Tests
 
             _sut.GetFeedAsync(feedUrl, itemCount);
 
-            _articleRepository.Received().GetMostRecentAsync(5);
+            _articleRepository.Received().GetMostRecentAsync(1, 5);
         }
 
         [Test]
@@ -145,7 +145,7 @@ namespace DustedCodes.Blog.Tests
             const string feedUrl = "feedUrl";
             const int itemCount = 5;
             IEnumerable<Article> articles = new List<Article>();
-            _articleRepository.GetMostRecentAsync(0).ReturnsForAnyArgs(Task.FromResult(articles));
+            _articleRepository.GetMostRecentAsync(0, 0).ReturnsForAnyArgs(Task.FromResult(articles));
 
             _sut.GetFeedAsync(feedUrl, itemCount);
 

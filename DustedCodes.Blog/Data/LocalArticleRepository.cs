@@ -31,14 +31,15 @@ namespace DustedCodes.Blog.Data
             return await _articleReader.ReadAsync(metadata.Id);
         }
 
-        public async Task<IEnumerable<Article>> GetMostRecentAsync(int maxCount)
+        public async Task<IEnumerable<Article>> GetMostRecentAsync(int page, int pageSize)
         {
             await CheckAndFillCacheAsync();
 
             var mostRecentArticles = _articleCache
                 .Metadata.OrderByDescending(a => a.PublishDateTime)
-                .Take(maxCount);
-            
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
+
             return await ReadArticlesAsync(mostRecentArticles);
         }
 
