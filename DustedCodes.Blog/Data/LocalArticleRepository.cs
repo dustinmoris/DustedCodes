@@ -16,6 +16,13 @@ namespace DustedCodes.Blog.Data
             _articleReader = articleReader;
         }
 
+        public async Task<int> GetTotalCount()
+        {
+            await CheckAndFillCacheAsync();
+
+            return _articleCache.Metadata.Count;
+        }
+
         public async Task<Article> FindAsync(string articleId)
         {
             if (string.IsNullOrEmpty(articleId))

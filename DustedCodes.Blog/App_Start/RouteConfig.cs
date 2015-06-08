@@ -15,6 +15,12 @@ namespace DustedCodes.Blog
             routes.MapRoute(
                 name: "Index",
                 url: "",
+                defaults: new { controller = "Blog", action = "Index", page = 1 }
+            );
+
+            routes.MapRoute(
+                name: "Page",
+                url: "Page/{page}",
                 defaults: new { controller = "Blog", action = "Index" }
             );
 

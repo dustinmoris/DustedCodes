@@ -5,6 +5,8 @@ namespace DustedCodes.Blog.Data
 {
     public interface IArticleRepository
     {
+        Task<int> GetTotalCount();
+
         Task<Article> FindAsync(string articleId);
 
         Task<IEnumerable<Article>> GetMostRecentAsync(int page, int pageSize);

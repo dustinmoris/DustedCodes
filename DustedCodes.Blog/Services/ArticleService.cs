@@ -13,6 +13,11 @@ namespace DustedCodes.Blog.Services
             _articleRepository = articleRepository;
         }
 
+        public async Task<int> GetTotalCount()
+        {
+            return await _articleRepository.GetTotalCount();
+        }
+
         public async Task<IEnumerable<Article>> GetMostRecentAsync(int page, int pageSize)
         {
             return await _articleRepository.GetMostRecentAsync(page, pageSize);

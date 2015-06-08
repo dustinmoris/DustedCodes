@@ -16,9 +16,10 @@ namespace DustedCodes.Blog.Controllers
             _viewModelFactory = viewModelFactory;
         }
 
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int page)
         {
-            var articles = await _articleService.GetMostRecentAsync(1, 10);
+            const int pageSize = 3;
+            var articles = await _articleService.GetMostRecentAsync(page, pageSize);
 
             var viewModel = _viewModelFactory.CreateIndexViewModel(articles);
 
