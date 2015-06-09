@@ -68,14 +68,14 @@ namespace DustedCodes.Blog.ViewModels
                 };
         }
 
-        public IndexViewModel CreateIndexViewModel(IEnumerable<Article> articles, int totalCount, int currentPage)
+        public IndexViewModel CreateIndexViewModel(IEnumerable<Article> articles, int totalPageCount, int currentPage)
         {
             var articlePartialViewModels = articles.Select(a => CreateArticlePartialViewModel(a, true));
 
             return new IndexViewModel
                 {
                     Articles = articlePartialViewModels,
-                    TotalCount = totalCount,
+                    TotalPageCount = totalPageCount,
                     CurrentPage = currentPage,
                     BlogTitle = _appConfig.BlogTitle,
                     BlogDescription = _appConfig.BlogDescription,

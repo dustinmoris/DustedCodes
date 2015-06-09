@@ -20,9 +20,8 @@ namespace DustedCodes.Blog.Controllers
 
         public async Task<ActionResult> Index(int page)
         {
-            const int pageSize = 3;
-            var totalCount = await _articleService.GetTotalCount();
-            var articles = await _articleService.GetMostRecentAsync(page, pageSize);
+            var totalCount = await _articleService.GetTotalPageCount();
+            var articles = await _articleService.GetMostRecentAsync(page);
 
             var viewModel = _viewModelFactory.CreateIndexViewModel(articles, totalCount, page);
 

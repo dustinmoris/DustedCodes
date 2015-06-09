@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DustedCodes.Blog.Data;
 
@@ -7,20 +8,24 @@ namespace DustedCodes.Blog.Services
     public sealed class ArticleService : IArticleService
     {
         private readonly IArticleRepository _articleRepository;
+        private const int PageSize = 3;
 
         public ArticleService(IArticleRepository articleRepository)
         {
             _articleRepository = articleRepository;
         }
 
-        public async Task<int> GetTotalCount()
+        public async Task<int> GetTotalPageCount()
         {
-            return await _articleRepository.GetTotalCount();
+            var totalCount = await _articleRepository.GetTotalCount();
+            var pages = totalCount / (float)PageSize;
+
+            return Convert.ToInt32(Math.Ceiling(pages));
         }
 
-        public async Task<IEnumerable<Article>> GetMostRecentAsync(int page, int pageSize)
+        public async Task<IEnumerable<Article>> GetMostRecentAsync(int page)
         {
-            return await _articleRepository.GetMostRecentAsync(page, pageSize);
+            return await _articleRepository.GetMostRecentAsync(page, PageSize);
         }
 
         public async Task<IEnumerable<Article>> FindByTagAsync(string tag)
