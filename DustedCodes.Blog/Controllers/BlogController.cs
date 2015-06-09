@@ -11,17 +11,19 @@ namespace DustedCodes.Blog.Controllers
     {
         private readonly IArticleService _articleService;
         private readonly IViewModelFactory _viewModelFactory;
+        private readonly int _pageSize;
 
-        public BlogController(IArticleService articleService, IViewModelFactory viewModelFactory)
+        public BlogController(IArticleService articleService, IViewModelFactory viewModelFactory, int pageSize)
         {
             _articleService = articleService;
             _viewModelFactory = viewModelFactory;
+            _pageSize = pageSize;
         }
 
         public async Task<ActionResult> Index(int page)
         {
-            var totalCount = await _articleService.GetTotalPageCount();
-            var articles = await _articleService.GetMostRecentAsync(page);
+            var totalCount = await _articleService.GetTotalPageCount(_pageSize);
+            var articles = await _articleService.GetMostRecentAsync(page, _pageSize);
 
             var viewModel = _viewModelFactory.CreateIndexViewModel(articles, totalCount, page);
 

@@ -1,4 +1,5 @@
 using DustedCodes.Blog.Config;
+using DustedCodes.Blog.Controllers;
 using DustedCodes.Blog.Data;
 using DustedCodes.Blog.Feeds;
 using DustedCodes.Blog.Helpers;
@@ -13,7 +14,7 @@ namespace DustedCodes.Blog
     {
         public static void Setup(IKernel kernel)
         {
-            var appConfig = new AppConfig();
+            IAppConfig appConfig = new AppConfig();
             kernel.Bind<IAppConfig>().To<AppConfig>();
 
             kernel.Bind<IArticleCache>().ToConstant(ArticleCache.Instance);
@@ -34,6 +35,8 @@ namespace DustedCodes.Blog
             kernel.Bind<IFeedService>().To<FeedService>();
 
             kernel.Bind<IViewModelFactory>().To<ViewModelFactory>();
+
+            kernel.Bind<BlogController>().ToSelf().WithConstructorArgument("pageSize", appConfig.BlogPageSize);
         }
     }
 }

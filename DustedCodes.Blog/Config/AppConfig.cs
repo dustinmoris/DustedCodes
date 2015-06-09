@@ -1,3 +1,4 @@
+using System;
 using System.Web.Configuration;
 using System.Web.Hosting;
 
@@ -13,6 +14,11 @@ namespace DustedCodes.Blog.Config
         public string BlogDescription
         {
             get { return WebConfigurationManager.AppSettings["Blog_Description"]; }
+        }
+
+        public int BlogPageSize
+        {
+            get { return int.Parse(WebConfigurationManager.AppSettings["Blog_PageSize"]); }
         }
 
         public string ArticlesDirectoryPath

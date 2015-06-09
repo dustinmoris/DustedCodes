@@ -4,6 +4,7 @@
     {
         string BlogTitle { get; }
         string BlogDescription { get; }
+        int BlogPageSize { get; }
         string ArticlesDirectoryPath { get; }
         string DisqusShortname { get; }
         string EditArticleUrlFormat { get; }

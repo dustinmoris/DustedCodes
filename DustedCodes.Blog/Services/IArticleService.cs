@@ -6,9 +6,9 @@ namespace DustedCodes.Blog.Services
 {
     public interface IArticleService
     {
-        Task<int> GetTotalPageCount();
+        Task<int> GetTotalPageCount(int pageSize);
 
-        Task<IEnumerable<Article>> GetMostRecentAsync(int page);
+        Task<IEnumerable<Article>> GetMostRecentAsync(int page, int pageSize);
 
         Task<IEnumerable<Article>> FindByTagAsync(string tag);
 
