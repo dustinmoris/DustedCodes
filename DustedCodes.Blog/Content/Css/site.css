@@ -297,6 +297,14 @@ blockquote {
         margin-right: 0;
     }
 
+.pager-prev {
+    float: left;
+}
+
+.pager-next {
+    float: right;
+}
+
 @media all and (min-width: 480px) {
 
 
