@@ -151,7 +151,7 @@ namespace DustedCodes.Automation.Tests
         public void Can_Edit_Article_In_GitHub()
         {
             var homePage = Application.Startup();
-            var blogPost = DataToValidate.BlogPosts.First();
+            var blogPost = DataToValidate.BlogPosts.Last();
             var blogPostPage = homePage.GoToBlogPost(blogPost.Title);
             var gitHubEditPage = blogPostPage.GoToEditPage();
 
