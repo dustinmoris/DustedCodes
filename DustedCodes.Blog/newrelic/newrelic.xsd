@@ -161,7 +161,7 @@
 									<xs:documentation>
 										If IIS is hosting multiple applications and you wish to have them report into New Relic as separate applications, create an application setting in the Web.Config of each application named NewRelic.AppName
 
-										Set this to be the name of your application as you'd like it to show up in New Relic.  New Relic will then auto-map instances of your application into an "application" on your home dashboard page.
+										Set this to be the name of your application as you'd like it to show up in New Relic. New Relic will then auto-map instances of your application into an "application" on your home dashboard page.
 
 										If youw ant to map this instance onto multiple applications, like "AJAX Requests" and "All UI", then specify up to three distinct names.
 									</xs:documentation>
@@ -294,7 +294,7 @@
 						<xs:attribute name="log" type="xs:boolean" default="false">
 							<xs:annotation>
 								<xs:documentation>
-									If log is set to true, then each method that is instrumented will be logged in the application event log.	This is helpful when debugging custom instrumentation.
+									If log is set to true, then each method that is instrumented will be logged in the application event log. This is helpful when debugging custom instrumentation.
 								</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
@@ -393,7 +393,7 @@
 									<xs:attribute name="enabled" type="xs:boolean" use="optional">
 										<xs:annotation>
 											<xs:documentation>
-												Deprecated: Turns on response header parameter capturing for the Transaction Tracer and Error Collector features.	Default is true.
+												Deprecated: Turns on response header parameter capturing for the Transaction Tracer and Error Collector features. Default is true.
 											</xs:documentation>
 										</xs:annotation>
 									</xs:attribute>
@@ -420,7 +420,7 @@
 									<xs:attribute name="enabled" type="xs:boolean" use="optional">
 										<xs:annotation>
 											<xs:documentation>
-												Deprecated: Turns on custom parameter capturing for the Transaction Tracer and Error Collector features.	Default is true.
+												Deprecated: Turns on custom parameter capturing for the Transaction Tracer and Error Collector features. Default is true.
 											</xs:documentation>
 										</xs:annotation>
 									</xs:attribute>
@@ -562,6 +562,24 @@
 							<xs:annotation>
 								<xs:documentation>
 									Deprecated: Include custom parameters in transaction analytics events.	Defaults to true.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="customEvents" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>
+							Collects information about custom events that occur in an application.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="enabled" type="xs:boolean" use="optional" default="true">
+							<xs:annotation>
+								<xs:documentation>
+									Turns the custom event recorder on or off. Default is true.
+									Note: The agent will store up to 10,000 custom events in memory at a time.
 								</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>

@@ -45,9 +45,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="NewRelic.Api.Agent, Version=4.4.60.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewRelic.Azure.WebSites.4.4.60.0\lib\NewRelic.Api.Agent.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NewRelic.Api.Agent, Version=4.6.29.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NewRelic.Azure.WebSites.4.6.29.0\lib\NewRelic.Api.Agent.dll</HintPath>
     </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -150,6 +150,8 @@
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.WebApi1.Instrumentation.xml" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.WebApi2.dll" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.WebApi2.Instrumentation.xml" />
+    <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.WebServices.dll" />
+    <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.WebServices.Instrumentation.xml" />
     <Content Include="newrelic\Extensions\NewRelic.Reflection.dll" />
     <Content Include="newrelic\Extensions\NewRelic.SystemExtensions.dll" />
     <Content Include="newrelic\Extensions\NewRelic.SystemInterfaces.dll" />
@@ -220,11 +222,11 @@
     <Content Include="Views\Shared\_Analytics.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Content\Css\error.min.css" />
     <Content Include="newrelic\newrelic.config" />
     <Content Include="newrelic\Extensions\extension.xsd">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Content\Css\error.min.css" />
     <None Include="newrelic\newrelic.xsd">
       <SubType>Designer</SubType>
     </None>

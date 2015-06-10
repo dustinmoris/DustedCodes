@@ -49,27 +49,9 @@
 
 		<!-- **************************  WEB SERVICES  ***************************** -->
 
-		<tracerFactory name="NewRelic.Agent.Core.Tracer.Factories.ServiceModel.SoapLogicalMethodTracerFactory" transactionNamingPriority="5">
-			<!-- synchronous -->
-			<match assemblyName="System.Web.Services" className="System.Web.Services.Protocols.LogicalMethodInfo">
-				<exactMethodMatcher methodName="Invoke" parameters="System.Object,System.Object[]" />
-			</match>
-			<!-- asynchronous -->
-			<match assemblyName="System.Web.Services" className="System.Web.Services.Protocols.LogicalMethodInfo">
-				<exactMethodMatcher methodName="BeginInvoke" parameters="System.Object,System.Object[],System.AsyncCallback,System.Object" />
-			</match>
-		</tracerFactory>
-
 		<tracerFactory name="NewRelic.Agent.Core.Tracer.Factories.ServiceModel.WebServiceMethodTracerFactory" transactionNamingPriority="5">
 			<match assemblyName="System.Web.Extensions" className="System.Web.Script.Services.WebServiceMethodData">
 				<exactMethodMatcher methodName="CallMethod" />
-			</match>
-		</tracerFactory>
-
-		<tracerFactory name="NewRelic.Agent.Core.Tracer.Factories.ServiceModel.SoapHttpClientProtocolTracerFactory" transactionNamingPriority="5">
-			<match assemblyName="System.Web.Services" className="System.Web.Services.Protocols.SoapHttpClientProtocol">
-				<exactMethodMatcher methodName="Invoke" />
-				<exactMethodMatcher methodName="InvokeAsync" />
 			</match>
 		</tracerFactory>
 
