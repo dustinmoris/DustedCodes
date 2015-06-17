@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using DustedCodes.Automation.Framework.Extensions;
 using OpenQA.Selenium;
 
@@ -19,6 +20,41 @@ namespace DustedCodes.Automation.Framework.Pages
             Driver.Instance.FindElement(By.LinkText(title)).Click();
 
             return new BlogPostPage();
+        }
+
+        public BlogPostPage FindAndGoToBlogPost(string title)
+        {
+            var currentBlogPosts = GetCurrentBlogPosts();
+
+            if (currentBlogPosts.Contains(title))
+                return GoToBlogPost(title);
+
+            // Totally not optimised but this does the job.
+            // First navigate all the way to the end to find the blog post:
+            IWebElement nextLink;
+            while ((nextLink = Driver.Instance.FindElementOrNull(By.ClassName("pager-next"))) != null)
+            {
+                nextLink.Click();
+
+                currentBlogPosts = GetCurrentBlogPosts();
+
+                if (currentBlogPosts.Contains(title))
+                    return GoToBlogPost(title);
+            }
+
+            // Then all the way back to the first page in case we started off somewhere in the middle
+            IWebElement prevLink;
+            while ((prevLink = Driver.Instance.FindElementOrNull(By.ClassName("pager-prev"))) != null)
+            {
+                prevLink.Click();
+
+                currentBlogPosts = GetCurrentBlogPosts();
+
+                if (currentBlogPosts.Contains(title))
+                    return GoToBlogPost(title);
+            }
+
+            throw new NotFoundException(string.Format("The blog post with the title '{0}' cannot be found", title));
         }
 
         public IEnumerable<string> GetCurrentBlogPosts()

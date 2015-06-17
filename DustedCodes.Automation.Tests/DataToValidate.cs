@@ -45,6 +45,18 @@ namespace DustedCodes.Automation.Tests
                         Title = "Demystifying ASP.NET MVC 5 Error Pages and Error Logging",
                         PermalinkId = "demystifying-aspnet-mvc-5-error-pages-and-error-logging",
                         Tags = new[] { "asp-net", "mvc", "error-pages", "error-logging" }
+                    },
+                    new BlogPost
+                    {
+                        Title = "Effective defense against distributed brute force attacks",
+                        PermalinkId = "effective-defense-against-distributed-brute-force-attacks",
+                        Tags = new[] { "security", "brute-force-attacks" }
+                    },
+                    new BlogPost
+                    {
+                        Title = "Running free tier and paid tier web apps on the same Microsoft Azure subscription",
+                        PermalinkId = "running-free-tier-and-paid-tier-web-apps-on-the-same-microsoft-azure-subscription",
+                        Tags = new[] { "microsoft-azure", "app-hosting-plan" }
                     }
                 };
             }

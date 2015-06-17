@@ -118,6 +118,7 @@
     <Content Include="App_Data\Articles\hello-world.html" />
     <Content Include="App_Data\Articles\making-font-awesome-awesome-using-icons-without-i-tags.html" />
     <Content Include="App_Data\Articles\php-uk-conference-2015.html" />
+    <Content Include="App_Data\Articles\running-free-tier-and-paid-tier-web-apps-on-the-same-microsoft-azure-subscription.html" />
     <Content Include="Content\Css\error.css" />
     <Content Include="Content\Css\site.min.css" />
     <Content Include="Content\Css\site.css" />

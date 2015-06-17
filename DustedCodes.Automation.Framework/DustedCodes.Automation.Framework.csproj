@@ -45,6 +45,7 @@
     <Compile Include="AppConfig.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Driver.cs" />
+    <Compile Include="Extensions\WebDriverExtensions.cs" />
     <Compile Include="Extensions\WebElementExtensions.cs" />
     <Compile Include="Feeds\AtomFeed.cs" />
     <Compile Include="Feeds\RssFeed.cs" />

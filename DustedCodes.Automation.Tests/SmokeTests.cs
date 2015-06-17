@@ -32,7 +32,7 @@ namespace DustedCodes.Automation.Tests
 
             foreach (var blogPost in DataToValidate.BlogPosts)
             {
-                var blogPostPage = homePage.GoToBlogPost(blogPost.Title);
+                var blogPostPage = homePage.FindAndGoToBlogPost(blogPost.Title);
                 Assert.IsTrue(blogPostPage.IsAt(blogPost.Title));
 
                 if (blogPost.Tags != null && blogPost.Tags.Any())
@@ -151,7 +151,8 @@ namespace DustedCodes.Automation.Tests
         public void Can_Edit_Article_In_GitHub()
         {
             var homePage = Application.Startup();
-            var blogPost = DataToValidate.BlogPosts.Last();
+            // Test the edit link with the second last blog post, which should be commited to GitHub already:
+            var blogPost = DataToValidate.BlogPosts.ElementAt(DataToValidate.BlogPosts.Count() - 2);
             var blogPostPage = homePage.GoToBlogPost(blogPost.Title);
             var gitHubEditPage = blogPostPage.GoToEditPage();
 
