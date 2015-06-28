@@ -116,6 +116,7 @@
     <Content Include="App_Data\Articles\guard-clauses-without-test-coverage-a-common-tdd-pitfall.html" />
     <Content Include="App_Data\Articles\effective-defense-against-distributed-brute-force-attacks.html" />
     <Content Include="App_Data\Articles\hello-world.html" />
+    <Content Include="App_Data\Articles\the-beauty-of-asymmetric-encryption-rsa-crash-course-for-developers.html" />
     <Content Include="App_Data\Articles\making-font-awesome-awesome-using-icons-without-i-tags.html" />
     <Content Include="App_Data\Articles\php-uk-conference-2015.html" />
     <Content Include="App_Data\Articles\running-free-tier-and-paid-tier-web-apps-on-the-same-microsoft-azure-subscription.html" />
