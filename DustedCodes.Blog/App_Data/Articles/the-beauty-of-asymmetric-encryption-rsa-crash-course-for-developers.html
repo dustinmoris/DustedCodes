@@ -1,6 +1,6 @@
 ﻿<!--
-    Published: 2015-06-29 23:44
-    LastEdited: 2015-06-29 23:44
+    Published: 2015-06-28 23:44
+    LastEdited: 2015-06-29 01:21
     Author: Dustin Moris Gorski
     Title: The beauty of asymmetric encryption - RSA crash course for developers
     Tags: security rsa asymmetric-encryption cryptography
@@ -34,6 +34,7 @@
 <h4>Alice, Bob and Eve</h4>
 <p>Alice and Bob want to communicate privately and Eve wants to eavesdrop. Both, Alice and Bob have their individual public and private key pair.</p>
 <p>Alice uses Bob's public key to encrypt a private message before sending it to Bob. Bob can use his private key to decrypt the messgae. Now Bob can use Alice's public key to reply to Alice without Eve being able to understand any of the transmitted data. Finally Alice decrypts Bob's message with her own private key.</p>
+<a href="https://www.flickr.com/photos/130657798@N05/18626777534" title="public-key-encryption by Dustin Moris Gorski, on Flickr"><img src="https://c1.staticflickr.com/1/418/18626777534_fc5524c031_o.gif" alt="public-key-encryption"></a>
 <p>The public key is available to everyone, while the private key is only known to the key holder. There is never the requirement to share a secret key via an insecure channel.</p>
 
 <h4>Integrity and Authenticity</h4>
@@ -134,6 +135,7 @@ var decimals = binary.Select(b => Convert.ToInt32(b)).ToArray();</code></pre>
 <h3>Key length</h3>
 <p>With the fast development of computer chips the recommended key length for RSA changes over time.</p>
 <blockquote>RSA claims that 1024-bit keys are likely to become crackable some time between 2006 and 2010 and that 2048-bit keys are sufficient until 2030. An RSA key length of 3072 bits should be used if security is required beyond 2030<br/><a href="https://en.wikipedia.org/wiki/Key_size#Asymmetric_algorithm_key_lengths">Asymmetric algorithm key lengths on Wikipedia.</a></blockquote>
+<p>If you use RSA in your application, then you should periodically (every few years) recycle your keys and generate a new pair to meet current length recommendations and stay secure.</p>
 
 <h2>Future</h2>
 <p>The entire security of RSA is built on the fact that it is impractible to determine p and q by looking at n. If at some point in the future a mathematician finds a way to rapidly factor n, then RSA would become of no use.</p>
