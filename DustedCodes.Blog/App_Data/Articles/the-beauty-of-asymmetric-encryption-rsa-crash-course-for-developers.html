@@ -9,7 +9,7 @@
 
 <p>Unfortunately security and in particular cryptography is a complex science on its own. It is very difficult to get it right and extremely easy to get it wrong.</p>
 
-<p>As a developer I personally find the topic very interesting and challenging and therefore thrive to understand the concepts of cryptography more than just the bare minimum.</p>
+<p>As a developer I personally find the topic very interesting and challenging and therefore strive to understand the concepts of cryptography more than just the bare minimum.</p>
 
 <p>With this in mind I would like to break down one of the most important cryptographic algorithms which is used in modern web development nowadays: <a href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)">Asymmetric encryption with RSA.</a></p>
 
@@ -52,8 +52,8 @@
 <p>The concept of encrypting a message with one key and not being able to decrypt with the same key is based on one-way functions. As the name suggests the characteristic of a one-way function is that it is not reversible other than with a trial and error approach.</p>
 <p>This can be achieved if there is an infitie amount of values which lead to the same result, if there is some information lost as part of the algorithm or if the time to decrypt takes immensely longer than to encrypt.</p>
 <h4>A simple example of a one-way function</h4>
-<p>Let's say the initial value is 274. The one-way function reads as following:</p>
-<p><em>You start from the centre of a map. Now take your value and divide it by it's last digit. The result is a new value x. Now draw a line x centimeters north west and mark a new point on the map. Next take your original value and subtract it by x. The result is y. Draw another line, starting from the last point, y centimeters south east. The final point is the end result.</em></p>
+<p>Let's say the initial value is 264. The one-way function reads as following:</p>
+<p><em>You start from the centre of a map. Now take your value and divide it by it's last digit. The result is a new value x. Now draw a line x centimeters north east and mark a new point on the map. Next take your original value and subtract it by x. The result is y. Draw another line, starting from the last point, y centimeters south west. The final point is the end result.</em></p>
 <a href="https://www.flickr.com/photos/130657798@N05/19247927141" title="one-way-function-example by Dustin Moris Gorski, on Flickr"><img src="https://c4.staticflickr.com/4/3707/19247927141_e7b4b378a8_o.gif" alt="one-way-function-example"></a>
 <p>In this example we would divide 264 by 4 and retrieve 66 for x. Additionally we subtract 66 from 264 and retrieve y = 198. We draw both lines and determine the final point on the map, which represents the end result of the one-way function.</p>
 <p>Now just from knowing the final point on the map and the definition of the function it is not possible to easily deduce the original value.</p>
@@ -124,7 +124,7 @@ var decimals = binary.Select(b => Convert.ToInt32(b)).ToArray();</code></pre>
 <p>
     Alice receives the cipher 112 and can decrypt it using her private key <strong>d</strong> and the formula:<br/>
     <strong>m = c<sup>d</sup> mod n</strong><br/>
-    m = 112<sup>247 mod 323</sup><br/>
+    m = 112<sup>247</sup> mod 323<br/>
     The first number of the original message is <strong>m = 73</strong>.
 </p>
 <p>RSA is a brilliant one-way function which allows someone to reverse it only if the private key <strong>d</strong> is known.</p>
@@ -141,5 +141,5 @@ var decimals = binary.Select(b => Convert.ToInt32(b)).ToArray();</code></pre>
 <p>If you use RSA in your application, then you should periodically (every few years) recycle your keys and generate a new pair to meet current length recommendations and stay secure.</p>
 
 <h2>Future</h2>
-<p>The entire security of RSA is built on the fact that it is impractible to determine p and q by looking at n. If at some point in the future a mathematician finds a way to rapidly factor n, then RSA would become of no use.</p>
-<p>Another interesting way of cracking most of today's crypto systems could be the usage of <a href="https://en.wikipedia.org/wiki/Quantum_computing#Potential">quantum computing</a>, which as of now still remains a very theoretical topic.</p>
+<p>The entire security of RSA is built on the fact that it is impracticle to determine p and q by looking at n. If at some point in the future a mathematician finds a way to rapidly factor n, then RSA would become of no use.</p>
+<p>Another interesting way of cracking most of today's crypto systems could be with the help of <a href="https://en.wikipedia.org/wiki/Quantum_computing#Potential">quantum computing</a>, which as of now still remains a very theoretical topic.</p>
