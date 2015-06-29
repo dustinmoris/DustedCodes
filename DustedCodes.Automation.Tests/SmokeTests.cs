@@ -159,6 +159,24 @@ namespace DustedCodes.Automation.Tests
             Assert.IsTrue(gitHubEditPage.IsAt(blogPost.PermalinkId));
         }
 
+        [Test]
+        public void Archive_Shows_All_Posts_and_Links_Are_Working()
+        {
+            var homePage = Application.Startup();
+            var archivePage = homePage.GoToArchive();
+
+            var allBlogPostsInArchive = archivePage.GetAllBlogPosts();
+            Assert.AreEqual(DataToValidate.BlogPosts.Count(), allBlogPostsInArchive.Count());
+
+            foreach (var blogPost in DataToValidate.BlogPosts)
+            {
+                var blogPostPage = archivePage.GoToBlogPost(blogPost.Title);
+                Assert.IsTrue(blogPostPage.IsAt(blogPost.Title));
+
+                archivePage = blogPostPage.GoToArchive();
+            }
+        }
+
         [TearDown]
         public void TearDown()
         {

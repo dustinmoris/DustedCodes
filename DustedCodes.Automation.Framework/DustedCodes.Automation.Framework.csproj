@@ -50,6 +50,7 @@
     <Compile Include="Feeds\AtomFeed.cs" />
     <Compile Include="Feeds\RssFeed.cs" />
     <Compile Include="Pages\AboutPage.cs" />
+    <Compile Include="Pages\ArchivePage.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\BlogPostPage.cs" />
     <Compile Include="Pages\GitHubEditPage.cs" />

@@ -24,6 +24,13 @@ namespace DustedCodes.Automation.Framework.Pages
             return new HomePage();
         }
 
+        public ArchivePage GoToArchive()
+        {
+            Driver.Instance.FindElement(By.LinkText("ARCHIVE")).Click();
+
+            return new ArchivePage();
+        }
+
         public AboutPage GoToAbout()
         {
             Driver.Instance.FindElement(By.LinkText("ABOUT")).Click();
