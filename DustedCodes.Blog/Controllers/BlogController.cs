@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using DustedCodes.Blog.Data;
@@ -22,10 +23,10 @@ namespace DustedCodes.Blog.Controllers
 
         public async Task<ActionResult> Index(int page)
         {
-            var totalCount = await _articleService.GetTotalPageCount(_pageSize);
+            var totalPageCount = await _articleService.GetTotalPageCount(_pageSize);
             var articles = await _articleService.GetMostRecentAsync(page, _pageSize);
 
-            var viewModel = _viewModelFactory.CreateIndexViewModel(articles, totalCount, page);
+            var viewModel = _viewModelFactory.CreateIndexViewModel(articles, totalPageCount, page);
 
             return View(viewModel);
         }
@@ -45,9 +46,9 @@ namespace DustedCodes.Blog.Controllers
         public async Task<ActionResult> Tagged(string tag)
         {
             var result = await _articleService.FindByTagAsync(tag);
-
             var articles = result as Article[] ?? result.ToArray();
-            var viewModel = _viewModelFactory.CreateIndexViewModel(articles, articles.Count(), 1);
+
+            var viewModel = _viewModelFactory.CreateIndexViewModel(articles, 1, 1);
 
             return View("Index", viewModel);
         }
