@@ -68,8 +68,8 @@
 <h3>Prime numbers</h3>
 <p>Prime numbers are the last important building block of the RSA algorithm.</p>
 <blockquote>
-    A prime number (or a prime) is a natural number greater than 1 that has no positive divisors other than 1 and itself.
-    <a href="https://en.wikipedia.org/wiki/Prime_number">Prime number on Wikipedia.</a>
+    <p>A prime number (or a prime) is a natural number greater than 1 that has no positive divisors other than 1 and itself.</p>
+    <footer><cite><a href="https://en.wikipedia.org/wiki/Prime_number">Prime number</a>, Wikipedia</cite></footer>
 </blockquote>
 <p><em>Example of prime numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, ...</em></p>
 <p>What's important to know is that there is <a href="https://en.wikipedia.org/wiki/Prime_number#Euclid.27s_proof">an infinite amount of prime numbers</a> and there is no effective formula to calculate a prime number or to validate a given number to be prime or not.</p>
@@ -134,7 +134,10 @@ var decimals = binary.Select(b => Convert.ToInt32(b)).ToArray();</code></pre>
 <p>A common practise is to use RSA only for the encryption of a secret key, which then is used in a symmetric encryption algorithm. Typically the message to encrypt is a lot longer than the secret key itself, therefore this is a very effective method to benefit from the security of an asymmetric- and the speed of a symmetric encryption algorithm.</p>
 <h3>Key length</h3>
 <p>With the fast development of computer chips the recommended key length for RSA changes over time.</p>
-<blockquote>RSA claims that 1024-bit keys are likely to become crackable some time between 2006 and 2010 and that 2048-bit keys are sufficient until 2030. An RSA key length of 3072 bits should be used if security is required beyond 2030<br/><a href="https://en.wikipedia.org/wiki/Key_size#Asymmetric_algorithm_key_lengths">Asymmetric algorithm key lengths on Wikipedia.</a></blockquote>
+<blockquote>
+    <p>RSA claims that 1024-bit keys are likely to become crackable some time between 2006 and 2010 and that 2048-bit keys are sufficient until 2030. An RSA key length of 3072 bits should be used if security is required beyond 2030.</p>
+    <footer><cite><a href="https://en.wikipedia.org/wiki/Key_size#Asymmetric_algorithm_key_lengths">Asymmetric algorithm key lengths</a>, Wikipedia</cite></footer>
+</blockquote>
 <p>If you use RSA in your application, then you should periodically (every few years) recycle your keys and generate a new pair to meet current length recommendations and stay secure.</p>
 
 <h2>Future</h2>

@@ -120,7 +120,9 @@ public ActionResult Index()
 <p>Luckily you can change this behaviour by setting the redirectMode to ResponseRewrite:</p>
 <pre><code>&lt;customErrors mode="On" redirectMode="ResponseRewrite"&gt;</code></pre>
 <p>This fixes the initial problem, but now you will end up with an error when redirecting to your error page:</p>
-<blockquote>An exception occurred while processing your request. Additionally, another exception occurred while executing the custom error page for the first exception. The request has been terminated.</blockquote>
+<blockquote>
+    <p>An exception occurred while processing your request. Additionally, another exception occurred while executing the custom error page for the first exception. The request has been terminated.</p>
+</blockquote>
 <p>It is because ResponseRewrite mode uses <a href="https://msdn.microsoft.com/en-us/library/ms525800%28v=vs.90%29.aspx">Server.Transfer</a> under the covers, which looks for a file on your file system. As a result we need to change the redirect path to a static file, for example to an .aspx or .html file:</p>
 <pre><code>&lt;customErrors mode="On" redirectMode="ResponseRewrite" defaultRedirect="~/Error.aspx"/&gt;</code></pre>
 <p>Now there is only one last issue left with this - the response code of the error page will still be 200 OK. The only fix for this is to manually set the correct error code in your .aspx error page:</p>

@@ -232,13 +232,28 @@ blockquote {
     padding: 0.5em 10px;
 }
 
-blockquote a {
-    display: block;
-    margin-top: .8em;
-    font-size: .85em;
-    font-weight: 500;
-    font-style: italic;
-}
+    blockquote > p:first-child {
+        margin-top: 0;
+    }
+
+    blockquote > p:last-child {
+        margin-bottom: 0;
+    }
+
+    blockquote > footer {
+        margin: 0 0 0.3em 0;
+        padding: 0;
+    }
+
+        blockquote > footer > cite {
+            font-size: .85em;
+            font-weight: 600;
+            font-style: italic;
+        }
+
+            blockquote > footer > cite > a:before {
+                content: '- ';
+            }
 
 #avatar {
     border: 1px solid #d1d1d1;
@@ -298,7 +313,7 @@ blockquote a {
     }
 
     .article-metadata > .tags {
-        text-align: left;   
+        text-align: left;
     }
 
 .tag {
