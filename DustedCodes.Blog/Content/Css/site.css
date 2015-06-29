@@ -297,6 +297,10 @@ blockquote a {
         color: #777;
     }
 
+    .article-metadata > .tags {
+        text-align: left;   
+    }
+
 .tag {
     margin-right: .5em;
 }
