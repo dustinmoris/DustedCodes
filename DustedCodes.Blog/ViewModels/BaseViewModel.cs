@@ -1,4 +1,4 @@
-﻿namespace DustedCodes.Blog.ViewModels.Blog
+﻿namespace DustedCodes.Blog.ViewModels
 {
     public abstract class BaseViewModel
     {

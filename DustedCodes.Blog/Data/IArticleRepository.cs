@@ -12,5 +12,7 @@ namespace DustedCodes.Blog.Data
         Task<IEnumerable<Article>> GetMostRecentAsync(int page, int pageSize);
 
         Task<IEnumerable<Article>> FindByTagAsync(string tag);
+
+        Task<IEnumerable<ArticleMetadata>> GetAllArticleMetadata();
     }
 }

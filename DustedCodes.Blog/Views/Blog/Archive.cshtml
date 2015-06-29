@@ -1,0 +1,35 @@
+﻿@using System.Globalization
+@model DustedCodes.Blog.ViewModels.Blog.ArchiveViewModel
+
+@{
+    ViewBag.Title = "Archive";
+}
+
+<div>
+    <h1>Archive</h1>
+
+    @{
+        var articlesByYear = Model.ArticleMetadata.GroupBy(a => a.PublishDateTime.Year);
+
+        foreach (var parentGroup in articlesByYear)
+        {
+            var year = parentGroup.Key;
+            <h2>@year</h2>
+
+            var articlesByMonth = Model.ArticleMetadata.Where(a => a.PublishDateTime.Year.Equals(year)).GroupBy(a => a.PublishDateTime.Month);
+
+            foreach (var subGroup in articlesByMonth)
+            {
+                var month = subGroup.Key;
+                <h3>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month)</h3>
+
+                <ul>
+                    @foreach (var articleMetadata in subGroup)
+                    {
+                        <li>@Html.ActionLink(articleMetadata.Title, "Article", "Blog", new { id = articleMetadata.Id }, null)</li>
+                    }
+                </ul>
+            }
+        }
+    }
+</div>

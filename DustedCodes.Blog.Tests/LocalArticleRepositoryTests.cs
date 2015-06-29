@@ -523,5 +523,60 @@ namespace DustedCodes.Blog.Tests
 
             Assert.IsTrue(expected.SequenceEqual(actual));
         }
+
+        [Test]
+        public async Task GetAllArticleMetadata__With_Null_Cache__Reads_All_Articles()
+        {
+            _articleCache.Metadata.Returns((List<ArticleMetadata>)null);
+
+            await _sut.GetAllArticleMetadata();
+
+            await Task.FromResult(_articleReader.Received(1).ReadAllAsync());
+        }
+
+        [Test]
+        public async Task GetAllArticleMetadata__With_Non_Null_Cache__Doesnt_Read_All_Articles()
+        {
+            _articleCache.Metadata.Returns(new List<ArticleMetadata>());
+
+            await _sut.GetAllArticleMetadata();
+
+            await Task.FromResult(_articleReader.DidNotReceive().ReadAllAsync());
+        }
+
+        [Test]
+        public async Task GetAllArticleMetadata__With_Null_Cache__Sets_Cache_With_Result_From_Reader()
+        {
+            _articleCache.Metadata.Returns((List<ArticleMetadata>)null);
+            var articles = new List<Article>
+                {
+                    new Article {Metadata = {Id = "1"}},
+                    new Article {Metadata = {Id = "b"}},
+                    new Article {Metadata = {Id = "C"}}
+                };
+            _articleReader.ReadAllAsync().ReturnsForAnyArgs(Task.FromResult((IEnumerable<Article>)articles));
+            var expectedMetadata = articles.Select(b => b.Metadata);
+
+            await _sut.GetAllArticleMetadata();
+
+            Assert.IsTrue(expectedMetadata.SequenceEqual(_articleCache.Metadata));
+        }
+
+        [Test]
+        public async Task GetAllArticleMetadata__With_Initialised_Cache__Returns_Cache_Items()
+        {
+            var cache = new List<ArticleMetadata>
+                {
+                    new ArticleMetadata { Id = "1" },
+                    new ArticleMetadata { Id = "2" },
+                    new ArticleMetadata { Id = "3" },
+                    new ArticleMetadata { Id = "4" }
+                };
+            _articleCache.Metadata.Returns(cache);
+
+            var allArticleMetadata = await _sut.GetAllArticleMetadata();
+
+            Assert.IsTrue(cache.SequenceEqual(allArticleMetadata));
+        }
     }
 }

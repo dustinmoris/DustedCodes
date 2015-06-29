@@ -206,9 +206,10 @@
     <Compile Include="Services\FeedService.cs" />
     <Compile Include="Services\IArticleService.cs" />
     <Compile Include="Services\IFeedService.cs" />
+    <Compile Include="ViewModels\Blog\ArchiveViewModel.cs" />
     <Compile Include="ViewModels\Home\AboutViewModel.cs" />
     <Compile Include="ViewModels\Blog\ArticlePartialViewModel.cs" />
-    <Compile Include="ViewModels\Blog\BaseViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\Blog\ArticleViewModel.cs" />
     <Compile Include="ViewModels\Blog\IndexViewModel.cs" />
     <Compile Include="ViewModels\IViewModelFactory.cs" />
@@ -233,6 +234,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PublishProfiles\dustedcodes.pubxml" />
+    <Content Include="Views\Blog\Archive.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

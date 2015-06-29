@@ -83,5 +83,17 @@ namespace DustedCodes.Blog.ViewModels
                     IsProductionEnvironment = _appConfig.IsProductionEnvironment
                 };
         }
+
+        public ArchiveViewModel CreateArchiveViewModel(IEnumerable<ArticleMetadata> articleMetadata)
+        {
+            return new ArchiveViewModel
+                {
+                    BlogTitle = _appConfig.BlogTitle,
+                    BlogDescription = _appConfig.BlogDescription,
+                    DisqusShortname = _appConfig.DisqusShortname,
+                    IsProductionEnvironment = _appConfig.IsProductionEnvironment,
+                    ArticleMetadata = articleMetadata
+                };
+        }
     }
 }

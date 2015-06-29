@@ -1,4 +1,4 @@
-﻿@model DustedCodes.Blog.ViewModels.Blog.BaseViewModel
+﻿@model DustedCodes.Blog.ViewModels.BaseViewModel
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +27,9 @@
         <ul>
             <li>
                 @Html.ActionLink("Blog", "Index", "Blog")
+            </li>
+            <li>
+                @Html.ActionLink("Archive", "Archive", "Blog")
             </li>
             <li>
                 @Html.ActionLink("About", "About", "Home")

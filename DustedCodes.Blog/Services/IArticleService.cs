@@ -13,5 +13,7 @@ namespace DustedCodes.Blog.Services
         Task<IEnumerable<Article>> FindByTagAsync(string tag);
 
         Task<Article> FindByIdAsync(string id);
+
+        Task<IEnumerable<ArticleMetadata>> GetAllArticleMetadata();
     }
 }

@@ -64,6 +64,13 @@ namespace DustedCodes.Blog.Data
             return await ReadArticlesAsync(taggedArticles);
         }
 
+        public async Task<IEnumerable<ArticleMetadata>> GetAllArticleMetadata()
+        {
+            await CheckAndFillCacheAsync();
+
+            return _articleCache.Metadata;
+        }
+
         private async Task CheckAndFillCacheAsync()
         {
             if (_articleCache.Metadata != null)

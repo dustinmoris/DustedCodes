@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using DustedCodes.Blog.Data;
@@ -56,6 +55,14 @@ namespace DustedCodes.Blog.Controllers
         public ActionResult ArticleRedirect(string id)
         {
             return RedirectToActionPermanent("Article", new { id });
+        }
+
+        public async Task<ActionResult> Archive()
+        {
+            var articleMetadata = await _articleService.GetAllArticleMetadata();
+            var viewModel = _viewModelFactory.CreateArchiveViewModel(articleMetadata);
+
+            return View(viewModel);
         }
     }
 }

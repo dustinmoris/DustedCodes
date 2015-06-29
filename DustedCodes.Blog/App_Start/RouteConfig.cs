@@ -25,6 +25,12 @@ namespace DustedCodes.Blog
             );
 
             routes.MapRoute(
+                name: "Archive",
+                url: "Archive",
+                defaults: new { controller = "Blog", action = "Archive" }
+            );
+
+            routes.MapRoute(
                 name: "About",
                 url: "About",
                 defaults: new { controller = "Home", action = "About" }

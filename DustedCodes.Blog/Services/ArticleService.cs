@@ -36,5 +36,10 @@ namespace DustedCodes.Blog.Services
         {
             return await _articleRepository.FindAsync(id);
         }
+
+        public async Task<IEnumerable<ArticleMetadata>> GetAllArticleMetadata()
+        {
+            return await _articleRepository.GetAllArticleMetadata();
+        }
     }
 }
