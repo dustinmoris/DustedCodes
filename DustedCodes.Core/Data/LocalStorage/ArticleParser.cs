@@ -1,8 +1,9 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using DustedCodes.Core.IO;
 
-namespace DustedCodes.Blog.Data.LocalStorage
+namespace DustedCodes.Core.Data.LocalStorage
 {
     public sealed class ArticleParser : IArticleParser
     {

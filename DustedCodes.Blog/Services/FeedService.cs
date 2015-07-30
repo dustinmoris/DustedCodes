@@ -2,8 +2,8 @@
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using DustedCodes.Blog.Config;
-using DustedCodes.Blog.Data;
 using DustedCodes.Blog.Feeds;
+using DustedCodes.Core.Data;
 
 namespace DustedCodes.Blog.Services
 {

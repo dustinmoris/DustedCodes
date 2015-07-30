@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace DustedCodes.Blog.Data.LocalStorage
+namespace DustedCodes.Core.IO
 {
     public interface ITextReaderFactory
     {

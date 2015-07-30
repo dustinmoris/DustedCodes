@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using System.IO;
 
-namespace DustedCodes.Blog.IO
+namespace DustedCodes.Core.IO
 {
     public interface IDirectoryReader
     {

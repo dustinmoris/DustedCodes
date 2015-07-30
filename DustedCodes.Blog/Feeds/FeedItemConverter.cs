@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.ServiceModel.Syndication;
-using DustedCodes.Blog.Data;
 using DustedCodes.Blog.Helpers;
+using DustedCodes.Core.Data;
 
 namespace DustedCodes.Blog.Feeds
 {

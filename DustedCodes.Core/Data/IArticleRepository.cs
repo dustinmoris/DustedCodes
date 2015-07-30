@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DustedCodes.Blog.Data
+namespace DustedCodes.Core.Data
 {
     public interface IArticleRepository
     {

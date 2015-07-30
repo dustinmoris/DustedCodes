@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using DustedCodes.Blog.Config;
-using DustedCodes.Blog.Data;
 using DustedCodes.Blog.Helpers;
 using DustedCodes.Blog.ViewModels.Blog;
 using DustedCodes.Blog.ViewModels.Home;
+using DustedCodes.Core.Data;
 
 namespace DustedCodes.Blog.ViewModels
 {

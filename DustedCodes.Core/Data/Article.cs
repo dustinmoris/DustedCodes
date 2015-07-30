@@ -1,4 +1,4 @@
-﻿namespace DustedCodes.Blog.Data
+﻿namespace DustedCodes.Core.Data
 {
     public sealed class Article
     {

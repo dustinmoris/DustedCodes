@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace DustedCodes.Blog.IO
+namespace DustedCodes.Core.IO
 {
     public sealed class DirectoryReader : IDirectoryReader
     {

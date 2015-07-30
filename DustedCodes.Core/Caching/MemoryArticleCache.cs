@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using DustedCodes.Blog.Data;
+using DustedCodes.Core.Data;
 
-namespace DustedCodes.Blog.Caching
+namespace DustedCodes.Core.Caching
 {
     public sealed class MemoryArticleCache : IArticleCache
     {

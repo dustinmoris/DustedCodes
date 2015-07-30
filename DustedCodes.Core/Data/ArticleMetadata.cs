@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DustedCodes.Blog.Data
+namespace DustedCodes.Core.Data
 {
     public sealed class ArticleMetadata
     {

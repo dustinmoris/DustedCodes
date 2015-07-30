@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using DustedCodes.Blog.IO;
+using DustedCodes.Core.IO;
 
-namespace DustedCodes.Blog.Data.LocalStorage
+namespace DustedCodes.Core.Data.LocalStorage
 {
     public sealed class StaticFileArticleRepository : IArticleRepository
     {

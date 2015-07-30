@@ -177,16 +177,6 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Data\Article.cs" />
-    <Compile Include="Caching\MemoryArticleCache.cs" />
-    <Compile Include="Data\ArticleMetadata.cs" />
-    <Compile Include="Data\LocalStorage\ArticleParser.cs" />
-    <Compile Include="Caching\IArticleCache.cs" />
-    <Compile Include="Data\LocalStorage\IArticleParser.cs" />
-    <Compile Include="Data\IArticleRepository.cs" />
-    <Compile Include="Data\LocalStorage\ITextReaderFactory.cs" />
-    <Compile Include="Data\LocalStorage\StaticFileArticleRepository.cs" />
-    <Compile Include="Data\LocalStorage\TextReaderFactory.cs" />
     <Compile Include="Feeds\FeedBuilder.cs" />
     <Compile Include="Feeds\FeedItemConverter.cs" />
     <Compile Include="Feeds\IFeedBuilder.cs" />
@@ -198,10 +188,6 @@
     <Compile Include="Helpers\IUrlGenerator.cs" />
     <Compile Include="Helpers\UrlEncoder.cs" />
     <Compile Include="Helpers\UrlGenerator.cs" />
-    <Compile Include="IO\DirectoryReader.cs" />
-    <Compile Include="IO\FileReader.cs" />
-    <Compile Include="IO\IDirectoryReader.cs" />
-    <Compile Include="IO\IFileReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ArticleService.cs" />
     <Compile Include="Services\FeedService.cs" />
@@ -246,6 +232,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Logs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DustedCodes.Core\DustedCodes.Core.csproj">
+      <Project>{249f1d7b-cb40-49a6-ae53-54185c10ff8f}</Project>
+      <Name>DustedCodes.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

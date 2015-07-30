@@ -1,13 +1,12 @@
-using DustedCodes.Blog.Caching;
 using DustedCodes.Blog.Config;
 using DustedCodes.Blog.Controllers;
-using DustedCodes.Blog.Data;
-using DustedCodes.Blog.Data.LocalStorage;
 using DustedCodes.Blog.Feeds;
 using DustedCodes.Blog.Helpers;
-using DustedCodes.Blog.IO;
 using DustedCodes.Blog.Services;
 using DustedCodes.Blog.ViewModels;
+using DustedCodes.Core.Data;
+using DustedCodes.Core.Data.LocalStorage;
+using DustedCodes.Core.IO;
 using Ninject;
 
 namespace DustedCodes.Blog
@@ -21,7 +20,6 @@ namespace DustedCodes.Blog
 
             kernel.Bind<ITextReaderFactory>().To<TextReaderFactory>();
 
-            kernel.Bind<IArticleCache>().ToConstant(MemoryArticleCache.Instance);
             kernel.Bind<IArticleParser>().To<ArticleParser>();
             kernel.Bind<IArticleRepository>().To<StaticFileArticleRepository>()
                 .WithConstructorArgument("articleDirectoryPath", appConfig.ArticlesDirectoryPath);

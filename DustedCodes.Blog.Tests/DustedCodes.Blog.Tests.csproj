@@ -68,6 +68,10 @@
       <Project>{3AE893E6-61B5-4F61-A7DD-EF2380FAA97E}</Project>
       <Name>DustedCodes.Blog</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DustedCodes.Core\DustedCodes.Core.csproj">
+      <Project>{249F1D7B-CB40-49A6-AE53-54185C10FF8F}</Project>
+      <Name>DustedCodes.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

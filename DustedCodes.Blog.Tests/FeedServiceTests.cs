@@ -3,9 +3,9 @@ using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using DustedCodes.Blog.Config;
-using DustedCodes.Blog.Data;
 using DustedCodes.Blog.Feeds;
 using DustedCodes.Blog.Services;
+using DustedCodes.Core.Data;
 using NSubstitute;
 using NUnit.Framework;
 
