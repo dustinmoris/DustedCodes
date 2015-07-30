@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace DustedCodes.Blog.Services
+namespace DustedCodes.Core.Collections
 {
     public sealed class PagedCollection<T>
     {

@@ -7,6 +7,7 @@ using DustedCodes.Blog.ViewModels;
 using DustedCodes.Core.Data;
 using DustedCodes.Core.Data.LocalStorage;
 using DustedCodes.Core.IO;
+using DustedCodes.Core.Services;
 using Ninject;
 
 namespace DustedCodes.Blog

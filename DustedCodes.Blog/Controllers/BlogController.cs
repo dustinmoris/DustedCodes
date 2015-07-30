@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using DustedCodes.Blog.Services;
 using DustedCodes.Blog.ViewModels;
+using DustedCodes.Core.Services;
 
 namespace DustedCodes.Blog.Controllers
 {

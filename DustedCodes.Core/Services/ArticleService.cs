@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DustedCodes.Core.Collections;
 using DustedCodes.Core.Data;
 
-namespace DustedCodes.Blog.Services
+namespace DustedCodes.Core.Services
 {
     public sealed class ArticleService : IArticleService
     {

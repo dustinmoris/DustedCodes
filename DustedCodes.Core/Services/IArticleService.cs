@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DustedCodes.Core.Collections;
 using DustedCodes.Core.Data;
 
-namespace DustedCodes.Blog.Services
+namespace DustedCodes.Core.Services
 {
     public interface IArticleService
     {
