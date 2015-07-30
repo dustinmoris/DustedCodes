@@ -2,7 +2,7 @@
 
 namespace DustedCodes.Blog.IO
 {
-    public interface IFilesReader
+    public interface IFileReader
     {
         Task<string> ReadAllTextAsync(string filePath);
     }

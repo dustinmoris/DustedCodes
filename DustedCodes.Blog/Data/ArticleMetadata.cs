@@ -10,6 +10,6 @@ namespace DustedCodes.Blog.Data
         public string Title { get; set; }
         public DateTime PublishDateTime { get; set; }
         public DateTime LastEditedDateTime { get; set; }
-        public IEnumerable<string> Tags { get; set; }
+        public ICollection<string> Tags { get; set; }
     }
 }

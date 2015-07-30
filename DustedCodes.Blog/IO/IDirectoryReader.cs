@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 
 namespace DustedCodes.Blog.IO

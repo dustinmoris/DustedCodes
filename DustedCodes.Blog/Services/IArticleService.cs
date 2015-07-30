@@ -6,14 +6,12 @@ namespace DustedCodes.Blog.Services
 {
     public interface IArticleService
     {
-        Task<int> GetTotalPageCount(int pageSize);
+        Task<Article> GetByIdAsync(string articleId);
 
-        Task<IEnumerable<Article>> GetMostRecentAsync(int page, int pageSize);
+        Task<ICollection<Article>> GetByTagAsync(string tag);
 
-        Task<IEnumerable<Article>> FindByTagAsync(string tag);
+        Task<ICollection<Article>> GetAllAsync();
 
-        Task<Article> FindByIdAsync(string id);
-
-        Task<IEnumerable<ArticleMetadata>> GetAllArticleMetadata();
+        Task<PagedCollection<Article>> GetMostRecentAsync(int pageSize, int page);
     }
 }

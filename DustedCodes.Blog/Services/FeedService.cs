@@ -1,4 +1,5 @@
-﻿using System.ServiceModel.Syndication;
+﻿using System.Linq;
+using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using DustedCodes.Blog.Config;
 using DustedCodes.Blog.Data;
@@ -24,15 +25,14 @@ namespace DustedCodes.Blog.Services
 
         public async Task<SyndicationFeed> GetFeedAsync(string feedUrl, int maxItemCount)
         {
-            const int page = 1;
+            var articles = await _articleRepository.GetAllOrderedByDateAsync();
+            var mostRecentArticles = articles.Take(maxItemCount);
 
-            var articles = await _articleRepository.GetMostRecentAsync(page, maxItemCount);
-            
             _feedBuilder.SetFeedUrl(feedUrl);
             _feedBuilder.SetFeedTitle(_appConfig.BlogTitle);
             _feedBuilder.SetFeedDescription(_appConfig.BlogDescription);
 
-            return _feedBuilder.Build(articles);
+            return _feedBuilder.Build(mostRecentArticles);
         }
     }
 }

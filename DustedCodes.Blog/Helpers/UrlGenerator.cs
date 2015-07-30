@@ -4,7 +4,7 @@ using System.Web.Routing;
 
 namespace DustedCodes.Blog.Helpers
 {
-    public class UrlGenerator : IUrlGenerator
+    public sealed class UrlGenerator : IUrlGenerator
     {
         private static HttpRequest GetCurrentRequest()
         {

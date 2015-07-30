@@ -40,14 +40,14 @@ namespace DustedCodes.Automation.Framework.Pages
 
         public RssFeed GoToRssFeed()
         {
-            Driver.Instance.FindElement(By.LinkText("RSS FEED")).Click();
+            Driver.Instance.FindElement(By.LinkText("RSS")).Click();
 
             return new RssFeed();
         }
 
         public AtomFeed GoToAtomFeed()
         {
-            Driver.Instance.FindElement(By.LinkText("ATOM FEED")).Click();
+            Driver.Instance.FindElement(By.LinkText("ATOM")).Click();
 
             return new AtomFeed();
         }

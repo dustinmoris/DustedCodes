@@ -35,7 +35,7 @@ namespace DustedCodes.Blog.Feeds
 
         public SyndicationFeed Build(IEnumerable<Article> articles)
         {
-            var feedItems = articles.Select(a => _feedItemConverter.ConvertToFeedItem(a)).ToList();
+            var feedItems = articles.Select(a => _feedItemConverter.ConvertToFeedItem(a));
 
             var feed = new SyndicationFeed(
                 _feedTitle,

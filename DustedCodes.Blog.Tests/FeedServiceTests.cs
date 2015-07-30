@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using DustedCodes.Blog.Config;
@@ -37,25 +38,14 @@ namespace DustedCodes.Blog.Tests
         }
 
         [Test]
-        public void GetFeed__With_Any_Arguments__Gets_Article_From_Repository_Only_Once()
+        public void GetFeed__With_Any_Arguments__Gets_Articles_From_Repository_Only_Once()
         {
             const string feedUrl = "feedUrl";
             const int itemCount = 10;
 
             _sut.GetFeedAsync(feedUrl, itemCount);
 
-            _articleRepository.ReceivedWithAnyArgs(1).GetMostRecentAsync(0, 0);
-        }
-
-        [Test]
-        public void GetFeed__With_Item_Count_5__Gets_5_Article_From_Repository()
-        {
-            const string feedUrl = "feedUrl";
-            const int itemCount = 5;
-
-            _sut.GetFeedAsync(feedUrl, itemCount);
-
-            _articleRepository.Received().GetMostRecentAsync(1, 5);
+            _articleRepository.ReceivedWithAnyArgs(1).GetAllOrderedByDateAsync();
         }
 
         [Test]
@@ -140,16 +130,22 @@ namespace DustedCodes.Blog.Tests
         }
 
         [Test]
-        public void GetFeed__With_Any_Arguments__Builds_Feed_With_Article_From_Repository()
+        public void GetFeed__With_Any_Arguments__Builds_Feed_With_Correct_Set_Of_Articles_From_Repository()
         {
             const string feedUrl = "feedUrl";
-            const int itemCount = 5;
-            IEnumerable<Article> articles = new List<Article>();
-            _articleRepository.GetMostRecentAsync(0, 0).ReturnsForAnyArgs(Task.FromResult(articles));
+            const int itemCount = 2;
+            var article1 = new Article();
+            var article2 = new Article();
+            var article3 = new Article();
+            ICollection<Article> articles = new[] {article1, article2, article3};
+            _articleRepository.GetAllOrderedByDateAsync().ReturnsForAnyArgs(Task.FromResult(articles));
 
             _sut.GetFeedAsync(feedUrl, itemCount);
 
-            _feedBuilder.Received().Build(articles);
+            _feedBuilder.Received().Build(Arg.Is<IEnumerable<Article>>(c => 
+                c.Count() == 2
+                && c.ElementAt(0) == article1 
+                && c.ElementAt(1) == article2));
         }
 
         [Test]

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace DustedCodes.Blog.IO
 {
-    public sealed class FilesReader : IFilesReader
+    public sealed class FileReader : IFileReader
     {
         public async Task<string> ReadAllTextAsync(string filePath)
         {

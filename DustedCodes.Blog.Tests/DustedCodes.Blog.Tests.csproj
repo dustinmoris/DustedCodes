@@ -56,7 +56,6 @@
     <Compile Include="ArticleParserTests.cs" />
     <Compile Include="ArticleReaderTests.cs" />
     <Compile Include="FeedServiceTests.cs" />
-    <Compile Include="LocalArticleRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RssFeedResultTests.cs" />
   </ItemGroup>

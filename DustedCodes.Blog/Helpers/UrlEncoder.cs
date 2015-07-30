@@ -2,7 +2,7 @@
 
 namespace DustedCodes.Blog.Helpers
 {
-    public class UrlEncoder : IUrlEncoder
+    public sealed class UrlEncoder : IUrlEncoder
     {
         public string EncodeUrl(string url)
         {

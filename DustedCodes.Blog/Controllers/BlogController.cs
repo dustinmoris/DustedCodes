@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using DustedCodes.Blog.Data;
 using DustedCodes.Blog.Services;
 using DustedCodes.Blog.ViewModels;
 
@@ -22,17 +21,15 @@ namespace DustedCodes.Blog.Controllers
 
         public async Task<ActionResult> Index(int page)
         {
-            var totalPageCount = await _articleService.GetTotalPageCount(_pageSize);
-            var articles = await _articleService.GetMostRecentAsync(page, _pageSize);
-
-            var viewModel = _viewModelFactory.CreateIndexViewModel(articles, totalPageCount, page);
+            var result = await _articleService.GetMostRecentAsync(_pageSize, page);
+            var viewModel = _viewModelFactory.CreateIndexViewModel(result.Items, result.TotalPages, result.PageNumber);
 
             return View(viewModel);
         }
 
         public async Task<ActionResult> Article(string id)
         {
-            var article = await _articleService.FindByIdAsync(id);
+            var article = await _articleService.GetByIdAsync(id);
 
             if (article == null)
                 return HttpNotFound();
@@ -44,9 +41,7 @@ namespace DustedCodes.Blog.Controllers
 
         public async Task<ActionResult> Tagged(string tag)
         {
-            var result = await _articleService.FindByTagAsync(tag);
-            var articles = result as Article[] ?? result.ToArray();
-
+            var articles = await _articleService.GetByTagAsync(tag);
             var viewModel = _viewModelFactory.CreateIndexViewModel(articles, 1, 1);
 
             return View("Index", viewModel);
@@ -59,8 +54,9 @@ namespace DustedCodes.Blog.Controllers
 
         public async Task<ActionResult> Archive()
         {
-            var articleMetadata = await _articleService.GetAllArticleMetadata();
-            var viewModel = _viewModelFactory.CreateArchiveViewModel(articleMetadata);
+            var articles = await _articleService.GetAllAsync();
+            var metadata = articles.Select(a => a.Metadata);
+            var viewModel = _viewModelFactory.CreateArchiveViewModel(metadata);
 
             return View(viewModel);
         }

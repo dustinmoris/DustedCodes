@@ -2,17 +2,27 @@
 using System.Linq;
 using System.ServiceModel.Syndication;
 using DustedCodes.Blog.Data;
+using DustedCodes.Blog.Helpers;
 
 namespace DustedCodes.Blog.Feeds
 {
     public sealed class FeedItemConverter : IFeedItemConverter
     {
+        private readonly IUrlGenerator _urlGenerator;
+
+        public FeedItemConverter(IUrlGenerator urlGenerator)
+        {
+            _urlGenerator = urlGenerator;
+        }
+
         public SyndicationItem ConvertToFeedItem(Article article)
         {
+            var permalinkUrl = _urlGenerator.GeneratePermalinkUrl(article.Metadata.Id);
+
             var item = new SyndicationItem(
                 article.Metadata.Title,
                 new TextSyndicationContent(article.Content, TextSyndicationContentKind.Html),
-                new Uri(article.PermalinkUrl),
+                new Uri(permalinkUrl),
                 article.Metadata.Id,
                 article.Metadata.LastEditedDateTime)
             {

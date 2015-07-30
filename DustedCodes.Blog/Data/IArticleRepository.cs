@@ -5,14 +5,8 @@ namespace DustedCodes.Blog.Data
 {
     public interface IArticleRepository
     {
-        Task<int> GetTotalCount();
+        Task<Article> GetAsync(string id);
 
-        Task<Article> FindAsync(string articleId);
-
-        Task<IEnumerable<Article>> GetMostRecentAsync(int page, int pageSize);
-
-        Task<IEnumerable<Article>> FindByTagAsync(string tag);
-
-        Task<IEnumerable<ArticleMetadata>> GetAllArticleMetadata();
+        Task<ICollection<Article>> GetAllOrderedByDateAsync();
     }
 }

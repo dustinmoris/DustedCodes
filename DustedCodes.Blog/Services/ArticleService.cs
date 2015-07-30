@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DustedCodes.Blog.Data;
 
@@ -14,32 +15,45 @@ namespace DustedCodes.Blog.Services
             _articleRepository = articleRepository;
         }
 
-        public async Task<int> GetTotalPageCount(int pageSize)
+        public async Task<Article> GetByIdAsync(string articleId)
         {
-            var totalCount = await _articleRepository.GetTotalCount();
-            var pages = totalCount / (float)pageSize;
-
-            return Convert.ToInt32(Math.Ceiling(pages));
+            return await _articleRepository.GetAsync(articleId);
         }
 
-        public async Task<IEnumerable<Article>> GetMostRecentAsync(int page, int pageSize)
+        public async Task<ICollection<Article>> GetByTagAsync(string tag)
         {
-            return await _articleRepository.GetMostRecentAsync(page, pageSize);
+            var articles = await _articleRepository.GetAllOrderedByDateAsync();
+
+            return articles
+                .Where(a => a.Metadata != null 
+                    && a.Metadata.Tags != null 
+                    && a.Metadata.Tags.Contains(tag))
+                .ToList();
         }
 
-        public async Task<IEnumerable<Article>> FindByTagAsync(string tag)
+        public async Task<ICollection<Article>> GetAllAsync()
         {
-            return await _articleRepository.FindByTagAsync(tag);
+            return await _articleRepository.GetAllOrderedByDateAsync();
         }
 
-        public async Task<Article> FindByIdAsync(string id)
+        public async Task<PagedCollection<Article>> GetMostRecentAsync(int pageSize, int page)
         {
-            return await _articleRepository.FindAsync(id);
-        }
+            var articles = await _articleRepository.GetAllOrderedByDateAsync();
 
-        public async Task<IEnumerable<ArticleMetadata>> GetAllArticleMetadata()
-        {
-            return await _articleRepository.GetAllArticleMetadata();
+            var items = articles
+                .Skip(pageSize * (page - 1))
+                .Take(pageSize)
+                .ToList();
+
+            return new PagedCollection<Article>
+            {
+                Items = items,
+                PageNumber = page,
+                PageSize = pageSize,
+                TotalItems = articles.Count,
+                // Usig a simple cast as it is unlikely that this number will exceed Int32
+                TotalPages = (int)Math.Ceiling((double)articles.Count / pageSize)
+            };
         }
     }
 }

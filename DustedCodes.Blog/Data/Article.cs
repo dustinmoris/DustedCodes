@@ -9,6 +9,5 @@
 
         public ArticleMetadata Metadata { get; set; }
         public string Content { get; set; }
-        public string PermalinkUrl { get; set; }
     }
 }

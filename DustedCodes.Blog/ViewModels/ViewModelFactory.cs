@@ -8,20 +8,23 @@ using DustedCodes.Blog.ViewModels.Home;
 
 namespace DustedCodes.Blog.ViewModels
 {
-    public class ViewModelFactory : IViewModelFactory
+    public sealed class ViewModelFactory : IViewModelFactory
     {
         private readonly IAppConfig _appConfig;
+        private readonly IUrlGenerator _urlGenerator;
         private readonly IUrlEncoder _urlEncoder;
 
-        public ViewModelFactory(IAppConfig appConfig, IUrlEncoder urlEncoder)
+        public ViewModelFactory(IAppConfig appConfig, IUrlGenerator urlGenerator, IUrlEncoder urlEncoder)
         {
             _appConfig = appConfig;
+            _urlGenerator = urlGenerator;
             _urlEncoder = urlEncoder;
         }
 
         private ArticlePartialViewModel CreateArticlePartialViewModel(Article article, bool renderTitleAsLink)
         {
-            var encodedPermalinkUrl = _urlEncoder.EncodeUrl(article.PermalinkUrl);
+            var permalinkUrl = _urlGenerator.GeneratePermalinkUrl(article.Metadata.Id);
+            var encodedPermalinkUrl = _urlEncoder.EncodeUrl(permalinkUrl);
 
             return new ArticlePartialViewModel
                 {
@@ -29,7 +32,7 @@ namespace DustedCodes.Blog.ViewModels
                     Author = article.Metadata.Author,
                     Content = article.Content,
                     Title = article.Metadata.Title,
-                    PermalinkUrl = article.PermalinkUrl,
+                    PermalinkUrl = permalinkUrl,
                     EditArticleUrl = string.Format(_appConfig.EditArticleUrlFormat, article.Metadata.Id),
                     UserFriendlyPublishDateTime = article.Metadata.PublishDateTime.ToString(_appConfig.DateTimeFormat),
                     ValidHtml5TPublishDateTime = article.Metadata.PublishDateTime.ToString(_appConfig.HtmlDateTimeFormat),

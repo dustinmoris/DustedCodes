@@ -1,6 +1,8 @@
+using DustedCodes.Blog.Caching;
 using DustedCodes.Blog.Config;
 using DustedCodes.Blog.Controllers;
 using DustedCodes.Blog.Data;
+using DustedCodes.Blog.Data.LocalStorage;
 using DustedCodes.Blog.Feeds;
 using DustedCodes.Blog.Helpers;
 using DustedCodes.Blog.IO;
@@ -17,10 +19,12 @@ namespace DustedCodes.Blog
             IAppConfig appConfig = new AppConfig();
             kernel.Bind<IAppConfig>().To<AppConfig>();
 
-            kernel.Bind<IArticleCache>().ToConstant(ArticleCache.Instance);
+            kernel.Bind<ITextReaderFactory>().To<TextReaderFactory>();
+
+            kernel.Bind<IArticleCache>().ToConstant(MemoryArticleCache.Instance);
             kernel.Bind<IArticleParser>().To<ArticleParser>();
-            kernel.Bind<IArticleReader>().To<ArticleReader>().WithConstructorArgument("articleDirectoryPath", appConfig.ArticlesDirectoryPath);
-            kernel.Bind<IArticleRepository>().To<LocalArticleRepository>();
+            kernel.Bind<IArticleRepository>().To<StaticFileArticleRepository>()
+                .WithConstructorArgument("articleDirectoryPath", appConfig.ArticlesDirectoryPath);
 
             kernel.Bind<IFeedBuilder>().To<FeedBuilder>();
             kernel.Bind<IFeedItemConverter>().To<FeedItemConverter>();
@@ -29,7 +33,6 @@ namespace DustedCodes.Blog
             kernel.Bind<IUrlGenerator>().To<UrlGenerator>();
 
             kernel.Bind<IDirectoryReader>().To<DirectoryReader>();
-            kernel.Bind<IFilesReader>().To<FilesReader>();
 
             kernel.Bind<IArticleService>().To<ArticleService>();
             kernel.Bind<IFeedService>().To<FeedService>();
