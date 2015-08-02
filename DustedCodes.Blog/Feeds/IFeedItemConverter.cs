@@ -5,6 +5,6 @@ namespace DustedCodes.Blog.Feeds
 {
     public interface IFeedItemConverter
     {
-        SyndicationItem ConvertToFeedItem(Article article);
+        SyndicationItem ConvertToFeedItem(Article article, string permalinkUrl);
     }
 }

@@ -5,6 +5,7 @@
         string BlogTitle { get; }
         string BlogDescription { get; }
         int BlogPageSize { get; }
+        int FeedMaxItemCount { get; }
         string ArticlesDirectoryPath { get; }
         string DisqusShortname { get; }
         string EditArticleUrlFormat { get; }

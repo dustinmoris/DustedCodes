@@ -176,10 +176,10 @@
     <Compile Include="Config\IAppConfig.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
+    <Compile Include="Feeds\FeedFactory.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Feeds\FeedBuilder.cs" />
+    <Compile Include="Feeds\IFeedFactory.cs" />
     <Compile Include="Feeds\FeedItemConverter.cs" />
-    <Compile Include="Feeds\IFeedBuilder.cs" />
     <Compile Include="Feeds\IFeedItemConverter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -189,8 +189,6 @@
     <Compile Include="Helpers\UrlEncoder.cs" />
     <Compile Include="Helpers\UrlGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\FeedService.cs" />
-    <Compile Include="Services\IFeedService.cs" />
     <Compile Include="ViewModels\Blog\ArchiveViewModel.cs" />
     <Compile Include="ViewModels\Home\AboutViewModel.cs" />
     <Compile Include="ViewModels\Blog\ArticlePartialViewModel.cs" />

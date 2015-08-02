@@ -1,5 +1,5 @@
-using System.Web.Configuration;
 using System.Web.Hosting;
+using WebConfig = System.Web.Configuration.WebConfigurationManager;
 
 namespace DustedCodes.Blog.Config
 {
@@ -7,67 +7,72 @@ namespace DustedCodes.Blog.Config
     {
         public string BlogTitle
         {
-            get { return WebConfigurationManager.AppSettings["Blog_Title"]; }
+            get { return WebConfig.AppSettings["Blog_Title"]; }
         }
 
         public string BlogDescription
         {
-            get { return WebConfigurationManager.AppSettings["Blog_Description"]; }
+            get { return WebConfig.AppSettings["Blog_Description"]; }
         }
 
         public int BlogPageSize
         {
-            get { return int.Parse(WebConfigurationManager.AppSettings["Blog_PageSize"]); }
+            get { return int.Parse(WebConfig.AppSettings["Blog_PageSize"]); }
+        }
+
+        public int FeedMaxItemCount
+        {
+            get { return int.Parse(WebConfig.AppSettings["Feed_MaxItemCount"]); }
         }
 
         public string ArticlesDirectoryPath
         {
-            get { return HostingEnvironment.MapPath(WebConfigurationManager.AppSettings["Articles_Directory_Path"]); }
+            get { return HostingEnvironment.MapPath(WebConfig.AppSettings["Articles_Directory_Path"]); }
         }
 
         public string DisqusShortname
         {
-            get { return WebConfigurationManager.AppSettings["Disqus_Shortname"]; }
+            get { return WebConfig.AppSettings["Disqus_Shortname"]; }
         }
 
         public string EditArticleUrlFormat
         {
-            get { return WebConfigurationManager.AppSettings["Edit_Article_Url_Format"]; }
+            get { return WebConfig.AppSettings["Edit_Article_Url_Format"]; }
         }
 
         public bool IsProductionEnvironment
         {
-            get { return bool.Parse(WebConfigurationManager.AppSettings["Is_Production_Environment"]); }
+            get { return bool.Parse(WebConfig.AppSettings["Is_Production_Environment"]); }
         }
 
         public string DateTimeFormat
         {
-            get { return WebConfigurationManager.AppSettings["DateTime_Format"]; }
+            get { return WebConfig.AppSettings["DateTime_Format"]; }
         }
 
         public string HtmlDateTimeFormat
         {
-            get { return WebConfigurationManager.AppSettings["Html_DateTime_Format"]; }
+            get { return WebConfig.AppSettings["Html_DateTime_Format"]; }
         }
 
         public string TwitterShareUrlFormat
         {
-            get { return WebConfigurationManager.AppSettings["Twitter_ShareUrl_Format"]; }
+            get { return WebConfig.AppSettings["Twitter_ShareUrl_Format"]; }
         }
 
         public string GooglePlusShareUrlFormat
         {
-            get { return WebConfigurationManager.AppSettings["GooglePlus_ShareUrl_Format"]; }
+            get { return WebConfig.AppSettings["GooglePlus_ShareUrl_Format"]; }
         }
 
         public string FacebookShareUrlFormat
         {
-            get { return WebConfigurationManager.AppSettings["Facebook_ShareUrl_Format"]; }
+            get { return WebConfig.AppSettings["Facebook_ShareUrl_Format"]; }
         }
 
         public string YammerShareUrlFormat
         {
-            get { return WebConfigurationManager.AppSettings["Yammer_ShareUrl_Format"]; }
+            get { return WebConfig.AppSettings["Yammer_ShareUrl_Format"]; }
         }
     }
 }

@@ -2,7 +2,6 @@ using DustedCodes.Blog.Config;
 using DustedCodes.Blog.Controllers;
 using DustedCodes.Blog.Feeds;
 using DustedCodes.Blog.Helpers;
-using DustedCodes.Blog.Services;
 using DustedCodes.Blog.ViewModels;
 using DustedCodes.Core.Data;
 using DustedCodes.Core.Data.LocalStorage;
@@ -25,8 +24,8 @@ namespace DustedCodes.Blog
             kernel.Bind<IArticleRepository>().To<StaticFileArticleRepository>()
                 .WithConstructorArgument("articleDirectoryPath", appConfig.ArticlesDirectoryPath);
 
-            kernel.Bind<IFeedBuilder>().To<FeedBuilder>();
             kernel.Bind<IFeedItemConverter>().To<FeedItemConverter>();
+            kernel.Bind<IFeedFactory>().To<FeedFactory>().WithConstructorArgument("maxItemCount", appConfig.FeedMaxItemCount);
 
             kernel.Bind<IUrlEncoder>().To<UrlEncoder>();
             kernel.Bind<IUrlGenerator>().To<UrlGenerator>();
@@ -34,7 +33,6 @@ namespace DustedCodes.Blog
             kernel.Bind<IDirectoryReader>().To<DirectoryReader>();
 
             kernel.Bind<IArticleService>().To<ArticleService>();
-            kernel.Bind<IFeedService>().To<FeedService>();
 
             kernel.Bind<IViewModelFactory>().To<ViewModelFactory>();
 
