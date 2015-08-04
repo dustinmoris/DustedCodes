@@ -32,16 +32,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Caching\IArticleCache.cs" />
-    <Compile Include="Caching\MemoryArticleCache.cs" />
     <Compile Include="Data\Article.cs" />
     <Compile Include="Data\ArticleMetadata.cs" />
     <Compile Include="Data\IArticleRepository.cs" />

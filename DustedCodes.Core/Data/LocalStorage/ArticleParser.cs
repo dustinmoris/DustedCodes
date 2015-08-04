@@ -16,17 +16,30 @@ namespace DustedCodes.Core.Data.LocalStorage
 
         public async Task<Article> ParseAsync(FileInfo fileInfo)
         {
+            if (fileInfo == null)
+                throw new ArgumentNullException("fileInfo");
+
             using (var textReader = _textReaderFactory.FromFile(fileInfo))
             {
-                var article = new Article
+                var metadata = await ParseMetadataAsync(textReader, fileInfo);
+                var content = await textReader.ReadToEndAsync();
+                
+                content = content.Trim();
+
+                if (content.Length == 0)
                 {
-                    Metadata = await ParseMetadataAsync(textReader, fileInfo),
-                    Content = await textReader.ReadToEndAsync()
+                    throw new FormatException(string.Format(
+                        "Cannot parse the file '{0}' to an article, because there was no content.",
+                        fileInfo.FullName));   
+                }
+
+                metadata.Id = fileInfo.Name.Replace(fileInfo.Extension, string.Empty);
+
+                return new Article
+                {
+                    Metadata = metadata,
+                    Content = content
                 };
-
-                article.Metadata.Id = fileInfo.Name.Replace(fileInfo.Extension, string.Empty);
-
-                return article;
             }
         }
 
@@ -84,6 +97,13 @@ namespace DustedCodes.Core.Data.LocalStorage
                         articleMetadata.Tags = tags;
                         break;
                 }
+            }
+
+            if (line != "-->")
+            {
+                throw new FormatException(string.Format(
+                    "Cannot parse the file '{0}' to an article. Couldn't find the closing tag of the meta data block.",
+                    fileInfo.FullName));
             }
 
             return articleMetadata;
