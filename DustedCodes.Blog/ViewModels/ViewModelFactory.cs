@@ -23,26 +23,26 @@ namespace DustedCodes.Blog.ViewModels
 
         private ArticlePartialViewModel CreateArticlePartialViewModel(Article article, bool renderTitleAsLink)
         {
-            var permalinkUrl = _urlGenerator.GeneratePermalinkUrl(article.Metadata.Id);
+            var permalinkUrl = _urlGenerator.GeneratePermalinkUrl(article.Id);
             var encodedPermalinkUrl = _urlEncoder.EncodeUrl(permalinkUrl);
 
             return new ArticlePartialViewModel
                 {
-                    Id = article.Metadata.Id,
-                    Author = article.Metadata.Author,
+                    Id = article.Id,
+                    Author = article.Author,
                     Content = article.Content,
-                    Title = article.Metadata.Title,
+                    Title = article.Title,
                     PermalinkUrl = permalinkUrl,
-                    EditArticleUrl = string.Format(_appConfig.EditArticleUrlFormat, article.Metadata.Id),
-                    UserFriendlyPublishDateTime = article.Metadata.PublishDateTime.ToString(_appConfig.DateTimeFormat),
-                    ValidHtml5TPublishDateTime = article.Metadata.PublishDateTime.ToString(_appConfig.HtmlDateTimeFormat),
+                    EditArticleUrl = string.Format(_appConfig.EditArticleUrlFormat, article.Id),
+                    UserFriendlyPublishDateTime = article.PublishDateTime.ToString(_appConfig.DateTimeFormat),
+                    ValidHtml5TPublishDateTime = article.PublishDateTime.ToString(_appConfig.HtmlDateTimeFormat),
                     TwitterShareUrl = string.Format(_appConfig.TwitterShareUrlFormat, encodedPermalinkUrl),
                     GooglePlusShareUrl = string.Format(_appConfig.GooglePlusShareUrlFormat, encodedPermalinkUrl),
                     FacebookShareUrl = string.Format(_appConfig.FacebookShareUrlFormat, encodedPermalinkUrl),
                     YammerShareUrl = string.Format(_appConfig.YammerShareUrlFormat, encodedPermalinkUrl),
                     RenderTitleAsLink = renderTitleAsLink,
-                    HasTags = article.Metadata.Tags != null && article.Metadata.Tags.Any(),
-                    Tags = article.Metadata.Tags
+                    HasTags = article.Tags != null && article.Tags.Any(),
+                    Tags = article.Tags
                 };
         }
 
@@ -87,7 +87,7 @@ namespace DustedCodes.Blog.ViewModels
                 };
         }
 
-        public ArchiveViewModel CreateArchiveViewModel(IEnumerable<ArticleMetadata> articleMetadata)
+        public ArchiveViewModel CreateArchiveViewModel(IEnumerable<Article> articles)
         {
             return new ArchiveViewModel
                 {
@@ -95,7 +95,7 @@ namespace DustedCodes.Blog.ViewModels
                     BlogDescription = _appConfig.BlogDescription,
                     DisqusShortname = _appConfig.DisqusShortname,
                     IsProductionEnvironment = _appConfig.IsProductionEnvironment,
-                    ArticleMetadata = articleMetadata
+                    Articles = articles
                 };
         }
     }

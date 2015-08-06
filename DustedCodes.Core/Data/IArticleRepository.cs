@@ -7,6 +7,6 @@ namespace DustedCodes.Core.Data
     {
         Task<Article> GetAsync(string id);
 
-        Task<ICollection<Article>> GetAllOrderedByDateAsync();
+        Task<SortedSet<Article>> GetAllSortedByDateAsync();
     }
 }

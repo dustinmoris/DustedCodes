@@ -5,6 +5,6 @@ namespace DustedCodes.Blog.ViewModels.Blog
 {
     public class ArchiveViewModel : BaseViewModel
     {
-        public IEnumerable<ArticleMetadata> ArticleMetadata { get; set; }
+        public IEnumerable<Article> Articles { get; set; }
     }
 }

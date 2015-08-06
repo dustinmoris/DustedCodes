@@ -21,25 +21,21 @@ namespace DustedCodes.Core.Services
             return await _articleRepository.GetAsync(articleId);
         }
 
-        public async Task<ICollection<Article>> GetByTagAsync(string tag)
+        public async Task<IEnumerable<Article>> GetByTagAsync(string tag)
         {
-            var articles = await _articleRepository.GetAllOrderedByDateAsync();
+            var articles = await _articleRepository.GetAllSortedByDateAsync();
 
-            return articles
-                .Where(a => a.Metadata != null 
-                    && a.Metadata.Tags != null 
-                    && a.Metadata.Tags.Contains(tag))
-                .ToList();
+            return articles.Where(a => a.Tags != null && a.Tags.Contains(tag));
         }
 
-        public async Task<ICollection<Article>> GetAllAsync()
+        public async Task<IEnumerable<Article>> GetAllAsync()
         {
-            return await _articleRepository.GetAllOrderedByDateAsync();
+            return await _articleRepository.GetAllSortedByDateAsync();
         }
 
-        public async Task<PagedCollection<Article>> GetMostRecentAsync(int pageSize, int page)
+        public async Task<PagedCollection<Article>> GetByPageAsync(int pageSize, int page)
         {
-            var articles = await _articleRepository.GetAllOrderedByDateAsync();
+            var articles = await _articleRepository.GetAllSortedByDateAsync();
 
             var items = articles
                 .Skip(pageSize * (page - 1))
@@ -55,6 +51,13 @@ namespace DustedCodes.Core.Services
                 // Usig a simple cast as it is unlikely that this number will exceed Int32
                 TotalPages = (int)Math.Ceiling((double)articles.Count / pageSize)
             };
+        }
+
+        public async Task<IEnumerable<Article>> GetMostRecentAsync(int maxCount)
+        {
+            var articles = await _articleRepository.GetAllSortedByDateAsync();
+
+            return articles.Take(maxCount);
         }
     }
 }

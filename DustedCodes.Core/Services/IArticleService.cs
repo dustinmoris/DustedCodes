@@ -9,10 +9,12 @@ namespace DustedCodes.Core.Services
     {
         Task<Article> GetByIdAsync(string articleId);
 
-        Task<ICollection<Article>> GetByTagAsync(string tag);
+        Task<IEnumerable<Article>> GetByTagAsync(string tag);
 
-        Task<ICollection<Article>> GetAllAsync();
+        Task<IEnumerable<Article>> GetAllAsync();
 
-        Task<PagedCollection<Article>> GetMostRecentAsync(int pageSize, int page);
+        Task<PagedCollection<Article>> GetByPageAsync(int pageSize, int page);
+
+        Task<IEnumerable<Article>> GetMostRecentAsync(int maxCount);
     }
 }

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
+using DustedCodes.Core.Data.Comparer;
 using DustedCodes.Core.IO;
 
 namespace DustedCodes.Core.Data.LocalStorage
@@ -34,7 +34,7 @@ namespace DustedCodes.Core.Data.LocalStorage
             return await _articleParser.ParseAsync(fileInfo);
         }
 
-        public async Task<ICollection<Article>> GetAllOrderedByDateAsync()
+        public async Task<SortedSet<Article>> GetAllSortedByDateAsync()
         {
             const string searchPattern = "*.html";
             var files = _directoryReader.GetFiles(_articleDirectoryPath, searchPattern);
@@ -42,7 +42,7 @@ namespace DustedCodes.Core.Data.LocalStorage
             if (files == null || files.Length == 0)
                 return null;
 
-            var articles = new List<Article>();
+            var articles = new SortedSet<Article>(new ByPublishDateDescending());
 
             foreach (var file in files)
             {
@@ -50,7 +50,7 @@ namespace DustedCodes.Core.Data.LocalStorage
                 articles.Add(article);
             }
 
-            return articles.OrderByDescending(a => a.Metadata.PublishDateTime).ToList();
+            return articles;
         }
     }
 }

@@ -4,26 +4,26 @@ using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using DustedCodes.Blog.Config;
 using DustedCodes.Blog.Helpers;
-using DustedCodes.Core.Data;
+using DustedCodes.Core.Services;
 
 namespace DustedCodes.Blog.Feeds
 {
     public sealed class FeedFactory : IFeedFactory
     {
-        private readonly IArticleRepository _articleRepository;
+        private readonly IArticleService _articleService;
         private readonly IFeedItemConverter _feedItemConverter;
         private readonly IUrlGenerator _urlGenerator;
         private readonly IAppConfig _appConfig;
         private readonly int _maxItemCount;
 
         public FeedFactory(
-            IArticleRepository articleRepository, 
+            IArticleService articleService, 
             IFeedItemConverter feedItemConverter, 
             IUrlGenerator urlGenerator, 
             IAppConfig appConfig, 
             int maxItemCount)
         {
-            _articleRepository = articleRepository;
+            _articleService = articleService;
             _feedItemConverter = feedItemConverter;
             _urlGenerator = urlGenerator;
             _appConfig = appConfig;
@@ -46,13 +46,12 @@ namespace DustedCodes.Blog.Feeds
 
         private async Task<SyndicationFeed> CreateFeed(string feedUrl)
         {
-            var articles = await _articleRepository.GetAllOrderedByDateAsync();
-            var mostRecentArticles = articles.Take(_maxItemCount);
+            var articles = await _articleService.GetMostRecentAsync(_maxItemCount);
 
-            var feedItems = mostRecentArticles.Select(article =>
+            var feedItems = articles.Select(article =>
                 _feedItemConverter.ConvertToFeedItem(
                     article,
-                    _urlGenerator.GeneratePermalinkUrl(article.Metadata.Id)));
+                    _urlGenerator.GeneratePermalinkUrl(article.Id)));
 
             var feed = new SyndicationFeed(
                 _appConfig.BlogTitle,

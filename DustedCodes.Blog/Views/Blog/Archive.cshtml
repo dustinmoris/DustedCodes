@@ -9,14 +9,14 @@
     <h1>Archive</h1>
 
     @{
-        var articlesByYear = Model.ArticleMetadata.GroupBy(a => a.PublishDateTime.Year);
+        var articlesByYear = Model.Articles.GroupBy(a => a.PublishDateTime.Year);
 
         foreach (var parentGroup in articlesByYear)
         {
             var year = parentGroup.Key;
             <h2>@year</h2>
 
-            var articlesByMonth = Model.ArticleMetadata.Where(a => a.PublishDateTime.Year.Equals(year)).GroupBy(a => a.PublishDateTime.Month);
+            var articlesByMonth = Model.Articles.Where(a => a.PublishDateTime.Year.Equals(year)).GroupBy(a => a.PublishDateTime.Month);
 
             foreach (var subGroup in articlesByMonth)
             {

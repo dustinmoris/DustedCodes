@@ -10,19 +10,19 @@ namespace DustedCodes.Blog.Feeds
         public SyndicationItem ConvertToFeedItem(Article article, string permalinkUrl)
         {
             var item = new SyndicationItem(
-                article.Metadata.Title,
+                article.Title,
                 new TextSyndicationContent(article.Content, TextSyndicationContentKind.Html),
                 new Uri(permalinkUrl),
-                article.Metadata.Id,
-                article.Metadata.LastEditedDateTime)
+                article.Id,
+                article.LastEditedDateTime)
             {
-                PublishDate = article.Metadata.PublishDateTime
+                PublishDate = article.PublishDateTime
             };
 
-            if (article.Metadata.Tags == null || !article.Metadata.Tags.Any())
+            if (article.Tags == null || !article.Tags.Any())
                 return item;
 
-            foreach (var tag in article.Metadata.Tags)
+            foreach (var tag in article.Tags)
             {
                 item.Categories.Add(new SyndicationCategory(tag));
             }

@@ -21,29 +21,25 @@ namespace DustedCodes.Core.Data.LocalStorage
 
             using (var textReader = _textReaderFactory.FromFile(fileInfo))
             {
-                var metadata = await ParseMetadataAsync(textReader, fileInfo);
-                var content = await textReader.ReadToEndAsync();
-                
-                content = content.Trim();
+                var article = await ParseMetadataAsync(textReader, fileInfo);
 
-                if (content.Length == 0)
+                article.Content = await textReader.ReadToEndAsync();
+                article.Content = article.Content.Trim();
+
+                if (article.Content.Length == 0)
                 {
                     throw new FormatException(string.Format(
                         "Cannot parse the file '{0}' to an article, because there was no content.",
                         fileInfo.FullName));   
                 }
 
-                metadata.Id = fileInfo.Name.Replace(fileInfo.Extension, string.Empty);
+                article.Id = fileInfo.Name.Replace(fileInfo.Extension, string.Empty);
 
-                return new Article
-                {
-                    Metadata = metadata,
-                    Content = content
-                };
+                return article;
             }
         }
 
-        private static async Task<ArticleMetadata> ParseMetadataAsync(TextReader textReader, FileSystemInfo fileInfo)
+        private static async Task<Article> ParseMetadataAsync(TextReader textReader, FileSystemInfo fileInfo)
         {
             var line = await textReader.ReadLineAsync();
 
@@ -54,7 +50,7 @@ namespace DustedCodes.Core.Data.LocalStorage
                     fileInfo.FullName));
             }
 
-            var articleMetadata = new ArticleMetadata();
+            var article = new Article();
 
             while ((line = await textReader.ReadLineAsync()) != null && line != "-->")
             {
@@ -69,18 +65,18 @@ namespace DustedCodes.Core.Data.LocalStorage
                 switch (key)
                 {
                     case "title":
-                        articleMetadata.Title = value;
+                        article.Title = value;
                         break;
 
                     case "author":
-                        articleMetadata.Author = value;
+                        article.Author = value;
                         break;
 
                     case "published":
                         DateTime publishDateTime;
                         if (DateTime.TryParse(value, out publishDateTime))
                         {
-                            articleMetadata.PublishDateTime = publishDateTime;
+                            article.PublishDateTime = publishDateTime;
                         }
                         break;
 
@@ -88,13 +84,13 @@ namespace DustedCodes.Core.Data.LocalStorage
                         DateTime lastEditedDateTime;
                         if (DateTime.TryParse(value, out lastEditedDateTime))
                         {
-                            articleMetadata.LastEditedDateTime = lastEditedDateTime;
+                            article.LastEditedDateTime = lastEditedDateTime;
                         }
                         break;
 
                     case "tags":
                         var tags = value.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                        articleMetadata.Tags = tags;
+                        article.Tags = tags;
                         break;
                 }
             }
@@ -106,7 +102,7 @@ namespace DustedCodes.Core.Data.LocalStorage
                     fileInfo.FullName));
             }
 
-            return articleMetadata;
+            return article;
         }
     }
 }

@@ -22,12 +22,12 @@ namespace DustedCodes.Core.Tests
         {
             public static void Match(Article expectedArticle, Article actualArticle)
             {
-                Assert.AreEqual(expectedArticle.Metadata.Id, actualArticle.Metadata.Id);
-                Assert.AreEqual(expectedArticle.Metadata.Author, actualArticle.Metadata.Author);
-                Assert.AreEqual(expectedArticle.Metadata.Title, actualArticle.Metadata.Title);
-                Assert.AreEqual(expectedArticle.Metadata.PublishDateTime, actualArticle.Metadata.PublishDateTime);
-                Assert.AreEqual(expectedArticle.Metadata.LastEditedDateTime, actualArticle.Metadata.LastEditedDateTime);
-                CollectionAssert.AreEqual(expectedArticle.Metadata.Tags, actualArticle.Metadata.Tags);
+                Assert.AreEqual(expectedArticle.Id, actualArticle.Id);
+                Assert.AreEqual(expectedArticle.Author, actualArticle.Author);
+                Assert.AreEqual(expectedArticle.Title, actualArticle.Title);
+                Assert.AreEqual(expectedArticle.PublishDateTime, actualArticle.PublishDateTime);
+                Assert.AreEqual(expectedArticle.LastEditedDateTime, actualArticle.LastEditedDateTime);
+                CollectionAssert.AreEqual(expectedArticle.Tags, actualArticle.Tags);
                 Assert.AreEqual(expectedArticle.Content, actualArticle.Content);
             }
         }
@@ -160,10 +160,7 @@ Hello World!";
                         {
                             return new Article
                             {
-                                Metadata = new ArticleMetadata
-                                {
-                                    Title = "Valid Article",
-                                },
+                                Title = "Valid Article",
                                 Content = "Hello World!"
                             };
                         }
@@ -197,14 +194,11 @@ Test Article";
                         {
                             return new Article
                             {
-                                Metadata = new ArticleMetadata
-                                {
-                                    PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
-                                    LastEditedDateTime = new DateTime(2015, 3, 13, 14, 30, 0),
-                                    Author = "Foo Bar",
-                                    Title = "Great Article",
-                                    Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" }
-                                },
+                                PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
+                                LastEditedDateTime = new DateTime(2015, 3, 13, 14, 30, 0),
+                                Author = "Foo Bar",
+                                Title = "Great Article",
+                                Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
                                 Content = "Test Article"
                             };
                         }
@@ -239,14 +233,11 @@ Tags: tag-1 another-tag 3rd-tag-here
                         {
                             return new Article
                             {
-                                Metadata = new ArticleMetadata
-                                {
-                                    PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
-                                    LastEditedDateTime = new DateTime(2015, 3, 13, 14, 30, 0),
-                                    Author = "Foo Bar",
-                                    Title = "Great Article",
-                                    Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" }
-                                },
+                                PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
+                                LastEditedDateTime = new DateTime(2015, 3, 13, 14, 30, 0),
+                                Author = "Foo Bar",
+                                Title = "Great Article",
+                                Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
                                 Content = @"<h2>Hello World</h2>
 <p>This is a test.</p>
 
@@ -282,14 +273,11 @@ Test Article";
                         {
                             return new Article
                             {
-                                Metadata = new ArticleMetadata
-                                {
-                                    PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
-                                    LastEditedDateTime = new DateTime(2015, 3, 13, 14, 30, 0),
-                                    Author = "Foo Bar the second",
-                                    Title = "Great Article",
-                                    Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" }
-                                },
+                                PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
+                                LastEditedDateTime = new DateTime(2015, 3, 13, 14, 30, 0),
+                                Author = "Foo Bar the second",
+                                Title = "Great Article",
+                                Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
                                 Content = @"Test Article"
                             };
                         }
@@ -327,14 +315,11 @@ Test Article";
                         {
                             return new Article
                             {
-                                Metadata = new ArticleMetadata
-                                {
-                                    PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
-                                    LastEditedDateTime = new DateTime(2015, 3, 13, 14, 30, 0),
-                                    Author = "Foo Bar the second",
-                                    Title = "Great Article",
-                                    Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" }
-                                },
+                                PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
+                                LastEditedDateTime = new DateTime(2015, 3, 13, 14, 30, 0),
+                                Author = "Foo Bar the second",
+                                Title = "Great Article",
+                                Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
                                 Content = @"Test Article"
                             };
                         }
@@ -365,10 +350,7 @@ Test Article";
                         {
                             return new Article
                             {
-                                Metadata = new ArticleMetadata
-                                {
-                                    Author = "foo Bar"
-                                },
+                                Author = "foo Bar",
                                 Content = @"Test Article"
                             };
                         }
@@ -492,7 +474,7 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Valid.ArticleWithEmptyLinesAfterMetadata.Text);
             var expectedArticle = ArticleTestRepository.Valid.ArticleWithEmptyLinesAfterMetadata.ExpectedArticle;
-            expectedArticle.Metadata.Id = DefaultArticleId;
+            expectedArticle.Id = DefaultArticleId;
 
             var article = await _sut.ParseAsync(fileInfo);
 
@@ -505,7 +487,7 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Valid.ArticleWithAllMetadataAndHtmlFormattedContent.Text);
             var expectedArticle = ArticleTestRepository.Valid.ArticleWithAllMetadataAndHtmlFormattedContent.ExpectedArticle;
-            expectedArticle.Metadata.Id = DefaultArticleId;
+            expectedArticle.Id = DefaultArticleId;
 
             var article = await _sut.ParseAsync(fileInfo);
 
@@ -518,7 +500,7 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Valid.ArticleWithDuplicateMetadata.Text);
             var expectedArticle = ArticleTestRepository.Valid.ArticleWithDuplicateMetadata.ExpectedArticle;
-            expectedArticle.Metadata.Id = DefaultArticleId;
+            expectedArticle.Id = DefaultArticleId;
 
             var article = await _sut.ParseAsync(fileInfo);
 
@@ -531,7 +513,7 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Valid.ArticleWithWeirdlyFormattedMetadata.Text);
             var expectedArticle = ArticleTestRepository.Valid.ArticleWithWeirdlyFormattedMetadata.ExpectedArticle;
-            expectedArticle.Metadata.Id = DefaultArticleId;
+            expectedArticle.Id = DefaultArticleId;
 
             var article = await _sut.ParseAsync(fileInfo);
 
@@ -544,7 +526,7 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Valid.ArticleWithNonSupportedMetadata.Text);
             var expectedArticle = ArticleTestRepository.Valid.ArticleWithNonSupportedMetadata.ExpectedArticle;
-            expectedArticle.Metadata.Id = DefaultArticleId;
+            expectedArticle.Id = DefaultArticleId;
 
             var article = await _sut.ParseAsync(fileInfo);
 

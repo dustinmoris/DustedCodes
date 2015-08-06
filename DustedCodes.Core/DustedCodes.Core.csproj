@@ -35,7 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Article.cs" />
-    <Compile Include="Data\ArticleMetadata.cs" />
+    <Compile Include="Data\Comparer\ByPublishDateDescending.cs" />
     <Compile Include="Data\IArticleRepository.cs" />
     <Compile Include="Data\LocalStorage\ArticleParser.cs" />
     <Compile Include="Data\LocalStorage\IArticleParser.cs" />

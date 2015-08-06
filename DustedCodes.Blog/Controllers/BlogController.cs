@@ -21,7 +21,7 @@ namespace DustedCodes.Blog.Controllers
 
         public async Task<ActionResult> Index(int page)
         {
-            var result = await _articleService.GetMostRecentAsync(_pageSize, page);
+            var result = await _articleService.GetByPageAsync(_pageSize, page);
             var viewModel = _viewModelFactory.CreateIndexViewModel(result.Items, result.TotalPages, result.PageNumber);
 
             return View(viewModel);
@@ -55,8 +55,7 @@ namespace DustedCodes.Blog.Controllers
         public async Task<ActionResult> Archive()
         {
             var articles = await _articleService.GetAllAsync();
-            var metadata = articles.Select(a => a.Metadata);
-            var viewModel = _viewModelFactory.CreateArchiveViewModel(metadata);
+            var viewModel = _viewModelFactory.CreateArchiveViewModel(articles);
 
             return View(viewModel);
         }
