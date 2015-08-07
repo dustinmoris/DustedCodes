@@ -1,8 +1,10 @@
+using System.Runtime.Caching;
 using DustedCodes.Blog.Config;
 using DustedCodes.Blog.Controllers;
 using DustedCodes.Blog.Feeds;
 using DustedCodes.Blog.Helpers;
 using DustedCodes.Blog.ViewModels;
+using DustedCodes.Core.Caching;
 using DustedCodes.Core.Data;
 using DustedCodes.Core.Data.LocalStorage;
 using DustedCodes.Core.IO;
@@ -31,6 +33,11 @@ namespace DustedCodes.Blog
             kernel.Bind<IUrlGenerator>().To<UrlGenerator>();
 
             kernel.Bind<IDirectoryReader>().To<DirectoryReader>();
+
+            kernel.Bind<ICache>()
+                .To<ObjectCacheWrapper>()
+                .WithConstructorArgument("objectCache", MemoryCache.Default)
+                .WithConstructorArgument("defaultCacheItemPolicy", new CacheItemPolicy());
 
             kernel.Bind<IArticleService>().To<ArticleService>();
 
