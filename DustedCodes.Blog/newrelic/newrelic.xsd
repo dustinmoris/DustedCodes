@@ -119,6 +119,14 @@
 							</xs:annotation>
 						</xs:attribute>
 
+						<xs:attribute name="autoStart" type="xs:boolean" default="true">
+							<xs:annotation>
+								<xs:documentation>
+									If false, the agent will not automatically start sending data to New Relic. You can use the Agent API to manually start the agent.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+
 						<xs:attribute name="sendDataOnExit" type="xs:boolean" default="false">
 							<xs:annotation>
 								<xs:documentation>

@@ -55,26 +55,6 @@
 			</match>
 		</tracerFactory>
 
-		<!-- WCF (Windows Communication Framework) -->
-		<tracerFactory name="NewRelic.Agent.Core.Tracer.Factories.ServiceModel.WcfServiceInvocationTracerFactory" transactionNamingPriority="5">
-			<!-- synchronous service invocations -->
-			<match assemblyName="System.ServiceModel" className="System.ServiceModel.Dispatcher.SyncMethodInvoker">
-				<exactMethodMatcher methodName="Invoke" parameters="System.Object,System.Object[],System.Object[]&amp;" />
-			</match>
-			<!-- asynchronous service invocations -->
-			<match assemblyName="System.ServiceModel" className="System.ServiceModel.Dispatcher.AsyncMethodInvoker">
-				<exactMethodMatcher methodName="InvokeBegin" parameters="System.Object,System.Object[],System.AsyncCallback,System.Object" />
-				<exactMethodMatcher methodName="InvokeEnd" parameters="System.Object,System.Object[]&amp;,System.IAsyncResult" />
-			</match>
-		</tracerFactory>
-
-		<!-- WCF (Windows Communication Framework) client -->
-		<tracerFactory name="NewRelic.Agent.Core.Tracer.Factories.ServiceModel.WcfInvokeServiceTracerFactory">
-			<match assemblyName="System.ServiceModel" className="System.ServiceModel.Channels.ServiceChannelProxy">
-				<exactMethodMatcher methodName="InvokeService" />
-			</match>
-		</tracerFactory>
-
 		<!-- Microsoft Message Queue (MSMQ) -->
 		<tracerFactory name="NewRelic.Agent.Core.Tracer.Factories.MessageQueues.MessageSendTracerFactory">
 			<match assemblyName="System.Messaging" className="System.Messaging.MessageQueue">
