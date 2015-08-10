@@ -16,13 +16,13 @@
         Human friendly error pages
         <ul>
             <li>Custom page per error code (e.g.: 404, 403, 500, etc.)</li>
-            <li>Preserving the error code in the response to avoid Google indexing error pages</li>
+            <li>Preserving the HTTP error code in the response to avoid search engines index error pages</li>
         </ul>
     </li>
-    <li>Logging unhandled errors</li>
+    <li>Global error logging for unhandled exceptions</li>
 </ol>
 <h3>Error pages and logging in ASP.NET MVC 5</h3>
-<p>I am sure one could think of many more solutions to the problem, but typically you will find solutions which involve at least one or a combination of more of these methods:</p>
+<p>I am sure one could think of many more possible solutions to the problem, but typically you will find implementations which involve at least one or a combination of many of these methods:</p>
 <ul>
     <li><a href="https://msdn.microsoft.com/en-us/library/system.web.mvc.handleerrorattribute%28v=vs.118%29.aspx">HandleErrorAttribute</a></li>
     <li><a href="https://msdn.microsoft.com/en-us/library/system.web.mvc.controller.onexception%28v=vs.118%29.aspx">Controller.OnException Method</a></li>
@@ -31,8 +31,8 @@
     <li><a href="https://msdn.microsoft.com/en-us/library/ms690497%28v=vs.90%29.aspx">httpErrors element</a> in web.config</li>
     <li>Custom <a href="https://msdn.microsoft.com/en-us/library/ms178468%28v=vs.85%29.aspx">HttpModule</a></li>
 </ul>
-<p>That's a lot of different ways for handling an error and they all have a justifyable use case. There is no golden solution which works for every application.</p>
-<p>Before I will go through each approach more in detail I want to explain some fundamentals which will hopefully make the whole topic a lot easier to understand.</p>
+<p>That's a lot of different ways for handling an error and they all have a justifyable use case. There is no golden solution which works for every application, so it is good to know how they work and when they are best applied.</p>
+<p>Before I will go through each approach in more detail I want to explain some fundamentals which will hopefully make the topic a lot easier to understand.</p>
 <h3>ASP.NET MVC Fundamentals</h3>
 <p>ASP.NET MVC is nothing more than an <a href="https://msdn.microsoft.com/en-us/library/ms227675%28v=vs.100%29.aspx">HttpHandler</a> plugged into the ASP.NET framework. The easiest way to illustrate this is by opening the Global.asax.cs:</p>
 <pre><code>public class MvcApplication : System.Web.HttpApplication</code></pre>
