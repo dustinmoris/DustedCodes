@@ -49,7 +49,7 @@ public class DomainClassTests
     }
 }</code></pre>
 
-<p>In true TDD practise you'd write just enough code to first compile the project and let the test fail and then return null to make it pass:</p>
+<p>In true TDD practise you'd write just enough code to compile the project first, then let the test fail and at last return null to make it pass:</p>
 <pre><code>public class DomainClass
 {
     public object DoSomeWork(object arg)
@@ -58,7 +58,7 @@ public class DomainClassTests
     }
 }</code></pre>
 
-<p><strong>However, at this point I have often seen developers implememnt a little bit more than actually required by the test:</strong></p>
+<p><strong>However, at this point I have often seen developers implememnt a little bit more code than actually required by the test:</strong></p>
 <pre><code>public class DomainClass
 {
     public object DoSomeWork(object arg)
@@ -71,7 +71,7 @@ public class DomainClassTests
     }
 }</code></pre>
 
-<p>It is very tempting to write a bit more code if you already know what the desired end result should look like. Guard clauses are so trivial that it makes this mistake very common.</p>
+<p>It is very tempting to write a bit more code if you already know what the desired end result should look like. Guard clauses are so trivial that it makes it a very common mistake.</p>
 <p>Someone might argue that the code is justified, because if you comment out the if statement the test will fail.</p>
 <p>This is not true though, because the entire condition as a whole is not required yet and as we have proven above, a simple <code>return null;</code> statement satisfies the test as well.</p>
 
