@@ -1,14 +1,13 @@
 ﻿<!--
     Published: 2015-03-19 23:28
-    LastEdited: 2015-03-19 23:28
+    LastEdited: 2015-08-09 22:59
     Author: Dustin Moris Gorski
     Title: Guard clauses without test coverage, a common TDD pitfall
     Tags: tdd guard-clauses
 -->
-<p>Today I wanted to blog about a little bug which I often find in TDD-style written unit tests.</p>
-<p>This mistake is more likely to happen when you write your tests first.</p>
+<p>Today I wanted to blog about a little mistake which easily creeps into your otherwise good TDD practices.</p>
 
-<p>My demo starts with an empty unit test project. I start by initializing my subject under test, and then implementing the class to make my solution build:</p>
+<p>For this demo I'd like to start with an empty unit test project. I start initializing a subject under test and then implementing just enough code to make the solution build:</p>
 <pre><code>namespace MyClassLibrary
 {
     public class DomainClass { }
@@ -24,15 +23,15 @@
     }
 }</code></pre>
 
-<p>In this example our method under test will execute a very typical piece of logic:</p>
+<p>For this example the method under test will have some very trivial business logic:</p>
 <ol>
     <li>Accept an argument</li>
-    <li>Check if the argument is null and return early, otherwise proceed</li>
+    <li>Check if the argument is NULL and return early, otherwise proceed</li>
     <li>Call into a dependency</li>
     <li>Return a result</li>
 </ol>
 
-<p>Okay, let's finish the test to check for the argument first:</p>
+<p>Let's finish the first test by checking for the simple case of a NULL argument:</p>
 <pre><code>[TestFixture]
 public class DomainClassTests
 {
@@ -50,7 +49,7 @@ public class DomainClassTests
     }
 }</code></pre>
 
-<p>Make it compile, let the test fail and finally implement just enough to make it succeed:</p>
+<p>In true TDD practise you'd write just enough code to first compile the project and let the test fail and then return null to make it pass:</p>
 <pre><code>public class DomainClass
 {
     public object DoSomeWork(object arg)
@@ -58,9 +57,8 @@ public class DomainClassTests
         return null;
     }
 }</code></pre>
-<p><a href="http://www.ncrunch.net/">NCrunch</a> tells me everything is good. That was trivial.</p>
 
-<p><strong>However, at this stage developers often tend to implememnt more than is required by the test:</strong></p>
+<p><strong>However, at this point I have often seen developers implememnt a little bit more than actually required by the test:</strong></p>
 <pre><code>public class DomainClass
 {
     public object DoSomeWork(object arg)
@@ -73,22 +71,24 @@ public class DomainClassTests
     }
 }</code></pre>
 
-<p>
-    It is very tempting to do a little bit more, because you might have an idea what the end result will look like. Additionally, if you comment the guard clause, your test will actually fail now! Everything seems to be legit, right?
-</p>
+<p>It is very tempting to write a bit more code if you already know what the desired end result should look like. Guard clauses are so trivial that it makes this mistake very common.</p>
+<p>Someone might argue that the code is justified, because if you comment out the if statement the test will fail.</p>
+<p>This is not true though, because the entire condition as a whole is not required yet and as we have proven above, a simple <code>return null;</code> statement satisfies the test as well.</p>
 
-<p>Unfortunately not, if you don't pay extra attention, then you are likely to introduce a bug in your unit tests.</p>
-<p>The danger comes when you get to implement the first dependency:</p>
+<p>This little mistake seems very harmless now, but it could inroduce a potential NullReferenceException later in the project when the first developer starts to re-factor code and remove redundant code.</p>
+
+<p>This will essentially happen when we continue implementing the remaining unit tests and business logic for the method under test:</p>
+
 <pre><code>public object DoSomeWork(object arg)
 {
-    if (input == null)
+    if (arg == null)
         return null;
     
     var result = _dependecy.ProcessData(arg);
-
     return result;
 }</code></pre>
-<p>After the previous test went green for the first time, it probably never failed again. There was no incentive to change it anymore. But now, when you remove the guard clause, the test will continue to succeed:</p>
+
+<p>Now at this point I could delete the if statement together with the &quot;return null&quot; and the first test will still succeed:</p>
 <pre><code>public object DoSomeWork(object arg)
 {
     // if (input == null)
@@ -97,23 +97,25 @@ public class DomainClassTests
     var result = _dependecy.ProcessData(arg);
     return result;
 }</code></pre>
-<p>Why? Because your dependency didn't exist at the time when you wrote this test and therefore it hasn't been setup to return a value. By default the stub will return null and your test will lie to you that everything is okay.</p>
-<p>This is a common mistake I have noticed when code reviewing tests. It doesn't happen with guard clausses only. Another example is when you have more than one dependency and some null checks:</p>
-<pre><code>public object DoSomeWork()
+
+<p>Why? Well because in the first test we didn't set up a stub for the dependency yet:</p>
+<pre><code>[TestFixture]
+public class DomainClassTests
 {
-    var data = _repository.GetData();
+    [Test]
+    public void DoSomeWork_With_Null_Input_Will_Return_Null()
+    {
+        // Arrange
+        var sut = new DomainClass();
 
-    if (data == null)
-        return null;
+        // Act
+        var actual = sut.DoSomeWork(null);
 
-    var crunchedData = _dataCruncher.Crunch(data);
-
-    if (crunchedData == null)
-        return null;
-
-    // More work here...
-
-    return crunchedData;
+        // Assert
+        Assert.IsNull(actual);
+    }
 }</code></pre>
-<p>Same thing again, when I didn't pay attention to setup a default return value for the newly added dependency, then my first guard clause will not be covered by a unit test anymore.</p>
-<p>It is surely not the most critical bug, but it is still something worth to look out for during your next code review.</p>
+
+<p>It means that &quot;<code>var result = _dependecy.ProcessData(arg);</code>&quot; will return null and make the test go green.</p>
+
+<p>This is why it is best to not introduce little short cuts in TDD and be careful during your code reviews as well!</p>
