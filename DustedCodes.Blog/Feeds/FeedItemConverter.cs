@@ -14,7 +14,7 @@ namespace DustedCodes.Blog.Feeds
                 new TextSyndicationContent(article.Content, TextSyndicationContentKind.Html),
                 new Uri(permalinkUrl),
                 article.Id,
-                article.LastEditedDateTime)
+                article.PublishDateTime)
             {
                 PublishDate = article.PublishDateTime
             };

@@ -9,7 +9,6 @@ namespace DustedCodes.Core.Data
         public string Author { get; set; }
         public string Title { get; set; }
         public DateTime PublishDateTime { get; set; }
-        public DateTime LastEditedDateTime { get; set; }
         public ICollection<string> Tags { get; set; }
         public string Content { get; set; }
     }

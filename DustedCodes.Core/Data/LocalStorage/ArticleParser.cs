@@ -80,14 +80,6 @@ namespace DustedCodes.Core.Data.LocalStorage
                         }
                         break;
 
-                    case "lastedited":
-                        DateTime lastEditedDateTime;
-                        if (DateTime.TryParse(value, out lastEditedDateTime))
-                        {
-                            article.LastEditedDateTime = lastEditedDateTime;
-                        }
-                        break;
-
                     case "tags":
                         var tags = value.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                         article.Tags = tags;

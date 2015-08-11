@@ -26,7 +26,6 @@ namespace DustedCodes.Core.Tests
                 Assert.AreEqual(expectedArticle.Author, actualArticle.Author);
                 Assert.AreEqual(expectedArticle.Title, actualArticle.Title);
                 Assert.AreEqual(expectedArticle.PublishDateTime, actualArticle.PublishDateTime);
-                Assert.AreEqual(expectedArticle.LastEditedDateTime, actualArticle.LastEditedDateTime);
                 CollectionAssert.AreEqual(expectedArticle.Tags, actualArticle.Tags);
                 Assert.AreEqual(expectedArticle.Content, actualArticle.Content);
             }
@@ -195,7 +194,6 @@ Test Article";
                             return new Article
                             {
                                 PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
-                                LastEditedDateTime = new DateTime(2015, 3, 13, 14, 30, 0),
                                 Author = "Foo Bar",
                                 Title = "Great Article",
                                 Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
@@ -234,7 +232,6 @@ Tags: tag-1 another-tag 3rd-tag-here
                             return new Article
                             {
                                 PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
-                                LastEditedDateTime = new DateTime(2015, 3, 13, 14, 30, 0),
                                 Author = "Foo Bar",
                                 Title = "Great Article",
                                 Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
@@ -274,7 +271,6 @@ Test Article";
                             return new Article
                             {
                                 PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
-                                LastEditedDateTime = new DateTime(2015, 3, 13, 14, 30, 0),
                                 Author = "Foo Bar the second",
                                 Title = "Great Article",
                                 Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
@@ -316,7 +312,6 @@ Test Article";
                             return new Article
                             {
                                 PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
-                                LastEditedDateTime = new DateTime(2015, 3, 13, 14, 30, 0),
                                 Author = "Foo Bar the second",
                                 Title = "Great Article",
                                 Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
