@@ -17,7 +17,7 @@ namespace DustedCodes.Core.Data.LocalStorage
         public async Task<Article> ParseAsync(FileInfo fileInfo)
         {
             if (fileInfo == null)
-                throw new ArgumentNullException("fileInfo");
+                throw new ArgumentNullException(nameof(fileInfo));
 
             using (var textReader = _textReaderFactory.FromFile(fileInfo))
             {
@@ -28,8 +28,7 @@ namespace DustedCodes.Core.Data.LocalStorage
 
                 if (article.Content.Length == 0)
                 {
-                    throw new FormatException(
-                        $"Cannot parse the file '{fileInfo.FullName}' to an article, because there was no content.");   
+                    throw new FormatException($"Cannot parse the file '{fileInfo.FullName}' to an article, because there was no content.");   
                 }
 
                 article.Id = fileInfo.Name.Replace(fileInfo.Extension, string.Empty);
@@ -44,8 +43,7 @@ namespace DustedCodes.Core.Data.LocalStorage
 
             if (line == null || !line.Equals("<!--"))
             {
-                throw new FormatException(
-                    $"Cannot parse the file '{fileInfo.FullName}' to an article. The first line has to begin with an XML comment tag '<!--'.");
+                throw new FormatException($"Cannot parse the file '{fileInfo.FullName}' to an article. The first line has to begin with an XML comment tag '<!--'.");
             }
 
             var article = new Article();
@@ -87,8 +85,7 @@ namespace DustedCodes.Core.Data.LocalStorage
 
             if (line != "-->")
             {
-                throw new FormatException(
-                    $"Cannot parse the file '{fileInfo.FullName}' to an article. Couldn't find the closing tag of the meta data block.");
+                throw new FormatException($"Cannot parse the file '{fileInfo.FullName}' to an article. Couldn't find the closing tag of the meta data block.");
             }
 
             return article;
