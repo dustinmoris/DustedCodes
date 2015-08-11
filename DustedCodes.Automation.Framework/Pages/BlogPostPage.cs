@@ -25,7 +25,7 @@ namespace DustedCodes.Automation.Framework.Pages
 
         public HomePage GoToTag(string tag)
         {
-            var xpath = string.Format("/html/body/main/article/header/descendant::a[text()='{0}']", tag);
+            var xpath = $"/html/body/main/article/header/descendant::a[text()='{tag}']";
             var tagLink = Driver.Instance.FindElement(By.XPath(xpath));
 
             tagLink.Click();

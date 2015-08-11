@@ -28,9 +28,8 @@ namespace DustedCodes.Core.Data.LocalStorage
 
                 if (article.Content.Length == 0)
                 {
-                    throw new FormatException(string.Format(
-                        "Cannot parse the file '{0}' to an article, because there was no content.",
-                        fileInfo.FullName));   
+                    throw new FormatException(
+                        $"Cannot parse the file '{fileInfo.FullName}' to an article, because there was no content.");   
                 }
 
                 article.Id = fileInfo.Name.Replace(fileInfo.Extension, string.Empty);
@@ -45,9 +44,8 @@ namespace DustedCodes.Core.Data.LocalStorage
 
             if (line == null || !line.Equals("<!--"))
             {
-                throw new FormatException(string.Format(
-                    "Cannot parse the file '{0}' to an article. The first line has to begin with an XML comment tag '<!--'.",
-                    fileInfo.FullName));
+                throw new FormatException(
+                    $"Cannot parse the file '{fileInfo.FullName}' to an article. The first line has to begin with an XML comment tag '<!--'.");
             }
 
             var article = new Article();
@@ -89,9 +87,8 @@ namespace DustedCodes.Core.Data.LocalStorage
 
             if (line != "-->")
             {
-                throw new FormatException(string.Format(
-                    "Cannot parse the file '{0}' to an article. Couldn't find the closing tag of the meta data block.",
-                    fileInfo.FullName));
+                throw new FormatException(
+                    $"Cannot parse the file '{fileInfo.FullName}' to an article. Couldn't find the closing tag of the meta data block.");
             }
 
             return article;

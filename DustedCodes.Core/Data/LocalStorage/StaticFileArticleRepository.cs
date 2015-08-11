@@ -28,7 +28,7 @@ namespace DustedCodes.Core.Data.LocalStorage
             if (string.IsNullOrEmpty(id))
                 throw new ArgumentException("id cannot be null or empty.");
 
-            var filePath = string.Format("{0}\\{1}.html", _articleDirectoryPath, id);
+            var filePath = $"{_articleDirectoryPath}\\{id}.html";
             var fileInfo = new FileInfo(filePath);
 
             return await _articleParser.ParseAsync(fileInfo);

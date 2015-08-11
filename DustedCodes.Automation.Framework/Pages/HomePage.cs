@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using DustedCodes.Automation.Framework.Extensions;
 using OpenQA.Selenium;
 
@@ -54,7 +53,7 @@ namespace DustedCodes.Automation.Framework.Pages
                     return GoToBlogPost(title);
             }
 
-            throw new NotFoundException(string.Format("The blog post with the title '{0}' cannot be found", title));
+            throw new NotFoundException($"The blog post with the title '{title}' cannot be found");
         }
 
         public IEnumerable<string> GetCurrentBlogPosts()

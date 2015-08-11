@@ -8,7 +8,7 @@ namespace DustedCodes.Automation.Framework.Pages
         {
             var filenameField = Driver.Instance.FindElement(By.CssSelector("input[type=text][name=filename]"));
 
-            var expectedFilename = string.Format("{0}.html", permalinkId);
+            var expectedFilename = $"{permalinkId}.html";
 
             return filenameField.GetAttribute("value") == expectedFilename;
         }

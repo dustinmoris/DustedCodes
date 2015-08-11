@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
 using DustedCodes.Core.Data;
@@ -153,17 +151,11 @@ Hello World!";
                         }
                     }
 
-                    public static Article ExpectedArticle
+                    public static Article ExpectedArticle => new Article
                     {
-                        get
-                        {
-                            return new Article
-                            {
-                                Title = "Valid Article",
-                                Content = "Hello World!"
-                            };
-                        }
-                    }
+                        Title = "Valid Article",
+                        Content = "Hello World!"
+                    };
                 }
 
                 public static class ArticleWithEmptyLinesAfterMetadata
@@ -187,20 +179,14 @@ Test Article";
                         }
                     }
 
-                    public static Article ExpectedArticle
+                    public static Article ExpectedArticle => new Article
                     {
-                        get
-                        {
-                            return new Article
-                            {
-                                PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
-                                Author = "Foo Bar",
-                                Title = "Great Article",
-                                Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
-                                Content = "Test Article"
-                            };
-                        }
-                    }
+                        PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
+                        Author = "Foo Bar",
+                        Title = "Great Article",
+                        Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
+                        Content = "Test Article"
+                    };
                 }
 
                 public static class ArticleWithAllMetadataAndHtmlFormattedContent
@@ -225,23 +211,17 @@ Tags: tag-1 another-tag 3rd-tag-here
                         }
                     }
 
-                    public static Article ExpectedArticle
+                    public static Article ExpectedArticle => new Article
                     {
-                        get
-                        {
-                            return new Article
-                            {
-                                PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
-                                Author = "Foo Bar",
-                                Title = "Great Article",
-                                Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
-                                Content = @"<h2>Hello World</h2>
+                        PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
+                        Author = "Foo Bar",
+                        Title = "Great Article",
+                        Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
+                        Content = @"<h2>Hello World</h2>
 <p>This is a test.</p>
 
 <p>The End!</p>"
-                            };
-                        }
-                    }
+                    };
                 }
 
                 public static class ArticleWithDuplicateMetadata
@@ -264,20 +244,14 @@ Test Article";
                         }
                     }
 
-                    public static Article ExpectedArticle
+                    public static Article ExpectedArticle => new Article
                     {
-                        get
-                        {
-                            return new Article
-                            {
-                                PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
-                                Author = "Foo Bar the second",
-                                Title = "Great Article",
-                                Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
-                                Content = @"Test Article"
-                            };
-                        }
-                    }
+                        PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
+                        Author = "Foo Bar the second",
+                        Title = "Great Article",
+                        Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
+                        Content = @"Test Article"
+                    };
                 }
 
                 public static class ArticleWithWeirdlyFormattedMetadata
@@ -305,20 +279,14 @@ Test Article";
                         }
                     }
 
-                    public static Article ExpectedArticle
+                    public static Article ExpectedArticle => new Article
                     {
-                        get
-                        {
-                            return new Article
-                            {
-                                PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
-                                Author = "Foo Bar the second",
-                                Title = "Great Article",
-                                Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
-                                Content = @"Test Article"
-                            };
-                        }
-                    }
+                        PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
+                        Author = "Foo Bar the second",
+                        Title = "Great Article",
+                        Tags = new[] { "tag-1", "another-tag", "3rd-tag-here" },
+                        Content = @"Test Article"
+                    };
                 }
 
                 public static class ArticleWithNonSupportedMetadata
@@ -339,17 +307,11 @@ Test Article";
                         }
                     }
 
-                    public static Article ExpectedArticle
+                    public static Article ExpectedArticle => new Article
                     {
-                        get
-                        {
-                            return new Article
-                            {
-                                Author = "foo Bar",
-                                Content = @"Test Article"
-                            };
-                        }
-                    }
+                        Author = "foo Bar",
+                        Content = @"Test Article"
+                    };
                 }
             }
         }
@@ -357,7 +319,7 @@ Test Article";
         private IArticleParser _sut;
         private ITextReaderFactory _textReaderFactory;
         private const string DefaultArticleId = "this-is-a-file";
-        private readonly FileInfo _defaultFile = new FileInfo(string.Format("C:\\some\\{0}.txt", DefaultArticleId));
+        private readonly FileInfo _defaultFile = new FileInfo($"C:\\some\\{DefaultArticleId}.txt");
 
         [SetUp]
         public void Setup()
