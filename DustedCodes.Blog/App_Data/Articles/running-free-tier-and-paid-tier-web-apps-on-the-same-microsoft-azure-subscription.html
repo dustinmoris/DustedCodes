@@ -15,7 +15,7 @@
 <a href="https://www.flickr.com/photos/130657798@N05/18829751471" title="azure_create_web_app by Dustin Moris Gorski, on Flickr"><img src="https://c4.staticflickr.com/4/3949/18829751471_b072e0ceaa_o.png" alt="azure_create_web_app"></a>
 
 <p>Evidentally every new web app gets automatically assigned to my existing app service plan, which I upgraded to the shared tier.</p>
-<p>Luckily I learned my lesson after the first bill, however my initial attempt to just switch my test web apps back to the free tier was not as simple as I thought it would be. I cannot scale one web app individually without affecting all other web apps in the same plan:</p>
+<p>Luckily I learned my lesson after the first bill. However my initial attempt to just switch my test web apps back to the free tier was not as simple as I thought it would be. I cannot scale one app individually without affecting all other apps on the same plan:</p>
 <a href="https://www.flickr.com/photos/130657798@N05/18640926409" title="azure_change_pricing_tier by Dustin Moris Gorski, on Flickr"><img src="https://c4.staticflickr.com/4/3865/18640926409_dbf2790205_o.png" alt="azure_change_pricing_tier"></a>
 
 <p>The solution is to create a new app service plan and assign it to the Free tier.</p>
@@ -27,5 +27,5 @@
 <a href="https://www.flickr.com/photos/130657798@N05/18821999642" title="azure_switch_to_azure_preview_portal by Dustin Moris Gorski, on Flickr"><img src="https://c2.staticflickr.com/6/5541/18821999642_d779125c72_o.png" class="half-width" alt="azure_switch_to_azure_preview_portal"></a>
 <a href="https://www.flickr.com/photos/130657798@N05/18640926369" title="azure_preview_portal_app_service_plans by Dustin Moris Gorski, on Flickr"><img src="https://c2.staticflickr.com/6/5496/18640926369_1f679d0f4f_o.png" class="half-width" alt="azure_preview_portal_app_service_plans"></a>
 
-<p>This was not difficult at all, but certainly a mistake which can easily happen to anyone who is new to Microsoft Azure and loves to quickly click through the creation assistant without carefully checking every field.</p>
-<p>Also very useful to know is that if you chose the same data centre location for all your app service plans, then you can easily move a web app from one plan to another. This could become very handy when having different test and/or production stages (Dev/Staging/Production).</p>
+<p>This wasn't difficult at all, but certainly a mistake which can easily happen to anyone who is new to Microsoft Azure.</p>
+<p>Another very useful thing to know is that if you choose the same data centre location for all your app service plans, then you can easily move a web app from one plan to another. This could be very handy when having different test and/or production stages (Dev/Staging/Production).</p>
