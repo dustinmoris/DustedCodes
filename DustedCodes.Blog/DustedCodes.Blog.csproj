@@ -117,6 +117,7 @@
     <Content Include="App_Data\Articles\demystifying-aspnet-mvc-5-error-pages-and-error-logging.html" />
     <Content Include="App_Data\Articles\guard-clauses-without-test-coverage-a-common-tdd-pitfall.html" />
     <Content Include="App_Data\Articles\effective-defense-against-distributed-brute-force-attacks.html" />
+    <Content Include="App_Data\Articles\how-to-use-rsa-in-dotnet-rsacryptoserviceprovider-vs-rsacng.html" />
     <Content Include="App_Data\Articles\hello-world.html" />
     <Content Include="App_Data\Articles\the-beauty-of-asymmetric-encryption-rsa-crash-course-for-developers.html" />
     <Content Include="App_Data\Articles\making-font-awesome-awesome-using-icons-without-i-tags.html" />

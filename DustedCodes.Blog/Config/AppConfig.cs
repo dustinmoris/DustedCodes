@@ -13,6 +13,7 @@ namespace DustedCodes.Blog.Config
         public string DisqusShortname => WebConfig.AppSettings["Disqus_Shortname"];
         public string EditArticleUrlFormat => WebConfig.AppSettings["Edit_Article_Url_Format"];
         public bool IsProductionEnvironment => bool.Parse(WebConfig.AppSettings["Is_Production_Environment"]);
+        public bool UseCache => bool.Parse(WebConfig.AppSettings["Use_Cache"]);
         public string DateTimeFormat => WebConfig.AppSettings["DateTime_Format"];
         public string HtmlDateTimeFormat => WebConfig.AppSettings["Html_DateTime_Format"];
         public string TwitterShareUrlFormat => WebConfig.AppSettings["Twitter_ShareUrl_Format"];

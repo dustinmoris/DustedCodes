@@ -34,10 +34,17 @@ namespace DustedCodes.Blog
 
             kernel.Bind<IDirectoryReader>().To<DirectoryReader>();
 
-            kernel.Bind<ICache>()
-                .To<ObjectCacheWrapper>()
-                .WithConstructorArgument("objectCache", MemoryCache.Default)
-                .WithConstructorArgument("defaultCacheItemPolicy", new CacheItemPolicy());
+            if (appConfig.UseCache)
+            {
+                kernel.Bind<ICache>()
+                    .To<ObjectCacheWrapper>()
+                    .WithConstructorArgument("objectCache", MemoryCache.Default)
+                    .WithConstructorArgument("defaultCacheItemPolicy", new CacheItemPolicy());
+            }
+            else
+            {
+                kernel.Bind<ICache>().To<NullCache>();
+            }
 
             kernel.Bind<IArticleService>().To<ArticleService>();
 

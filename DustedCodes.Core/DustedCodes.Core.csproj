@@ -35,6 +35,7 @@
     <Reference Include="System.Runtime.Caching" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\NullCache.cs" />
     <Compile Include="Caching\ObjectCacheWrapper.cs" />
     <Compile Include="Data\Article.cs" />
     <Compile Include="Data\Comparer\ByPublishDateDescending.cs" />

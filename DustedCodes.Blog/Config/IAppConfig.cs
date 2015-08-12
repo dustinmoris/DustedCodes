@@ -10,6 +10,7 @@
         string DisqusShortname { get; }
         string EditArticleUrlFormat { get; }
         bool IsProductionEnvironment { get; }
+        bool UseCache { get; }
         string DateTimeFormat { get; }
         string HtmlDateTimeFormat { get; }
         string TwitterShareUrlFormat { get; }
