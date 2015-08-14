@@ -31,7 +31,9 @@ namespace DustedCodes.Core.Data.LocalStorage
             var filePath = $"{_articleDirectoryPath}\\{id}.html";
             var fileInfo = new FileInfo(filePath);
 
-            return await _articleParser.ParseAsync(fileInfo);
+            return fileInfo.Exists 
+                ? await _articleParser.ParseAsync(fileInfo) 
+                : null;
         }
 
         public async Task<ICollection<Article>> GetAllSortedByDateAsync()

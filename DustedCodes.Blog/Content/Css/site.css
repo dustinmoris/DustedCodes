@@ -10,6 +10,8 @@
     color: #333;
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
     font-size: .95em;
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
 }
 
     body > header,
@@ -147,8 +149,6 @@ pre {
 
 code {
     white-space: pre-wrap;
-    -ms-word-wrap: break-word;
-    word-wrap: break-word;
     font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
     color: #c30;
     line-height: 1.6em;
@@ -201,7 +201,6 @@ article h1 a::before {
 
 article li {
     margin: .5em 0;
-    text-align: justify;
     line-height: 1.8;
 }
 
