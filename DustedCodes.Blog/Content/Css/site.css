@@ -231,10 +231,10 @@ article > footer > a:active {
 }
 
 blockquote {
-    background: #fafae7;
-    border-left: 10px solid #e1e1d7;
+    background: #f1f1f1;
+    border-left: 5px solid #c90;
     margin: 1.5em 0;
-    padding: 0.5em 10px;
+    padding: .6em 1em;
 }
 
     blockquote > p:first-child {
@@ -279,9 +279,9 @@ blockquote {
     padding-left: 0;
 }
 
-#archive ul li:before {
-    content: '- ';
-}
+    #archive ul li:before {
+        content: '- ';
+    }
 
 .half-width {
     -webkit-box-sizing: border-box;
@@ -346,6 +346,21 @@ blockquote {
 .pager-next {
     float: right;
 }
+
+.yellow-screen-of-death {
+    border: 0;
+    background: #ffc;
+    font-family: Consolas, 'Lucida Console', monospace;
+    font-size: .9em;
+}
+
+    .yellow-screen-of-death header {
+        color: rgb(128, 0, 0);
+        font-family: sans-serif;
+        font-size: 1.1em;
+        font-style: italic;
+        font-weight: 600;
+    }
 
 @media all and (min-width: 480px) {
 
