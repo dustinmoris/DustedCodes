@@ -15,7 +15,7 @@
 
 <h2>RSA Class</h2>
 <p>The RSA class in <em>System.Security.Cryptography</em> is an abstract class which cannot be instantiated itself. It is the base class for all other RSA implementations and exists since .NET 1.1 in the mscorlib assembly.</p>
-<p>It derives from the abstract class <a href="https://msdn.microsoft.com/en-us/library/system.security.cryptography.asymmetricalgorithm(v=vs.110).aspx">AsymmetricAlgorithm</a>, which itself implements <a href="https://msdn.microsoft.com/en-us/library/system.idisposable(v=vs.110).aspx">IDisposable</a>. This means every instance of an RSA implementation should be disposed after its usage for good practise.</p>
+<p>It derives from the abstract class <a href="https://msdn.microsoft.com/en-us/library/system.security.cryptography.asymmetricalgorithm(v=vs.110).aspx">AsymmetricAlgorithm</a>, which itself implements <a href="https://msdn.microsoft.com/en-us/library/system.idisposable(v=vs.110).aspx">IDisposable</a>. This means every instance of an RSA implementation should be disposed after its usage to free up memory as soon as possible.</p>
 <p>The base class defines many methods, but most likely you will be interested in one of these which come with the default RSA contract:</p>
 <ol>
 	<li>Encrypting data</li>
@@ -38,7 +38,7 @@
 <p>Also notice how the methods accept a data object but no indication of which padding system should be used. Using an <a href="http://rdist.root.org/2009/10/06/why-rsa-encryption-padding-is-critical/">encyrption padding is critical to the security of your RSA implementation</a> and therefore is somewhat lacking in the base contract.</p>
 
 <h4>After .NET 4.0</h4>
-<p>Starting with the .NET 4.0 framework the RSA class has been significantly extended. In Addition to all the signing methods it has received two new methods for encrypting and decrypting a message:</p>
+<p>Starting with the .NET 4.0 framework the RSA class has been significantly extended. In addition to all the signing methods it received two new methods for encrypting and decrypting a message:</p>
 <ul>
 	<li><code>public virtual byte[] Encrypt(byte[] data, RSAEncryptionPadding padding)</code></li>
 	<li><code>public virtual byte[] Decrypt(byte[] data, RSAEncryptionPadding padding)</code></li>
