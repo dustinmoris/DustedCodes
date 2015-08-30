@@ -78,7 +78,7 @@ namespace DustedCodes.Automation.Tests
             var homePage = Application.Startup();
             var rssFeed = homePage.GoToRssFeed();
 
-            foreach (var blogPost in DataToValidate.BlogPosts)
+            foreach (var blogPost in DataToValidate.BlogPosts.Reverse().Take(10))
             {
                 var blogPostPage = rssFeed.GoToArticle(blogPost.Title);
                 Assert.IsTrue(blogPostPage.IsAt(blogPost.Title));
@@ -93,7 +93,7 @@ namespace DustedCodes.Automation.Tests
             var homePage = Application.Startup();
             var rssFeed = homePage.GoToAtomFeed();
 
-            foreach (var blogPost in DataToValidate.BlogPosts)
+            foreach (var blogPost in DataToValidate.BlogPosts.Reverse().Take(10))
             {
                 var blogPostPage = rssFeed.GoToArticle(blogPost.Title);
                 Assert.IsTrue(blogPostPage.IsAt(blogPost.Title));

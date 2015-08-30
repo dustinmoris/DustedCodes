@@ -59,6 +59,24 @@ namespace DustedCodes.Automation.Tests
                 Title = "The beauty of asymmetric encryption - RSA crash course for developers",
                 PermalinkId = "the-beauty-of-asymmetric-encryption-rsa-crash-course-for-developers",
                 Tags = new[] { "security", "rsa", "asymmetric-encryption", "cryptography" }
+            },
+            new BlogPost
+            {
+                Title = "How to use RSA in .NET: RSACryptoServiceProvider vs. RSACng and good practise patterns",
+                PermalinkId = "how-to-use-rsa-in-dotnet-rsacryptoserviceprovider-vs-rsacng-and-good-practise-patterns",
+                Tags = new[] { "dotnet", "rsa", "security", "asymmetric-encryption", "cryptography" }
+            },
+            new BlogPost
+            {
+                Title = "Using C# 6 features in ASP.NET MVC 5 razor views",
+                PermalinkId = "using-csharp-6-features-in-aspdotnet-mvc-5-razor-views",
+                Tags = new[] { "asp-net", "mvc-5", "csharp-6", "razor" }
+            },
+            new BlogPost
+            {
+                Title = "Display build history charts for AppVeyor or TravisCI builds with an SVG widget",
+                PermalinkId = "display-build-history-charts-for-appveyor-or-travisci-builds-with-an-svg-widget",
+                Tags = new[] { "appveyor", "travisci", "github", "svg" }
             }
         };
     }
