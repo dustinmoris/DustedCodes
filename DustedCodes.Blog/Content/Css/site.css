@@ -259,14 +259,6 @@ blockquote {
                 content: '- ';
             }
 
-#avatar {
-    border: 1px solid #d1d1d1;
-    padding: 3px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
 #contact {
     padding-left: 0;
     list-style: none;
@@ -431,7 +423,7 @@ blockquote {
 
     #avatar-link {
         float: left;
-        max-width: 375px;
+        max-width: 260px;
         margin-right: 2em;
         margin-bottom: .5em;
     }
