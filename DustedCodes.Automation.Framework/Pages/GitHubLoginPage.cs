@@ -2,9 +2,9 @@ using OpenQA.Selenium;
 
 namespace DustedCodes.Automation.Framework.Pages
 {
-    public class GitHubLoginPage
+    public static class GitHubLoginPage
     {
-        public void Login(string username, string password)
+        public static void Login(string username, string password)
         {
             var usernameField = Driver.Instance.FindElement(By.Id("login_field"));
             var passwordField = Driver.Instance.FindElement(By.Id("password"));

@@ -2,15 +2,23 @@
 
 namespace DustedCodes.Automation.Framework.Pages
 {
-    public class GitHubEditPage : GitHubPage
+    public static class GitHubEditPage
     {
-        public bool IsAt(string permalinkId)
+        public static bool IsAt(string permalinkId)
         {
+            SignInIfRequired();
+
             var filenameField = Driver.Instance.FindElement(By.CssSelector("input[type=text][name=filename]"));
-
             var expectedFilename = $"{permalinkId}.html";
-
             return filenameField.GetAttribute("value") == expectedFilename;
+        }
+
+        private static void SignInIfRequired()
+        {
+            if (Driver.Instance.FindElement(By.Id("login")) != null)
+            {
+                GitHubLoginPage.Login(AppConfig.GitHubUsername, AppConfig.GitHubPassword);
+            }
         }
     }
 }

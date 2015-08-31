@@ -4,16 +4,15 @@ using OpenQA.Selenium;
 
 namespace DustedCodes.Automation.Framework.Pages
 {
-    public class BlogPostPage : BasePage
+    public static class BlogPostPage
     {
-        public bool IsAt(string title)
+        public static bool IsAt(string title)
         {
             var articleTitle = Driver.Instance.FindElement(By.CssSelector("body > main > article > header > h1"));
-
             return articleTitle.Text == title;
         }
 
-        public IEnumerable<string> GetTags()
+        public static IEnumerable<string> GetTags()
         {
             var tagElements = Driver.Instance.FindElements(By.CssSelector(".tag"));
 
@@ -23,22 +22,17 @@ namespace DustedCodes.Automation.Framework.Pages
             return null;
         }
 
-        public HomePage GoToTag(string tag)
+        public static void GoToTag(string tag)
         {
             var xpath = $"/html/body/main/article/header/descendant::a[text()='{tag}']";
             var tagLink = Driver.Instance.FindElement(By.XPath(xpath));
-
             tagLink.Click();
-
-            return new HomePage();
         }
 
-        public GitHubEditPage GoToEditPage()
+        public static void GoToEditPage()
         {
             var editLink = Driver.Instance.FindElement(By.ClassName("edit-article"));
             editLink.Click();
-
-            return new GitHubEditPage();
         }
     }
 }

@@ -1,180 +1,126 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using DustedCodes.Automation.Framework;
+using DustedCodes.Automation.Framework.Feeds;
 using DustedCodes.Automation.Framework.Pages;
 using NUnit.Framework;
 
 namespace DustedCodes.Automation.Tests
 {
-    [TestFixture, Category("SmokeTests")]
+    [TestFixture, Category("AutomationTests")]
     public class SmokeTests
     {
         [Test]
-        public void Home_Page_And_About_Page_Are_Available()
+        public void All_Pages_Are_Available()
         {
-            var homePage = Application.Startup();
-            Assert.IsTrue(homePage.IsAt());
+            Assert.IsTrue(HomePage.IsAt());
 
-            var aboutPage = homePage.GoToAbout();
-            Assert.IsTrue(aboutPage.IsAt());
+            BasePage.GoToAbout();
+            Assert.IsTrue(AboutPage.IsAt());
 
-            homePage = aboutPage.GoToBlog();
-            Assert.IsTrue(homePage.IsAt());
+            BasePage.GoToBlog();
+            Assert.IsTrue(HomePage.IsAt());
+
+            BasePage.GoToArchive();
+            Assert.IsTrue(ArchivePage.IsAt());
         }
 
         [Test]
         public void All_BlogPosts_Are_Available()
         {
-            var homePage = Application.Startup();
-
             foreach (var blogPost in DataToValidate.BlogPosts)
             {
-                var blogPostPage = homePage.FindAndGoToBlogPost(blogPost.Title);
-                Assert.IsTrue(blogPostPage.IsAt(blogPost.Title));
+                HomePage.FindAndGoToBlogPost(blogPost.Title);
+                Assert.IsTrue(BlogPostPage.IsAt(blogPost.Title));
 
                 if (blogPost.Tags != null && blogPost.Tags.Any())
                 {
-                    var tags = blogPostPage.GetTags();
+                    var tags = BlogPostPage.GetTags();
                     Assert.IsTrue(blogPost.Tags.SequenceEqual(tags));
                 }
 
-                homePage = blogPostPage.GoToHome();
+                BasePage.GoToHome();
             }
         }
 
         [Test]
         public void Tag_Search_Is_Working()
         {
-            var homePage = Application.Startup();
-
-            var currentBlogPosts = homePage.GetCurrentBlogPosts();
+            var currentBlogPosts = HomePage.GetCurrentBlogPosts();
             var blogPostTitle = currentBlogPosts.First();
 
-            var blogPostPage = homePage.GoToBlogPost(blogPostTitle);
-            var tags = blogPostPage.GetTags();
-            homePage = blogPostPage.GoToTag(tags.First());
+            HomePage.GoToBlogPost(blogPostTitle);
+            var tags = BlogPostPage.GetTags();
+            BlogPostPage.GoToTag(tags.First());
 
-            Assert.IsTrue(homePage.GetCurrentBlogPosts().Contains(blogPostTitle));
+            Assert.IsTrue(HomePage.GetCurrentBlogPosts().Contains(blogPostTitle));
         }
 
         [Test]
         public void Old_BlogPost_URLs_Are_Working()
         {
-            var homePage = Application.Startup();
-
             var url = $"{AppConfig.RootUrl}articles/hello-world";
-            homePage.GoToUrl(url);
-
-            var blogPostPage = new BlogPostPage();
-            Assert.IsTrue(blogPostPage.IsAt("Hello World"));
+            BasePage.GoToUrl(url);
+            
+            Assert.IsTrue(BlogPostPage.IsAt("Hello World"));
         }
 
         [Test]
         public void Rss_Feed_Is_Working()
         {
-            var homePage = Application.Startup();
-            var rssFeed = homePage.GoToRssFeed();
+            BasePage.GoToRssFeed();
 
             foreach (var blogPost in DataToValidate.BlogPosts.Reverse().Take(10))
             {
-                var blogPostPage = rssFeed.GoToArticle(blogPost.Title);
-                Assert.IsTrue(blogPostPage.IsAt(blogPost.Title));
-
-                rssFeed = blogPostPage.GoToRssFeed();
+                RssFeed.GoToArticle(blogPost.Title);
+                Assert.IsTrue(BlogPostPage.IsAt(blogPost.Title));
+                BasePage.GoToRssFeed();
             }
         }
 
         [Test]
         public void Atom_Feed_Is_Working()
         {
-            var homePage = Application.Startup();
-            var rssFeed = homePage.GoToAtomFeed();
+            BasePage.GoToAtomFeed();
 
             foreach (var blogPost in DataToValidate.BlogPosts.Reverse().Take(10))
             {
-                var blogPostPage = rssFeed.GoToArticle(blogPost.Title);
-                Assert.IsTrue(blogPostPage.IsAt(blogPost.Title));
-
-                rssFeed = blogPostPage.GoToAtomFeed();
-            }
-        }
-
-        [Test]
-        public async Task Not_Found_Error_Page_Is_Working()
-        {
-            using (var httpClient = new HttpClient())
-            {
-                var nonExistingUrl = $"{AppConfig.RootUrl}this/path/does/not/exist";
-                var result = await httpClient.GetAsync(new Uri(nonExistingUrl));
-                var content = await result.Content.ReadAsStringAsync();
-
-                Assert.AreEqual(HttpStatusCode.NotFound, result.StatusCode);
-                Assert.IsTrue(content.Contains("Page not found"));
-                Assert.IsTrue(content.Contains("Dusted Codes"));
-            }
-        }
-
-        [Test]
-        public async Task Bad_Request_Error_Page_Is_Working()
-        {
-            using (var httpClient = new HttpClient())
-            {
-                var badUrl = $"{AppConfig.RootUrl}<script></script>";
-                var result = await httpClient.GetAsync(new Uri(badUrl));
-                var content = await result.Content.ReadAsStringAsync();
-
-                Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
-                Assert.IsTrue(content.Contains("Bad Request"));
-                Assert.IsTrue(content.Contains("Dusted Codes"));
-            }
-        }
-
-        [Test]
-        public async Task Forbidden_Error_Page_Is_Shown_On_NewRelic_Folder()
-        {
-            using (var httpClient = new HttpClient())
-            {
-                var badUrl = $"{AppConfig.RootUrl}newrelic";
-                var result = await httpClient.GetAsync(new Uri(badUrl));
-                var content = await result.Content.ReadAsStringAsync();
-
-                Assert.AreEqual(HttpStatusCode.Forbidden, result.StatusCode);
-                Assert.IsTrue(content.Contains("Access Forbidden"));
-                Assert.IsTrue(content.Contains("Dusted Codes"));
+                AtomFeed.GoToArticle(blogPost.Title);
+                Assert.IsTrue(BlogPostPage.IsAt(blogPost.Title));
+                BasePage.GoToAtomFeed();
             }
         }
 
         [Test]
         public void Can_Edit_Article_In_GitHub()
         {
-            var homePage = Application.Startup();
             // Test the edit link with the second last blog post, which should be commited to GitHub already:
             var blogPost = DataToValidate.BlogPosts.ElementAt(DataToValidate.BlogPosts.Count() - 2);
-            var blogPostPage = homePage.GoToBlogPost(blogPost.Title);
-            var gitHubEditPage = blogPostPage.GoToEditPage();
+            HomePage.GoToBlogPost(blogPost.Title);
+            BlogPostPage.GoToEditPage();
 
-            Assert.IsTrue(gitHubEditPage.IsAt(blogPost.PermalinkId));
+            Assert.IsTrue(GitHubEditPage.IsAt(blogPost.PermalinkId));
         }
 
         [Test]
         public void Archive_Shows_All_Posts_and_Links_Are_Working()
         {
-            var homePage = Application.Startup();
-            var archivePage = homePage.GoToArchive();
+            BasePage.GoToArchive();
 
-            var allBlogPostsInArchive = archivePage.GetAllBlogPosts();
+            var allBlogPostsInArchive = ArchivePage.GetAllBlogPosts();
             Assert.AreEqual(DataToValidate.BlogPosts.Count(), allBlogPostsInArchive.Count());
 
             foreach (var blogPost in DataToValidate.BlogPosts)
             {
-                var blogPostPage = archivePage.GoToBlogPost(blogPost.Title);
-                Assert.IsTrue(blogPostPage.IsAt(blogPost.Title));
-
-                archivePage = blogPostPage.GoToArchive();
+                ArchivePage.GoToBlogPost(blogPost.Title);
+                Assert.IsTrue(BlogPostPage.IsAt(blogPost.Title));
+                BasePage.GoToArchive();
             }
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            Application.Startup();
         }
 
         [TearDown]

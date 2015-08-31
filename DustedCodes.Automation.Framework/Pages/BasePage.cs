@@ -1,55 +1,42 @@
-using DustedCodes.Automation.Framework.Feeds;
 using OpenQA.Selenium;
 
 namespace DustedCodes.Automation.Framework.Pages
 {
-    public class BasePage
+    public static class BasePage
     {
-        public void GoToUrl(string url)
+        public static void GoToUrl(string url)
         {
             Driver.Instance.Navigate().GoToUrl(url);
         }
 
-        public HomePage GoToHome()
+        public static void GoToHome()
         {
             Driver.Instance.FindElement(By.LinkText("DUSTED CODES")).Click();
-            
-            return new HomePage();
         }
 
-        public HomePage GoToBlog()
+        public static void GoToBlog()
         {
             Driver.Instance.FindElement(By.LinkText("BLOG")).Click();
-
-            return new HomePage();
         }
 
-        public ArchivePage GoToArchive()
+        public static void GoToArchive()
         {
             Driver.Instance.FindElement(By.LinkText("ARCHIVE")).Click();
-
-            return new ArchivePage();
         }
 
-        public AboutPage GoToAbout()
+        public static void GoToAbout()
         {
             Driver.Instance.FindElement(By.LinkText("ABOUT")).Click();
-
-            return new AboutPage();
         }
 
-        public RssFeed GoToRssFeed()
+        public static void GoToRssFeed()
         {
             Driver.Instance.FindElement(By.LinkText("RSS")).Click();
-
-            return new RssFeed();
         }
 
-        public AtomFeed GoToAtomFeed()
+        public static void GoToAtomFeed()
         {
             Driver.Instance.FindElement(By.LinkText("ATOM")).Click();
-
-            return new AtomFeed();
         }
     }
 }

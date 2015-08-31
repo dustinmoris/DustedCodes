@@ -53,7 +53,6 @@
     <Compile Include="Pages\BlogPostPage.cs" />
     <Compile Include="Pages\GitHubEditPage.cs" />
     <Compile Include="Pages\GitHubLoginPage.cs" />
-    <Compile Include="Pages\GitHubPage.cs" />
     <Compile Include="Pages\HomePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

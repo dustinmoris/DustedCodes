@@ -2,12 +2,11 @@
 
 namespace DustedCodes.Automation.Framework.Pages
 {
-    public class AboutPage : BasePage
+    public static class AboutPage
     {
-        public bool IsAt()
+        public static bool IsAt()
         {
             var title = Driver.Instance.FindElement(By.CssSelector("#about > h1"));
-
             return title.Text == "About";
         }
     }
