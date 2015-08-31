@@ -30,7 +30,7 @@ deploy:
     secure: h1vtujFnnnocUWjFBiKiIZ4LEpmTIcxcqgP8GlDxhJFYH2FKmsrvyMWY27K8ewCNhcFmenTeJYfTuuUzFX8Rbg==
   remove_files: true
   app_offline: true
-  skip_dirs: '\\App_Data\Logs'
+  skip_dirs: '\\App_Data\\Logs'
   on:
     branch: master
     appveyor_repo_tag: true
