@@ -1,16 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DustedCodes.Blog", "DustedCodes.Blog\DustedCodes.Blog.csproj", "{3AE893E6-61B5-4F61-A7DD-EF2380FAA97E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B5CAEF34-EA47-4F7F-8E33-6D3478FD1CE0}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DustedCodes.Blog.Tests", "DustedCodes.Blog.Tests\DustedCodes.Blog.Tests.csproj", "{C6145B95-3D35-44B9-A475-C710D96545C9}"
 EndProject
