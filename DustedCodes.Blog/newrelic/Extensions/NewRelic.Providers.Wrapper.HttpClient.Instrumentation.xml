@@ -3,9 +3,8 @@
 	<instrumentation>
 
 		<tracerFactory>
-			<match assemblyName="System.Net.Http" className="System.Net.Http.HttpClient">
-				<exactMethodMatcher methodName="SendAsync" parameters="System.Net.Http.HttpRequestMessage,System.Net.Http.HttpCompletionOption,
-            System.Threading.CancellationToken" />
+			<match assemblyName="System.Net.Http" className="System.Net.Http.HttpMessageInvoker">
+				<exactMethodMatcher methodName="SendAsync" parameters="System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken" />
 			</match>
 		</tracerFactory>
 
