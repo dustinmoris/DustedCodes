@@ -10,7 +10,7 @@ namespace DustedCodes.Blog
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            // Don't add HTTP headers to disclose ASP.NET MVC on the server
+            // Disable HTTP headers to disclose ASP.NET MVC on the server
             MvcHandler.DisableMvcResponseHeader = true;
         }
     }
