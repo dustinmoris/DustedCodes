@@ -26,4 +26,8 @@
     $(document).on("click", "#nav-toggle-button", function () {
         dustedcodes.menu.toggle();
     });
+    $(document).on("click", ".share-twitter-link, .share-facebook-link, .share-googleplus-link, .share-yammer-link", function (event) {
+        event.preventDefault();
+        dustedcodes.window.open($(this).attr("href"));
+    });
 })(jQuery);
