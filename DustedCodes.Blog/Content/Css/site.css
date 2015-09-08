@@ -35,32 +35,43 @@
         order: 0;
     }
 
-        body > header h1 {
-            margin-bottom: 0;
-            font-size: 1.2em;
-        }
+    body > main {
+        order: 2;
+    }
 
-            body > header h1 a:link,
-            body > header h1 a:visited,
-            body > header h1 a:hover,
-            body > header h1 a:active {
-                color: #111;
-                font-weight: 900;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+    body > footer {
+        order: 3;
+        margin-top: 2em;
+    }
 
-        body > header h2 {
-            margin-top: .5em;
-            font-size: .7em;
-            font-weight: 400;
-            color: #999;
+    body > header h1 {
+        margin-bottom: 0;
+        font-size: 1.2em;
+    }
+
+        body > header h1 a:link,
+        body > header h1 a:visited,
+        body > header h1 a:hover,
+        body > header h1 a:active {
+            color: #111;
+            font-weight: 900;
+            text-decoration: none;
             text-transform: uppercase;
-            letter-spacing: .2em;
         }
+
+    body > header h2 {
+        margin-top: .5em;
+        font-size: .7em;
+        font-weight: 400;
+        color: #999;
+        text-transform: uppercase;
+        letter-spacing: .2em;
+    }
 
     body > nav {
-        margin: 2em 0;
+        display: none;
+        order: 1;
+        margin: 1em 0;
         background: #f5f5f5;
     }
 
@@ -259,6 +270,29 @@ blockquote {
                 content: '- ';
             }
 
+#nav-toggle-button {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 1.5em;
+    background: transparent;
+    border: none;
+    padding: .6em 1em;
+    cursor: pointer;
+}
+
+    #nav-toggle-button:focus {
+        outline: 0;
+    }
+
+.nav-toggle-btn-bar {
+    display: block;
+    margin: 4px 0;
+    width: 25px;
+    height: 3px;
+    background: #222;
+}
+
 #contact {
     padding-left: 0;
     list-style: none;
@@ -353,20 +387,31 @@ blockquote {
         font-weight: 600;
     }
 
-@media all and (min-width: 480px) {
+.screenreader-only {
+    position: absolute;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
 
+@media all and (max-width: 640px) {
 
-    body > main {
-        order: 2;
+    .nav-expanded {
+        display: block;
     }
 
-    body > footer {
-        order: 3;
-        margin-top: 2em;
+    .nav-collapsed {
+        display: none;
     }
+}
+
+@media all and (min-width: 640px) {
 
     body > nav {
-        order: 1;
+        display: block;
         margin: .5em 0 0 0;
         justify-content: flex-end;
         align-items: center;
@@ -411,6 +456,10 @@ blockquote {
 
     .half-width {
         max-width: 50%;
+    }
+
+    #nav-toggle-button {
+        display: none;
     }
 
     #about {
