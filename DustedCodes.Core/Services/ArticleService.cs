@@ -27,24 +27,24 @@ namespace DustedCodes.Core.Services
             if (cachedArticle != null)
                 return cachedArticle;
 
-            return await _articleRepository.GetAsync(articleId);
+            return await _articleRepository.GetAsync(articleId).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Article>> GetByTagAsync(string tag)
         {
-            var articles = await GetAllArticlesSortedByDateAsync();
+            var articles = await GetAllArticlesSortedByDateAsync().ConfigureAwait(false);
 
             return articles.Where(a => a.Tags != null && a.Tags.Contains(tag));
         }
 
         public async Task<IEnumerable<Article>> GetAllAsync()
         {
-            return await GetAllArticlesSortedByDateAsync();
+            return await GetAllArticlesSortedByDateAsync().ConfigureAwait(false);
         }
 
         public async Task<PagedCollection<Article>> GetByPageAsync(int pageSize, int page)
         {
-            var articles = await GetAllArticlesSortedByDateAsync();
+            var articles = await GetAllArticlesSortedByDateAsync().ConfigureAwait(false);
 
             var items = articles
                 .Skip(pageSize * (page - 1))
@@ -64,7 +64,7 @@ namespace DustedCodes.Core.Services
 
         public async Task<IEnumerable<Article>> GetMostRecentAsync(int maxCount)
         {
-            var articles = await GetAllArticlesSortedByDateAsync();
+            var articles = await GetAllArticlesSortedByDateAsync().ConfigureAwait(false);
 
             return articles.Take(maxCount);
         }
@@ -76,7 +76,7 @@ namespace DustedCodes.Core.Services
             if (cachedArticles != null)
                 return cachedArticles;
 
-            var articles = await _articleRepository.GetAllSortedByDateAsync();
+            var articles = await _articleRepository.GetAllSortedByDateAsync().ConfigureAwait(false);
             _cache.Set(SortedArticlesCacheKey, articles);
 
             return articles;

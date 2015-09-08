@@ -34,19 +34,19 @@ namespace DustedCodes.Blog.Feeds
         {
             var feedUrl = _urlGenerator.GenerateRssFeedUrl();
 
-            return await CreateFeed(feedUrl);
+            return await CreateFeed(feedUrl).ConfigureAwait(false);
         }
 
         public async Task<SyndicationFeed> CreateAtomFeed()
         {
             var feedUrl = _urlGenerator.GenerateAtomFeedUrl();
 
-            return await CreateFeed(feedUrl);
+            return await CreateFeed(feedUrl).ConfigureAwait(false);
         }
 
         private async Task<SyndicationFeed> CreateFeed(string feedUrl)
         {
-            var articles = await _articleService.GetMostRecentAsync(_maxItemCount);
+            var articles = await _articleService.GetMostRecentAsync(_maxItemCount).ConfigureAwait(false);
 
             var feedItems = articles.Select(article =>
                 _feedItemConverter.ConvertToFeedItem(

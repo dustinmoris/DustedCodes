@@ -32,7 +32,7 @@ namespace DustedCodes.Core.Data.LocalStorage
             var fileInfo = new FileInfo(filePath);
 
             return fileInfo.Exists 
-                ? await _articleParser.ParseAsync(fileInfo) 
+                ? await _articleParser.ParseAsync(fileInfo).ConfigureAwait(false)
                 : null;
         }
 
@@ -48,7 +48,7 @@ namespace DustedCodes.Core.Data.LocalStorage
 
             foreach (var file in files)
             {
-                var article = await _articleParser.ParseAsync(file);
+                var article = await _articleParser.ParseAsync(file).ConfigureAwait(false);
                 articles.Add(article);
             }
 

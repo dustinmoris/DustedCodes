@@ -21,9 +21,9 @@ namespace DustedCodes.Core.Data.LocalStorage
 
             using (var textReader = _textReaderFactory.FromFile(fileInfo))
             {
-                var article = await ParseMetadataAsync(textReader, fileInfo);
+                var article = await ParseMetadataAsync(textReader, fileInfo).ConfigureAwait(false);
 
-                article.Content = await textReader.ReadToEndAsync();
+                article.Content = await textReader.ReadToEndAsync().ConfigureAwait(false);
                 article.Content = article.Content.Trim();
 
                 if (article.Content.Length == 0)
@@ -39,7 +39,7 @@ namespace DustedCodes.Core.Data.LocalStorage
 
         private static async Task<Article> ParseMetadataAsync(TextReader textReader, FileSystemInfo fileInfo)
         {
-            var line = await textReader.ReadLineAsync();
+            var line = await textReader.ReadLineAsync().ConfigureAwait(false);
 
             if (line == null || !line.Equals("<!--"))
             {
@@ -48,7 +48,7 @@ namespace DustedCodes.Core.Data.LocalStorage
 
             var article = new Article();
 
-            while ((line = await textReader.ReadLineAsync()) != null && line != "-->")
+            while ((line = await textReader.ReadLineAsync().ConfigureAwait(false)) != null && line != "-->")
             {
                 var pair = line.Split(new[] { ':' }, 2, StringSplitOptions.None);
 
