@@ -1,9 +1,5 @@
 ﻿@model DustedCodes.Blog.ViewModels.Blog.IndexViewModel
 
-@{
-    ViewBag.Title = "Blog";
-}
-
 @if (Model.Articles != null && Model.Articles.Any())
 {
     foreach (var articleModel in Model.Articles)

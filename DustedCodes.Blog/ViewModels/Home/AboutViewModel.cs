@@ -1,9 +1,14 @@
 ﻿using System;
+using DustedCodes.Blog.Config;
 
 namespace DustedCodes.Blog.ViewModels.Home
 {
     public class AboutViewModel : BaseViewModel
     {
+        public AboutViewModel(IAppConfig appConfig) : base(appConfig, "About")
+        {
+        }
+
         public static double YearsLivingInLondon
         {
             get
