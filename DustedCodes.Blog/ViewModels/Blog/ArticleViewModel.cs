@@ -1,7 +1,15 @@
-﻿namespace DustedCodes.Blog.ViewModels.Blog
+﻿using DustedCodes.Blog.Config;
+
+namespace DustedCodes.Blog.ViewModels.Blog
 {
     public class ArticleViewModel : BaseViewModel
     {
-        public ArticlePartialViewModel Article { get; set; }
+        public readonly ArticlePartialViewModel Article;
+
+        public ArticleViewModel(IAppConfig appConfig, ArticlePartialViewModel articlePartialViewModel) 
+            : base(appConfig, articlePartialViewModel.Title)
+        {
+            Article = articlePartialViewModel;
+        }
     }
 }
