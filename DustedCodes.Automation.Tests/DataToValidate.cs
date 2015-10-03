@@ -77,6 +77,12 @@ namespace DustedCodes.Automation.Tests
                 Title = "Display build history charts for AppVeyor or TravisCI builds with an SVG widget",
                 PermalinkId = "display-build-history-charts-for-appveyor-or-travisci-builds-with-an-svg-widget",
                 Tags = new[] { "appveyor", "travisci", "github", "svg" }
+            },
+            new BlogPost
+            {
+                Title = "Death of a QA in Scrum",
+                PermalinkId = "death-of-a-qa-in-scrum",
+                Tags = new[] { "scrum", "agile", "testing" }
             }
         };
     }

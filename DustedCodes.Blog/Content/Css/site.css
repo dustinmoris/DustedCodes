@@ -1,7 +1,8 @@
 ﻿body {
     display: flex;
-    -ms-flex-flow: row wrap;
-    flex-flow: row wrap;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
     -ms-align-content: flex-start;
     -webkit-align-content: flex-start;
     align-content: flex-start;
@@ -9,27 +10,20 @@
     padding: 0;
     color: #333;
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
-    font-size: .95em;
     -ms-word-wrap: break-word;
     word-wrap: break-word;
 }
 
-    body > header,
-    body > main,
-    body > nav,
-    body > footer {
-        flex-basis: 100%;
+    body > header > div,
+    body > main > article,
+    body > main > aside,
+    body > main > div,
+    body > main > p,
+    body > footer > p {
+        margin: 1em auto;
+        max-width: 600px;
+        padding: 0 20px;
     }
-
-        body > header > div,
-        body > main > article,
-        body > main > aside,
-        body > main > div,
-        body > footer > p {
-            margin: 1em auto;
-            max-width: 600px;
-            padding: 0 20px;
-        }
 
     body > header {
         order: 0;
@@ -46,7 +40,7 @@
 
     body > header h1 {
         margin-bottom: 0;
-        font-size: 1.2em;
+        font-size: 1.1em;
     }
 
         body > header h1 a:link,
@@ -72,7 +66,7 @@
         display: none;
         order: 1;
         margin: 1em 0;
-        background: #f5f5f5;
+        background: #f1f1f1;
     }
 
         body > nav > ul {
@@ -86,9 +80,9 @@
                 display: block;
                 border-bottom: 1px solid #fff;
                 padding: .75em 0;
-                color: #555;
+                color: #444;
                 font-weight: 600;
-                font-size: .85em;
+                font-size: .8em;
                 text-align: center;
                 text-transform: uppercase;
                 text-decoration: none;
@@ -147,7 +141,7 @@ h4 {
 
 p, aside {
     text-align: justify;
-    line-height: 1.8;
+    line-height: 2em;
 }
 
 pre {
@@ -169,6 +163,10 @@ code {
 pre code {
     font-size: .85em;
     color: #333;
+}
+
+strong {
+    color: #222;
 }
 
 img {
@@ -212,7 +210,7 @@ article h1 a::before {
 
 article li {
     margin: .5em 0;
-    line-height: 1.8;
+    line-height: 2em;
 }
 
 article footer {
@@ -364,12 +362,12 @@ blockquote {
         margin-right: 0;
     }
 
-.pager-prev {
-    float: left;
-}
-
-.pager-next {
-    float: right;
+.pager {
+    display: flex;
+    -ms-flex-direction: row-reverse;
+    -webkit-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    justify-content: space-between;
 }
 
 .yellow-screen-of-death {
