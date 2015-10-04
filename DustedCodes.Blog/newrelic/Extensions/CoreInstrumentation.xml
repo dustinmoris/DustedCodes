@@ -40,13 +40,6 @@
 			</match>
 		</tracerFactory>
 
-		<!-- **************************  KATANA (OWIN)  ************************** -->
-		<tracerFactory name="NewRelic.Agent.Core.Tracer.Factories.WebTransactionTracerFactory">
-			<match assemblyName="Microsoft.Owin.Host.HttpListener" className="Microsoft.Owin.Host.HttpListener.OwinHttpListener">
-				<exactMethodMatcher methodName="StartProcessingRequest" parameters="System.Net.HttpListenerContext" />
-			</match>
-		</tracerFactory>
-
 		<!-- **************************  WEB SERVICES  ***************************** -->
 
 		<tracerFactory name="NewRelic.Agent.Core.Tracer.Factories.ServiceModel.WebServiceMethodTracerFactory" transactionNamingPriority="5">
