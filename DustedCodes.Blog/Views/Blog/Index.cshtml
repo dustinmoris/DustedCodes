@@ -7,25 +7,23 @@
         @Html.Partial("_Article", articleModel)
     }
 
-    <div>
-        <p>
-            @if (Model.CurrentPage > 1)
-            {
-                <a class="pager-prev" href="@Url.Action("Index", "Blog", new { page = Model.CurrentPage - 1 })">
-                    <i class="fa fa-chevron-left"></i>
-                    Newer Posts
-                </a>
-            }
+    <p class="pager">
+        @if (Model.TotalPageCount > Model.CurrentPage)
+        {
+            <a href="@Url.Action("Index", "Blog", new { page = Model.CurrentPage + 1 })">
+                Older Posts
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        }
 
-            @if (Model.TotalPageCount > Model.CurrentPage)
-            {
-                <a class="pager-next" href="@Url.Action("Index", "Blog", new { page = Model.CurrentPage + 1 })">
-                    Older Posts
-                    <i class="fa fa-chevron-right"></i>
-                </a>
-            }
-        </p>
-    </div>
+        @if (Model.CurrentPage > 1)
+        {
+            <a href="@Url.Action("Index", "Blog", new { page = Model.CurrentPage - 1 })">
+                <i class="fa fa-chevron-left"></i>
+                Newer Posts
+            </a>
+        }
+    </p>
 }
 else
 {

@@ -6,8 +6,8 @@
     window.dustedcodes = {
         window: {
             open: function (url, width, height) {
-                width = (typeof width === "undefined") ? 700 : width;
-                height = (typeof height === "undefined") ? 300 : height;
+                width = (typeof width === "undefined") ? 520 : width;
+                height = (typeof height === "undefined") ? 570 : height;
                 window.open(url, "_blank", "width=" + width + ", height=" + height);
             }
         },
@@ -26,7 +26,7 @@
     $(document).on("click", "#nav-toggle-button", function () {
         dustedcodes.menu.toggle();
     });
-    $(document).on("click", ".share-twitter-link, .share-facebook-link, .share-googleplus-link, .share-yammer-link", function (event) {
+    $(document).on("click", ".share-link", function (event) {
         event.preventDefault();
         dustedcodes.window.open($(this).attr("href"));
     });

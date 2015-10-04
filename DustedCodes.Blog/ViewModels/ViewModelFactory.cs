@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using DustedCodes.Blog.Config;
@@ -40,6 +41,8 @@ namespace DustedCodes.Blog.ViewModels
                 GooglePlusShareUrl = string.Format(_appConfig.GooglePlusShareUrlFormat, encodedPermalinkUrl),
                 FacebookShareUrl = string.Format(_appConfig.FacebookShareUrlFormat, encodedPermalinkUrl),
                 YammerShareUrl = string.Format(_appConfig.YammerShareUrlFormat, encodedPermalinkUrl),
+                LinkedInShareUrl = string.Format(_appConfig.LinkedInShareUrlFormat, encodedPermalinkUrl, article.Title),
+                WhatsAppShareUrl = string.Format(_appConfig.WhatsAppShareUrlFormat, article.Title, encodedPermalinkUrl),
                 RenderTitleAsLink = renderTitleAsLink,
                 HasTags = article.Tags != null && article.Tags.Any(),
                 Tags = article.Tags
