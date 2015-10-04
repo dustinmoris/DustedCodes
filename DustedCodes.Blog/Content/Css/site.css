@@ -209,7 +209,7 @@ article h1 a::before {
 }
 
 article li {
-    margin: .5em 0;
+    margin: .6em 0;
     line-height: 2em;
 }
 
@@ -271,7 +271,7 @@ blockquote {
 #nav-toggle-button {
     display: block;
     position: absolute;
-    right: 20px;
+    right: 10px;
     top: 1.5em;
     background: transparent;
     border: none;
@@ -340,8 +340,9 @@ blockquote {
     .article-metadata > address,
     .article-metadata > a,
     .article-metadata > .tags {
+        font-style: normal;
         display: block;
-        margin: 0.4em 0;
+        margin: .6em 0;
     }
 
     .article-metadata a:link,

@@ -18,12 +18,12 @@
             <a class="icon fa-comments disqus-comment-count" href="@Model.PermalinkUrl#disqus_thread" data-disqus-identifier="@Model.Id">Comments</a>
             @if (Model.HasTags)
             {
-                <p class="icon fa-tags tags">
+                <span class="icon fa-tags tags">
                     @foreach (var tag in Model.Tags)
                     {
                         @Html.ActionLink(tag, "Tagged", "Blog", new { tag = tag }, new { @class = "tag" });
                     }
-                </p>
+                </span>
             }
         </div>
     </header>
