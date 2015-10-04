@@ -1,4 +1,7 @@
 using System.Runtime.Caching;
+using System.Web.Mvc;
+using Autofac;
+using Autofac.Integration.Mvc;
 using DustedCodes.Blog.Config;
 using DustedCodes.Blog.Controllers;
 using DustedCodes.Blog.Feeds;
@@ -9,48 +12,46 @@ using DustedCodes.Core.Data;
 using DustedCodes.Core.Data.LocalStorage;
 using DustedCodes.Core.IO;
 using DustedCodes.Core.Services;
-using Ninject;
 
 namespace DustedCodes.Blog
 {
     public static class DependencyConfig
     {
-        public static void Setup(IKernel kernel)
+        public static void Setup()
         {
-            IAppConfig appConfig = new AppConfig();
-            kernel.Bind<IAppConfig>().To<AppConfig>();
+            var builder = new ContainerBuilder();
+            var appConfig = new AppConfig();
 
-            kernel.Bind<ITextReaderFactory>().To<TextReaderFactory>();
-
-            kernel.Bind<IArticleParser>().To<ArticleParser>();
-            kernel.Bind<IArticleRepository>().To<StaticFileArticleRepository>()
-                .WithConstructorArgument("articleDirectoryPath", appConfig.ArticlesDirectoryPath);
-
-            kernel.Bind<IFeedItemConverter>().To<FeedItemConverter>();
-            kernel.Bind<IFeedFactory>().To<FeedFactory>().WithConstructorArgument("maxItemCount", appConfig.FeedMaxItemCount);
-
-            kernel.Bind<IUrlEncoder>().To<UrlEncoder>();
-            kernel.Bind<IUrlGenerator>().To<UrlGenerator>();
-
-            kernel.Bind<IDirectoryReader>().To<DirectoryReader>();
+            builder.RegisterType<AppConfig>().As<IAppConfig>().InstancePerDependency();
+            builder.RegisterType<TextReaderFactory>().As<ITextReaderFactory>().InstancePerDependency();
+            builder.RegisterType<ArticleParser>().As<IArticleParser>().InstancePerDependency();
+            builder.RegisterType<StaticFileArticleRepository>().As<IArticleRepository>()
+                .WithParameter("articleDirectoryPath", appConfig.ArticlesDirectoryPath);
+            builder.RegisterType<FeedItemConverter>().As<IFeedItemConverter>();
+            builder.RegisterType<FeedFactory>().As<IFeedFactory>()
+                .WithParameter("maxItemCount", appConfig.FeedMaxItemCount);
+            builder.RegisterType<UrlEncoder>().As<IUrlEncoder>();
+            builder.RegisterType<UrlGenerator>().As<IUrlGenerator>();
+            builder.RegisterType<DirectoryReader>().As<IDirectoryReader>();
+            builder.RegisterType<ArticleService>().As<IArticleService>();
+            builder.RegisterType<ViewModelFactory>().As<IViewModelFactory>();
 
             if (appConfig.UseCache)
             {
-                kernel.Bind<ICache>()
-                    .To<ObjectCacheWrapper>()
-                    .WithConstructorArgument("objectCache", MemoryCache.Default)
-                    .WithConstructorArgument("defaultCacheItemPolicy", new CacheItemPolicy());
+                builder.RegisterType<ObjectCacheWrapper>()
+                    .As<ICache>()
+                    .WithParameter("objectCache", MemoryCache.Default)
+                    .WithParameter("defaultCacheItemPolicy", new CacheItemPolicy());
             }
             else
             {
-                kernel.Bind<ICache>().To<NullCache>();
+                builder.RegisterType<NullCache>().As<ICache>();
             }
 
-            kernel.Bind<IArticleService>().To<ArticleService>();
+            builder.RegisterControllers(typeof(MvcApplication).Assembly);
+            builder.RegisterType<BlogController>().AsSelf().WithParameter("pageSize", appConfig.BlogPageSize);
 
-            kernel.Bind<IViewModelFactory>().To<ViewModelFactory>();
-
-            kernel.Bind<BlogController>().ToSelf().WithConstructorArgument("pageSize", appConfig.BlogPageSize);
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(builder.Build()));
         }
     }
 }
