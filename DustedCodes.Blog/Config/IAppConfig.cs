@@ -17,5 +17,7 @@
         string GooglePlusShareUrlFormat { get; }
         string FacebookShareUrlFormat { get; }
         string YammerShareUrlFormat { get; }
+        string LinkedInShareUrlFormat { get; }
+        string WhatsAppShareUrlFormat { get; }
     }
 }

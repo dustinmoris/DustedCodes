@@ -20,5 +20,7 @@ namespace DustedCodes.Blog.Config
         public string GooglePlusShareUrlFormat => WebConfig.AppSettings["GooglePlus_ShareUrl_Format"];
         public string FacebookShareUrlFormat => WebConfig.AppSettings["Facebook_ShareUrl_Format"];
         public string YammerShareUrlFormat => WebConfig.AppSettings["Yammer_ShareUrl_Format"];
+        public string LinkedInShareUrlFormat => WebConfig.AppSettings["LinkedIn_ShareUrl_Format"];
+        public string WhatsAppShareUrlFormat => WebConfig.AppSettings["WhatsApp_ShareUrl_Format"];
     }
 }

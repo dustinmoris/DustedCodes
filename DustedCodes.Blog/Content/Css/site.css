@@ -482,4 +482,8 @@ blockquote {
             height: 0;
             clear: both;
         }
+
+    .mobile-only {
+        display: none !important;
+    }
 }
