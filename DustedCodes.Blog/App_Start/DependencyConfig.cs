@@ -48,6 +48,7 @@ namespace DustedCodes.Blog
                 builder.RegisterType<NullCache>().As<ICache>();
             }
 
+            builder.RegisterControllers(typeof(MvcApplication).Assembly);
             builder.RegisterType<BlogController>().AsSelf().WithParameter("pageSize", appConfig.BlogPageSize);
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(builder.Build()));
