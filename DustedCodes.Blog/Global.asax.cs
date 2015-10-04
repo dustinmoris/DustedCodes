@@ -9,9 +9,11 @@ namespace DustedCodes.Blog
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            DependencyConfig.Setup();
 
             // Disable HTTP headers to disclose ASP.NET MVC on the server
             MvcHandler.DisableMvcResponseHeader = true;
+
         }
     }
 }
