@@ -31,7 +31,7 @@ namespace DustedCodes.Automation.Framework.Pages
             // Totally not optimised but this does the job.
             // First navigate all the way to the end to find the blog post:
             IWebElement nextLink;
-            while ((nextLink = Driver.Instance.FindElementOrNull(By.ClassName("pager-next"))) != null)
+            while ((nextLink = Driver.Instance.FindElementOrNull(By.LinkText("Older Posts"))) != null)
             {
                 nextLink.Click();
                 currentBlogPosts = GetCurrentBlogPosts();
@@ -45,7 +45,7 @@ namespace DustedCodes.Automation.Framework.Pages
 
             // Then all the way back to the first page in case we started off somewhere in the middle
             IWebElement prevLink;
-            while ((prevLink = Driver.Instance.FindElementOrNull(By.ClassName("pager-prev"))) != null)
+            while ((prevLink = Driver.Instance.FindElementOrNull(By.LinkText("Newer Posts"))) != null)
             {
                 prevLink.Click();
                 currentBlogPosts = GetCurrentBlogPosts();
