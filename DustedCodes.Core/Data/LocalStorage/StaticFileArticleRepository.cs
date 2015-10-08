@@ -36,7 +36,7 @@ namespace DustedCodes.Core.Data.LocalStorage
                 : null;
         }
 
-        public async Task<ICollection<Article>> GetAllSortedByDateAsync()
+        public async Task<IEnumerable<Article>> GetOrderedByDateAsync()
         {
             const string searchPattern = "*.html";
             var files = _directoryReader.GetFiles(_articleDirectoryPath, searchPattern);
