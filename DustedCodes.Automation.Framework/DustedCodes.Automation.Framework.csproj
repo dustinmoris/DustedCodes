@@ -47,13 +47,13 @@
     <Compile Include="Extensions\WebElementExtensions.cs" />
     <Compile Include="Feeds\AtomFeed.cs" />
     <Compile Include="Feeds\RssFeed.cs" />
-    <Compile Include="Pages\AboutPage.cs" />
-    <Compile Include="Pages\ArchivePage.cs" />
-    <Compile Include="Pages\Navigation.cs" />
-    <Compile Include="Pages\BlogPostPage.cs" />
-    <Compile Include="Pages\GitHubEditPage.cs" />
-    <Compile Include="Pages\GitHubLoginPage.cs" />
-    <Compile Include="Pages\HomePage.cs" />
+    <Compile Include="Abstractions\AboutPage.cs" />
+    <Compile Include="Abstractions\ArchivePage.cs" />
+    <Compile Include="Abstractions\Navigation.cs" />
+    <Compile Include="Abstractions\BlogPostPage.cs" />
+    <Compile Include="Abstractions\GitHubEditPage.cs" />
+    <Compile Include="Abstractions\GitHubLoginPage.cs" />
+    <Compile Include="Abstractions\HomePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
