@@ -7,6 +7,8 @@ namespace DustedCodes.Automation.Framework.Abstractions
 {
     public static class HomePage
     {
+        private static IWebElement OlderPostsLink => Driver.Instance.FindElementOrNull(By.LinkText("Older Posts"));
+
         public static bool IsAt()
         {
             var homeLink = Driver.Instance.FindElement(By.LinkText("DUSTED CODES"));
@@ -18,46 +20,20 @@ namespace DustedCodes.Automation.Framework.Abstractions
             Driver.Instance.FindElement(By.LinkText(title)).Click();
         }
 
-        public static void FindAndGoToBlogPost(string title)
+        public static IEnumerable<string> GetAllBlogPostsInOriginalOrder()
         {
-            var currentBlogPosts = GetCurrentBlogPosts();
+            Browser.GoToRootPage();
 
-            if (currentBlogPosts.Contains(title))
+            var allBlogPosts = new List<string>();
+            allBlogPosts.AddRange(GetCurrentBlogPosts());
+
+            while (OlderPostsLink != null)
             {
-                GoToBlogPost(title);
-                return;
+                OlderPostsLink.Click();
+                allBlogPosts.AddRange(GetCurrentBlogPosts());
             }
 
-            // Totally not optimised but this does the job.
-            // First navigate all the way to the end to find the blog post:
-            IWebElement nextLink;
-            while ((nextLink = Driver.Instance.FindElementOrNull(By.LinkText("Older Posts"))) != null)
-            {
-                nextLink.Click();
-                currentBlogPosts = GetCurrentBlogPosts();
-
-                if (!currentBlogPosts.Contains(title))
-                    continue;
-
-                GoToBlogPost(title);
-                return;
-            }
-
-            // Then all the way back to the first page in case we started off somewhere in the middle
-            IWebElement prevLink;
-            while ((prevLink = Driver.Instance.FindElementOrNull(By.LinkText("Newer Posts"))) != null)
-            {
-                prevLink.Click();
-                currentBlogPosts = GetCurrentBlogPosts();
-
-                if (!currentBlogPosts.Contains(title))
-                    continue;
-
-                GoToBlogPost(title);
-                return;
-            }
-
-            throw new NotFoundException($"The blog post with the title '{title}' cannot be found");
+            return allBlogPosts;
         }
 
         public static IEnumerable<string> GetCurrentBlogPosts()

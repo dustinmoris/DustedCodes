@@ -21,6 +21,26 @@ namespace DustedCodes.Automation.Tests
 
             Navigation.GoToArchive();
             Assert.IsTrue(ArchivePage.IsAt());
+
+            Navigation.GoToAtomFeed();
+            Assert.IsTrue(AtomFeed.IsAt());
+
+            Navigation.GoToRoot();
+            Navigation.GoToRssFeed();
+            Assert.IsTrue(RssFeed.IsAt());
+        }
+
+        [Test]
+        public void All_BlogPosts_Are_In_Correct_Order()
+        {
+            var blogPosts = HomePage.GetAllBlogPostsInOriginalOrder().ToList();
+            var expectedBlogPosts = DataToValidate.BlogPosts.ToList();
+            expectedBlogPosts.Reverse();
+
+            for (var i = 0; i < expectedBlogPosts.Count; i++)
+            {
+                Assert.AreEqual(expectedBlogPosts[i].Title, blogPosts[i]);
+            }
         }
 
         [Test]
@@ -28,16 +48,16 @@ namespace DustedCodes.Automation.Tests
         {
             foreach (var blogPost in DataToValidate.BlogPosts)
             {
-                HomePage.FindAndGoToBlogPost(blogPost.Title);
+                var url = $"{AppConfig.RootUrl}{blogPost.PermalinkId}";
+                Navigation.GoToUrl(url);
+                
                 Assert.IsTrue(BlogPostPage.IsAt(blogPost.Title));
 
-                if (blogPost.Tags != null && blogPost.Tags.Any())
-                {
-                    var tags = BlogPostPage.GetTags();
-                    Assert.IsTrue(blogPost.Tags.SequenceEqual(tags));
-                }
+                if (blogPost.Tags == null || !blogPost.Tags.Any())
+                    continue;
 
-                Navigation.GoToHome();
+                var tags = BlogPostPage.GetTags();
+                Assert.IsTrue(blogPost.Tags.SequenceEqual(tags));
             }
         }
 
@@ -119,13 +139,13 @@ namespace DustedCodes.Automation.Tests
         [SetUp]
         public void SetUp()
         {
-            Application.Startup();
+            Browser.Startup();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Application.Quit();
+            Browser.Quit();
         }
     }
 }

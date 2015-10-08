@@ -6,7 +6,12 @@ namespace DustedCodes.Automation.Framework.Abstractions
     {
         public static void GoToUrl(string url)
         {
-            Driver.Instance.Navigate().GoToUrl(url);
+            Browser.GoToUrl(url);
+        }
+
+        public static void GoToRoot()
+        {
+            Browser.GoToRootPage();
         }
 
         public static void GoToHome()
