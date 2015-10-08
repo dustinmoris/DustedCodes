@@ -1,8 +1,8 @@
 using OpenQA.Selenium;
 
-namespace DustedCodes.Automation.Framework.Feeds
+namespace DustedCodes.Automation.Framework.Abstractions
 {
-    public static class AtomFeed
+    public static class RssFeed
     {
         public static bool IsAt()
         {

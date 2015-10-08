@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using DustedCodes.Automation.Framework;
 using DustedCodes.Automation.Framework.Abstractions;
-using DustedCodes.Automation.Framework.Feeds;
 using NUnit.Framework;
 
 namespace DustedCodes.Automation.Tests

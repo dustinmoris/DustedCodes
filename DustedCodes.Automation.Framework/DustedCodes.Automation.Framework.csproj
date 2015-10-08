@@ -45,8 +45,8 @@
     <Compile Include="Driver.cs" />
     <Compile Include="Extensions\WebDriverExtensions.cs" />
     <Compile Include="Extensions\WebElementExtensions.cs" />
-    <Compile Include="Feeds\AtomFeed.cs" />
-    <Compile Include="Feeds\RssFeed.cs" />
+    <Compile Include="Abstractions\AtomFeed.cs" />
+    <Compile Include="Abstractions\RssFeed.cs" />
     <Compile Include="Abstractions\AboutPage.cs" />
     <Compile Include="Abstractions\ArchivePage.cs" />
     <Compile Include="Abstractions\Navigation.cs" />
@@ -58,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Feeds\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
