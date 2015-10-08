@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using DustedCodes.Automation.Framework;
-using DustedCodes.Automation.Framework.Feeds;
-using DustedCodes.Automation.Framework.Pages;
+using DustedCodes.Automation.Framework.Abstractions;
 using NUnit.Framework;
 
 namespace DustedCodes.Automation.Tests
@@ -14,14 +13,34 @@ namespace DustedCodes.Automation.Tests
         {
             Assert.IsTrue(HomePage.IsAt());
 
-            BasePage.GoToAbout();
+            Navigation.GoToAbout();
             Assert.IsTrue(AboutPage.IsAt());
 
-            BasePage.GoToBlog();
+            Navigation.GoToBlog();
             Assert.IsTrue(HomePage.IsAt());
 
-            BasePage.GoToArchive();
+            Navigation.GoToArchive();
             Assert.IsTrue(ArchivePage.IsAt());
+
+            Navigation.GoToAtomFeed();
+            Assert.IsTrue(AtomFeed.IsAt());
+
+            Navigation.GoToRoot();
+            Navigation.GoToRssFeed();
+            Assert.IsTrue(RssFeed.IsAt());
+        }
+
+        [Test]
+        public void All_BlogPosts_Are_In_Correct_Order()
+        {
+            var blogPosts = HomePage.GetAllBlogPostsInOriginalOrder().ToList();
+            var expectedBlogPosts = DataToValidate.BlogPosts.ToList();
+            expectedBlogPosts.Reverse();
+
+            for (var i = 0; i < expectedBlogPosts.Count; i++)
+            {
+                Assert.AreEqual(expectedBlogPosts[i].Title, blogPosts[i]);
+            }
         }
 
         [Test]
@@ -29,16 +48,16 @@ namespace DustedCodes.Automation.Tests
         {
             foreach (var blogPost in DataToValidate.BlogPosts)
             {
-                HomePage.FindAndGoToBlogPost(blogPost.Title);
+                var url = $"{AppConfig.RootUrl}{blogPost.PermalinkId}";
+                Navigation.GoToUrl(url);
+                
                 Assert.IsTrue(BlogPostPage.IsAt(blogPost.Title));
 
-                if (blogPost.Tags != null && blogPost.Tags.Any())
-                {
-                    var tags = BlogPostPage.GetTags();
-                    Assert.IsTrue(blogPost.Tags.SequenceEqual(tags));
-                }
+                if (blogPost.Tags == null || !blogPost.Tags.Any())
+                    continue;
 
-                BasePage.GoToHome();
+                var tags = BlogPostPage.GetTags();
+                Assert.IsTrue(blogPost.Tags.SequenceEqual(tags));
             }
         }
 
@@ -59,7 +78,7 @@ namespace DustedCodes.Automation.Tests
         public void Old_BlogPost_URLs_Are_Working()
         {
             var url = $"{AppConfig.RootUrl}articles/hello-world";
-            BasePage.GoToUrl(url);
+            Navigation.GoToUrl(url);
             
             Assert.IsTrue(BlogPostPage.IsAt("Hello World"));
         }
@@ -67,26 +86,26 @@ namespace DustedCodes.Automation.Tests
         [Test]
         public void Rss_Feed_Is_Working()
         {
-            BasePage.GoToRssFeed();
+            Navigation.GoToRssFeed();
 
             foreach (var blogPost in DataToValidate.BlogPosts.Reverse().Take(10))
             {
                 RssFeed.GoToArticle(blogPost.Title);
                 Assert.IsTrue(BlogPostPage.IsAt(blogPost.Title));
-                BasePage.GoToRssFeed();
+                Navigation.GoToRssFeed();
             }
         }
 
         [Test]
         public void Atom_Feed_Is_Working()
         {
-            BasePage.GoToAtomFeed();
+            Navigation.GoToAtomFeed();
 
             foreach (var blogPost in DataToValidate.BlogPosts.Reverse().Take(10))
             {
                 AtomFeed.GoToArticle(blogPost.Title);
                 Assert.IsTrue(BlogPostPage.IsAt(blogPost.Title));
-                BasePage.GoToAtomFeed();
+                Navigation.GoToAtomFeed();
             }
         }
 
@@ -104,7 +123,7 @@ namespace DustedCodes.Automation.Tests
         [Test]
         public void Archive_Shows_All_Posts_and_Links_Are_Working()
         {
-            BasePage.GoToArchive();
+            Navigation.GoToArchive();
 
             var allBlogPostsInArchive = ArchivePage.GetAllBlogPosts();
             Assert.AreEqual(DataToValidate.BlogPosts.Count(), allBlogPostsInArchive.Count());
@@ -113,20 +132,20 @@ namespace DustedCodes.Automation.Tests
             {
                 ArchivePage.GoToBlogPost(blogPost.Title);
                 Assert.IsTrue(BlogPostPage.IsAt(blogPost.Title));
-                BasePage.GoToArchive();
+                Navigation.GoToArchive();
             }
         }
 
         [SetUp]
         public void SetUp()
         {
-            Application.Startup();
+            Browser.Startup();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Application.Quit();
+            Browser.Quit();
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿namespace DustedCodes.Automation.Framework
 {
-    public static class Application
+    public static class Browser
     {
         public static void Startup()
         {
             Driver.Init();
-            Driver.Instance.Navigate().GoToUrl(AppConfig.RootUrl);
+            GoToRootPage();
         }
 
         public static void Quit()
@@ -14,6 +14,16 @@
             {
                 Driver.Instance.Quit();
             }
+        }
+
+        internal static void GoToRootPage()
+        {
+            GoToUrl(AppConfig.RootUrl);
+        }
+
+        internal static void GoToUrl(string url)
+        {
+            Driver.Instance.Navigate().GoToUrl(url);
         }
     }
 }

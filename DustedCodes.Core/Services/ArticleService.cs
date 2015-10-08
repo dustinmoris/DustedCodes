@@ -76,7 +76,7 @@ namespace DustedCodes.Core.Services
             if (cachedArticles != null)
                 return cachedArticles;
 
-            var articles = await _articleRepository.GetAllSortedByDateAsync().ConfigureAwait(false);
+            var articles = (await _articleRepository.GetOrderedByDateAsync().ConfigureAwait(false)).ToList();
             _cache.Set(SortedArticlesCacheKey, articles);
 
             return articles;

@@ -1,12 +1,17 @@
 using OpenQA.Selenium;
 
-namespace DustedCodes.Automation.Framework.Pages
+namespace DustedCodes.Automation.Framework.Abstractions
 {
-    public static class BasePage
+    public static class Navigation
     {
         public static void GoToUrl(string url)
         {
-            Driver.Instance.Navigate().GoToUrl(url);
+            Browser.GoToUrl(url);
+        }
+
+        public static void GoToRoot()
+        {
+            Browser.GoToRootPage();
         }
 
         public static void GoToHome()

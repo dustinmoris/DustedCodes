@@ -1,6 +1,6 @@
 using OpenQA.Selenium;
 
-namespace DustedCodes.Automation.Framework.Pages
+namespace DustedCodes.Automation.Framework.Abstractions
 {
     public static class GitHubLoginPage
     {
