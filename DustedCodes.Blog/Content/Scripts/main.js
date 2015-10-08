@@ -26,7 +26,7 @@
     $(document).on("click", "#nav-toggle-button", function () {
         dustedcodes.menu.toggle();
     });
-    $(document).on("click", ".share-link", function (event) {
+    $(document).on("click", "#share>a", function (event) {
         event.preventDefault();
         dustedcodes.window.open($(this).attr("href"));
     });

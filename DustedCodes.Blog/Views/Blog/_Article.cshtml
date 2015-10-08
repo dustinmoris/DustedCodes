@@ -18,38 +18,38 @@
             <a class="icon fa-comments disqus-comment-count" href="@Model.PermalinkUrl#disqus_thread" data-disqus-identifier="@Model.Id">Comments</a>
             @if (Model.HasTags)
             {
-                <span class="icon fa-tags tags">
+                <span id="tags" class="icon fa-tags tags">
                     @foreach (var tag in Model.Tags)
                     {
-                        @Html.ActionLink(tag, "Tagged", "Blog", new { tag = tag }, new { @class = "tag" });
+                        @Html.ActionLink(tag, "Tagged", "Blog", new { tag = tag })
                     }
                 </span>
             }
         </div>
     </header>
     @Html.Raw(Model.Content)
-    <footer>
+    <footer id="share">
         <h1>Share it:</h1>
         <a href="mailto:?subject=@Model.Title&amp;body=Check out this site @Model.PermalinkUrl."
            title="Share by Email">
             <i class="fa fa-envelope-o"></i>
         </a>
-        <a class="share-link" href="@Model.TwitterShareUrl" title="Share on Twitter">
+        <a href="@Model.TwitterShareUrl" title="Share on Twitter">
             <i class="fa fa-twitter"></i>
         </a>
-        <a class="share-link" href="@Model.GooglePlusShareUrl" title="Share on Google+">
+        <a href="@Model.GooglePlusShareUrl" title="Share on Google+">
             <i class="fa fa-google-plus"></i>
         </a>
-        <a class="share-link" href="@Model.FacebookShareUrl" title="Share on Facebook">
+        <a href="@Model.FacebookShareUrl" title="Share on Facebook">
             <i class="fa fa-facebook-f"></i>
         </a>
-        <a class="share-link" href="@Model.YammerShareUrl" title="Share on Yammer">
+        <a href="@Model.YammerShareUrl" title="Share on Yammer">
             <i class="fa fa-yahoo"></i>
         </a>
-        <a class="share-link" href="@Model.LinkedInShareUrl" title="Share on LinkedIn">
+        <a href="@Model.LinkedInShareUrl" title="Share on LinkedIn">
             <i class="fa fa-linkedin"></i>
         </a>
-        <a class="share-link mobile-only" href="@Model.WhatsAppShareUrl" data-action="share/whatsapp/share" title="Share on WhatsApp">
+        <a class="mobile-only" href="@Model.WhatsAppShareUrl" data-action="share/whatsapp/share" title="Share on WhatsApp">
             <i class="fa fa-whatsapp"></i>
         </a>
     </footer>
