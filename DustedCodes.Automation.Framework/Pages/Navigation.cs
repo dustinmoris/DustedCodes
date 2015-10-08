@@ -2,7 +2,7 @@ using OpenQA.Selenium;
 
 namespace DustedCodes.Automation.Framework.Pages
 {
-    public static class BasePage
+    public static class Navigation
     {
         public static void GoToUrl(string url)
         {
