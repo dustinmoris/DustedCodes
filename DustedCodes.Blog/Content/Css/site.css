@@ -396,6 +396,11 @@ blockquote {
     overflow: hidden;
 }
 
+#avatar {
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+}
+
 @media all and (max-width: 640px) {
 
     .nav-expanded {
@@ -483,6 +488,10 @@ blockquote {
             height: 0;
             clear: both;
         }
+
+    #avatar {
+        max-width: 185px;
+    }
 
     .mobile-only {
         display: none !important;
