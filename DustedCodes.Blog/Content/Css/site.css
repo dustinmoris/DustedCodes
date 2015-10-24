@@ -287,8 +287,10 @@ blockquote {
     display: block;
     margin: 4px 0;
     width: 25px;
-    height: 3px;
-    background: #222;
+    height: 2px;
+    background: #555;
+    -ms-border-radius: 2px;
+    border-radius: 2px;
 }
 
 #contact {
