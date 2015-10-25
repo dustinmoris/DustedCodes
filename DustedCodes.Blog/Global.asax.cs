@@ -13,7 +13,6 @@ namespace DustedCodes.Blog
 
             // Disable HTTP headers to disclose ASP.NET MVC on the server
             MvcHandler.DisableMvcResponseHeader = true;
-
         }
     }
 }

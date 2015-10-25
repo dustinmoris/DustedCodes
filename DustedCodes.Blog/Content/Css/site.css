@@ -285,9 +285,9 @@ blockquote {
 
 .nav-toggle-btn-bar {
     display: block;
-    margin: 4px 0;
+    margin: 5px 0;
     width: 25px;
-    height: 3px;
+    height: 2px;
     background: #222;
 }
 
@@ -396,6 +396,12 @@ blockquote {
     overflow: hidden;
 }
 
+#avatar {
+    max-width: 250px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+}
+
 @media all and (max-width: 640px) {
 
     .nav-expanded {
@@ -483,6 +489,10 @@ blockquote {
             height: 0;
             clear: both;
         }
+
+    #avatar {
+        max-width: 185px;
+    }
 
     .mobile-only {
         display: none !important;
