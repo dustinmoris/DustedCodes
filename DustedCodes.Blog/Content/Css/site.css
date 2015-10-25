@@ -285,12 +285,10 @@ blockquote {
 
 .nav-toggle-btn-bar {
     display: block;
-    margin: 4px 0;
+    margin: 5px 0;
     width: 25px;
     height: 2px;
-    background: #555;
-    -ms-border-radius: 2px;
-    border-radius: 2px;
+    background: #222;
 }
 
 #contact {
@@ -399,6 +397,7 @@ blockquote {
 }
 
 #avatar {
+    max-width: 250px;
     -ms-border-radius: 3px;
     border-radius: 3px;
 }
