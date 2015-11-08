@@ -121,6 +121,7 @@
     <Content Include="App_Data\Articles\effective-defense-against-distributed-brute-force-attacks.html" />
     <Content Include="App_Data\Articles\display-build-history-charts-for-appveyor-or-travisci-builds-with-an-svg-widget.html" />
     <Content Include="App_Data\Articles\death-of-a-qa-in-scrum.html" />
+    <Content Include="App_Data\Articles\when-to-use-scrum-waterfall-vs-scrum-vs-kanban-vs-scrumban.html" />
     <Content Include="App_Data\Articles\using-csharp-6-features-in-aspdotnet-mvc-5-razor-views.html" />
     <Content Include="App_Data\Articles\how-to-use-rsa-in-dotnet-rsacryptoserviceprovider-vs-rsacng-and-good-practise-patterns.html" />
     <Content Include="App_Data\Articles\hello-world.html" />
