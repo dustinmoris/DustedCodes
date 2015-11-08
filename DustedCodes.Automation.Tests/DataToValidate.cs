@@ -83,6 +83,12 @@ namespace DustedCodes.Automation.Tests
                 Title = "Death of a QA in Scrum",
                 PermalinkId = "death-of-a-qa-in-scrum",
                 Tags = new[] { "scrum", "agile", "testing" }
+            },
+            new BlogPost
+            {
+                Title = "When to use Scrum? Waterfall vs. Scrum vs. Kanban vs. Scrumban",
+                PermalinkId = "when-to-use-scrum-waterfall-vs-scrum-vs-kanban-vs-scrumban",
+                Tags = new[] { "scrum", "kanban", "scrumban", "waterfall", "agile" }
             }
         };
     }
