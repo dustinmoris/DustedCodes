@@ -18,17 +18,17 @@
             <a class="icon fa-comments disqus-comment-count" href="@Model.PermalinkUrl#disqus_thread" data-disqus-identifier="@Model.Id">Comments</a>
             @if (Model.HasTags)
             {
-                <span id="tags" class="icon fa-tags tags">
+                <span class="icon fa-tags tags">
                     @foreach (var tag in Model.Tags)
                     {
-                        @Html.ActionLink(tag, "Tagged", "Blog", new { tag = tag })
+                        @Html.ActionLink(tag, "Tagged", "Blog", new { tag }, null)
                     }
                 </span>
             }
         </div>
     </header>
     @Html.Raw(Model.Content)
-    <footer id="share">
+    <footer class="share-links">
         <h1>Share it:</h1>
         <a href="mailto:?subject=@Model.Title&amp;body=Check out this site @Model.PermalinkUrl."
            title="Share by Email">

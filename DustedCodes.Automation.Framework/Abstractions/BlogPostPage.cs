@@ -14,7 +14,7 @@ namespace DustedCodes.Automation.Framework.Abstractions
 
         public static IEnumerable<string> GetTags()
         {
-            var tagElements = Driver.Instance.FindElements(By.CssSelector(".tag"));
+            var tagElements = Driver.Instance.FindElements(By.CssSelector(".tags>a"));
 
             if (tagElements != null && tagElements.Any())
                 return tagElements.Select(e => e.Text);
