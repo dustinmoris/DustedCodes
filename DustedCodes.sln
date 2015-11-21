@@ -20,6 +20,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{C169E963-BADB-4AA1-8261-55F54C571CED}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
+		BeforeBuild.ps1 = BeforeBuild.ps1
 		TransformStaticFiles.ps1 = TransformStaticFiles.ps1
 	EndProjectSection
 EndProject

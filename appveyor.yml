@@ -10,6 +10,7 @@ assembly_info:
   assembly_file_version: '{version}'
   assembly_informational_version: '{version}'
 before_build:
+  - ps: .\BeforeBuild.ps1
   # Force MSBuild 14
   - set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
   - nuget restore
