@@ -195,3 +195,9 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+# Custom build temporary output folder
+_Build_Temp/
+
+# Generated static html files in App_Data
+DustedCodes.Blog/App_Data/Articles/*.html

@@ -20,6 +20,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{C169E963-BADB-4AA1-8261-55F54C571CED}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
+		Build.ps1 = Build.ps1
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DustedCodes.Core", "DustedCodes.Core\DustedCodes.Core.csproj", "{249F1D7B-CB40-49A6-AE53-54185C10FF8F}"
