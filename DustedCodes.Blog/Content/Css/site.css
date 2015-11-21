@@ -339,7 +339,7 @@ blockquote {
     .article-metadata > time,
     .article-metadata > address,
     .article-metadata > a,
-    #tags {
+    .tags {
         font-style: normal;
         display: block;
         margin: .6em 0;
@@ -351,15 +351,15 @@ blockquote {
         color: #777;
     }
 
-#tags {
+.tags {
     text-align: left;
 }
 
-    #tags > a {
+    .tags > a {
         margin-right: .5em;
     }
 
-        #tags > a:last-child {
+        .tags > a:last-child {
             margin-right: 0;
         }
 
