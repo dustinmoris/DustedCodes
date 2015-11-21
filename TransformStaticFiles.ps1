@@ -107,7 +107,7 @@ Write-Output "Modifying Includes.."
 $content.Project.ItemGroup.Content | Where-Object { 
     $_.Include -ne $null -and $_.Include.Contains("App_Data\Articles\") -and $_.Include.EndsWith(".md") 
 } | % {
-	Write-Output "Updating " + $_.Include + "..."
+	Write-Output ("Updating " + $_.Include + "...")
     $_.Include = $_.Include.Replace(".md", ".html")
 }
 
