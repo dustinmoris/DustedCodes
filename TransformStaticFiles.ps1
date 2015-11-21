@@ -1,6 +1,7 @@
 ﻿[CmdletBinding()]
 param
 (
+	[Parameter(Position = 1, Mandatory = $true)]
 	[string] $SolutionDir
 )
 
@@ -12,17 +13,22 @@ Function Get-LatestMarkdownDeep
         [string] $DestinationFolder
     )
 
-    # 1. Download latest MarkdownDeep Library
-    $downloadUrl = "http://www.toptensoftware.com/downloads/MarkdownDeep.zip"
-    $destination = "$DestinationFolder\MarkdownDeep.zip"
-    $webClient = New-Object System.Net.WebClient
-    $webClient.DownloadFile($downloadUrl, $destination)
+	$markdownLibraryFolder = "$DestinationFolder\MarkdownDeep"
 
-    # 2. Extract zip files
-    Expand-Archive -Source $destination -Destination "$DestinationFolder\_Build_Temp\MarkdownDeep"
+	if (!(Test-Path $markdownLibraryFolder))
+	{
+		# 1. Download latest MarkdownDeep Library
+		$downloadUrl = "http://www.toptensoftware.com/downloads/MarkdownDeep.zip"
+		$destination = "$DestinationFolder\MarkdownDeep.zip"
+		$webClient = New-Object System.Net.WebClient
+		$webClient.DownloadFile($downloadUrl, $destination)
+
+		# 2. Extract zip files
+		Expand-Archive -Source $destination -Destination $markdownLibraryFolder
+	}
 
     # 3. Register assembly
-    Add-Type -Path "$DestinationFolder\_Build_Temp\MarkdownDeep\bin\MarkdownDeep.dll"
+    Add-Type -Path "$markdownLibraryFolder\bin\MarkdownDeep.dll"
 }
 
 # Remove this function when PowerShell 5 is installed on the build machine
@@ -57,6 +63,24 @@ Function ConvertTo-Html
 # -----------------
 # BEGIN:
 
-Get-LatestMarkdownDeep -DestinationFolder $SolutionDir
+$ErrorActionPreference = "Stop"
 
-Get-ChildItem "$SolutionDir\DustedCodes.Blog\App_Data\Articles" -Filter *.md | % { ConvertTo-Html $_ }
+Write-Output "----"
+Write-Output "POST BUILD EVENT"
+Write-Output "----"
+
+$tempFolder = "$SolutionDir\_Build_Temp"
+if (!(Test-Path $tempFolder)) 
+{ 
+	Write-Output "Creating temporary folder..."
+	New-Item -Path $tempFolder -ItemType Directory -Force 
+}
+
+Write-Output "Downloading latest MarkdownDeep library..."
+Get-LatestMarkdownDeep -DestinationFolder $tempFolder
+
+Write-Output "Compiling articles..."
+Get-ChildItem "$SolutionDir\DustedCodes.Blog\App_Data\Articles" -Filter *.md | % {
+	Write-Output "Compiling $_"
+	ConvertTo-Html $_ 
+}
