@@ -3,5 +3,6 @@
     Author: Dustin Moris Gorski
     Title: Hello World
 -->
-<p>Website has been launched.</p>
-<p>More content and small incremental updates will follow over the next few weeks.</p>
+Website has been launched.
+
+More content and small incremental updates will follow over the next few weeks.

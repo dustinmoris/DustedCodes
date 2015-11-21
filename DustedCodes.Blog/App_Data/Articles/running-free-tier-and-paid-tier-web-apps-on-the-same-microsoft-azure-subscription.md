@@ -4,8 +4,8 @@
     Title: Running free tier and paid tier web apps on the same Microsoft Azure subscription
     Tags: windows-azure app-hosting-plan
 -->
-<p>Last week I noticed a charge of ~ £20 by MSFT AZURE on my bank statement and initially struggled to work out why I was charged this much.</p>
-<p>I knew I'd have to pay something for this website, which is hosted on the shared tier in Microsoft Azure, but according to <a href="http://azure.microsoft.com/en-us/pricing/calculator/">Microsoft Azure's pricing calculator</a> it should have only come to £5.91 per month:</p>
+<p>Last week I noticed a charge of ~ &pound;20 by MSFT AZURE on my bank statement and initially struggled to work out why I was charged this much.</p>
+<p>I knew I'd have to pay something for this website, which is hosted on the shared tier in Microsoft Azure, but according to <a href="http://azure.microsoft.com/en-us/pricing/calculator/">Microsoft Azure's pricing calculator</a> it should have only come to &pound;5.91 per month:</p>
 <a href="https://www.flickr.com/photos/130657798@N05/18821999662" title="Windows Azure Shared Pricing Tier by Dustin Moris Gorski, on Flickr"><img src="https://c2.staticflickr.com/6/5328/18821999662_b71b95637e_o.png" alt="Windows Azure Shared Pricing Tier"></a>
 
 <p>After a little investigation I quickly found the issue, it was due to a few on and off test web apps which were running on the shared tier as well.</p>
