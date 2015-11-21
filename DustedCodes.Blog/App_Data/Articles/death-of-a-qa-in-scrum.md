@@ -54,7 +54,7 @@
 
 <h3>Scrum is one team, not a set of roles</h3>
 
-<p>The problem also becomes very prominent if the team starts using language like "<strong>we</strong> developers do this…, <strong>they</strong> QA do that…" and vice versa.</p>
+<p>The problem also becomes very prominent if the team starts using language like "<strong>we</strong> developers do this..., <strong>they</strong> QA do that..." and vice versa.</p>
 
 <p>Scrum is built on the fundamental believe that one self-contained team works together towards a goal. There cannot be any sub teams, dependencies or bottle necks within a team. Each member of the team (except the PO and BA if you like) must be capable of working on each phase of a user story, otherwise your Scrum is deemed to fail.</p>
 
@@ -75,6 +75,6 @@
 
 <p>Personally I have not made the experience of this change yet, but I witnessed a transition from manual testers to fully committed automation testers and the results were extremely good! The learning curve is very steep in the beginning, but to be honest the entire software industry is a big journey of change and it is not any different for a junior developer either.</p>
 
-<p><strong>As someone said to me before… it takes about 8-9 years before a developer actually becomes good…</strong></p>
+<p><strong>As someone said to me before... it takes about 8-9 years before a developer actually becomes good...</strong></p>
 
 <p>Are you ready for the change?</p>
