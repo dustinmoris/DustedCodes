@@ -140,7 +140,6 @@ h4 {
 }
 
 p, aside {
-    text-align: justify;
     line-height: 2em;
 }
 
@@ -496,5 +495,9 @@ blockquote {
 
     .mobile-only {
         display: none !important;
+    }
+
+    p, aside {
+        text-align: justify;
     }
 }
