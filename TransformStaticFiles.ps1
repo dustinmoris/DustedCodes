@@ -1,4 +1,10 @@
-﻿Function Get-LatestMarkdownDeep
+﻿[CmdletBinding()]
+param
+(
+	[string] $SolutionDir
+)
+
+Function Get-LatestMarkdownDeep
 {
     [CmdletBinding()]
     param
@@ -49,8 +55,8 @@ Function ConvertTo-Html
 }
 
 # -----------------
-# BEGIN BUILD:
+# BEGIN:
 
-Get-LatestMarkdownDeep -DestinationFolder $PSScriptRoot
+Get-LatestMarkdownDeep -DestinationFolder $SolutionDir
 
-Get-ChildItem "$PSScriptRoot\DustedCodes.Blog\App_Data\Articles" -Filter *.md | % { ConvertTo-Html $_ }
+Get-ChildItem "$SolutionDir\DustedCodes.Blog\App_Data\Articles" -Filter *.md | % { ConvertTo-Html $_ }
