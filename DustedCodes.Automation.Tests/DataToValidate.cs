@@ -52,7 +52,7 @@ namespace DustedCodes.Automation.Tests
             {
                 Title = "Running free tier and paid tier web apps on the same Microsoft Azure subscription",
                 PermalinkId = "running-free-tier-and-paid-tier-web-apps-on-the-same-microsoft-azure-subscription",
-                Tags = new[] { "microsoft-azure", "app-hosting-plan" }
+                Tags = new[] { "windows-azure", "app-hosting-plan" }
             },
             new BlogPost
             {

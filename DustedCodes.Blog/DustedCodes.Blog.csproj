@@ -60,8 +60,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="NewRelic.Api.Agent, Version=5.6.53.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewRelic.Azure.WebSites.5.6.53.0\lib\NewRelic.Api.Agent.dll</HintPath>
+    <Reference Include="NewRelic.Api.Agent, Version=5.9.74.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewRelic.Azure.WebSites.5.9.74.0\lib\NewRelic.Api.Agent.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
@@ -116,19 +116,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Articles\demystifying-aspnet-mvc-5-error-pages-and-error-logging.html" />
-    <Content Include="App_Data\Articles\guard-clauses-without-test-coverage-a-common-tdd-pitfall.html" />
-    <Content Include="App_Data\Articles\effective-defense-against-distributed-brute-force-attacks.html" />
-    <Content Include="App_Data\Articles\display-build-history-charts-for-appveyor-or-travisci-builds-with-an-svg-widget.html" />
-    <Content Include="App_Data\Articles\death-of-a-qa-in-scrum.html" />
-    <Content Include="App_Data\Articles\when-to-use-scrum-waterfall-vs-scrum-vs-kanban-vs-scrumban.html" />
-    <Content Include="App_Data\Articles\using-csharp-6-features-in-aspdotnet-mvc-5-razor-views.html" />
-    <Content Include="App_Data\Articles\how-to-use-rsa-in-dotnet-rsacryptoserviceprovider-vs-rsacng-and-good-practise-patterns.html" />
-    <Content Include="App_Data\Articles\hello-world.html" />
-    <Content Include="App_Data\Articles\the-beauty-of-asymmetric-encryption-rsa-crash-course-for-developers.html" />
-    <Content Include="App_Data\Articles\making-font-awesome-awesome-using-icons-without-i-tags.html" />
-    <Content Include="App_Data\Articles\php-uk-conference-2015.html" />
-    <Content Include="App_Data\Articles\running-free-tier-and-paid-tier-web-apps-on-the-same-microsoft-azure-subscription.html" />
+    <Content Include="App_Data\Articles\demystifying-aspnet-mvc-5-error-pages-and-error-logging.md" />
+    <Content Include="App_Data\Articles\guard-clauses-without-test-coverage-a-common-tdd-pitfall.md" />
+    <Content Include="App_Data\Articles\effective-defense-against-distributed-brute-force-attacks.md" />
+    <Content Include="App_Data\Articles\display-build-history-charts-for-appveyor-or-travisci-builds-with-an-svg-widget.md" />
+    <Content Include="App_Data\Articles\death-of-a-qa-in-scrum.md" />
+    <Content Include="App_Data\Articles\when-to-use-scrum-waterfall-vs-scrum-vs-kanban-vs-scrumban.md" />
+    <Content Include="App_Data\Articles\using-csharp-6-features-in-aspdotnet-mvc-5-razor-views.md" />
+    <Content Include="App_Data\Articles\how-to-use-rsa-in-dotnet-rsacryptoserviceprovider-vs-rsacng-and-good-practise-patterns.md" />
+    <Content Include="App_Data\Articles\hello-world.md" />
+    <Content Include="App_Data\Articles\the-beauty-of-asymmetric-encryption-rsa-crash-course-for-developers.md" />
+    <Content Include="App_Data\Articles\making-font-awesome-awesome-using-icons-without-i-tags.md" />
+    <Content Include="App_Data\Articles\php-uk-conference-2015.md" />
+    <Content Include="App_Data\Articles\running-free-tier-and-paid-tier-web-apps-on-the-same-microsoft-azure-subscription.md" />
     <Content Include="Content\Css\error.css" />
     <Content Include="Content\Css\site.min.css" />
     <Content Include="Content\Css\site.css" />
@@ -141,6 +141,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="newrelic\Extensions\CoreInstrumentation.xml" />
+    <Content Include="newrelic\Extensions\JetBrains.Annotations.dll" />
+    <Content Include="newrelic\Extensions\JetBrains.Annotations.xml" />
     <Content Include="newrelic\Extensions\NewRelic.Agent.AttributeFilter.dll" />
     <Content Include="newrelic\Extensions\NewRelic.Agent.Configuration.dll" />
     <Content Include="newrelic\Extensions\NewRelic.Agent.Core.dll" />
@@ -242,6 +244,7 @@
     <None Include="newrelic\newrelic.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\Create WebDeployPackage.pubxml" />
     <None Include="Properties\PublishProfiles\dustedcodes.pubxml" />
     <Content Include="Views\Blog\Archive.cshtml" />
     <None Include="Web.Debug.config">
@@ -263,6 +266,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -292,6 +298,32 @@
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)CompileArticles.ps1" $(SolutionDir)</PreBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <ExcludeFromPackageFiles Include="$(ProjectDir)\App_Data\Articles\*.md">
+      <FromTarget>Project</FromTarget>
+    </ExcludeFromPackageFiles>
+  </ItemGroup>
+  <Target Name="CollectCompiledArticles">
+    <ItemGroup>
+      <_CustomFiles Include="$(ProjectDir)\App_Data\Articles\*.html" />
+      <FilesForPackagingFromProject Include="%(_CustomFiles.Identity)">
+        <DestinationRelativePath>App_Data\Articles\%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+      </FilesForPackagingFromProject>
+    </ItemGroup>
+  </Target>
+  <PropertyGroup>
+    <PipelineCollectFilesPhaseDependsOn>
+      CollectCompiledArticles;
+      $(PipelineCollectFilesPhaseDependsOn);
+    </PipelineCollectFilesPhaseDependsOn>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
