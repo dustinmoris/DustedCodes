@@ -12,3 +12,5 @@ Inspired by GitHub Pages and Jekyll this is a C# blog engine which renders stati
 Blog articles can be written in either Markdown or HTML. Markdown pages get compiled into static HTML pages at build time.
 
 Feel free to fork it and create your own nerdy space in the world wide web!
+
+Visit my blog at http://dusted.codes
