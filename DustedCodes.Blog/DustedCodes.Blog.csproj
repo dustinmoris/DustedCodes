@@ -301,7 +301,7 @@
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)TransformStaticFiles.ps1" $(SolutionDir)</PreBuildEvent>
+    <PreBuildEvent>C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)CompileArticles.ps1" $(SolutionDir)</PreBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <ExcludeFromPackageFiles Include="$(ProjectDir)\App_Data\Articles\*.md">

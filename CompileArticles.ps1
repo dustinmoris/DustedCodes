@@ -65,9 +65,9 @@ Function ConvertTo-Html
 
 $ErrorActionPreference = "Stop"
 
-Write-Output "----"
-Write-Output "POST BUILD EVENT"
-Write-Output "----"
+Write-Output "-----"
+Write-Output "Compile static .html pages from Markdown"
+Write-Output "-----"
 
 $tempFolder = "$SolutionDir\_Build_Temp"
 if (!(Test-Path $tempFolder)) 
