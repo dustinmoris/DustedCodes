@@ -242,6 +242,7 @@
     <None Include="newrelic\newrelic.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\Create WebDeployPackage.pubxml" />
     <None Include="Properties\PublishProfiles\dustedcodes.pubxml" />
     <Content Include="Views\Blog\Archive.cshtml" />
     <None Include="Web.Debug.config">
@@ -293,11 +294,30 @@
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)TransformStaticFiles.ps1" $(SolutionDir)</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)TransformStaticFiles.ps1" $(SolutionDir)</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <ExcludeFromPackageFiles Include="$(ProjectDir)\App_Data\Articles\*.md">
+      <FromTarget>Project</FromTarget>
+    </ExcludeFromPackageFiles>
+  </ItemGroup>
+  <Target Name="CollectCompiledArticles">
+    <ItemGroup>
+      <_CustomFiles Include="$(ProjectDir)\App_Data\Articles\*.html" />
+      <FilesForPackagingFromProject Include="%(_CustomFiles.Identity)">
+        <DestinationRelativePath>App_Data\Articles\%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+      </FilesForPackagingFromProject>
+    </ItemGroup>
+  </Target>
+  <PropertyGroup>
+    <PipelineCollectFilesPhaseDependsOn>
+      CollectCompiledArticles;
+      $(PipelineCollectFilesPhaseDependsOn);
+    </PipelineCollectFilesPhaseDependsOn>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

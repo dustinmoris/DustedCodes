@@ -84,32 +84,3 @@ Get-ChildItem "$SolutionDir\DustedCodes.Blog\App_Data\Articles" -Filter *.md | %
 	Write-Output "Compiling $_"
 	ConvertTo-Html $_ 
 }
-
-# ONLY ON APPVEYOR BUILDS
-# ----------------
-# Change the csproj File to include static HTML files instead of Markdown files for the articles.
-# The files need to be swapped so that MSBuild picks the right files for the WebDeploy package.
-# ----------------
-
-if ($env:APPVEYOR -eq $null -or $env:APPVEYOR -eq $false) 
-{ 
-	Write-Output "Skipping .csproj file transformation (only on AppVeyor builds)."
-	return
-}
-
-# Load the .csproj file content
-Write-Output "Loading $csprojFile..."
-$csprojFile = "$SolutionDir\DustedCodes.Blog\DustedCodes.Blog.csproj"
-[xml]$content = Get-Content -Path $csprojFile
-
-# Find the Include elements and modify the extension from .md to .html
-Write-Output "Modifying Includes.."
-$content.Project.ItemGroup.Content | Where-Object { 
-    $_.Include -ne $null -and $_.Include.Contains("App_Data\Articles\") -and $_.Include.EndsWith(".md") 
-} | % {
-	Write-Output ("Updating " + $_.Include + "...")
-    $_.Include = $_.Include.Replace(".md", ".html")
-}
-
-# Update the .csproj file
-$content.Save($csprojFile)
