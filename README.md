@@ -9,8 +9,6 @@ My personal website - an Open Source ASP.NET MVC 5 Blog.
 
 Inspired by GitHub Pages and Jekyll this is a C# blog engine which renders static HTML pages.
 
-My preferred choice of markup language was plain HTML because it gives me more flexibility than markdown.
-
-However this is only a small implementation detail and can be easily changed by providing a different implementation of ```DustedCodes.Core.Data.LocalStorage.IArticleParser```.
+Blog articles can be written in either Markdown or HTML. Markdown pages get compiled into static HTML pages at build time.
 
 Feel free to fork it and create your own nerdy space in the world wide web!
