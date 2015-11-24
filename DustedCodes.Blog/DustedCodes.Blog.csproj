@@ -120,19 +120,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Articles\demystifying-aspnet-mvc-5-error-pages-and-error-logging.md" />
-    <Content Include="App_Data\Articles\guard-clauses-without-test-coverage-a-common-tdd-pitfall.md" />
-    <Content Include="App_Data\Articles\effective-defense-against-distributed-brute-force-attacks.md" />
-    <Content Include="App_Data\Articles\display-build-history-charts-for-appveyor-or-travisci-builds-with-an-svg-widget.md" />
-    <Content Include="App_Data\Articles\death-of-a-qa-in-scrum.md" />
-    <Content Include="App_Data\Articles\when-to-use-scrum-waterfall-vs-scrum-vs-kanban-vs-scrumban.md" />
-    <Content Include="App_Data\Articles\using-csharp-6-features-in-aspdotnet-mvc-5-razor-views.md" />
-    <Content Include="App_Data\Articles\how-to-use-rsa-in-dotnet-rsacryptoserviceprovider-vs-rsacng-and-good-practise-patterns.md" />
-    <Content Include="App_Data\Articles\hello-world.md" />
-    <Content Include="App_Data\Articles\the-beauty-of-asymmetric-encryption-rsa-crash-course-for-developers.md" />
-    <Content Include="App_Data\Articles\making-font-awesome-awesome-using-icons-without-i-tags.md" />
-    <Content Include="App_Data\Articles\php-uk-conference-2015.md" />
-    <Content Include="App_Data\Articles\running-free-tier-and-paid-tier-web-apps-on-the-same-microsoft-azure-subscription.md" />
+    <None Include="App_Data\Articles\demystifying-aspnet-mvc-5-error-pages-and-error-logging.md" />
+    <None Include="App_Data\Articles\guard-clauses-without-test-coverage-a-common-tdd-pitfall.md" />
+    <None Include="App_Data\Articles\effective-defense-against-distributed-brute-force-attacks.md" />
+    <None Include="App_Data\Articles\display-build-history-charts-for-appveyor-or-travisci-builds-with-an-svg-widget.md" />
+    <None Include="App_Data\Articles\death-of-a-qa-in-scrum.md" />
+    <None Include="App_Data\Articles\when-to-use-scrum-waterfall-vs-scrum-vs-kanban-vs-scrumban.md" />
+    <None Include="App_Data\Articles\using-csharp-6-features-in-aspdotnet-mvc-5-razor-views.md" />
+    <None Include="App_Data\Articles\how-to-use-rsa-in-dotnet-rsacryptoserviceprovider-vs-rsacng-and-good-practise-patterns.md" />
+    <None Include="App_Data\Articles\hello-world.md" />
+    <None Include="App_Data\Articles\the-beauty-of-asymmetric-encryption-rsa-crash-course-for-developers.md" />
+    <None Include="App_Data\Articles\making-font-awesome-awesome-using-icons-without-i-tags.md" />
+    <None Include="App_Data\Articles\php-uk-conference-2015.md" />
+    <None Include="App_Data\Articles\running-free-tier-and-paid-tier-web-apps-on-the-same-microsoft-azure-subscription.md" />
     <Content Include="Content\Css\error.css" />
     <Content Include="Content\Css\site.min.css" />
     <Content Include="Content\Css\site.css" />
@@ -309,11 +309,6 @@
   <PropertyGroup>
     <PreBuildEvent>C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)CompileArticles.ps1" $(SolutionDir)</PreBuildEvent>
   </PropertyGroup>
-  <ItemGroup>
-    <ExcludeFromPackageFiles Include="$(ProjectDir)\App_Data\Articles\*.md">
-      <FromTarget>Project</FromTarget>
-    </ExcludeFromPackageFiles>
-  </ItemGroup>
   <Target Name="CollectCompiledArticles">
     <ItemGroup>
       <_CustomFiles Include="$(ProjectDir)\App_Data\Articles\*.html" />
