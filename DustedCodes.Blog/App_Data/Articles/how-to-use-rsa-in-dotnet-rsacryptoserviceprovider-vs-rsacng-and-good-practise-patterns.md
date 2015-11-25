@@ -32,8 +32,8 @@
 <h4>.NET 3.5 and earlier</h4>
 <p>In .NET 3.5 and earlier the RSA class was much smaller than it is today. It didn't have a contract for signing and validating data and only exposed two methods for encyrpting and decrypting a value:</p>
 <ul>
-	<li><a href="https://msdn.microsoft.com/en-us/library/system.security.cryptography.rsa.encryptvalue(v=vs.90).aspx"><code>public abstract byte[] EncryptValue(byte[] rgb)</code></a></li>
-	<li><a href="https://msdn.microsoft.com/en-us/library/system.security.cryptography.rsa.decryptvalue(v=vs.90).aspx"><code>public abstract byte[] DecryptValue(byte[] rgb)</code></a></li>
+	<li><a href="https://msdn.microsoft.com/en-us/library/system.security.cryptography.rsa.encryptvalue(v=vs.90).aspx">public abstract byte[] EncryptValue(byte[] rgb)</a></li>
+	<li><a href="https://msdn.microsoft.com/en-us/library/system.security.cryptography.rsa.decryptvalue(v=vs.90).aspx">public abstract byte[] DecryptValue(byte[] rgb)</a></li>
 </ul>
 <p>Also notice how the methods accept a data object but no indication of which padding system should be used. Using an <a href="http://rdist.root.org/2009/10/06/why-rsa-encryption-padding-is-critical/">encyrption padding is critical to the security of your RSA implementation</a> and therefore is somewhat lacking in the base contract.</p>
 
@@ -55,8 +55,8 @@
 <h3>Factory methods</h3>
 <p>The RSA class also implements two static factory methods to create an instance of RSA:</p>
 <ol>
-    <li><a href="https://msdn.microsoft.com/en-us/library/7taa5dzy(v=vs.110).aspx"><code>public static RSA Create()</code></a></li>
-    <li><a href="https://msdn.microsoft.com/en-us/library/5ws2s1f6(v=vs.110).aspx"><code>public static RSA Create(string algName)</code></a></li>
+    <li><a href="https://msdn.microsoft.com/en-us/library/7taa5dzy(v=vs.110).aspx">public static RSA Create()</a></li>
+    <li><a href="https://msdn.microsoft.com/en-us/library/5ws2s1f6(v=vs.110).aspx">public static RSA Create(string algName)</a></li>
 </ol>
 <p>In all versions of .NET the default implementation is the RSACryptoServiceProvider:</p>
 <pre><code>using (var rsa = RSA.Create())
