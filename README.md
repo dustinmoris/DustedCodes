@@ -13,4 +13,4 @@ Blog articles can be written in either Markdown or HTML. Markdown pages get comp
 
 Feel free to fork it and create your own nerdy space in the world wide web!
 
-Visit my blog at http://dusted.codes
+Visit my blog at [dusted.codes](http://dusted.codes/).
