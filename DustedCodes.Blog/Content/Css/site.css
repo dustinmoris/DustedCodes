@@ -143,25 +143,22 @@ p, aside {
     line-height: 2em;
 }
 
-pre {
+code {
     border: 1px solid #e5e5e5;
-    padding: .5em 0 .5em 1em;
+    padding: .3em .5em;
     -ms-border-radius: 4px;
     border-radius: 4px;
     background: #fafafa;
-}
-
-code {
     white-space: pre-wrap;
     font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
-    color: #c30;
     line-height: 1.6em;
-    font-size: .9em;
-}
-
-pre code {
     font-size: .85em;
     color: #333;
+}
+
+pre>code {
+    display: block;
+    padding: .5em 0 .5em 1em;
 }
 
 strong {
