@@ -4,7 +4,7 @@
     Title: How to make an IStatusCodeHandler portable in NancyFx
     Tags: nancyfx architecture
 -->
-I am currently building several micro services using the [NancyFx](http://nancyfx.org/) framework with many projects sharing the same underlying architecture.
+I am currently working on several micro services using the [NancyFx](http://nancyfx.org/) framework with many projects sharing the same underlying architecture.
 
 The [IStatusCodeHandler](https://github.com/NancyFx/Nancy/blob/master/src/Nancy/IStatusCodeHandler.cs) interface is one of the core infrastructure components which is used by many Nancy projects to intercept and process a Nancy context before the final response gets returned to the client.
 
