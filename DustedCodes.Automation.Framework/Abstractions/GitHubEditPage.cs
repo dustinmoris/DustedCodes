@@ -9,7 +9,7 @@ namespace DustedCodes.Automation.Framework.Abstractions
             SignInIfRequired();
 
             var filenameField = Driver.Instance.FindElement(By.CssSelector("input[type=text][name=filename]"));
-            var expectedFilename = $"{permalinkId}.html";
+            var expectedFilename = $"{permalinkId}.md";
             return filenameField.GetAttribute("value") == expectedFilename;
         }
 
