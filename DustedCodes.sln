@@ -11,8 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DustedCodes.Automation.Fram
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DustedCodes.Automation.Tests", "DustedCodes.Automation.Tests\DustedCodes.Automation.Tests.csproj", "{56276311-5B0B-4025-83F5-E16D651851FE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "About", "About", "{1B5D3E1B-3318-4AF8-9702-82765160F3B0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{1B5D3E1B-3318-4AF8-9702-82765160F3B0}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
@@ -26,11 +27,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DustedCodes.Core", "DustedCodes.Core\DustedCodes.Core.csproj", "{249F1D7B-CB40-49A6-AE53-54185C10FF8F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DustedCodes.Core.Tests", "DustedCodes.Core.Tests\DustedCodes.Core.Tests.csproj", "{E9794F23-A4EF-433C-BA7C-2C02BDBC1833}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source Control", "Source Control", "{0CC362D9-3E7E-4C1B-981A-A3136172F4BD}"
-	ProjectSection(SolutionItems) = preProject
-		.gitignore = .gitignore
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
