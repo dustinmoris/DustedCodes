@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{1B5D
 		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
+		WebEssentials2015-Settings.json = WebEssentials2015-Settings.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{C169E963-BADB-4AA1-8261-55F54C571CED}"
