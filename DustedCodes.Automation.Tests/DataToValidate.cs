@@ -89,6 +89,12 @@ namespace DustedCodes.Automation.Tests
                 Title = "When to use Scrum? Waterfall vs. Scrum vs. Kanban vs. Scrumban",
                 PermalinkId = "when-to-use-scrum-waterfall-vs-scrum-vs-kanban-vs-scrumban",
                 Tags = new[] { "scrum", "kanban", "scrumban", "waterfall", "agile" }
+            },
+            new BlogPost
+            {
+                Title = "How to make an IStatusCodeHandler portable in NancyFx",
+                PermalinkId = "how-to-make-an-istatuscodehandler-portable-in-nancyfx",
+                Tags = new[] { "nancyfx", "architecture" }
             }
         };
     }
