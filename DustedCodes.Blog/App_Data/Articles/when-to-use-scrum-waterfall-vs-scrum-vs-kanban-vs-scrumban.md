@@ -31,10 +31,10 @@
 <p>Rolling out Scrum to all teams, making everyone follow the same iterations and maximising consistency in the process leaves very little to no room for self organising teams. At the end of the day there is nothing left to self organise and a team follows the same rigid patterns and reporting schedules as they did before, but now under the hat of Scrum.</p>
 
 <p>Alternatively a much better, or in my opinion a more agile approach would be to say &quot;I don't care how you work&quot;. Provide a team with enough coaching to understand the differences in agile methodologies and empower them to pick the right tool for themselves.</p>
-<p>The manager can stop worrying about all the boring semantics of a process and focus on more relevant and exciting parts of the business - the results. Additionally this will force a team to make success measurable, which is key in agile software development.</p>
+<p>The manager can stop worrying about all the boring semantics of a process and focus on more relevant and exciting parts of the business - mainly the results. Additionally this will force a team to make success measurable, which is key in agile software development.</p>
 
 <h4>The power of trust</h4>
-<p>There is <a href="http://www.entrepreneur.com/article/217701">nothing more powerful than delegating responsibility</a> to a team. It triggers a higher sense of ownership, pride in one's own work, intrinsic motivation and increase in productivity.</p>
+<p>There is nothing more powerful than delegating responsibility to a team. It triggers a higher sense of ownership, pride in one's own work, intrinsic motivation and increase in productivity.</p>
 <p>The team is responsible for it's own process and will take any action required to make it as smooth as possible. Situations where a team leaned back and waited for someone else to fix an issue belong in the past!</p>
 
 <h3>Scrum is not a silver bullet</h3>
@@ -69,7 +69,7 @@
 
 <p>The heavy Scrum process is vital to this type of project. Every single meeting and the restrictions of a committed sprint serve a real purpose and are advantageous to the success of a project.</p>
 
-<p>However, if a project doesn't have the requirements listed from above then Scrum can very quickly become uneconomical.</p>
+<p>However, if a project doesn't have any of the requirements listed above then Scrum can very quickly become uneconomical.</p>
 
 <h2>Waterfall is okay if nothing is expected to change</h2>
 
