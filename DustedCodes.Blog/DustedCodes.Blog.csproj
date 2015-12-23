@@ -126,10 +126,7 @@
     <None Include="App_Data\Articles\display-build-history-charts-for-appveyor-or-travisci-builds-with-an-svg-widget.md" />
     <None Include="App_Data\Articles\death-of-a-qa-in-scrum.md" />
     <None Include="App_Data\Articles\how-to-make-an-istatuscodehandler-portable-in-nancyfx.md" />
-    <Content Include="App_Data\Articles\using-raml-to-design-test-and-document-restful-apis.html">
-      <DependentUpon>using-raml-to-design-test-and-document-restful-apis.md</DependentUpon>
-    </Content>
-    <Content Include="App_Data\Articles\using-raml-to-design-test-and-document-restful-apis.md" />
+    <Content Include="App_Data\Articles\design-test-and-document-restful-apis-using-raml-in-dotnet.md" />
     <None Include="App_Data\Articles\when-to-use-scrum-waterfall-vs-scrum-vs-kanban-vs-scrumban.md" />
     <None Include="App_Data\Articles\using-csharp-6-features-in-aspdotnet-mvc-5-razor-views.md" />
     <None Include="App_Data\Articles\how-to-use-rsa-in-dotnet-rsacryptoserviceprovider-vs-rsacng-and-good-practise-patterns.md" />
