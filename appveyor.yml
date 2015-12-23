@@ -1,4 +1,4 @@
-version: 2.10.1.{build}
+version: 2.11.0.{build}
 os:
   - Visual Studio 2015
 configuration: Release
