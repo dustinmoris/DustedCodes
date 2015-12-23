@@ -143,6 +143,15 @@ p, aside {
     line-height: 2em;
 }
 
+pre {
+    overflow-x: hidden;
+}
+
+    pre > code {
+        display: block;
+        padding: .5em 0 .5em 1em;
+    }
+
 code {
     border: 1px solid #e5e5e5;
     padding: .3em .5em;
@@ -152,13 +161,8 @@ code {
     white-space: pre-wrap;
     font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
     line-height: 1.6em;
-    font-size: .85em;
+    font-size: .8em;
     color: #333;
-}
-
-pre>code {
-    display: block;
-    padding: .5em 0 .5em 1em;
 }
 
 strong {
@@ -398,6 +402,13 @@ blockquote {
     border-radius: 3px;
 }
 
+@media all and (max-width: 480px) {
+
+    pre > code {
+        font-size: .75em;
+    }
+}
+
 @media all and (max-width: 640px) {
 
     .nav-expanded {
@@ -496,5 +507,9 @@ blockquote {
 
     p, aside {
         text-align: justify;
+    }
+
+    pre > code {
+        font-size: .85em;
     }
 }
