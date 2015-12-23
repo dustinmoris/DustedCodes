@@ -2,7 +2,7 @@
     Published: 2015-12-23 00:04
     Author: Dustin Moris Gorski
     Title: Design, test and document RESTful APIs using RAML in .NET
-    Tags: raml restful-api design testing dotnet anypoint
+    Tags: raml restful-api dotnet anypoint
 -->
 Building a RESTful API is easy. Building a RESTful API which is easy to consume is more difficult. There are three key elements which make a good API:
 
@@ -53,9 +53,9 @@ As I mentioned earlier, for the purpose of this demo I would like to build a ver
 -   ***GET** /status/{parcelId}* will return the status of a parcel
 -   ***PUT** /status/{parcelId}* will update the status of a parcel
 
-RAML is a [YAML](http://www.yaml.org/) based language and designed for human readability. The beauty of this is that you can write RAML in any basic editor without fancy syntax highlighting and it will be still easy to read and understand.
+RAML is a [YAML](http://www.yaml.org/) based language and designed for human readability. The beauty of this is that you can write RAML in a basic editor without fancy syntax highlighting and it will be still easy to read and understand.
 
-However, there is a really good [Atom](https://atom.io/) plugin called [API Workbench](http://apiworkbench.com/) which I am using to kick start my API:
+However, there is a good [Atom](https://atom.io/) plugin called [API Workbench](http://apiworkbench.com/) which I am using to kick start my API:
 
 <pre><code>#%RAML 0.8
 title: Parcel Delivery API
@@ -64,9 +64,9 @@ baseUri: http://localhost/raml-demo-api/{version}
 protocols: [ HTTP, HTTPS ]</code></pre>
 
 *Sidenote:
-I will not go through every single line of the spec, but try to provide enough context so that you can easily follow the examples.*
+I will not go through every single line of the sample code, but provide enough context so that it should be easy to follow.*
 
-At the top of the document I specified the RAML version, followed by the title of the API, the API version and the basic URI with a version placeholder. This will allow me to introduce breaking changes in the future. The API shall also be called from both protocols, HTTP and HTTPS.
+At the top of the document I specified the RAML version, followed by the title of the API, the API version and the basic URI with a version placeholder. This allows me to introduce breaking changes in the future. The API shall also be called from both protocols, HTTP and HTTPS.
 
 Next I define a single endpoint to set and get status information for a given parcel ID:
 
@@ -114,9 +114,9 @@ After this I define the contract for the GET operation, which shall return the c
                 "updated": "2015-12-09T16:53:19.5168335+00:00"
               }</code></pre>
 
-As you can see there is probably not much I have to explain. The GET operation expects a successful response with the 200 HTTP status code and a JSON payload containing the current status. Note how RAML allows me to provide an example alongside the schema for a better understanding. This will be particularly useful at a later point.
+As you can see there is probably not much I have to explain. The GET operation returns a successful response with the 200 HTTP status code and a JSON payload containing the current status. Note how RAML allows me to provide an example alongside the schema. This will be particularly useful at a later point.
 
-I am pleased with this and therefore apply something similar for the PUT verb:
+I am pleased with that and apply something similar for the PUT verb:
 
 <pre><code>...
   put:
@@ -145,11 +145,9 @@ I am pleased with this and therefore apply something similar for the PUT verb:
 
 The only difference is that the PUT operation expects a JSON object in the HTTP body and returns the [201 status code](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2) on success.
 
-Now I am almost done with designing the API. The only missing thing is to describe what happens if a consumer provides a wrong parcel ID.
+Now I'm almost done with designing my API. The only thing missing is to describe what happens if a consumer provides an invalid parcel ID. It might either not exist or be in the wrong format.
 
-The supplied parcel ID might either not exist or be in the wrong format.
-
-Because this applies to both operations, the GET and the PUT on my endpoint, I will define two additional error responses as a [trait](http://docs.raml.org/specs/1.0/#raml-10-spec-resource-types-and-traits) which can be shared by multiple endpoints in RAML:
+Because this applies to both operations, the GET and the PUT on my endpoint, I will define a [trait](http://docs.raml.org/specs/1.0/#raml-10-spec-resource-types-and-traits) with two additional error responses, which can be shared by multiple endpoints in RAML:
 
 <pre><code>...
 traits:
@@ -176,9 +174,9 @@ traits:
                   "message": "Parcel ID not found."
                 }</code></pre>
 
-Every trait has a unique name. I named this one &quot;requiresValidParcelId&quot;.
+Every trait has a unique name. In this case I called it `requiresValidParcelId`.
 
-Perhaps you noticed the &quot;schema: ErrorMessage&quot; in the declaration of the response body. Shared schemas is another feature of RAML. In this case I have defined a schema called &quot;ErrorMessage&quot; which describes the payload in the error response:
+Perhaps you noticed the `schema: ErrorMessage` in the declaration of the response body. Shared schemas is another feature of RAML. I created an `ErrorMessage` schema to describe the JSON payload of an error response:
 
 <pre><code>...
 schemas:
@@ -195,9 +193,9 @@ schemas:
         }
       }</code></pre>
 
-It is the same principle as to how I defined the success response in my previous example, with the only difference that this one is declared in a separate section inside the RAML which allows me re-use in mutliple endpoints.
+Overall it is the same principle as to how I defined the success response in my previous example, except that this one is declared in a separate section which allows multiple re-use inside RAML.
 
-At last I need to hook up the status endpoint with the trait:
+At last I need to hook up my endpoint with the trait:
 
 <pre><code>...
 /status/{parcelId}:
@@ -318,11 +316,11 @@ traits:
       201:
         description: The status has been successfully updated.</code></pre>
 
-*The full [RAML document](https://github.com/dustinmoris/RAML-Demo/blob/master/api.raml) can also be found in my [RAML-Demo](https://github.com/dustinmoris/RAML-Demo/) repository on GitHub.*
+*You can also explore the full [RAML document](https://github.com/dustinmoris/RAML-Demo/blob/master/api.raml) in my [RAML-Demo](https://github.com/dustinmoris/RAML-Demo/) GitHub repository.*
 
 RAML has a lot more to offer than what I showed in this basic example, but hopefully this gives you a rough idea of how intuitive and powerful it can be!
 
-One of my favourite features is that you can auto-generate a .NET client from a RAML file, which brings me to the second part of this blog post.
+Additionally there is a lot of useful tooling built around RAML. One of my favourites is the RAML Tools for .NET, which brings me to the second part of this blog post.
 
 <h2 id="generate-a-client-from-the-raml-document">2. Generate a client from the RAML document</h2>
 
@@ -332,7 +330,7 @@ First I create an empty test project and include the RAML file (api.raml) in a s
 
 <a href="https://www.flickr.com/photos/130657798@N05/23265040193/in/dateposted-public/" title="RAML-Demo-Solution-Tree"><img src="https://farm1.staticflickr.com/734/23265040193_87ebcfdf49_o.png" alt="RAML-Demo-Solution-Tree"></a>
 
-For the next part I have to install the official [RAML Tools for .NET](https://github.com/mulesoft-labs/raml-dotnet-tools) Visual Studio extension:
+For the next part I have to install the [RAML Tools for .NET](https://github.com/mulesoft-labs/raml-dotnet-tools) Visual Studio extension:
 
 <a href="https://www.flickr.com/photos/130657798@N05/23865723396/in/dateposted-public/" title="RAML-Demo-Visual-Studio-RAML-Extension"><img src="https://farm6.staticflickr.com/5739/23865723396_88003023fd_o.png" alt="RAML-Demo-Visual-Studio-RAML-Extension"></a>
 
@@ -348,21 +346,21 @@ I select the Upload option and navigate to the api.raml inside my solution folde
 
 <a href="https://www.flickr.com/photos/130657798@N05/23865723466/in/dateposted-public/" title="RAML-Demo-Create-Client"><img src="https://farm6.staticflickr.com/5778/23865723466_db487ddba7_o.png" alt="RAML-Demo-Create-Client"></a>
 
-The import process automatically detected my single endpoint (/status/{parcelId}) and the only thing I had to change was the default client name to be &quot;ParcelDeliveryApiClient&quot; in case I want to import another API at a later point.
+The import process automatically detected my single endpoint and the only thing I had to change was the default client name to &quot;ParcelDeliveryApiClient&quot; in case I want to import another API at a later point.
 
 Hitting the Import button finishes the remaining work and once completed I am seeing a new API reference in my project tree:
 
 <a href="https://www.flickr.com/photos/130657798@N05/23596119830/in/dateposted-public/" title="RAML-Demo-RAML-References-in-Project"><img src="https://farm6.staticflickr.com/5662/23596119830_abde113f83_o.png" alt="RAML-Demo-RAML-References-in-Project"></a>
 
-This was a very smooth and painless import and if successful I should be able to instantiate an object of `ParcelDeliveryApiClient` in a new class file:
+This was a very smooth and painless process and if successfully imported I should be able to create an instance of `ParcelDeliveryApiClient` in a new class file:
 
 <a href="https://www.flickr.com/photos/130657798@N05/23797380272/in/dateposted-public/" title="RAML-Demo-Aut-Generated-Client-in-Code"><img src="https://farm6.staticflickr.com/5833/23797380272_a633140864_o.png" alt="RAML-Demo-Aut-Generated-Client-in-Code"></a>
 
-Amazing, let's explore the auto-generated client by writing some tests next!
+Amazing, let's explore the auto-generated client by writing some tests in the next step!
 
 <h2 id="write-tests-using-the-auto-generated-client">3. Write tests using the auto-generated client</h2>
 
-Using the client I can write integration tests against a real endpoint. At the moment I don't have a working API running anywhere so I define a provisional URI and a couple more parameters for my first test:
+With the `ParcelDeliveryApiClient` I can write integration tests against a real endpoint. At the moment I don't have a working API running anywhere so I define a provisional URI and a couple more parameters for my first test:
 
 <pre><code>[TestFixture]
 public class ParcelDeliveryApiTests
@@ -376,7 +374,7 @@ public class ParcelDeliveryApiTests
     }
 }</code></pre>
 
-Next I initialize an instance of the client and send a PUT request for the parcel ID 123456:
+Next I initialize the client and send a PUT request for the parcel ID 123456:
 
 <pre><code>[Test]
 public async Task IntegrationTest1()
@@ -396,9 +394,9 @@ public async Task IntegrationTest1()
             parcelId);</strong>
 }</code></pre>
 
-The amazing thing is that the entire client code has been auto-generated when importing the RAML file. Every member of the class such as the &quot;StatusParcelId&quot; or the &quot;Put(...)&quot; method, as well as the &quot;StatusParcelIdPutRequestContent&quot; DTO class have been auto-magically created for me.
+The amazing thing is that the entire client code has been auto-generated during the import. Every member of the class such as the `StatusParcelId` or the `Put(...)` method, as well as the `StatusParcelIdPutRequestContent` DTO class have been auto-magically created for me.
 
-Remember, all I have done was to describe my API using RAML and with a few additional clicks in Visual Studio I am now able to write full fletched integration tests against an API which doesn't even exist yet!
+Remember, all I have done so far was to describe my API using RAML and with a few additional clicks in Visual Studio I am now able to write full fletched integration tests against an API which doesn't even exist yet!
 
 I find this pretty cool.
 
@@ -453,13 +451,13 @@ public async Task IntegrationTest()
 
 After the PUT I am firing a GET with the same parcel ID and expect another successful response with the updated status.
 
-When I run this test it will fail on the first assertion, because there is nothing behind the endpoint yet, but I am going to fix this very soon.
+When I run this test it will fail on the first assertion, because at the moment there is nothing behind the endpoint yet, but I am going to fix this very soon.
 
-This test obviously doesn't cover everything from the RAML document, but at this point it should be clear that with the auto-generated client I can test every single facet of my API without having to write any client code myself.
+This test obviously doesn't cover everything from the RAML document, but at this point it should be clear that with the auto-generated client I can test every single aspect of my API without having to write any client code myself.
 
 ### Coupling the RAML file to the API
 
-So how is this better than a normal integration test? The key benefit is that the client is a 1:1 replica of the RAML file. If the API changes I will have to update the client as well which subsequently forces me to update the RAML first.
+So how is this better than a normal integration test? The key benefit is that the client is a 1:1 replica of the RAML file. If the API changes I will have to update my tests, which requires me to update the client, which subsequently forces me to update the RAML first.
 
 Besides that it took me only 10 seconds to generate a perfect abstraction of my API which can be used for more than just writing tests.
 
@@ -467,7 +465,7 @@ Besides that it took me only 10 seconds to generate a perfect abstraction of my 
 
 I have to admit this part has very little to do with RAML, but I thought it would be great to provide a full end to end example as part of this blog post.
 
-For that reason I will make it short and fast forward this step by providing a quick and dirty implementation which should satisfy the integration test from above:
+For that reason I'll make it short and fast forward the implementation to the point where it will satisfy the test from above:
 
 <pre><code>public StatusModule() : base("/v1/status")
 {
@@ -495,24 +493,22 @@ For that reason I will make it short and fast forward this step by providing a q
     };
 }</code></pre>
 
-This snippet doesn't implement the entire API, but enough to make the test go green.
+This (quick and dirty) snippet doesn't implement the entire API, but enough to make the test go green.
 
-*By the way, you can find the [entire sample code of this blog post](https://github.com/dustinmoris/RAML-Demo) hosted on GitHub as well.*
-
-After cheating myself through step 4 let's move on to the next and final part of this article and look at another important aspect of building RESTful APIs.
+After cheating myself through step 4 let's move on to the next and final part of this article and look at another important criteria of building a RESTful API.
 
 <h2 id="document-and-review-an-api-using-the-anypoint-platform">5. Document and review an API using the Anypoint Platform</h2>
 
-Before going any deeper let's quickly recap what I've done so far:
+Before going any further let's quickly recap what I've done so far:
 
 -   I designed an API using RAML
 -   Used the RAML Tools for .NET to auto-generate a client
 -   Wrote an integration test with the generated client
 -   Implemented enough of the API to satisfy my test
 
-It feels like I am almost done. So what about documentation now? Well RAML is already human readable, it is accurate and tested against my actual API and all my tests are passing, so am I actually done?
+It feels like I am almost done. So what about documentation? Well RAML is already human readable, it is accurate and tested against my actual API and all my tests are passing as well, so am I actually done?
 
-No, not yet, there are two more issues I have to solve:
+No, not yet, there are two more things I have to solve:
 
 -   At the moment the RAML document is only in my source control and likely not accessible to external consumers
 -   Integration tests are great to give me confidence, but my stakeholders don't understand those green and red lights in Visual Studio (or CI system) and likely want to verify the API for themselves
@@ -529,7 +525,7 @@ The designer is exceptionally well done. It offers many features like syntax hig
 
 <a href="https://www.flickr.com/photos/130657798@N05/23548329229/in/dateposted-public/" title="RAML-Demo-Anypoint-Designer-Suggested-Nodes"><img src="https://farm1.staticflickr.com/565/23548329229_70792a7a3b_o.png" alt="RAML-Demo-Anypoint-Designer-Suggested-Nodes"></a>
 
-Another brilliant feature is the interactive preview when editing a RAML file. It visually displays every characteristic of your API in a beautiful interface, like those responses for an example:
+Another brilliant feature is the interactive preview when editing a RAML file. It visually displays every characteristic of your API in a beautiful interface, like those responses as an example:
 
 <a href="https://www.flickr.com/photos/130657798@N05/23611739780/in/dateposted-public/" title="RAML-Demo-Anypoint-Designer-Preview-Responses"><img src="https://farm1.staticflickr.com/570/23611739780_4be138f177_o.png" alt="RAML-Demo-Anypoint-Designer-Preview-Responses"></a>
 
@@ -537,11 +533,13 @@ It even goes as far as allowing me to interact with a mocked service while worki
 
 <a href="https://www.flickr.com/photos/130657798@N05/23881341456/in/dateposted-public/" title="RAML-Demo-Anypoint-Designer-Preview"><img src="https://farm6.staticflickr.com/5786/23881341456_e44ba5d047_o.png" alt="RAML-Demo-Anypoint-Designer-Preview"></a>
 
-When I click the Try It button it displays me a form with all relevant parameters and auto-populates the fields with the values from the example in my RAML:
+When I click the Try It button it displays me a form with all relevant parameters pre-populated with the values from the examples in my RAML:
 
 <a href="https://www.flickr.com/photos/130657798@N05/23907433735/in/dateposted-public/" title="RAML-Demo-Anypoint-Designer-TryIt-Request"><img src="https://farm6.staticflickr.com/5791/23907433735_0847e4e5c9_o.png" alt="RAML-Demo-Anypoint-Designer-TryIt-Request"></a>
 
-After I finished designing my API I published it into a Live Portal which is publicly accessible (can be private as well), where users and stakeholders can try the API against my live service.
+From the UI I can quickly run requests against my API with as little friction as possible.
+
+Finally you can publish your API into a Live Portal which is publicly accessible (can be private as well), where users and stakeholders can try the API in a live environment.
 
 Try it yourself by executing some PUT and GET requests via the [Live Portal of my demo API](https://anypoint.mulesoft.com/apiplatform/dustinmoris#/portals/organizations/1c966d9b-793c-46bc-a87a-427b9a4a9b4a/apis/45625/versions/47291).
 
