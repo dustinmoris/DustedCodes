@@ -175,6 +175,13 @@ img {
     max-height: 100%;
 }
 
+kbd {
+    border: 1px solid #888;
+    padding: .2em .5em;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+}
+
 article > header > h1:first-child {
     margin-top: .5em;
     border-top: 1px solid #efefef;
