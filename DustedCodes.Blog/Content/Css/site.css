@@ -329,6 +329,10 @@ blockquote {
     transform: translate(0, 0);
 }
 
+.icon-larger::before {
+    font-size: 1.5em;
+}
+
 .article-metadata {
     margin: 0 0 2.5em 0;
     color: #777;
