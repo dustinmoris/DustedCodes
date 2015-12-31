@@ -95,6 +95,18 @@ namespace DustedCodes.Automation.Tests
                 Title = "How to make an IStatusCodeHandler portable in NancyFx",
                 PermalinkId = "how-to-make-an-istatuscodehandler-portable-in-nancyfx",
                 Tags = new[] { "nancyfx", "architecture" }
+            },
+            new BlogPost
+            {
+                Title = "Design, test and document RESTful APIs using RAML in .NET",
+                PermalinkId = "design-test-and-document-restful-apis-using-raml-in-dotnet",
+                Tags = new[] { "raml", "restful-api", "dotnet", "anypoint" }
+            },
+            new BlogPost
+            {
+                Title = "Diagnosing CSS issues on mobile devices",
+                PermalinkId = "diagnosing-css-issues-on-mobile-devices",
+                Tags = new[] { "css" }
             }
         };
     }

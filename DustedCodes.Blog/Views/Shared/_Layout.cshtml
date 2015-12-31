@@ -39,10 +39,10 @@
                 @Html.ActionLink("Archive", "Archive", "Blog")
             </li>
             <li>
-                <a href="https://github.com/dustinmoris?tab=repositories">Projects</a>
+                @Html.ActionLink("About", "About", "Home")
             </li>
             <li>
-                @Html.ActionLink("About", "About", "Home")
+                <a class="icon fa-github" href="https://github.com/dustinmoris?tab=repositories">Projects</a>
             </li>
             <li>
                 @Html.ActionLink("RSS", "Rss", "Feed", null, new { @class = "icon fa-rss" })
