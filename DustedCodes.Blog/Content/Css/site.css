@@ -143,15 +143,6 @@ p, aside {
     line-height: 2em;
 }
 
-pre {
-    overflow-x: hidden;
-}
-
-    pre > code {
-        display: block;
-        padding: .5em 0 .5em 1em;
-    }
-
 code {
     display: inline-block;
     border: 1px solid #e5e5e5;
@@ -165,7 +156,22 @@ code {
     font-size: .8em;
     color: #333;
     text-align: left;
+    -moz-word-break: break-all;
+    -o-word-break: break-all;
+    word-break: break-all;
 }
+
+pre {
+    overflow-x: hidden;
+}
+
+    pre > code {
+        display: block;
+        padding: .5em 0 .5em 1em;
+        -moz-word-break: normal;
+        -o-word-break: normal;
+        word-break: normal;
+    }
 
 strong {
     color: #222;

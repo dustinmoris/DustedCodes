@@ -311,9 +311,12 @@
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>if $(ConfigurationName) == Debug (
-echo "Skipping Article compilation in debug mode."
+echo "Skipping article compilation in debug mode."
+echo "Skipping CSS compression in debug mode."
 ) else (
 C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)CompileArticles.ps1" $(SolutionDir)
+
+C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)CompressCss.ps1" $(SolutionDir)
 )
 
 </PreBuildEvent>
