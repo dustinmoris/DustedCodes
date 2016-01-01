@@ -13,7 +13,11 @@ First I had to make the invisible visible.
 With a little bit of Google's help and playing around in the Google Chrome Console (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd>) I put this little JavaScript snippet together:
 
 ```
-[].forEach.call(document.getElementsByTagName("*"), function(e) {e.style.outline = "1px solid red";});
+[].forEach.call(
+    document.getElementsByTagName("*"),
+    function(e) { 
+        e.style.outline = "1px solid red";
+});
 ```
 
 When I execute this in the console it will outline every element on the page:
