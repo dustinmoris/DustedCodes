@@ -153,8 +153,9 @@ pre {
     }
 
 code {
+    display: inline-block;
     border: 1px solid #e5e5e5;
-    padding: .3em .5em;
+    padding: .15em .5em;
     -ms-border-radius: 4px;
     border-radius: 4px;
     background: #fafafa;
@@ -163,6 +164,7 @@ code {
     line-height: 1.6em;
     font-size: .8em;
     color: #333;
+    text-align: left;
 }
 
 strong {
