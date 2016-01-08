@@ -1,0 +1,433 @@
+﻿<!--
+    Published: 2016-01-08 00:07
+    Author: Dustin Moris Gorski
+    Title: Running NancyFx in a Docker container, a beginner's guide to build and run .NET applications in Docker
+    Tags: docker dotnet nancyfx
+-->
+The quiet Christmas period is always a good time to explore new technologies and recent trends which have been on my list for a while. This Christmas I spent some time in learning [the latest ASP.NET framework](http://docs.asp.net/en/latest/conceptual-overview/aspnet.html), in particular how to run ASP.NET 5 applications on Linux via the [CoreCLR](https://github.com/dotnet/coreclr) and how to run a regular .NET 4.x web application via [Mono](http://www.mono-project.com/) in a [Docker](https://www.docker.com/) container. The latter is what I am going to talk about in this blog post today.
+
+## What is Docker?
+
+I assume you have some basic knowledge of what [Docker](https://www.docker.com/) is, how it revolutionized the way we ship software into the cloud and what the benefits are of a container over a VM. If anything of this doesn't make sense, then I would recommend you to make yourself familiar with the basic concept of containers and why it is desirable to run applications in a container before continuing with this blog post.
+
+A few good resources to get you started are:
+
+- [Docker Training](http://training.docker.com/)
+- [Docker Docs](https://docs.docker.com/)
+- [Docker Deep Dive on Pluralsight](https://www.pluralsight.com/courses/docker-deep-dive)
+- [Awesome Docker (list of useful Docker resources)](https://github.com/veggiemonk/awesome-docker)
+
+## Setting up Docker on Windows
+
+First you want to get Docker running locally so you can run and debug applications in a development environment. Luckily this has been made extremely easy for us. All you need is to download the [Docker Toolbox](https://www.docker.com/docker-toolbox) for Windows and follow the installation instructions.
+
+### Docker Toolbox
+
+After installation you will have three new applications:
+
+- [VirtualBox](https://www.virtualbox.org/)
+- [Kitematic](https://kitematic.com/)
+- Docker Quickstart Terminal
+
+If you have VirtualBox already installed then the installer will skip over this step. The important thing to know is that VirtualBox has an external API which can be used by other applications to manage VMs automatically. This is exactly what the Docker Machine does. It will create a new VM in VirtualBox with an image which has everything you need to run Docker there. Because it is all automated you never really have to worry about VirtualBox yourself.
+
+Kitematic is a GUI client around the Docker Machine. At the moment it is very limited in functionality and therefore you will not need it either.
+
+This leaves the Docker Terminal as the last application, which is the only thing we will be using to run and manage Docker containers in our local environment.
+
+### Run your first Docker command from the Terminal
+
+After a successful installation let's run a first Docker command to see if things generally work. When you open the terminal for the first time it will initialize the VM in VirtualBox. This may take a few seconds but eventually you should end up at a screen like this:
+
+<a href="https://www.flickr.com/photos/130657798@N05/24239896875/in/dateposted-public/" title="docker-quickstart-terminal"><img src="https://farm2.staticflickr.com/1483/24239896875_27598884fe_c.jpg" alt="docker-quickstart-terminal"></a>
+
+You don't have to open Kitematic or VirtualBox to get it running. As I said before, you can happily ignore those two applications, however, if you are curious you can look into VirtualBox and see the VM running as expected:
+
+<a href="https://www.flickr.com/photos/130657798@N05/23613070973/in/dateposted-public/" title="oracle-virtualbox-docker-default-vm"><img src="https://farm2.staticflickr.com/1688/23613070973_5d177cc563_b.jpg" alt="oracle-virtualbox-docker-default-vm"></a>
+
+<a href="https://www.flickr.com/photos/130657798@N05/23872055229/in/dateposted-public/" title="oracle-virtualbox-docker-default-vm-details"><img src="https://farm2.staticflickr.com/1558/23872055229_c5353380e2_z.jpg" alt="oracle-virtualbox-docker-default-vm-details"></a>
+
+It's a Linux box loaded from the boot2docker.iso.
+
+Back to the terminal I can now type `docker version` to get some basic version information about the Docker client and server application:
+
+<a href="https://www.flickr.com/photos/130657798@N05/24131827402/in/dateposted-public/" title="docker-version"><img src="https://farm2.staticflickr.com/1570/24131827402_966487e279_z.jpg" alt="docker-version"></a>
+
+With that we are good to go with Docker now.
+
+Maybe one thing which is worth mentioning at this point is the initial message in the Docker Terminal:
+
+<a href="https://www.flickr.com/photos/130657798@N05/24131827722/in/dateposted-public/" title="docker-host-ip-address"><img src="https://farm2.staticflickr.com/1497/24131827722_20c8599379_z.jpg" alt="docker-host-ip-address"></a>
+
+The IP address which is shown in your terminal is the endpoint from where you can reach your application later in this tutorial.
+
+## Creating a NancyFx web application for Docker
+
+Now it is time to actually create a .NET web application which can run on Mono.
+
+First I create a new project using the template for a regular console application, targeting .NET Framework 4.6.1.
+
+The project is entirely empty except the `Program.cs` file:
+
+<pre><code>
+class Program
+{
+    static void Main(string[] args)
+    {
+    }
+}
+</code></pre>
+
+Next I have to install 3 NuGet packages:
+
+<pre><code>
+Install-Package Nancy
+Install-Package Nancy.Hosting.Self
+Install-Package Mono.Posix
+</code></pre>
+
+The first package installs the [NancyFx](http://nancyfx.org/) web framework. Nancy is a lightweight .NET framework for building HTTP based services. You can think of it like a counterpart of ASP.NET, except it has nothing to do with ASP.NET, IIS or the System.Web namespace.
+
+You can still host Nancy applications on IIS, but you can equally host it somewhere else like a console application. This is exactly what we will do and why we install `Nancy.Hosting.Self` as the second package.
+
+The third package installs the POSIX interface for Mono and .NET.
+
+Having the Nancy packages installed I can now configure an endpoint and start a new `Nancy.Hosting.Self.NancyHost`:
+
+<pre><code>
+using System;
+using Nancy.Hosting.Self;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        const string url = "http://localhost:8888";
+
+        var uri = new Uri(url);
+        var host = new NancyHost(uri);
+
+        host.Start();
+    }
+}
+</code></pre>
+
+This console application will exit immediately after launching and therefore I need to add something to keep it open such as a `Console.ReadLine()` command. Additionally I want to stop the host when I know the application is going to shut down:
+
+<pre><code>
+host.Start();
+Console.ReadLine();
+host.Stop();
+</code></pre>
+
+If I would want to run this on Windows then I would be done now, but on Linux I want to wait for Unix termination signals instead.
+
+A way to detect if the application is running on Linux is with this little helper method:
+
+<pre><code>
+private static bool IsRunningOnMono()
+{
+    return Type.GetType("Mono.Runtime") != null;
+}
+</code></pre>
+
+Another helper method exposes the Unix termination signals:
+
+<pre><code>
+private static UnixSignal[] GetUnixTerminationSignals()
+{
+    return new[]
+    {
+        new UnixSignal(Signum.SIGINT),
+        new UnixSignal(Signum.SIGTERM),
+        new UnixSignal(Signum.SIGQUIT),
+        new UnixSignal(Signum.SIGHUP)
+    };
+}
+</code></pre>
+
+I add both methods to my `Program` class and change the `Main` method to support both, Windows and Unix termination:
+
+<pre><code>
+host.Start();
+
+if (IsRunningOnMono())
+{
+    var terminationSignals = GetUnixTerminationSignals();
+    UnixSignal.WaitAny(terminationSignals);
+}
+else
+{
+    Console.ReadLine();
+}
+
+host.Stop();
+</code></pre>
+
+This is what the final class looks like:
+
+<pre><code>
+using System;
+using Nancy.Hosting.Self;
+using Mono.Unix;
+using Mono.Unix.Native;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        const string url = "http://localhost:8888";
+
+        Console.WriteLine($"Starting Nancy on {url}...");
+
+        var uri = new Uri(url);
+        var host = new NancyHost(uri);
+        host.Start();
+
+        if (IsRunningOnMono())
+        {
+            var terminationSignals = GetUnixTerminationSignals();
+            UnixSignal.WaitAny(terminationSignals);
+        }
+        else
+        {
+            Console.ReadLine();
+        }
+
+        host.Stop();
+    }
+
+    private static bool IsRunningOnMono()
+    {
+        return Type.GetType("Mono.Runtime") != null;
+    }
+
+    private static UnixSignal[] GetUnixTerminationSignals()
+    {
+        return new[]
+        {
+            new UnixSignal(Signum.SIGINT),
+            new UnixSignal(Signum.SIGTERM),
+            new UnixSignal(Signum.SIGQUIT),
+            new UnixSignal(Signum.SIGHUP)
+        };
+    }
+}
+</code></pre>
+
+All I am missing now is at least one Nancy Module which serves HTTP requests. This is done by implementing a new module which derives from `Nancy.NancyModule` and registering at least one route. I setup a &quot;Nancy: Hello World&quot; message on the root `/` endpoint and an OS version string on the `/os` endpoint:
+
+<pre><code>
+using System;
+using Nancy;
+
+public class IndexModule : NancyModule
+{
+    public IndexModule()
+    {
+        Get["/"] = _ => "Nancy: Hello World";
+        Get["/os"] = _ => Environment.OSVersion.ToString();
+    }
+}
+</code></pre>
+
+If I compile and run this then I should be able to visit http://localhost:8888/ and see the hello world message and at http://localhost:8888/os I should see the OS version:
+
+<a href="https://www.flickr.com/photos/130657798@N05/23613071903/in/dateposted-public/" title="nancy-hello-world-in-browser" class="half-width"><img src="https://farm2.staticflickr.com/1534/23613071903_cd4fec4963_z.jpg" alt="nancy-hello-world-in-browser"></a>
+
+<a href="https://www.flickr.com/photos/130657798@N05/23613071903/in/dateposted-public/" title="nancy-hello-world-in-browser"class="half-width"><img src="https://farm2.staticflickr.com/1534/23613071903_cd4fec4963_z.jpg" alt="nancy-hello-world-in-browser"></a>
+
+## Running NancyFx in a Docker container
+
+The application is very simple but certainly enough to deploy the first version in a Docker container.
+
+### Create a Dockerfile
+
+First I need to build a Docker image which will contain the entire application and all of its dependencies. For this I have to create a recipe which defines what exactly goes into the image. The recipe is a `Dockerfile`, an ordinary human readable text file with instructions on how to compose an image. It is important to name the file exactly as shown, without a file extension and a capital &quot;D&quot;.
+
+It is good practice to add the Dockerfile into your project folder, because it may change when your project changes:
+
+<a href="https://www.flickr.com/photos/130657798@N05/24157345171/in/dateposted-public/" title="dockerfile-in-project-tree"><img src="https://farm2.staticflickr.com/1493/24157345171_a78fca91f9_z.jpg" alt="dockerfile-in-project-tree"></a>
+
+I also want to include the Dockerfile in the build output, therefore I have to change the &quot;Build Action&quot; setting to &quot;Content&quot; and &quot;Copy to Output Directory&quot; to &quot;Copy always&quot;:
+
+<a href="https://www.flickr.com/photos/130657798@N05/24157345131/in/dateposted-public/" title="dockerfile-properties"><img src="https://farm2.staticflickr.com/1640/24157345131_14023bba5d_z.jpg" alt="dockerfile-properties"></a>
+
+Visual Studio 2015 creates text files by default with the UTF-8-BOM encoding. This adds an additional (invisible) BOM character at the very beginning of the text file. This will cause an error when trying to build an image from the Dockerfile. The easiest way to change that is to open the file in [Notepad++](https://notepad-plus-plus.org/) and change the encoding to UTF-8 (without BOM):
+
+<a href="https://www.flickr.com/photos/130657798@N05/23611655044/in/dateposted-public/" title="dockerfile-encoding"><img src="https://farm2.staticflickr.com/1654/23611655044_7e9916a8cf_o.png" alt="dockerfile-encoding"></a>
+
+*You can also [permanently change Visual Studio to save files without BOM](http://stackoverflow.com/questions/5406172/utf-8-without-bom#answer-5411486).*
+
+Now that this is sorted I can open the file and start defining the build steps.
+
+Every Dockerfile has to begin with the [FROM](https://docs.docker.com/engine/reference/builder/#from) instruction. This defines the base image to start with. Docker uses a [layering system](https://docs.docker.com/engine/introduction/understanding-docker/#how-does-a-docker-image-work) which is one of the reasons why Docker images are so light. You can find many official images to start with at the public [Docker Hub](https://hub.docker.com/).
+
+Fortunately there is already an [official Mono repository](https://hub.docker.com/_/mono/) which we can use. The most recent image is [4.2.1.102](https://github.com/mono/docker/blob/39c80bc024a4797c119c895fda70024fbc14d5b9/4.2.1.102/Dockerfile) at the time of writing. As you can see the Mono image itself has the [debian:wheezy](https://github.com/tianon/docker-brew-debian/blob/bd71f2dfe1569968f341b9d195f8249c8f765283/wheezy/Dockerfile) image from the [official Debian repository](https://hub.docker.com/_/debian/) as its base. The Debian image has the empty [scratch](https://hub.docker.com/_/scratch/) image as its base. When we use the Mono image we essentially build a new layer on top of an existing tree:
+
+<pre>
+scratch
+   \___ debian:wheezy
+       \___ mono:4.2.1.102
+           \___ {our repository}:{tag}
+</pre>
+
+If you look at the [official Mono repository](https://hub.docker.com/_/mono/) you can see that the latest Mono image has multiple tags:
+
+<a href="https://www.flickr.com/photos/130657798@N05/24213790396/in/dateposted-public/" title="mono-latest-image-tag"><img src="https://farm2.staticflickr.com/1682/24213790396_c7d8795cd3_z.jpg" alt="mono-latest-image-tag"></a>
+
+It depends on your use case which tag makes the most sense for your application. Currently they all have been built from the same Dockerfile, but only tag `4.2.1.102` is explicit enough to always guarantee the exact same build. Personally I would chose this one for a production application:
+
+<pre><code>
+FROM mono:4.2.1.102
+</code></pre>
+
+The next two instructions are very straight forward. I want to create a new folder called `/app` and copy all relevant files, which are required to execute the application, into this folder. Remember that the Dockerfile gets copied into the build output folder. This means that I basically have to copy everything from the same directory where the Dockerfile sits into the `/app` folder:
+
+<pre><code>
+RUN mkdir /app
+COPY . /app
+</code></pre>
+
+My Nancy application has been configured to listen to port 8888. With the [EXPOSE](https://docs.docker.com/engine/reference/builder/#expose) instruction I inform Docker that the container listens to this specific port:
+
+<pre><code>
+EXPOSE 8888
+</code></pre>
+
+Finally I have to run the application with Mono:
+
+<pre><code>
+CMD ["mono", "/app/DockerDemoNancy.Host.exe", "-d"]
+</code></pre>
+
+This is what the final Dockerfile looks like:
+
+<pre><code>
+FROM mono:4.2.1.102
+RUN mkdir /app
+COPY . /app
+EXPOSE 8888
+CMD ["mono", "/app/DockerDemoNancy.Host.exe", "-d"]
+</code></pre>
+
+There is a lot more you can do with a Dockerfile. Check out the [Dockerfile reference](https://docs.docker.com/engine/reference/builder/) for a complete list of available instructions.
+
+### Build a Docker image
+
+Building a Docker image is extremely easy. Back in the Docker Terminal I navigate to the `/bin/Release/` folder of my Nancy application:
+
+<pre><code>
+cd /c/github/docker-demo-nancy/dockerdemonancy.host/bin/release
+</code></pre>
+
+Next I run the `docker build` command and tag the image with the `-t` option:
+
+<pre><code>
+docker build -t docker-demo-nancy:0.1.0 .
+</code></pre>
+
+Don't forget the dot at the end. This is the path to the directory which contains the Dockerfile. Because I already navigated into the `/bin/Release/` folder I just had to put a dot at the end.
+
+The build process will go through each instruction and create a new layer after executing it. The first time you build an image you are likely not going to have the `mono:4.2.1.102` image on disk and Docker will pull it from the public registry (Docker Hub):
+
+<a href="https://www.flickr.com/photos/130657798@N05/23611655124/in/dateposted-public/" title="docker-build-command"><img src="https://farm2.staticflickr.com/1695/23611655124_806b052f36_z.jpg" alt="docker-build-command"></a>
+
+As you can see the FROM instruction requires Docker to download 6 different images. This is because the `mono:4.2.1.102` image and all of its ancestors (`debian:wheezy`) have 6 instructions in total, which result in 6 layered images.
+
+A better way of visualizing this is by inspecting our own image.
+
+Once the build is complete we can list all available images with the `docker images` command:
+
+<a href="https://www.flickr.com/photos/130657798@N05/23613072363/in/dateposted-public/" title="docker-images-command"><img src="https://farm2.staticflickr.com/1626/23613072363_a31b08f1c1_z.jpg" alt="docker-images-command"></a>
+
+With `docker history {image-id}` I can see the entire history of the image, each layer it is made of and the command which is responsible for the layer:
+
+<a href="https://www.flickr.com/photos/130657798@N05/24213790946/in/dateposted-public/" title="docker-history"><img src="https://farm2.staticflickr.com/1643/24213790946_98af540e32_z.jpg" alt="docker-history"></a>
+
+This is quite clever! Anyway, I am getting carried away here, the point is we just created our first Docker image!
+
+*If you want to upload the image into a repository on Docker Hub or another private registry you can use [`docker tag`](https://docs.docker.com/engine/reference/commandline/tag/) to tag an existing image with a new tag and [`docker push`](https://docs.docker.com/engine/reference/commandline/push/) to upload it to the registry.*
+
+### Create and run a Docker container
+
+Running a Docker container couldn't be easier. Use the `docker run` command to create and run a container in one go:
+
+<pre><code>
+docker run -d -p 8888:8888 docker-demo-nancy:0.1.0
+</code></pre>
+
+The `-d` option tells Docker to run the container in detached mode and the `-p 8888:8888` option maps the container's port 8888 to the host's port 8888.
+
+Afterwards you can run `docker ps` to list all currently running containers:
+
+<a href="https://www.flickr.com/photos/130657798@N05/24213790636/in/dateposted-public/" title="docker-ps"><img src="https://farm2.staticflickr.com/1660/24213790636_64943657dd_z.jpg" alt="docker-ps"></a>
+
+Great, now pasting `{docker-ip}:8888` (the IP address from the beginning) into a browser should return the Nancy hello world message:
+
+<a href="https://www.flickr.com/photos/130657798@N05/23872053969/in/dateposted-public/" title="nancy-hello-world-in-browser-from-docker-container"><img src="https://farm2.staticflickr.com/1644/23872053969_76c537dbc6_z.jpg" alt="nancy-hello-world-in-browser-from-docker-container"></a>
+
+And going to `{docker-ip}:8888/os` should return &quot;Unix 4.1.13.2&quot;:
+
+<a href="https://www.flickr.com/photos/130657798@N05/23611653874/in/dateposted-public/" title="nancy-os-version-in-browser-from-docker-container"><img src="https://farm2.staticflickr.com/1704/23611653874_2a86e00c5e_z.jpg" alt="nancy-os-version-in-browser-from-docker-container"></a>
+
+This is pretty awesome. With almost no effort we managed to run a Nancy .NET application on Mono in a Docker container!
+
+#### Tip: map the Docker IP address to a friendly DNS
+
+You can map the Docker IP address to a friendly DNS by editing your Windows hosts file:
+1. Open `C:\Windows\System32\drivers\etc\hosts` as an administrator
+2. Add a new mapping to a memorable DNS, e.g: `192.168.99.100	docker.local`
+3. Save the file
+
+Now you can type `docker.local:8888` into your browser and get the same result:
+
+<a href="https://www.flickr.com/photos/130657798@N05/24131827632/in/dateposted-public/" title="docker-local-host-resolution"><img src="https://farm2.staticflickr.com/1654/24131827632_a980084994_z.jpg" alt="docker-local-host-resolution"></a>
+
+## Configure environment specific settings with Docker
+
+The last thing I would like to show in this blog post is how to manage environment specific variables with a Docker container.
+
+I think it is pretty obvious that you must never change a Docker image when you promote your Docker container from one environment to another. This means that the app.config which has been packed into the image must be the same for each environment. Even though this is a general practice that you should follow anyway I still see a lot of people transforming config files between environments. This has to stop and Docker makes it easy to load environment variables when launching a container.
+
+Let's make a small change to the Nancy IndexModule:
+
+<pre><code>public IndexModule()
+{
+    <strong>var secret = Environment.GetEnvironmentVariable("Secret");</strong>
+
+    Get["/"] = _ => "Nancy: Hello World";
+    Get["/os"] = _ => Environment.OSVersion.ToString();
+    <strong>Get["/secret"] = _ => secret ?? "not set";</strong>
+}
+</code></pre>
+
+It is a fairly straight forward change. I load an environment setting with the name &quot;Secret&quot; into a local variable and expose it later on.
+
+This environment setting could be anything, but typically it includes sensitive data like encryption keys, database connection strings or other environment specific data such as error log settings.
+
+Needles to say that you would never want to expose secret data to the public, but for the purpose of this demo I return it on the `/secret` endpoint to show that it works.
+
+Now I need to compile the application and build a new Docker image again, following the same instructions as before. I tagged the new image with `docker-demo-nancy:0.2.0`.
+
+Before I launch a new container I want to stop the current one to avoid a clash on port 8888, otherwise I would happily run them side by side.
+
+After I ran `docker stop {container-id}` I launch a new container with:
+
+<pre><code>docker run -d -p 8888:8888 -e Secret=S3cReT docker-demo-nancy:0.2.0</code></pre>
+
+The `docker run` command takes in one or many `-e` options to specify environment settings.
+
+
+
+
+
+If you run `docker inspect {container-id}` you get a whole bunch of information on a running container. One piece of information is the environment variables which have been loaded for that container:
+
+![](doker-inspect-env-vars.png)
+
+The container which I launched has only the PATH variable loaded by default.
+
+ 
+
+## Debugging NancyFx in a Docker container

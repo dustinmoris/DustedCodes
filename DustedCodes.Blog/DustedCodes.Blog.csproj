@@ -126,6 +126,7 @@
     <None Include="App_Data\Articles\display-build-history-charts-for-appveyor-or-travisci-builds-with-an-svg-widget.md" />
     <None Include="App_Data\Articles\death-of-a-qa-in-scrum.md" />
     <None Include="App_Data\Articles\diagnosing-css-issues-on-mobile-devices-with-google-chrome-bookmarklets.md" />
+    <None Include="App_Data\Articles\running-nancyfx-in-a-docker-container-a-beginners-guide-to-build-and-run-dotnet-applications-in-docker.md" />
     <None Include="App_Data\Articles\how-to-make-an-istatuscodehandler-portable-in-nancyfx.md" />
     <None Include="App_Data\Articles\design-test-and-document-restful-apis-using-raml-in-dotnet.md" />
     <None Include="App_Data\Articles\when-to-use-scrum-waterfall-vs-scrum-vs-kanban-vs-scrumban.md" />
