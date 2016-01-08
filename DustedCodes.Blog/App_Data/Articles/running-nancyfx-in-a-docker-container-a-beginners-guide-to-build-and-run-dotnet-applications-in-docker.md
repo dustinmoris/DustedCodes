@@ -1,7 +1,7 @@
 ﻿<!--
     Published: 2016-01-07 23:07
     Author: Dustin Moris Gorski
-    Title: Running NancyFx in a Docker container - a beginner's guide to build and run .NET applications in Docker
+    Title: Running NancyFx in a Docker container, a beginner's guide to build and run .NET applications in Docker
     Tags: docker dotnet nancyfx
 -->
 The quiet Christmas period is always a good time to explore new technologies and recent trends which have been on my list for a while. This Christmas I spent some time learning [the latest ASP.NET framework](http://docs.asp.net/en/latest/conceptual-overview/aspnet.html), in particular how to run ASP.NET 5 applications on Linux via the [CoreCLR](https://github.com/dotnet/coreclr) and how to run a regular .NET 4.x web application via [Mono](http://www.mono-project.com/) in a [Docker](https://www.docker.com/) container. The latter is what I am going to talk about in this blog post today.
@@ -116,7 +116,7 @@ host.Stop();
 
 If I would want to run this on Windows then I would be done now, but on Linux I want to wait for Unix termination signals instead.
 
-A way to detect if the application is running in Mono is with this little helper method:
+A way to detect if the application is running on Mono is with this little helper method:
 
 <pre><code>private static bool IsRunningOnMono()
 {
@@ -348,7 +348,7 @@ And going to `{docker-ip}:8888/os` should return &quot;Unix 4.1.13.2&quot;:
 
 <a href="https://www.flickr.com/photos/130657798@N05/23611653874/in/dateposted-public/" title="nancy-os-version-in-browser-from-docker-container"><img src="https://farm2.staticflickr.com/1704/23611653874_2a86e00c5e_z.jpg" alt="nancy-os-version-in-browser-from-docker-container"></a>
 
-This is pretty awesome. With almost no effort we managed to run a Nancy .NET application in Mono in a Docker container!
+This is pretty awesome. With almost no effort we managed to run a Nancy .NET application on Mono in a Docker container!
 
 #### Tip: map the Docker IP address to a friendly DNS
 
@@ -417,6 +417,6 @@ This brings me to the end of my first blog post on running .NET applications in 
 
 For this demo I chose the NancyFx framework to build a web application, but I could have equally written a regular .NET application which can run on Mono or used ASP.NET 5 which does not only run on Mono but also on the new CoreCLR which is cross platform compatible.
 
-Obviously there is a lot more that comes into running .NET apps in Docker which I haven't covered in this blog post. Some of these things are debugging applications in a Docker container, building Docker images from your CI and managing containers in production. Watch out for more following blog posts where I will drill down into some of those questions!
+Obviously there is a lot more that comes into running .NET apps in Docker which I haven't covered in this blog post. Some of these things are debugging applications in a Docker container, building Docker images from your CI and managing containers in production. Watch out for further blog posts where I will drill down into some of those topics!
 
-*The full [source code of the demo application](https://github.com/dustinmoris/Docker-Demo-Nancy) can be found on GitHub. I have also uploaded to Docker images to [my public repository on Docker Hub](https://hub.docker.com/r/dustinmoris/docker-demo-nancy/).*
+*The full [source code of the demo application](https://github.com/dustinmoris/Docker-Demo-Nancy) can be found on GitHub. I have also uploaded the Docker images to [my public repository on Docker Hub](https://hub.docker.com/r/dustinmoris/docker-demo-nancy/).*
