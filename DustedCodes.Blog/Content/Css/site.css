@@ -146,14 +146,14 @@ p, aside {
 code {
     display: inline-block;
     border: 1px solid #e5e5e5;
-    padding: .15em .5em;
+    padding: .15em .3em;
     -ms-border-radius: 4px;
     border-radius: 4px;
     background: #fafafa;
     white-space: pre-wrap;
     font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
     line-height: 1.6em;
-    font-size: .8em;
+    font-size: .85em;
     color: #333;
     text-align: left;
     -moz-word-break: break-all;
@@ -328,6 +328,13 @@ blockquote {
     max-width: 100%;
 }
 
+.two-third-width {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
 .icon::before {
     display: inline-block;
     margin-right: .5em;
@@ -487,6 +494,10 @@ blockquote {
 
     .half-width {
         max-width: 50%;
+    }
+
+    .two-third-width {
+        max-width: 66%;
     }
 
     #nav-toggle-button {

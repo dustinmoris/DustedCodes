@@ -6,7 +6,7 @@ namespace DustedCodes.Blog.ViewModels
     {
         private readonly IAppConfig _appConfig;
         private readonly string _pageName;
-        private const int CssVersion = 15;
+        private const int CssVersion = 16;
 
         protected BaseViewModel(IAppConfig appConfig, string pageName = null)
         {
