@@ -418,3 +418,5 @@ This brings me to the end of my first blog post on running .NET applications in 
 For this demo I chose the NancyFx framework to build a web application, but I could have equally written a regular .NET application which can run on Mono or used ASP.NET 5 which does not only run on Mono but also on the new CoreCLR which is cross platform compatible.
 
 Obviously there is a lot more that comes into running .NET apps in Docker which I haven't covered in this blog post. Some of these things are debugging applications in a Docker container, building Docker images from your CI and managing containers in production. Watch out for more following blog posts where I will drill down into some of those questions!
+
+*The full [source code of the demo application](https://github.com/dustinmoris/Docker-Demo-Nancy) can be found on GitHub. I have also uploaded to Docker images to [my public repository on Docker Hub](https://hub.docker.com/r/dustinmoris/docker-demo-nancy/).*
