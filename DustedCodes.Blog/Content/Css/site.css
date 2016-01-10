@@ -8,7 +8,7 @@
     align-content: flex-start;
     margin: 0;
     padding: 0;
-    color: #333;
+    color: #444;
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
     -ms-word-wrap: break-word;
     word-wrap: break-word;
@@ -146,9 +146,9 @@ p, aside {
 code {
     display: inline-block;
     border: 1px solid #e5e5e5;
-    padding: .15em .3em;
-    -ms-border-radius: 4px;
-    border-radius: 4px;
+    padding: .1em .3em;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
     background: #fafafa;
     white-space: pre-wrap;
     font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
@@ -224,7 +224,7 @@ article h1 a::before {
 }
 
 article li {
-    margin: .6em 0;
+    margin: .2em 0;
     line-height: 2em;
 }
 
@@ -310,6 +310,10 @@ blockquote {
     padding-left: 0;
     list-style: none;
 }
+
+    #contact li {
+        margin: .6em 0;
+    }
 
 #archive ul {
     list-style: none;
