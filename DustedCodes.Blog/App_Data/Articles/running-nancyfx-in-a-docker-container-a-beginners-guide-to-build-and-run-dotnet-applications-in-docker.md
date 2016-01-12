@@ -2,7 +2,7 @@
     Published: 2016-01-07 23:07
     Author: Dustin Moris Gorski
     Title: Running NancyFx in a Docker container, a beginner's guide to build and run .NET applications in Docker
-    Tags: docker dotnet nancyfx
+    Tags: docker nancyfx dotnet
 -->
 The quiet Christmas period is always a good time to explore new technologies and recent trends which have been on my list for a while. This Christmas I spent some time learning [the latest ASP.NET framework](http://docs.asp.net/en/latest/conceptual-overview/aspnet.html), in particular how to run ASP.NET 5 applications on Linux via the [CoreCLR](https://github.com/dotnet/coreclr) and how to run a regular .NET 4.x web application via [Mono](http://www.mono-project.com/) in a [Docker](https://www.docker.com/) container. The latter is what I am going to talk about in this blog post today.
 
