@@ -113,6 +113,12 @@ namespace DustedCodes.Automation.Tests
                 Title = "Running NancyFx in a Docker container - a beginner's guide to build and run .NET applications in Docker",
                 PermalinkId = "running-nancyfx-in-a-docker-container-a-beginners-guide-to-build-and-run-dotnet-applications-in-docker",
                 Tags = new[] { "docker", "dotnet", "nancyfx" }
+            },
+            new BlogPost
+            {
+                Title = "ASP.NET 5 like configuration in regular .NET applications",
+                PermalinkId = "aspnet-5-like-configuration-in-regular-dotnet-applications",
+                Tags = new[] { "asp-net", "dotnet" }
             }
         };
     }

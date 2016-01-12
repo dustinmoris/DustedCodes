@@ -1,16 +1,16 @@
 ﻿<!--
-    Published: 2016-01-12 02:02
+    Published: 2016-01-12 08:15
     Author: Dustin Moris Gorski
     Title: ASP.NET 5 like configuration in regular .NET applications
-    Tags: aspnet dotnet
+    Tags: asp-net dotnet
 -->
 [ASP.NET 5](https://get.asp.net/) is Microsoft's latest web framework and the new big thing on the .NET landscape. It comes with a whole lot of [new features](https://github.com/aspnet/home/releases/v1.0.0-rc1-final) and other changes which makes it very distinctive from previous ASP.NET versions. It is basically a complete re-write of the framework, optimized for the cloud and cross platform compatible. If you haven't checked it out yet then you are definitely missing out!
 
 Some of the newly introduced features are the new [configuration options](https://docs.asp.net/en/latest/fundamentals/configuration.html), which come as part of the [Microsoft.Extensions.Configuration](https://github.com/aspnet/Configuration) NuGet packages. They allow you a more flexible way of loading configuration values into an application and make it significantly easier to move an application across different environments without having to change configuration files or run through nasty configuration transformations as part of the process. [Scott Hanselman](http://www.hanselman.com/) has nicely summarized this topic in one of [his recent blog posts](http://www.hanselman.com/blog/BestPracticesForPrivateConfigDataAndConnectionStringsInConfigurationInASPNETAndAzure.aspx).
 
-It is needless to say that a lot of people are hugely excited about the new framework and many projects are being written in ASP.NET 5 right now, but there is also a significant amount of people who cannot easily migrate their existing projects to the new framework as of now. This might be for various reasons but essentially means they are stuck on an older ASP.NET version at least for a while.
+It is needless to say that a lot of people are hugely excited about the new framework and many projects are being written in ASP.NET 5 right now, but there is also a significant amount of people who cannot easily migrate their existing projects to the new framework yet. This might be for various reasons but essentially means they are stuck on an older version of ASP.NET at least for now.
 
-However, it doesn't mean that those people cannot already benefit from some of the new ideas and patterns which have been publicly introduced in ASP.NET 5 such as the new configuration options.
+However, it doesn't mean that those people cannot already benefit from some of the new ideas which have been publicly introduced in ASP.NET 5 such as the new configuration options.
 
 ## Implementing ASP.NET 5 like configuration options
 
@@ -71,7 +71,7 @@ This particular implementation wraps another `IConfiguration` implementation. If
 
 It's really as simple as that. The order of precedence is determined by the order of the classes being put together.
 
-This pattern can be extended as much as you like. For example if I would add two more classes I could have something like:
+This pattern can be extended as far as you like. For example if I would add two more classes I could have something like this:
 
 <pre><code>container.Register&lt;IConfiguration&gt;(
     new EnvironmentVariablesConfiguration(
@@ -79,4 +79,4 @@ This pattern can be extended as much as you like. For example if I would add two
             new AzureTableStorageConfiguration(
                 new AppConfigConfiguration()))));</code></pre>
 
-I hope this was helpful enough to illustrate how you can easily implement a &quot;cloud optimized&quot; configuration in any version of ASP.NET and follow good practice patterns!
+I hope this was helpful enough to illustrate how you can easily implement a &quot;cloud optimized&quot; configuration in any version of ASP.NET and follow good practice patterns no matter where you code!
