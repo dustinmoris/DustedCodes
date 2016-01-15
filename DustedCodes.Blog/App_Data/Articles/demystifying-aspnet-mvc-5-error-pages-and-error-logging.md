@@ -4,24 +4,23 @@
     Title: Demystifying ASP.NET MVC 5 Error Pages and Error Logging
     Tags: asp-net mvc error-pages error-logging
 -->
-<p>Custom error pages and proper error logging are two elementary and yet very confusing topics in ASP.NET MVC.</p>
+<p>Custom error pages and global error logging are two elementary and yet very confusing topics in ASP.NET MVC 5.</p>
 <p>There are numerous ways of implementing error pages in ASP.NET MVC 5 and when you search for advice you will find a dozen different StackOverflow threads, each suggesting a different implementation.</p>
 <h2>Overview</h2>
 <h3>What is the goal?</h3>
-<p>Generally when speaking of error pages and error logging I mean error pages and logging for <strong>unhandled exceptions</strong> in your application.</p>
-<p>The basic goal is:</p>
+<p>Typically good error handling consists of:</p>
 <ol>
     <li>
         Human friendly error pages
         <ul>
-            <li>Custom page per error code (e.g.: 404, 403, 500, etc.)</li>
-            <li>Preserving the HTTP error code in the response to avoid search engines index error pages</li>
+            <li>Custom error page per error code (e.g.: 404, 403, 500, etc.)</li>
+            <li>Preserving the HTTP error code in the response to avoid search engine indexing</li>
         </ul>
     </li>
     <li>Global error logging for unhandled exceptions</li>
 </ol>
 <h3>Error pages and logging in ASP.NET MVC 5</h3>
-<p>I am sure one could think of many more possible solutions to the problem, but typically you will find implementations which involve at least one or a combination of many of these methods:</p>
+<p>There are many ways of implementing error handling in ASP.NET MVC 5. Usually you will find solutions which involve at least one or a combination of these methods:</p>
 <ul>
     <li><a href="https://msdn.microsoft.com/en-us/library/system.web.mvc.handleerrorattribute%28v=vs.118%29.aspx">HandleErrorAttribute</a></li>
     <li><a href="https://msdn.microsoft.com/en-us/library/system.web.mvc.controller.onexception%28v=vs.118%29.aspx">Controller.OnException Method</a></li>
@@ -30,23 +29,23 @@
     <li><a href="https://msdn.microsoft.com/en-us/library/ms690497%28v=vs.90%29.aspx">httpErrors element</a> in web.config</li>
     <li>Custom <a href="https://msdn.microsoft.com/en-us/library/ms178468%28v=vs.85%29.aspx">HttpModule</a></li>
 </ul>
-<p>That's a lot of different ways for handling an error and they all have a justifyable use case. There is no golden solution which works for every application, so it is good to know how they work and when they are best applied.</p>
-<p>Before I will go through each approach in more detail I want to explain some fundamentals which will hopefully make the topic a lot easier to understand.</p>
+<p>All these methods have a historical reason and a justifyable use case. There is no golden solution which works for every application. It is good to know the differences in order to better understand which one is best applied when.</p>
+<p>Before going through each method in more detail I would like to explain some basic fundamentals which will hopefully help understanding the topic a lot easier.</p>
 <h3>ASP.NET MVC Fundamentals</h3>
-<p>ASP.NET MVC is nothing more than an <a href="https://msdn.microsoft.com/en-us/library/ms227675%28v=vs.100%29.aspx">HttpHandler</a> plugged into the ASP.NET framework. The easiest way to illustrate this is by opening the Global.asax.cs:</p>
+<p>The MVC framework is only a <a href="https://msdn.microsoft.com/en-us/library/ms227675%28v=vs.100%29.aspx">HttpHandler</a> plugged into the ASP.NET pipeline. The easiest way to illustrate this is by opening the Global.asax.cs:</p>
 <pre><code>public class MvcApplication : System.Web.HttpApplication</code></pre>
-<p>Navigating to the implementation of HttpApplication will reveal the underlying IHttpHandler and IHttpAsyncHandler interfaces:</p>
+<p>Navigating to the implementation of <code>HttpApplication</code> will reveal the underlying <code>IHttpHandler</code> and <code>IHttpAsyncHandler</code> interfaces:</p>
 <pre><code>public class HttpApplication : IComponent, IDisposable, IHttpAsyncHandler, IHttpHandler</code></pre>
 <p>ASP.NET itself is a larger framework to process incoming requests. Even though it could handle incoming requests from different sources, it is almost exclusively used with <abbr title="Internet Information Services">IIS</abbr>. It can be extended with <a href="https://msdn.microsoft.com/en-us/library/bb398986%28v=vs.140%29.aspx">HttpModules and HttpHandlers</a>.</p>
 <p>HttpModules are plugged into the pipeline to process a request at any point of the <a href="https://msdn.microsoft.com/en-us/library/ms178473(v=vs.85).aspx">ASP.NET life cycle</a>. A HttpHandler is responsible for producing a response/output for a request.</p>
-<p>IIS (Microsoft's web server technology) will create an incoming request for ASP.NET, which then will start processing it and eventually initialize the HttpApplication (the default handler) and create a response:</p>
+<p><a href="https://www.iis.net/">IIS</a> (Microsoft's web server technology) will create an incoming request for ASP.NET, which subsequently will start processing the request and eventually initialize the HttpApplication (which is the default handler) and create a response:</p>
 <a href="https://www.flickr.com/photos/130657798@N05/16862010839" title="IIS, ASP.NET and MVC architecture by Dustin Moris Gorski, on Flickr"><img src="https://farm9.staticflickr.com/8736/16862010839_64d17c3268_o.gif" alt="IIS, ASP.NET and MVC architecture"></a>
-<p>The point is that ASP.NET can only handle requests which IIS has forwarded to it. This is determined by the registered HttpHandlers (e.g. by default a request to a .htm file is not handled by ASP.NET).</p>
-<p>And finally, MVC is only one of potentially many registered handlers within ASP.NET.</p>
-<p>This is crucial to understand the different solutions for error handling.</p>
+<p>The key thing to know is that ASP.NET can only handle requests which IIS forwards to it. This is determined by the registered HttpHandlers (e.g. by default a request to a .htm file is not handled by ASP.NET).</p>
+<p>And finally, MVC is only one of potentially many registered handlers in the ASP.NET pipeline.</p>
+<p>This is crucial to understand the impact of different error handling methods.</p>
 <h2>Breaking down the options</h2>
 <h3>HandleErrorAttribute</h3>
-<p>The HandleErrorAttribute is an MVC FilterAttribute, which can be applied to a class or method:</p>
+<p>The HandleErrorAttribute is an MVC FilterAttribute, which can be applied to a class or a method:</p>
 <pre><code>namespace System.Web.Mvc
 {
     [AttributeUsage(
@@ -58,8 +57,8 @@
         // ...
     }
 }</code></pre>
-<p>It's error handling capabilities are limited to action methods within the MVC framework. This means it won't be able to catch and process exceptions raised from outside the ASP.NET MVC handler (e.g. exceptions at an earlier stage in the life cycle, errors in other handlers, etc.) nor any exceptoins where your action method is not part of the call stack (e.g. routing errors, etc.).</p>
-<p>The HandleErrorAttribute only handles 500 internal errors. For example this will not be caught by the attribute:</p>
+<p>It's error handling scope is limited to action methods within the MVC framework. This means it won't be able to catch and process exceptions raised from outside the ASP.NET MVC handler (e.g. exceptions at an earlier stage in the life cycle or errors in other handlers). It will equally not catch an exception if the action method is not part of the call stack (e.g. routing errors).</p>
+<p>Additionally the <code>HandleErrorAttribute</code> only handles 500 internal server errors. For example this will not be caught by the attribute:</p>
 <pre><code>[HandleError]
 public ActionResult Index()
 {
@@ -67,41 +66,45 @@ public ActionResult Index()
 }</code></pre>
 <p>You can use the attribute to decorate a controller class or a particular action method. It supports custom error pages per exception type out of the box:</p>
 <pre><code>[HandleError(ExceptionType = typeof(SqlException), View = "DatabaseError")]]</code></pre>
-<p>In order to get the HandleErrorAttribute working you also need to turn on customErrors in your web.config:</p>
+<p>In order to get the <code>HandleErrorAttribute</code> working you also need to turn customErrors on in your web.config:</p>
 <pre><code>&lt;customErrors mode="On" /&gt;</code></pre>
 <h4>Use case</h4>
-<p>The HandleErrorAttribute is the most limited in scope. Many application errors will bypass it and therefore it is not ideal for generic cross application error handling.</p>
-<p>It is a great tool for action specific error handling though (e.g. additional fault tolerance for critical action methods).</p>
+<p>The <code>HandleErrorAttribute</code> is the most limited in scope. Many application errors will bypass this filter and therefore it is not ideal for global application error handling.</p>
+<p>It is a great tool for action specific error handling though like additional fault tolerance for a critical action method.</p>
+
 <h3>Controller.OnException Method</h3>
-<p>This method gets called if any action method inside the controller throws an exception. Unlike the HandleErrorAttribute it will also catch 404 and other HTTP error codes and doesn't require setting customErrors mode on.</p>
-<p>The implementation is simple, just override the OnException method in your controller:</p>
+<p>The <code>OnException</code> method gets invoked if an action method from the controller throws an exception. Unlike the <code>HandleErrorAttribute</code> it will also catch 404 and other HTTP error codes and it doesn't require customErrors to be turned on.</p>
+<p>It is implemented by overriding the <code>OnException</code> method in a controller:</p>
 <pre><code>protected override void OnException(ExceptionContext filterContext)
 {
     filterContext.ExceptionHandled = true;
             
     // Redirect on error:
     filterContext.Result = RedirectToAction("Index", "Error");
+
     // OR set the result without redirection:
     filterContext.Result = new ViewResult
     {
         ViewName = "~/Views/Error/Index.cshtml"
     };
 }</code></pre>
-<p>You can check if the exception has alrady been handled at an earlier stage (e.g.: the HandleErrorAttribute):</p>
+<p>With the <code>filterContext.ExceptionHandled</code> property you can check if an exception has been handled at an earlier stage (e.g. the HandleErrorAttribute):</p>
 <pre><code>if (filterContext.ExceptionHandled)
     return;</code></pre>
-<p>Many solutions on the internet suggest to create a base controller class and implement the method in one location for a generic error handler.</p>
-<p>However, the fact that it is almost as limited as the HandleErrorAttribute, it is not an ideal solution for generic error handling. You will end up duplicating your work at least in one other place.</p>
+<p>Many solutions on the internet suggest to create a base controller class and implement the <code>OnException</code> method in one place to get a global error handler.</p>
+<p>However, this is not ideal because the <code>OnException</code> method is almost as limited as the <code>HandleErrorAttribute</code> in its scope. You will end up duplicating your work at least in one other place.</p>
 <h4>Use case</h4>
-<p>It gives a little bit more flexibility than the HandleErrorAttribute, but it is still too limited for generic error processing. It seems to be popular when you need to distinguish your error handling between regular and AJAX requests on a controller level.</p>
+<p>The <code>Controller.OnException</code> method gives you a little bit more flexibility than the <code>HandleErrorAttribute</code>, but it is still tied to the MVC framework. It is useful when you need to distinguish your error handling between regular and AJAX requests on a controller level.</p>
+
 <h3>Application_Error event</h3>
-<p>The Applicatoin_Error method is far more generic than the previous two options. It is not limited to the MVC scope any longer and needs to be implemented in the Global.asax.cs:</p>
+<p>The <code>Application_Error</code> method is far more generic than the previous two options. It is not limited to the MVC scope any longer and needs to be implemented in the Global.asax.cs:</p>
 <pre><code>protected void Application_Error(Object sender, EventArgs e)
 {
     var raisedException = Server.GetLastError();
+
     // Process exception
 }</code></pre>
-<p>If you've noticed it doesn't come from an interface, an abstract class or an overriden method. It is purely convention based, similar like the Page_Load event in ASP.NET Web Forms applications.</p>
+<p>If you've noticed it doesn't come from an interface, an abstract class or an overriden method. It is purely convention based, similar like the <code>Page_Load</code> event in ASP.NET Web Forms applications.</p>
 <p>Any unhandeled exception within ASP.NET will bubble up to this event. There is also no concept of routes anymore (because it is outside the MVC scope). If you want to redirect to a specific error page you have to know the exact URL or configure it to co-exist with customErrors or httpErrors.</p>
 <h4>Use case</h4>
 <p>In terms of generic error logging this is a great place to start with! It will capture all errors which haven't been handled at an earlier stage. But be careful, if you have used controller exception handling and set <code>filterContext.ExceptionHandled = true</code> then the exception will not bubble up to Applicatoin_Error.</p>
