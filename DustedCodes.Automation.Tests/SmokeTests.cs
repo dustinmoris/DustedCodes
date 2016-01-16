@@ -16,14 +16,14 @@ namespace DustedCodes.Automation.Tests
             Navigation.GoToAbout();
             Assert.IsTrue(AboutPage.IsAt());
 
+            AboutPage.GoToAtomFeed();
+            Assert.IsTrue(AtomFeed.IsAt());
+
             Navigation.GoToBlog();
             Assert.IsTrue(HomePage.IsAt());
 
             Navigation.GoToArchive();
             Assert.IsTrue(ArchivePage.IsAt());
-
-            Navigation.GoToAtomFeed();
-            Assert.IsTrue(AtomFeed.IsAt());
 
             Navigation.GoToRoot();
             Navigation.GoToRssFeed();
@@ -99,13 +99,15 @@ namespace DustedCodes.Automation.Tests
         [Test]
         public void Atom_Feed_Is_Working()
         {
-            Navigation.GoToAtomFeed();
+            Navigation.GoToAbout();
+            AboutPage.GoToAtomFeed();
 
             foreach (var blogPost in DataToValidate.BlogPosts.Reverse().Take(10))
             {
                 AtomFeed.GoToArticle(blogPost.Title);
                 Assert.IsTrue(BlogPostPage.IsAt(blogPost.Title));
-                Navigation.GoToAtomFeed();
+                Navigation.GoToAbout();
+                AboutPage.GoToAtomFeed();
             }
         }
 

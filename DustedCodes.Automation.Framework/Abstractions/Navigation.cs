@@ -38,10 +38,5 @@ namespace DustedCodes.Automation.Framework.Abstractions
         {
             Driver.Instance.FindElement(By.LinkText("RSS")).Click();
         }
-
-        public static void GoToAtomFeed()
-        {
-            Driver.Instance.FindElement(By.LinkText("ATOM")).Click();
-        }
     }
 }

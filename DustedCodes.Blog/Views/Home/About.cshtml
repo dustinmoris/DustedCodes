@@ -23,6 +23,11 @@
         <li><a class="icon fa-facebook-official icon-larger" href="https://www.facebook.com/dustinmoris.gorski">Facebook</a></li>
         <li><a class="icon fa-bug icon-larger" href="https://github.com/dustinmoris/personal-website/issues/new">Report an issue</a></li>
     </ul>
+    <h2>Subscribe</h2>
+    <ul id="subscribe">
+        <li>@Html.ActionLink("RSS", "Rss", "Feed", null, new { @class = "icon fa-rss icon-larger" })</li>
+        <li>@Html.ActionLink("Atom", "Atom", "Feed", null, new { @class = "icon fa-rss icon-larger" })</li>
+    </ul>
     <h2>License</h2>
     <p>All source code is licensed under <a href="http://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License v2.0</a>.</p>
     <h2>Copyright</h2>
