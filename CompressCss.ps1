@@ -43,7 +43,7 @@ Write-Output "-----"
 Write-Output "Compressing CSS Files"
 Write-Output "-----"
 
-Get-ChildItem "$SolutionDir\DustedCodes.Blog\Content\Css" -Exclude *.min.css | % {
+Get-ChildItem "$SolutionDir\DustedCodes.Blog\Assets\Css" -Exclude *.min.css | % {
 	Write-Output "Compressing $_"
 	Compress-CssFile -CssFilePath $_ 
 }

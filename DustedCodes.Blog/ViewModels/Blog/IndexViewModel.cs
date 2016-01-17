@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using DustedCodes.Blog.Config;
+using DustedCodes.Blog.Configuration;
 
 namespace DustedCodes.Blog.ViewModels.Blog
 {

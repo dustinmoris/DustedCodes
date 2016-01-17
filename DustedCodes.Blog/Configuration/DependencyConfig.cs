@@ -2,7 +2,6 @@ using System.Runtime.Caching;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
-using DustedCodes.Blog.Config;
 using DustedCodes.Blog.Controllers;
 using DustedCodes.Blog.Feeds;
 using DustedCodes.Blog.Helpers;
@@ -13,7 +12,7 @@ using DustedCodes.Core.Data.LocalStorage;
 using DustedCodes.Core.IO;
 using DustedCodes.Core.Services;
 
-namespace DustedCodes.Blog
+namespace DustedCodes.Blog.Configuration
 {
     public static class DependencyConfig
     {

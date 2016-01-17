@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DustedCodes.Blog.Config;
+using DustedCodes.Blog.Configuration;
 using DustedCodes.Blog.Helpers;
 using DustedCodes.Blog.ViewModels.Blog;
 using DustedCodes.Blog.ViewModels.Home;

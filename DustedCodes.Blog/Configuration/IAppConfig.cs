@@ -1,4 +1,4 @@
-﻿namespace DustedCodes.Blog.Config
+﻿namespace DustedCodes.Blog.Configuration
 {
     public interface IAppConfig
     {

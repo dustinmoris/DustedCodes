@@ -1,7 +1,7 @@
 using System.Web.Hosting;
 using WebConfig = System.Web.Configuration.WebConfigurationManager;
 
-namespace DustedCodes.Blog.Config
+namespace DustedCodes.Blog.Configuration
 {
     public class AppConfig : IAppConfig
     {

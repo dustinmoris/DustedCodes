@@ -2,7 +2,7 @@
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
-using DustedCodes.Blog.Config;
+using DustedCodes.Blog.Configuration;
 using DustedCodes.Blog.Helpers;
 using DustedCodes.Core.Services;
 

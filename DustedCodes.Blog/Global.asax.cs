@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using DustedCodes.Blog.Configuration;
 
 namespace DustedCodes.Blog
 {
