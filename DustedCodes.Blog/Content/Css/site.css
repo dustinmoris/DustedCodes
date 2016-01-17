@@ -452,6 +452,7 @@ blockquote {
                     margin-left: 1.5em;
                     border-bottom: 3px solid transparent;
                     padding: .75em .4em;
+                    font-size: .75em;
                 }
 
                 body > nav > ul > li > a:hover,
