@@ -315,11 +315,12 @@
   <PropertyGroup>
     <PreBuildEvent>if $(ConfigurationName) == Debug (
 echo "Skipping article compilation in debug mode."
-echo "Skipping CSS compression in debug mode."
+echo "Skipping CSS minification in debug mode."
+echo "Skipping JavaScript minification in debug mode."
 ) else (
 C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)CompileArticles.ps1" $(SolutionDir)
-
-C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)CompressCss.ps1" $(SolutionDir)
+C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)MinifyCss.ps1" $(SolutionDir) "WE-Markdown.css"
+C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)MinifyJavaScript.ps1" $(SolutionDir)
 )
 
 </PreBuildEvent>
