@@ -2,7 +2,7 @@
 Published: 2015-08-21 15:52
 Author: Dustin Moris Gorski
 Title: Using C# 6 features in ASP.NET MVC 5 razor views
-Tags: asp-net mvc-5 csharp-6 razor
+Tags: aspnet mvc-5 csharp-6 razor
 -->
 <p>Recently I upgraded my IDE to Visual Studio 2015 and made instant use of many new C# 6 features like the <a href="https://msdn.microsoft.com/en-us/library/dn986596.aspx">nameof keyword</a> or <a href="https://msdn.microsoft.com/en-us/library/dn961160.aspx">interpolated strings</a>.
 </p>

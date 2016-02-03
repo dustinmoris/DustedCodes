@@ -6,7 +6,8 @@ namespace DustedCodes.Blog.ViewModels
     {
         private readonly IAppConfig _appConfig;
         private readonly string _pageName;
-        private const int CssVersion = 18;
+        private const int CssVersion = 19;
+        private const int JavaScriptVersion = 5;
 
         protected BaseViewModel(IAppConfig appConfig, string pageName = null)
         {
@@ -20,6 +21,7 @@ namespace DustedCodes.Blog.ViewModels
         public string DisqusShortname => _appConfig.DisqusShortname;
         public bool IsProductionEnvironment => _appConfig.IsProductionEnvironment;
         public string RelativeCssFilePath => $"Assets/Css/site{(IsDebugMode() ? "" : ".min")}.css?v={CssVersion}";
+        public string RelativeJavaScriptFilePath => $"Assets/Scripts/main{(IsDebugMode() ? "" : ".min")}.js?v={JavaScriptVersion}";
 
         private static bool IsDebugMode()
         {

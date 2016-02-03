@@ -36,7 +36,7 @@ namespace DustedCodes.Automation.Framework.Abstractions
 
         public static void GoToRssFeed()
         {
-            Driver.Instance.FindElement(By.LinkText("RSS")).Click();
+            Driver.Instance.FindElement(By.LinkText("SUBSCRIBE")).Click();
         }
     }
 }

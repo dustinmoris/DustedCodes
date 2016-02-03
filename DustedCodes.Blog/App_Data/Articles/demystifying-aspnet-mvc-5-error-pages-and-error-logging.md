@@ -2,7 +2,7 @@
     Published: 2015-04-06 22:29
     Author: Dustin Moris Gorski
     Title: Demystifying ASP.NET MVC 5 Error Pages and Error Logging
-    Tags: asp-net mvc error-pages error-logging
+    Tags: aspnet mvc error-pages error-logging
 -->
 <p>Custom error pages and global error logging are two elementary and yet very confusing topics in ASP.NET MVC 5.</p>
 <p>There are numerous ways of implementing error pages in ASP.NET MVC 5 and when you search for advice you will find a dozen different StackOverflow threads, each suggesting a different implementation.</p>
