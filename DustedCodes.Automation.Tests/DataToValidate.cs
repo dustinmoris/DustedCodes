@@ -104,15 +104,15 @@ namespace DustedCodes.Automation.Tests
             },
             new BlogPost
             {
-                Title = "Diagnosing CSS issues on mobile devices",
-                PermalinkId = "diagnosing-css-issues-on-mobile-devices",
-                Tags = new[] { "css" }
+                Title = "Diagnosing CSS issues on mobile devices with Google Chrome bookmarklets",
+                PermalinkId = "diagnosing-css-issues-on-mobile-devices-with-google-chrome-bookmarklets",
+                Tags = new[] { "css", "google-chrome" }
             },
             new BlogPost
             {
                 Title = "Running NancyFx in a Docker container, a beginner's guide to build and run .NET applications in Docker",
                 PermalinkId = "running-nancyfx-in-a-docker-container-a-beginners-guide-to-build-and-run-dotnet-applications-in-docker",
-                Tags = new[] { "docker", "dotnet", "nancyfx" }
+                Tags = new[] { "docker", "nancyfx", "dotnet" }
             },
             new BlogPost
             {

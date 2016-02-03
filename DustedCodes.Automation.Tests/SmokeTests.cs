@@ -19,6 +19,7 @@ namespace DustedCodes.Automation.Tests
             AboutPage.GoToAtomFeed();
             Assert.IsTrue(AtomFeed.IsAt());
 
+            Navigation.GoToRoot();
             Navigation.GoToBlog();
             Assert.IsTrue(HomePage.IsAt());
 
