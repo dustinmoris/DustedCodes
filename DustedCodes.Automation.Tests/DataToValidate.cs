@@ -40,7 +40,7 @@ namespace DustedCodes.Automation.Tests
             {
                 Title = "Demystifying ASP.NET MVC 5 Error Pages and Error Logging",
                 PermalinkId = "demystifying-aspnet-mvc-5-error-pages-and-error-logging",
-                Tags = new[] { "asp-net", "mvc", "error-pages", "error-logging" }
+                Tags = new[] { "aspnet", "mvc", "error-pages", "error-logging" }
             },
             new BlogPost
             {
@@ -52,7 +52,7 @@ namespace DustedCodes.Automation.Tests
             {
                 Title = "Running free tier and paid tier web apps on the same Microsoft Azure subscription",
                 PermalinkId = "running-free-tier-and-paid-tier-web-apps-on-the-same-microsoft-azure-subscription",
-                Tags = new[] { "windows-azure", "app-hosting-plan" }
+                Tags = new[] { "microsoft-azure", "app-hosting-plan" }
             },
             new BlogPost
             {
@@ -70,7 +70,7 @@ namespace DustedCodes.Automation.Tests
             {
                 Title = "Using C# 6 features in ASP.NET MVC 5 razor views",
                 PermalinkId = "using-csharp-6-features-in-aspdotnet-mvc-5-razor-views",
-                Tags = new[] { "asp-net", "mvc-5", "csharp-6", "razor" }
+                Tags = new[] { "aspnet", "mvc-5", "csharp-6", "razor" }
             },
             new BlogPost
             {
@@ -110,7 +110,7 @@ namespace DustedCodes.Automation.Tests
             },
             new BlogPost
             {
-                Title = "Running NancyFx in a Docker container - a beginner's guide to build and run .NET applications in Docker",
+                Title = "Running NancyFx in a Docker container, a beginner's guide to build and run .NET applications in Docker",
                 PermalinkId = "running-nancyfx-in-a-docker-container-a-beginners-guide-to-build-and-run-dotnet-applications-in-docker",
                 Tags = new[] { "docker", "dotnet", "nancyfx" }
             },
@@ -118,7 +118,13 @@ namespace DustedCodes.Automation.Tests
             {
                 Title = "ASP.NET 5 like configuration in regular .NET applications",
                 PermalinkId = "aspnet-5-like-configuration-in-regular-dotnet-applications",
-                Tags = new[] { "asp-net", "dotnet" }
+                Tags = new[] { "aspnet", "dotnet" }
+            },
+            new BlogPost
+            {
+                Title = "Understanding ASP.NET Core 1.0 (ASP.NET 5) and why it will replace Classic ASP.NET",
+                PermalinkId = "understanding-aspnet-core-10-aka-aspnet-5-and-why-it-will-replace-classic-aspnet",
+                Tags = new[] { "aspnet-core", "aspnet", "dotnet" }
             }
         };
     }

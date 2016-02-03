@@ -2,7 +2,7 @@
     Published: 2015-06-14 21:20
     Author: Dustin Moris Gorski
     Title: Running free tier and paid tier web apps on the same Microsoft Azure subscription
-    Tags: windows-azure app-hosting-plan
+    Tags: microsoft-azure app-hosting-plan
 -->
 <p>Last week I noticed a charge of ~ &pound;20 by MSFT AZURE on my bank statement and initially struggled to work out why I was charged this much.</p>
 <p>I knew I'd have to pay something for this website, which is hosted on the shared tier in Microsoft Azure, but according to <a href="http://azure.microsoft.com/en-us/pricing/calculator/">Microsoft Azure's pricing calculator</a> it should have only come to &pound;5.91 per month:</p>
