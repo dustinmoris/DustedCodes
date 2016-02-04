@@ -41,9 +41,9 @@ namespace DustedCodes.Blog.Controllers
         public async Task<ActionResult> Tagged(string tag)
         {
             var articles = await _articleService.GetByTagAsync(tag);
-            var viewModel = _viewModelFactory.CreateIndexViewModel(articles, 1, 1);
+            var viewModel = _viewModelFactory.CreateArchiveViewModel(articles, $"Tagged with {tag}");
 
-            return View("Index", viewModel);
+            return View("Archive", viewModel);
         }
 
         public ActionResult ArticleRedirect(string id)
@@ -54,7 +54,7 @@ namespace DustedCodes.Blog.Controllers
         public async Task<ActionResult> Archive()
         {
             var articles = await _articleService.GetAllAsync();
-            var viewModel = _viewModelFactory.CreateArchiveViewModel(articles);
+            var viewModel = _viewModelFactory.CreateArchiveViewModel(articles, "Archive");
 
             return View(viewModel);
         }

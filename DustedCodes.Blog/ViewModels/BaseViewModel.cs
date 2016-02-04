@@ -5,17 +5,17 @@ namespace DustedCodes.Blog.ViewModels
     public abstract class BaseViewModel
     {
         private readonly IAppConfig _appConfig;
-        private readonly string _pageName;
+        private readonly string _pageTitle;
         private const int CssVersion = 19;
         private const int JavaScriptVersion = 5;
 
-        protected BaseViewModel(IAppConfig appConfig, string pageName = null)
+        protected BaseViewModel(IAppConfig appConfig, string pageTitle = null)
         {
             _appConfig = appConfig;
-            _pageName = pageName;
+            _pageTitle = pageTitle;
         }
 
-        public virtual string PageTitle => $"{_pageName} - {BlogTitle}";
+        public virtual string PageTitle => $"{_pageTitle} - {BlogTitle}";
         public string BlogTitle => _appConfig.BlogTitle;
         public string BlogDescription => _appConfig.BlogDescription;
         public string DisqusShortname => _appConfig.DisqusShortname;
