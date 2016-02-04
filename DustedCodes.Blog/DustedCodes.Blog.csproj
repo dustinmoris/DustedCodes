@@ -258,6 +258,7 @@
     <None Include="Properties\PublishProfiles\Create WebDeployPackage.pubxml" />
     <None Include="Properties\PublishProfiles\dustedcodes.pubxml" />
     <Content Include="Views\Blog\Archive.cshtml" />
+    <Content Include="Views\Shared\_AsciiArt.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

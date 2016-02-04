@@ -1,6 +1,7 @@
 ﻿@model DustedCodes.Blog.ViewModels.BaseViewModel
 <!DOCTYPE html>
 <html>
+@Html.Partial("_AsciiArt")
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,7 +47,7 @@
                 <a class="icon fa-github icon-larger" href="https://github.com/dustinmoris?tab=repositories">Projects</a>
             </li>
             <li>
-                @Html.ActionLink("Subscribe", "Rss", "Feed", null, new {@class = "icon fa-rss icon-larger"})
+                @Html.ActionLink("Subscribe", "Rss", "Feed", null, new { @class = "icon fa-rss icon-larger" })
             </li>
             <li>
                 <a class="icon fa-twitter icon-larger" href="https://twitter.com/dustinmoris">Follow</a>
