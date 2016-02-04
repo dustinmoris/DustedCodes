@@ -6,9 +6,13 @@ namespace DustedCodes.Blog.ViewModels.Blog
 {
     public class ArchiveViewModel : BaseViewModel
     {
-        public ArchiveViewModel(IAppConfig appConfig) : base(appConfig, "Archive")
+        public ArchiveViewModel(IAppConfig appConfig, string title)
+            : base(appConfig, title)
         {
+            Title = title;
         }
+
+        public string Title { get; }
 
         public IEnumerable<Article> Articles { get; set; }
     }

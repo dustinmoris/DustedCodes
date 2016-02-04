@@ -73,9 +73,9 @@ namespace DustedCodes.Blog.ViewModels
             };
         }
 
-        public ArchiveViewModel CreateArchiveViewModel(IEnumerable<Article> articles)
+        public ArchiveViewModel CreateArchiveViewModel(IEnumerable<Article> articles, string title)
         {
-            return new ArchiveViewModel(_appConfig) { Articles = articles };
+            return new ArchiveViewModel(_appConfig, title) { Articles = articles };
         }
     }
 }

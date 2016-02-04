@@ -13,6 +13,6 @@ namespace DustedCodes.Blog.ViewModels
 
         IndexViewModel CreateIndexViewModel(IEnumerable<Article> articles, int totalPageCount, int currentPage);
 
-        ArchiveViewModel CreateArchiveViewModel(IEnumerable<Article> articles);
+        ArchiveViewModel CreateArchiveViewModel(IEnumerable<Article> articles, string title);
     }
 }
