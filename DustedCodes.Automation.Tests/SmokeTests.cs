@@ -72,7 +72,7 @@ namespace DustedCodes.Automation.Tests
             var tags = BlogPostPage.GetTags();
             BlogPostPage.GoToTag(tags.First());
 
-            Assert.IsTrue(HomePage.GetCurrentBlogPosts().Contains(blogPostTitle));
+            Assert.IsTrue(ArchivePage.GetAllBlogPosts().Contains(blogPostTitle));
         }
 
         [Test]
