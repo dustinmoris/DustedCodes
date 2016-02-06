@@ -79,10 +79,10 @@
             body > nav > ul > li > a:visited {
                 display: block;
                 border-bottom: 1px solid #fff;
-                padding: .75em 0;
+                padding: .85em 0;
                 color: #444;
                 font-weight: 600;
-                font-size: .8em;
+                font-size: .85em;
                 text-align: center;
                 text-transform: uppercase;
                 text-decoration: none;
@@ -430,16 +430,17 @@ blockquote {
 
     body > nav {
         display: block;
-        margin: .5em 0 0 0;
-        justify-content: flex-end;
+        margin: 1em 0 1em 0;
+        justify-content: flex-start;
         align-items: center;
+        background: #fff;
     }
 
         body > nav > ul {
             margin: 0 auto;
             max-width: 600px;
             padding: 0 20px;
-            text-align: right;
+            text-align: left;
         }
 
             body > nav > ul > li {
@@ -449,16 +450,18 @@ blockquote {
                 body > nav > ul > li > a:link,
                 body > nav > ul > li > a:visited {
                     display: inline-block;
-                    margin-left: 1.5em;
-                    border-bottom: 3px solid transparent;
-                    padding: .75em .4em;
+                    margin-right: 1.5em;
+                    margin-bottom: 1px;
+                    border-bottom: 2px solid #f1f1f1;
+                    padding: .75em .4em .75em .4em;
                     font-size: .75em;
                 }
 
                 body > nav > ul > li > a:hover,
                 body > nav > ul > li > a:active {
-                    color: #000;
+                    margin-bottom: 0;
                     border-bottom: 3px solid #cfca4c;
+                    color: #000;
                 }
 
     .article-metadata time,

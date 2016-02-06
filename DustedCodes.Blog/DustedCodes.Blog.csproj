@@ -149,6 +149,8 @@
     <Content Include="Assets\ErrorPages\Forbidden.html" />
     <Content Include="Assets\ErrorPages\InternalError.html" />
     <Content Include="Assets\ErrorPages\NotFound.html" />
+    <Content Include="Assets\Images\favicon-16x16.png" />
+    <Content Include="Assets\Images\favicon-32x32.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="newrelic\Extensions\CoreInstrumentation.xml" />
