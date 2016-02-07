@@ -27,7 +27,7 @@
         dustedcodes.menu.toggle();
     });
     $(document).on("click", ".share-links>a", function (event) {
-        event.preventDefault();
+        event.defaultPrevented = true;
         dustedcodes.window.open($(this).attr("href"));
     });
 })(jQuery);
