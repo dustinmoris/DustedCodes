@@ -1,7 +1,7 @@
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 
-namespace DustedCodes.Blog.Feeds
+namespace DustedCodes.Core.Feeds
 {
     public interface IFeedFactory
     {

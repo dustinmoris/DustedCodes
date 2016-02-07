@@ -3,12 +3,12 @@ using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using DustedCodes.Blog.Controllers;
-using DustedCodes.Blog.Feeds;
 using DustedCodes.Blog.Helpers;
 using DustedCodes.Blog.ViewModels;
 using DustedCodes.Core.Caching;
 using DustedCodes.Core.Data;
 using DustedCodes.Core.Data.LocalStorage;
+using DustedCodes.Core.Feeds;
 using DustedCodes.Core.IO;
 using DustedCodes.Core.Services;
 using DustedCodes.Core.Web;
@@ -29,6 +29,8 @@ namespace DustedCodes.Blog.Configuration
                 .WithParameter("articleDirectoryPath", appConfig.ArticlesDirectoryPath);
             builder.RegisterType<FeedItemConverter>().As<IFeedItemConverter>();
             builder.RegisterType<FeedFactory>().As<IFeedFactory>()
+                .WithParameter("feedTitle", appConfig.BlogTitle)
+                .WithParameter("feedDescription", appConfig.BlogDescription)
                 .WithParameter("maxItemCount", appConfig.FeedMaxItemCount);
             builder.RegisterType<UrlEncoder>().As<IUrlEncoder>();
             builder.RegisterType<UrlGenerator>().As<IUrlGenerator>();

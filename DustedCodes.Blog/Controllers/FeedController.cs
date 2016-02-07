@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 using DustedCodes.Blog.ActionResults;
-using DustedCodes.Blog.Feeds;
+using DustedCodes.Core.Feeds;
 
 namespace DustedCodes.Blog.Controllers
 {

@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Caching\NullCache.cs" />
@@ -43,6 +44,10 @@
     <Compile Include="Data\IArticleRepository.cs" />
     <Compile Include="Data\LocalStorage\ArticleParser.cs" />
     <Compile Include="Data\LocalStorage\IArticleParser.cs" />
+    <Compile Include="Feeds\FeedFactory.cs" />
+    <Compile Include="Feeds\FeedItemConverter.cs" />
+    <Compile Include="Feeds\IFeedFactory.cs" />
+    <Compile Include="Feeds\IFeedItemConverter.cs" />
     <Compile Include="IO\ITextReaderFactory.cs" />
     <Compile Include="Data\LocalStorage\StaticFileArticleRepository.cs" />
     <Compile Include="IO\TextReaderFactory.cs" />

@@ -2,32 +2,33 @@
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
-using DustedCodes.Blog.Configuration;
-using DustedCodes.Blog.Helpers;
 using DustedCodes.Core.Services;
 using DustedCodes.Core.Web;
 
-namespace DustedCodes.Blog.Feeds
+namespace DustedCodes.Core.Feeds
 {
     public sealed class FeedFactory : IFeedFactory
     {
         private readonly IArticleService _articleService;
         private readonly IFeedItemConverter _feedItemConverter;
         private readonly IUrlGenerator _urlGenerator;
-        private readonly IAppConfig _appConfig;
+        private readonly string _feedTitle;
+        private readonly string _feedDescription;
         private readonly int _maxItemCount;
 
         public FeedFactory(
             IArticleService articleService, 
             IFeedItemConverter feedItemConverter, 
-            IUrlGenerator urlGenerator, 
-            IAppConfig appConfig, 
+            IUrlGenerator urlGenerator,
+            string feedTitle,
+            string feedDescription,
             int maxItemCount)
         {
             _articleService = articleService;
             _feedItemConverter = feedItemConverter;
             _urlGenerator = urlGenerator;
-            _appConfig = appConfig;
+            _feedTitle = feedTitle;
+            _feedDescription = feedDescription;
             _maxItemCount = maxItemCount;
         }
 
@@ -55,8 +56,8 @@ namespace DustedCodes.Blog.Feeds
                     _urlGenerator.GeneratePermalinkUrl(article.Id)));
 
             var feed = new SyndicationFeed(
-                _appConfig.BlogTitle,
-                _appConfig.BlogDescription,
+                _feedTitle,
+                _feedDescription,
                 new Uri(feedUrl),
                 feedItems);
 

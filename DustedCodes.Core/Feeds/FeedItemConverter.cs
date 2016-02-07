@@ -3,7 +3,7 @@ using System.Linq;
 using System.ServiceModel.Syndication;
 using DustedCodes.Core.Data;
 
-namespace DustedCodes.Blog.Feeds
+namespace DustedCodes.Core.Feeds
 {
     public sealed class FeedItemConverter : IFeedItemConverter
     {
