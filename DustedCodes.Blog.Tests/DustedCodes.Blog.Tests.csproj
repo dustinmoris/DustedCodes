@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AtomFeedResultTests.cs" />
-    <Compile Include="FeedServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RssFeedResultTests.cs" />
   </ItemGroup>
