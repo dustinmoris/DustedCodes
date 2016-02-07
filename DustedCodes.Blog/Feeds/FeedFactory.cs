@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DustedCodes.Blog.Configuration;
 using DustedCodes.Blog.Helpers;
 using DustedCodes.Core.Services;
+using DustedCodes.Core.Web;
 
 namespace DustedCodes.Blog.Feeds
 {

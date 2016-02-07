@@ -1,12 +1,12 @@
-﻿using System.Web;
+﻿using System.Net;
 
-namespace DustedCodes.Blog.Helpers
+namespace DustedCodes.Core.Web
 {
     public sealed class UrlEncoder : IUrlEncoder
     {
         public string EncodeUrl(string url)
         {
-            return HttpUtility.UrlEncode(url);
+            return WebUtility.UrlEncode(url);
         }
     }
 }

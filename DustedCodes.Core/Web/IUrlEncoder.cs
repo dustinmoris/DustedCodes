@@ -1,4 +1,4 @@
-﻿namespace DustedCodes.Blog.Helpers
+﻿namespace DustedCodes.Core.Web
 {
     public interface IUrlEncoder
     {

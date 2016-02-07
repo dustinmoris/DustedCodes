@@ -53,6 +53,9 @@
     <Compile Include="Services\IArticleService.cs" />
     <Compile Include="Collections\PagedCollection.cs" />
     <Compile Include="Caching\ICache.cs" />
+    <Compile Include="Web\IUrlEncoder.cs" />
+    <Compile Include="Web\IUrlGenerator.cs" />
+    <Compile Include="Web\UrlEncoder.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

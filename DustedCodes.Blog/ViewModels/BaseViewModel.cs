@@ -1,5 +1,6 @@
 ﻿using DustedCodes.Blog.Configuration;
 using DustedCodes.Blog.Helpers;
+using DustedCodes.Core.Web;
 
 namespace DustedCodes.Blog.ViewModels
 {
