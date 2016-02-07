@@ -174,7 +174,7 @@
     <li>The RSA instance could have been injected somewhere else as well, therefore disposing it would cause a bug.</li>
     <li>There is a <a href="http://dailydotnettips.com/2014/01/15/benefit-of-using-in-dispose-for-net-objects-why-and-when/">benefit of the using statement</a> and the constructor injection pattern doesn't allow me to make use of it</li>
 </ol>
-<p>This means we are better of by using a different dependency injection pattern. In this instance the factory pattern is more suitable:</p>
+<p>This means we are better off by using a different dependency injection pattern. In this instance the factory pattern is more suitable:</p>
 <pre><code>public interface IRSAFactory
 {
     RSA CreateRSA();
@@ -263,5 +263,3 @@ public class MyClass
 </ol>
 <p>I hope this was useful and that I could shed more light on RSA in .NET.</p>
 <p>There are a lot of resources on the internet showing how to use the RSACryptoServiceProvider and therefore I didn't want to re-iterate over the same topic again and focus more on some patterns beyond the default examples.</p>
-<p>Using the RSACng class is very similar and the official MSDN documentation gives good examples on both as well.</p>
-<p>If all dependent classes work with the abstarct RSA type then the only difference between both classes boils down to their composition in your factory.</p>

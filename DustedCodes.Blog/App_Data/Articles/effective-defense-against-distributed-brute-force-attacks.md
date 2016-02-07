@@ -5,16 +5,16 @@
     Tags: security brute-force-attacks
 -->
 <p>Protecting against brute force attacks can be a very tricky task.</p>
-<p>Recently I was curious if there are some best practice methods to protect your website against a distributed brute force attack and I found a lot of interesting solutions.</p>
+<p>Recently I was curious if there are any best practices to protect a website from distributed brute force attacks and I found a lot of interesting solutions:</p>
 
 <h2>Lock an account after X failed login attempts</h2>
-<p>If a user reaches a certain limit of failed login attempts  the website locks down the account and refuses any further access.</p>
+<p>The first method I found was very trivial. If a user reaches a certain limit of failed login attempts  the website locks down the account and refuses any further access.</p>
 <p>A genuine user can unlock his or her account by requesting a recovery link via email or by changing their password via the password reset function.</p>
 <h3>Problems with this pattern</h3>
 <ul>
     <li>Introduces a targeted DOS attack surface. An attacker could easily lock out an account by purposefully providing the wrong password several times to either to block an account from using the service entirely or to force the user into a recovery path, where the attacker might have found further vulnerabilities.</li>
-    <li>Doesn't protect against more sophisticated attacks (typically an attacker would pick the most common password an try it on all accounts, then pick the second most common, etc.)</li>
-    <li>Introduces a potential enumeration attack. An attacker can purposely provide a wrong password and determine if a certain email address/username exists when the account gets locked after a while.</li>
+    <li>Doesn't protect against more sophisticated attacks (typically an attacker would pick the most common password an try it on all accounts, then pick the second most common password, etc.)</li>
+    <li>Introduces a potential enumeration attack. An attacker can purposely provide a wrong password and determine if a certain email address/username exists if the account gets locked or not.</li>
 </ul>
 
 <h2>Blocking IP Addresses with too many failed login attempts</h2>
@@ -23,7 +23,7 @@
 <ul>
     <li>It doesn't help against a distributed brute force attack.</li>
     <li>Opens the door for another DOS attack.</li>
-    <li>There is a good chance that users behind a shared network will lock themselves out if enough users type in a wrong password within a short amount of time.</li>
+    <li>There is a good chance that users behind a shared network will lock themselves out if enough users type in a wrong password within a short period of time.</li>
 </ul>
 
 <h2>Whitelist-/Blacklisting IP Addresses</h2>
@@ -40,11 +40,11 @@
 <h3>Problems with this pattern</h3>
 <ul>
     <li>If a genuine user makes a mistake shortly after an attack, they might end up with a long response time.</li>
-    <li>The website ends up wasting threads unnecessarily. This can result in a potential DOS attack again!?</li>
+    <li>The website ends up unnecessarily wasting threads. This can result in a potential DOS attack again!?</li>
 </ul>
 
 <h2>Implement a challenge like a CAPTCHA</h2>
-<p>This appraoch is trying to stop automated bots from brute forcing an account by implementing a challenge, which supposedly can only be accomplished by a human. Captchas are a very popular solution, but there are many other creative approches to filter humans from machines.</p>
+<p>This appraoch is trying to stop automated bots from brute forcing an account by implementing a challenge, which supposedly can only be accomplished by a human. Captchas are a very popular solution, but there are many other creative approches to filter humans from machines which work on the same assumption.</p>
 <h3>Problems with this pattern</h3>
 <ul>
     <li>Bad user experience for the geuine user.</li>
@@ -73,4 +73,4 @@
 <p>Another very viable approach is to simply not fight brute force attacks at all. Make sure your users have strong passwords and make brute force attempts rather harmless.</p>
 <p>A good password policy is probably a good idea in any case. As always, security comes in layers.</p>
 
-<p>If you know another effective defense against distributed brute force attacks I'd be interested in hearing them!</p>
+<p>If you know any other effective defense systems against distributed brute force attacks I'd be interested in hearing them!</p>

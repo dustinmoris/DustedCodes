@@ -4,9 +4,9 @@
     Title: Guard clauses without test coverage, a common TDD pitfall
     Tags: tdd guard-clauses
 -->
-<p>Today I wanted to blog about a little mistake which easily creeps into your otherwise good TDD practices.</p>
+<p>Today I wanted to blog about a little mistake which can easily creep into otherwise good TDD practices.</p>
 
-<p>For this demo I'd like to start with an empty unit test project. I start initializing a subject under test and then implementing just enough code to make the solution build:</p>
+<p>For this demo I'd like to start with an empty unit test project and initialize a subject under test. Then I add enough code to make the solution build:</p>
 <pre><code>namespace MyClassLibrary
 {
     public class DomainClass { }
@@ -115,6 +115,6 @@ public class DomainClassTests
     }
 }</code></pre>
 
-<p>It means that &quot;<code>var result = _dependecy.ProcessData(arg);</code>&quot; will return null and make the test go green.</p>
+<p>It means that <code>var result = _dependecy.ProcessData(arg);</code> will return null and make the test go green.</p>
 
 <p>This is why it is best to not introduce little short cuts in TDD and be careful during your code reviews as well!</p>

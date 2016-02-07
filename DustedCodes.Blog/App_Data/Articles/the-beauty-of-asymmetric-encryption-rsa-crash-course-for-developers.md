@@ -40,7 +40,7 @@
 <p>Now theoretically Eve could equally use Alice's or Bob's public key and send them a private message. It wouldn't help her directly to read anyone's encrypted message, but she could trick either one of them to believe her message was from Bob or Alice and provoke them to make a mistake.</p>
 <p>Eve could also intercept and tamper with the encrypted message, so that after decryption it will read something different.</p>
 <p>Just by encrypting a message neither Bob or Alice can ever be sure that the message hasn't been modified (integrity) by Eve nor that the message wasn't sent from Eve in the first place (authenticity).</p>
-<p>Luckily RSA offers a solution to this problem as well. Similar to encrypting a message, the algorithm can also be used for signing it. Bob can use his private key to compute a signature from his message. The signature would be unique to the message and no other message would compute the same signature.</p>
+<p>Luckily RSA offers a solution to this problem. Similar to encrypting a message, the algorithm can also be used for signing it. Bob can use his private key to compute a signature from his message. The signature would be unique to the message and no other message would compute the same signature.</p>
 <p>Alice can then use Bob's public key to verify if the message and the attached signature match. Because she uses Bob's public key she can be sure that the message came from Bob. Only Bob can create a correct signature with his private key. Additionally Alice will easily know if the message has been modified or not. If Eve changed the message or the attached signature, then Alice will not be able to verify the signature with Bob's public key and therefore know that someone has tampered with the data.</p>
 <p>By providing an additional signature Alice and Bob can trust each others messages.</p>
 
@@ -62,7 +62,7 @@
 <a href="https://www.flickr.com/photos/130657798@N05/19051127700" title="Clock Arithmetic by Dustin Moris Gorski, on Flickr"><img src="https://c1.staticflickr.com/1/294/19051127700_2dd7074ef4_o.gif" alt="Clock Arithmetic"></a>
 <p>The dark circle represents the clock. The blue numbers represent the value 17. If you arrange all numbers from 1 to 17 clockwise in a loop, then the end value results in 5. In other words 17 mod 12 equals 5.</p>
 <p>The short-cut and common way of calculating the modulus is by dividing the original value by x. The reminder equals the modulus.</p>
-<p>The modulus of a and b is a great one-way function, because it is fairly simple and has an infinite amount of possible values giving the same result.</p>
+<p>The modulus operation is a great one-way function, because it is fairly simple and has an infinite amount of possible values giving the same result.</p>
 
 <h3>Prime numbers</h3>
 <p>Prime numbers are the last important building block of the RSA algorithm.</p>
