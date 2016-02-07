@@ -1,14 +1,9 @@
 ﻿using System.Collections.Generic;
-using DustedCodes.Blog.Configuration;
 
 namespace DustedCodes.Blog.ViewModels.Blog
 {
     public class IndexViewModel : BaseViewModel
     {
-        public IndexViewModel(IAppConfig appConfig) : base(appConfig)
-        {
-        }
-
         public override string PageTitle => $"{BlogTitle} - {BlogDescription}";
 
         public IEnumerable<ArticlePartialViewModel> Articles { get; set; }

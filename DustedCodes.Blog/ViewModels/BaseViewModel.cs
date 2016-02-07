@@ -1,27 +1,38 @@
 ﻿using DustedCodes.Blog.Configuration;
+using DustedCodes.Blog.Helpers;
 
 namespace DustedCodes.Blog.ViewModels
 {
     public abstract class BaseViewModel
     {
-        private readonly IAppConfig _appConfig;
         private readonly string _pageTitle;
         private const int CssVersion = 20;
         private const int JavaScriptVersion = 5;
 
-        protected BaseViewModel(IAppConfig appConfig, string pageTitle = null)
+        protected BaseViewModel(
+            string pageTitle = null)
         {
-            _appConfig = appConfig;
             _pageTitle = pageTitle;
         }
 
+        protected virtual IAppConfig AppConfig => new AppConfig();
+        protected virtual IUrlGenerator UrlGenerator => new UrlGenerator();
+
         public virtual string PageTitle => $"{_pageTitle} - {BlogTitle}";
-        public string BlogTitle => _appConfig.BlogTitle;
-        public string BlogDescription => _appConfig.BlogDescription;
-        public string DisqusShortname => _appConfig.DisqusShortname;
-        public bool IsProductionEnvironment => _appConfig.IsProductionEnvironment;
-        public string RelativeCssFilePath => $"Assets/Css/site{(IsDebugMode() ? "" : ".min")}.css?v={CssVersion}";
-        public string RelativeJavaScriptFilePath => $"Assets/Scripts/main{(IsDebugMode() ? "" : ".min")}.js?v={JavaScriptVersion}";
+        public string BaseUrl => UrlGenerator.GetBaseUrl();
+        public string BlogTitle => AppConfig.BlogTitle;
+        public string BlogDescription => AppConfig.BlogDescription;
+        public string DisqusShortname => AppConfig.DisqusShortname;
+        public bool IsProductionEnvironment => AppConfig.IsProductionEnvironment;
+
+        public string CssFilePath => UrlGenerator.GenerateContentUrl(
+            $"~/Assets/Css/site{(IsDebugMode() ? "" : ".min")}.css?v={CssVersion}");
+
+        public string JavaScriptFilePath => UrlGenerator.GenerateContentUrl(
+            $"~/Assets/Scripts/main{(IsDebugMode() ? "" : ".min")}.js?v={JavaScriptVersion}");
+
+        public string FullQualifiedContentUrl(string relativePath)
+            => UrlGenerator.GenerateFullQualifiedContentUrl(relativePath);
 
         private static bool IsDebugMode()
         {

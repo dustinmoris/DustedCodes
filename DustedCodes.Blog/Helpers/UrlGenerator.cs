@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -9,6 +10,28 @@ namespace DustedCodes.Blog.Helpers
         private static HttpRequest GetCurrentRequest()
         {
             return HttpContext.Current.Request;
+        }
+
+        public string GetBaseUrl()
+        {
+            var httpRequest = GetCurrentRequest();
+            var urlHelper = new UrlHelper(httpRequest.RequestContext, RouteTable.Routes);
+
+            return urlHelper.Action("Index", "Blog", null, httpRequest.Url.Scheme);
+        }
+
+        public string GenerateFullQualifiedContentUrl(string relativePath)
+        {
+            var baseUri = new Uri(GetBaseUrl());
+            return new Uri(baseUri, relativePath).AbsoluteUri;
+        }
+
+        public string GenerateContentUrl(string relativePath)
+        {
+            var httpRequest = GetCurrentRequest();
+            var urlHelper = new UrlHelper(httpRequest.RequestContext, RouteTable.Routes);
+
+            return urlHelper.Content(relativePath);
         }
 
         public string GeneratePermalinkUrl(string articleId)

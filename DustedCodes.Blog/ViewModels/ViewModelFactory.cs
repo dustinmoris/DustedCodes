@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using DustedCodes.Blog.Configuration;
@@ -51,21 +50,21 @@ namespace DustedCodes.Blog.ViewModels
 
         public AboutViewModel CreateAboutViewModel()
         {
-            return new AboutViewModel(_appConfig);
+            return new AboutViewModel();
         }
 
         public ArticleViewModel CreateArticleViewModel(Article article)
         {
             var partialViewModel = CreateArticlePartialViewModel(article, false);
 
-            return new ArticleViewModel(_appConfig, partialViewModel);
+            return new ArticleViewModel(partialViewModel);
         }
 
         public IndexViewModel CreateIndexViewModel(IEnumerable<Article> articles, int totalPageCount, int currentPage)
         {
             var articlePartialViewModels = articles.Select(a => CreateArticlePartialViewModel(a, true));
 
-            return new IndexViewModel(_appConfig)
+            return new IndexViewModel
             {
                 Articles = articlePartialViewModels,
                 TotalPageCount = totalPageCount,
@@ -75,7 +74,7 @@ namespace DustedCodes.Blog.ViewModels
 
         public ArchiveViewModel CreateArchiveViewModel(IEnumerable<Article> articles, string title)
         {
-            return new ArchiveViewModel(_appConfig, title) { Articles = articles };
+            return new ArchiveViewModel(title) { Articles = articles };
         }
     }
 }

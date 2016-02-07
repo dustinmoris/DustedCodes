@@ -1,11 +1,10 @@
 ﻿using System;
-using DustedCodes.Blog.Configuration;
 
 namespace DustedCodes.Blog.ViewModels.Home
 {
     public class AboutViewModel : BaseViewModel
     {
-        public AboutViewModel(IAppConfig appConfig) : base(appConfig, "About")
+        public AboutViewModel() : base("About")
         {
         }
 

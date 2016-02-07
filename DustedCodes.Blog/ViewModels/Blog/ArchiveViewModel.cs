@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
-using DustedCodes.Blog.Configuration;
 using DustedCodes.Core.Data;
 
 namespace DustedCodes.Blog.ViewModels.Blog
 {
     public class ArchiveViewModel : BaseViewModel
     {
-        public ArchiveViewModel(IAppConfig appConfig, string title)
-            : base(appConfig, title)
+        public ArchiveViewModel(string title) : base(title)
         {
             Title = title;
         }
