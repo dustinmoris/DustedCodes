@@ -125,6 +125,12 @@ namespace DustedCodes.Automation.Tests
                 Title = "Understanding ASP.NET Core 1.0 (ASP.NET 5) and why it will replace Classic ASP.NET",
                 PermalinkId = "understanding-aspnet-core-10-aka-aspnet-5-and-why-it-will-replace-classic-aspnet",
                 Tags = new[] { "aspnet-core", "aspnet", "dotnet" }
+            },
+            new BlogPost
+            {
+                Title = "SHA-256 is not a secure password hashing algorithm",
+                PermalinkId = "sha-256-is-not-a-secure-password-hashing-algorithm",
+                Tags = new[] { "security", "password-hashing", "cryptography", "brute-force-attacks" }
             }
         };
     }
