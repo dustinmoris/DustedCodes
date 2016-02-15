@@ -129,6 +129,9 @@
     <None Include="App_Data\Articles\display-build-history-charts-for-appveyor-or-travisci-builds-with-an-svg-widget.md" />
     <None Include="App_Data\Articles\death-of-a-qa-in-scrum.md" />
     <None Include="App_Data\Articles\diagnosing-css-issues-on-mobile-devices-with-google-chrome-bookmarklets.md" />
+    <Content Include="App_Data\Articles\aspnet-5-like-configuration-in-regular-dotnet-applications.html">
+      <DependentUpon>aspnet-5-like-configuration-in-regular-dotnet-applications.md</DependentUpon>
+    </Content>
     <Content Include="App_Data\Articles\aspnet-5-like-configuration-in-regular-dotnet-applications.md" />
     <None Include="App_Data\Articles\running-nancyfx-in-a-docker-container-a-beginners-guide-to-build-and-run-dotnet-applications-in-docker.md" />
     <None Include="App_Data\Articles\how-to-make-an-istatuscodehandler-portable-in-nancyfx.md" />
@@ -212,10 +215,10 @@
     <Compile Include="ActionResults\AtomFeedResult.cs" />
     <Compile Include="ActionResults\FeedResult.cs" />
     <Compile Include="ActionResults\RssFeedResult.cs" />
-    <Compile Include="Configuration\DependencyConfig.cs" />
-    <Compile Include="Configuration\RouteConfig.cs" />
-    <Compile Include="Configuration\AppConfig.cs" />
-    <Compile Include="Configuration\IAppConfig.cs" />
+    <Compile Include="Config\DependencyConfig.cs" />
+    <Compile Include="Config\RouteConfig.cs" />
+    <Compile Include="Config\AppConfig.cs" />
+    <Compile Include="Config\IAppConfig.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

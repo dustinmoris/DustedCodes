@@ -1,4 +1,4 @@
-﻿using DustedCodes.Blog.Configuration;
+﻿using DustedCodes.Blog.Config;
 using DustedCodes.Blog.Helpers;
 using DustedCodes.Core.Web;
 

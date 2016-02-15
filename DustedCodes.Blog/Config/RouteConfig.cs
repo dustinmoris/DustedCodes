@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace DustedCodes.Blog.Configuration
+namespace DustedCodes.Blog.Config
 {
     public static class RouteConfig
     {

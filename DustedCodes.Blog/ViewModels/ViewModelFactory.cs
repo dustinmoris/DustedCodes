@@ -1,10 +1,10 @@
-using DustedCodes.Blog.Configuration;
 using DustedCodes.Blog.ViewModels.Blog;
 using DustedCodes.Blog.ViewModels.Home;
 using DustedCodes.Core.Data;
 using DustedCodes.Core.Web;
 using System.Collections.Generic;
 using System.Linq;
+using DustedCodes.Blog.Config;
 
 namespace DustedCodes.Blog.ViewModels
 {

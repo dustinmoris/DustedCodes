@@ -13,7 +13,7 @@ using DustedCodes.Core.IO;
 using DustedCodes.Core.Services;
 using DustedCodes.Core.Web;
 
-namespace DustedCodes.Blog.Configuration
+namespace DustedCodes.Blog.Config
 {
     public static class DependencyConfig
     {
