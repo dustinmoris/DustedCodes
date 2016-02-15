@@ -1,4 +1,14 @@
-﻿body {
+﻿/*Fixing monospace handling across browsers*/
+pre,
+code,
+kbd,
+samp,
+tt {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+body {
     display: flex;
     -ms-flex-direction: column;
     -webkit-flex-direction: column;
