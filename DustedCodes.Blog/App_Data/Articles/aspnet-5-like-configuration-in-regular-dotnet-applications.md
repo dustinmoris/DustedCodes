@@ -2,7 +2,7 @@
     Published: 2016-01-12 08:15
     Author: Dustin Moris Gorski
     Title: ASP.NET 5 like configuration in regular .NET applications
-    Tags: aspnet dotnet
+    Tags: aspnet dotnet aspnet-core
 -->
 [ASP.NET 5](https://get.asp.net/) is Microsoft's latest web framework and the new big thing on the .NET landscape. It comes with a whole lot of [new features](https://github.com/aspnet/home/releases/v1.0.0-rc1-final) and other changes which makes it very distinctive from previous ASP.NET versions. It is basically a complete re-write of the framework, optimized for the cloud and cross platform compatible. If you haven't checked it out yet then you are definitely missing out!
 
@@ -84,3 +84,9 @@ Now I can access configuration values from other classes through an `IConfigurat
 <pre><code>var value = _configuration.Get("SomeKey");</code></pre>
 
 With this trick you can easily implement a &quot;cloud optimized&quot; configuration in any version of ASP.NET and follow good practice patterns no matter where you code!
+
+### UPDATE:
+
+I created a complete [example of how this might look like in an ASP.NET 4.6 MVC 5 application](https://github.com/dustinmoris/ASP.NET-4.6-Configuration-Demo) and uploaded it to GitHub.
+
+In this example I provide 3 configuration sources and two different ways of composing them together. Once via the Decorator pattern as shown in this blog post and another one using a fluent Builder pattern which is much more similar to the way it is done in ASP.NET Core.
