@@ -2,7 +2,7 @@
     Published: 2016-01-12 08:15
     Author: Dustin Moris Gorski
     Title: ASP.NET 5 like configuration in regular .NET applications
-    Tags: aspnet dotnet aspnet-core
+    Tags: aspnet dotnet aspnet-core architecture
 -->
 [ASP.NET 5](https://get.asp.net/) is Microsoft's latest web framework and the new big thing on the .NET landscape. It comes with a whole lot of [new features](https://github.com/aspnet/home/releases/v1.0.0-rc1-final) and other changes which makes it very distinctive from previous ASP.NET versions. It is basically a complete re-write of the framework, optimized for the cloud and cross platform compatible. If you haven't checked it out yet then you are definitely missing out!
 
