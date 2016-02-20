@@ -1,4 +1,4 @@
-# [Dusted Codes](http://dusted.codes/)
+# [Dusted Codes](https://dusted.codes/)
 [![Build status](https://ci.appveyor.com/api/projects/status/9d091ttri4t1rgf9/branch/master?svg=true)](https://ci.appveyor.com/project/dustinmoris/dustedcodes/branch/master)
 
 [![Build history](http://ci-buildstats.azurewebsites.net/appveyor/chart/dustinmoris/dustedcodes)](https://ci.appveyor.com/project/dustinmoris/dustedcodes/history)
@@ -13,4 +13,4 @@ Blog articles can be written in either Markdown or HTML. Markdown pages get comp
 
 Feel free to fork it and create your own nerdy space in the world wide web!
 
-Visit my blog at [dusted.codes](http://dusted.codes/).
+Visit my blog at [dusted.codes](https://dusted.codes/).

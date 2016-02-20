@@ -194,4 +194,4 @@ public ActionResult Index()
 <p>If you need to create application wide error logging, I highly recommend to look at this project!</p>
 <h2>Final words</h2>
 <p>I hope this overview was helpful in explaining the different error handling approaches and how they are linked together.</p>
-<p>Each of the techniques has a certain use case and it really depends on what requirements you have. If you have any further questions feel free to ask me here or via any of the social media channels referenced on my <a href="http://dusted.codes/about">about</a> page.</p>
+<p>Each of the techniques has a certain use case and it really depends on what requirements you have. If you have any further questions feel free to ask me here or via any of the social media channels referenced on my <a href="//dusted.codes/about">about</a> page.</p>

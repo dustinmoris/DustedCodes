@@ -121,7 +121,7 @@
 
 <h3>Less cross functional teams</h3>
 
-<p><a href="http://dusted.codes/death-of-a-qa-in-scrum">Scrum is not very compatible with non cross functional teams</a>. It either results in a lot of friction or in a waste of resources. Kanban doesn't entirely solve the problem, but is certainly a lot more friendly towards specialised roles and distributed efforts within a team.</p>
+<p><a href="//dusted.codes/death-of-a-qa-in-scrum">Scrum is not very compatible with non cross functional teams</a>. It either results in a lot of friction or in a waste of resources. Kanban doesn't entirely solve the problem, but is certainly a lot more friendly towards specialised roles and distributed efforts within a team.</p>
 
 <p>Work tasks can be divided into several stages with different upper limits on current work in progress. This allows a team to tweak those limits to avoid blockages and optimise a smooth continuous flow.</p>
 

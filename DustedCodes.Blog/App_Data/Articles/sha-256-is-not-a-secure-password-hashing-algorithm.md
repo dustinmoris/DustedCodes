@@ -18,7 +18,7 @@ A good password hashing algorithm removes the slightest chance of a shortcut, le
 
 First of all this means that a password must **always** be stored with a cryptographic one-way function. If a password has been encrypted with an algorithm which allows decryption then there is no guarantee that an attacker has not already gained access to the secret key and immediately bypassed all gates of security.
 
-Therefore encryption algorithms such as [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and [RSA](http://dusted.codes/the-beauty-of-asymmetric-encryption-rsa-crash-course-for-developers) are not secure storage mechanisms for a password. The use of a one-way hash function is mandatory.
+Therefore encryption algorithms such as [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) and [RSA](//dusted.codes/the-beauty-of-asymmetric-encryption-rsa-crash-course-for-developers) are not secure storage mechanisms for a password. The use of a one-way hash function is mandatory.
 
 ### Pre-image and collision attacks
 
