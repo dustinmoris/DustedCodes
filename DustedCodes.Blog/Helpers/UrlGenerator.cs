@@ -2,23 +2,36 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using DustedCodes.Blog.Config;
 using DustedCodes.Core.Web;
 
 namespace DustedCodes.Blog.Helpers
 {
     public sealed class UrlGenerator : IUrlGenerator
     {
+        private readonly IAppConfig _appConfig;
+
+        public UrlGenerator(IAppConfig appConfig)
+        {
+            _appConfig = appConfig;
+        }
+
         private static HttpRequest GetCurrentRequest()
         {
             return HttpContext.Current.Request;
         }
 
-        public string GetBaseUrl()
+        private string GetScheme(HttpRequest httpRequest)
+        {
+            return _appConfig.ForceHttps ? "https" : httpRequest.Url.Scheme;
+        }
+
+        private string GetBaseUrl()
         {
             var httpRequest = GetCurrentRequest();
             var urlHelper = new UrlHelper(httpRequest.RequestContext, RouteTable.Routes);
 
-            return urlHelper.Action("Index", "Blog", null, httpRequest.Url.Scheme);
+            return urlHelper.Action("Index", "Blog", null, GetScheme(httpRequest), httpRequest.Url.Host);
         }
 
         public string GenerateFullQualifiedContentUrl(string relativePath)
@@ -44,7 +57,7 @@ namespace DustedCodes.Blog.Helpers
                 "Article", 
                 "Blog", 
                 new RouteValueDictionary(new { id = articleId }), 
-                httpRequest.Url.Scheme, 
+                GetScheme(httpRequest), 
                 httpRequest.Url.Host);
         }
 
@@ -53,7 +66,7 @@ namespace DustedCodes.Blog.Helpers
             var httpRequest = GetCurrentRequest();
             var urlHelper = new UrlHelper(httpRequest.RequestContext, RouteTable.Routes);
 
-            return urlHelper.Action("Rss", "Feed", null, httpRequest.Url.Scheme, httpRequest.Url.Host);
+            return urlHelper.Action("Rss", "Feed", null, GetScheme(httpRequest), httpRequest.Url.Host);
         }
 
         public string GenerateAtomFeedUrl()
@@ -61,7 +74,7 @@ namespace DustedCodes.Blog.Helpers
             var httpRequest = GetCurrentRequest();
             var urlHelper = new UrlHelper(httpRequest.RequestContext, RouteTable.Routes);
 
-            return urlHelper.Action("Atom", "Feed", null, httpRequest.Url.Scheme, httpRequest.Url.Host);
+            return urlHelper.Action("Atom", "Feed", null, GetScheme(httpRequest), httpRequest.Url.Host);
         }
     }
 }

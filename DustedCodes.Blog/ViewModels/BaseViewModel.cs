@@ -17,10 +17,9 @@ namespace DustedCodes.Blog.ViewModels
         }
 
         protected virtual IAppConfig AppConfig => new AppConfig();
-        protected virtual IUrlGenerator UrlGenerator => new UrlGenerator();
+        protected virtual IUrlGenerator UrlGenerator => new UrlGenerator(AppConfig);
 
         public virtual string PageTitle => $"{_pageTitle} - {BlogTitle}";
-        public string BaseUrl => UrlGenerator.GetBaseUrl();
         public string BlogTitle => AppConfig.BlogTitle;
         public string BlogDescription => AppConfig.BlogDescription;
         public string DisqusShortname => AppConfig.DisqusShortname;
