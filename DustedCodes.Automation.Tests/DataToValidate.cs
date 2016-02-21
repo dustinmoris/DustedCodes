@@ -118,7 +118,7 @@ namespace DustedCodes.Automation.Tests
             {
                 Title = "ASP.NET 5 like configuration in regular .NET applications",
                 PermalinkId = "aspnet-5-like-configuration-in-regular-dotnet-applications",
-                Tags = new[] { "aspnet", "dotnet" }
+                Tags = new[] { "aspnet", "dotnet", "aspnet-core", "architecture" }
             },
             new BlogPost
             {
@@ -131,6 +131,12 @@ namespace DustedCodes.Automation.Tests
                 Title = "SHA-256 is not a secure password hashing algorithm",
                 PermalinkId = "sha-256-is-not-a-secure-password-hashing-algorithm",
                 Tags = new[] { "security", "password-hashing", "cryptography", "brute-force-attacks" }
+            },
+            new BlogPost
+            {
+                Title = "Don't dispose externally created dependencies",
+                PermalinkId = "dont-dispose-externally-created-dependencies",
+                Tags = new[] { "ioc", "architecture", "dotnet", "disposable" }
             }
         };
     }

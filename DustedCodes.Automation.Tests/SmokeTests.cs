@@ -52,13 +52,15 @@ namespace DustedCodes.Automation.Tests
                 var url = $"{AppConfig.RootUrl}{blogPost.PermalinkId}";
                 Navigation.GoToUrl(url);
                 
-                Assert.IsTrue(BlogPostPage.IsAt(blogPost.Title));
+                Assert.IsTrue(BlogPostPage.IsAt(blogPost.Title), $"Blog post not found: {blogPost.Title}");
 
                 if (blogPost.Tags == null || !blogPost.Tags.Any())
                     continue;
 
-                var tags = BlogPostPage.GetTags();
-                Assert.IsTrue(blogPost.Tags.SequenceEqual(tags));
+                var tags = BlogPostPage.GetTags().ToList();
+                
+                Assert.IsTrue(blogPost.Tags.SequenceEqual(tags), 
+                    $"Tags did not match for blog post: {blogPost.Title}, Tags: {string.Join(" ", tags)}");
             }
         }
 
