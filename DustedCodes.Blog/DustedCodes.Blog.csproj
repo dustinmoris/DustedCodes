@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Data\Articles\dont-dispose-externally-created-dependencies.md" />
+    <None Include="App_Data\Articles\circleci-build-history-charts-and-nuget-badges-by-buildstatsinfo.md" />
     <None Include="App_Data\Articles\sha-256-is-not-a-secure-password-hashing-algorithm.md" />
     <None Include="App_Data\Articles\understanding-aspnet-core-10-aka-aspnet-5-and-why-it-will-replace-classic-aspnet.md" />
     <None Include="App_Data\Articles\demystifying-aspnet-mvc-5-error-pages-and-error-logging.md" />

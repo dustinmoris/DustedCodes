@@ -137,6 +137,12 @@ namespace DustedCodes.Automation.Tests
                 Title = "Don't dispose externally created dependencies",
                 PermalinkId = "dont-dispose-externally-created-dependencies",
                 Tags = new[] { "ioc", "architecture", "dotnet", "disposable" }
+            },
+            new BlogPost
+            {
+                Title = "CircleCI build history charts and NuGet badges by Buildstats.info",
+                PermalinkId = "circleci-build-history-charts-and-nuget-badges-by-buildstatsinfo",
+                Tags = new[] { "circleci", "nuget", "github", "svg" }
             }
         };
     }
