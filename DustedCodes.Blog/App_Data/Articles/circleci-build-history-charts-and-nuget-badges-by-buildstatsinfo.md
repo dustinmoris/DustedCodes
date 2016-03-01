@@ -8,7 +8,7 @@ Quick update on [Buildstats.info](https://buildstats.info/). Two weeks ago I add
 
 CircleCI is the third continuous integration system which is supported by the build history chart now. AppVeyor and TravisCI are the other two. If you have a public open source project which is built by one of those systems then you might want to check out the official [documentation for the build history chart](https://github.com/dustinmoris/CI-BuildStats). Its quite cool and lets you create SVG badges like the one I did for my blog:
 
-[![Build History Chart](https://buildstats.info/appveyor/chart/dustinmoris/dustedcodes?branch=master)](https://ci.appveyor.com/project/dustinmoris/dustedcodes/history?branch=master)
+<a href="https://ci.appveyor.com/project/dustinmoris/dustedcodes/history?branch=master" title="dusted.codes build history"><img src="https://buildstats.info/appveyor/chart/dustinmoris/dustedcodes?branch=master" alt="Build History Chart" /></a>
 
 On a complete separate note I also added a new SVG badge for [NuGet packages](https://github.com/dustinmoris/CI-BuildStats#nuget-badge).
 
@@ -16,11 +16,11 @@ I did not think of adding NuGet support in the beginning, but since [Shields.io]
 
 <a  href="https://www.flickr.com/photos/130657798@N05/25255668592/in/datetaken/" title="shields.io-broken-nuget-badges"><img src="https://farm2.staticflickr.com/1630/25255668592_5362a02717_o.png" alt="shields.io-broken-nuget-badges" class="half-width"></a>
 
-The [issue has been reported](https://github.com/badges/shields/issues/655), but it does not look like it might get fixed any time soon.
+The [issue has been reported](https://github.com/badges/shields/issues/655), but it does not look like it might get fixed any time soon and so I went with my own solution.
 
 For my own projects I like to display the current version of my NuGet packages as well as the total number of downloads. With Shields.io I had to use two individual badges, but with Buildstats.info I can display both in one:
 
-[![NuGet Badge for NUnit](https://buildstats.info/nuget/nunit)](https://www.nuget.org/packages/NUnit/)
+<a href="https://www.nuget.org/packages/NUnit/" title="NUnit NuGet package"><img src="https://buildstats.info/nuget/nunit" alt="NuGet badge for NUnit" /></a>
 
 This is a first version which satisfied my own personal needs, but will likely expand over the coming weeks providing more functionality for other users as well.
 
