@@ -16,12 +16,12 @@ I did not think of adding NuGet support in the beginning, but since [Shields.io]
 
 <a  href="https://www.flickr.com/photos/130657798@N05/25255668592/in/datetaken/" title="shields.io-broken-nuget-badges"><img src="https://farm2.staticflickr.com/1630/25255668592_5362a02717_o.png" alt="shields.io-broken-nuget-badges" class="half-width"></a>
 
-The [issue has been reported](https://github.com/badges/shields/issues/655), but it does not look like it might get fixed any time soon and so I went with my own solution.
+The [issue has been reported](https://github.com/badges/shields/issues/655), but it doesn't look like it will get fixed any time soon and so I went with my own solution.
 
-For my own projects I like to display the current version of my NuGet packages as well as the total number of downloads. With Shields.io I had to use two individual badges, but with Buildstats.info I can display both in one:
+For my personal projects I like to display the current version of my NuGet packages as well as the total number of downloads. With Shields.io I had to use two individual badges, but with Buildstats.info I can display both in one:
 
-<a href="https://www.nuget.org/packages/NUnit/" title="NUnit NuGet package"><img src="https://buildstats.info/nuget/nunit" alt="NuGet badge for NUnit" /></a>
+<a href="https://www.nuget.org/packages/Lanem/" title="Lanem NuGet package"><img src="https://buildstats.info/nuget/lanem" alt="NuGet badge for Lanem" /></a>
 
-This is a first version which satisfied my own personal needs, but will likely expand over the coming weeks providing more functionality for other users as well.
+This is a first version which satisfied my own personal needs, but will likely expand over the next coming weeks providing more functionality for other users as well.
 
 I have a few ideas, but if you are looking for something in particular then please feel free to [file a feature request](https://github.com/dustinmoris/CI-BuildStats/issues) on the public GitHub repository.
