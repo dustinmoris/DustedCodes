@@ -20,11 +20,11 @@ In this blog post I will show how to use PowerShell to minify static assets from
 
 ## Minifying CSS and JavaScript with PowerShell
 
-Let's start off by implementing the PowerShell script files. In the first step I want to recursively find all CSS files within a given folder and exclude already minified files:
+Let's begin with the PowerShell script. In the first step I want to recursively find all CSS files within a given folder and exclude already minified files:
 
 <pre><code>Get-ChildItem $SolutionDir -Recurse -Include *.css -Exclude *.min.css</code></pre>
 
-`$SolutionDir` is a variable pointing to the root path of the solution. This variable will be assigned when calling the script from a post-build event. I will come back to this a bit later.
+`$SolutionDir` is a variable pointing to the root path of the solution. This variable will be assigned when calling the script from a post-build event. I will come back to this later again.
 
 The next step is to iterate through all CSS files and minify them. This can be achieved by piping `|` the result from `Get-ChildItem` to a foreach loop `%` and call a function on each individual element:
 
@@ -115,7 +115,7 @@ Get-ChildItem $SolutionDir -Recurse -Include *.css -Exclude *.min.css | % {
     Compress-CssFile -CssFilePath $_
 }</code></pre>
 
-This script is ready to work now. Implementing the same for JavaScript files is trivial from here. Simply copy the `MinifyCss.ps1` file and rename it to `MinifyJavaScript.ps1`. Change the implementation to point to the public [JavaScript Minifier](https://javascript-minifier.com/) API and change the file extensions from `.css` to `.js`.
+This script is ready now. Implementing the same functionality for JavaScript files is trivial. Simply copy the `MinifyCss.ps1` file and rename it to `MinifyJavaScript.ps1`. Change the implementation to point to the public [JavaScript Minifier](https://javascript-minifier.com/) API and change the file extensions from `.css` to `.js`.
 
 ## Calling PowerShell scripts from an ASP.NET post-build event
 
@@ -137,11 +137,11 @@ Go to the &quot;Build Events&quot; dialog and paste the following code into the 
 
 This code block makes sure that we only execute the PowerShell scripts when the project doesn't build in Debug mode. This is desired because during development we might make frequent changes to the original CSS file and not want to minify the content until we are ready to build in Release mode.
 
-The `$(SolutionDir)` placeholder is a [reserved MSBuild macro](https://msdn.microsoft.com/en-us/library/c02as0cs.aspx) which points to the root directory of the solution. I pass it directly to the PowerShell script where it gets assigned to the equally named PowerShell variable. The rest happens in PowerShell.
+The `$(SolutionDir)` placeholder is a [reserved MSBuild macro](https://msdn.microsoft.com/en-us/library/c02as0cs.aspx) which points to the root directory of the solution. It gets passed directly to the PowerShell script where it gets assigned to the equally named PowerShell variable. The rest happens in PowerShell.
 
 ## Swap between original and minified files in ASP.NET MVC Razor views
 
-The last piece in the puzzle is to swap between the original and the minified files in your ASP.NET MVC Razor views. In Debug mode we want to point to the original file, so that we can test CSS changes without any friction during development . In all other cases we want to swap it for the minified version instead.
+The last piece in the puzzle is to swap between the original and the minified files in the ASP.NET MVC Razor views. In Debug mode we want to point to the original file, so that we can test CSS changes without any friction during development, but in all other cases we want to swap it for the minified version instead.
 
 In order to distinguish between Debug and Release mode in an MVC razor view we need a little helper class:
 
@@ -157,7 +157,7 @@ In order to distinguish between Debug and Release mode in an MVC razor view we n
     }
 }</code></pre>
 
-Voila, with this little helper method I can easily switch between the `.css` and `.min.css` files in my HTML markup:
+With this helper method we can easily switch between the `.css` and `.min.css` files in the HTML markup:
 
 <pre><code>@if (Model.IsProductionEnvironment)
 {
@@ -172,4 +172,4 @@ If you [use C# 6.0 in you razor views](https://dusted.codes/using-csharp-6-featu
 
 <pre><code>&lt;link type="text/css" href=@($"~/Assets/Css/site{(BuildProperties.IsDebugMode() ? "" : ".min")}.css")&gt;</code></pre>
 
-Now you never have to worry about manually minifying your static assets anymore. It just happens automatically when you build in Release mode and publish your website to a live environment.
+Voila, now you never have to worry about manually minifying static assets anymore. It just happens automatically during the Release build and the live website will reference the correct path to the minified file.
