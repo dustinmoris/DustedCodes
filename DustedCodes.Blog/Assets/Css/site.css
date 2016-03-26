@@ -198,6 +198,7 @@ kbd {
     padding: .2em .5em;
     -ms-border-radius: 3px;
     border-radius: 3px;
+    font-size: .85em;
 }
 
 article > header > h1:first-child {

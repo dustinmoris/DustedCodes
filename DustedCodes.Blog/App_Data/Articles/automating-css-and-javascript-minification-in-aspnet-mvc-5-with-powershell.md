@@ -121,7 +121,7 @@ This script is ready to work now. Implementing the same for JavaScript files is 
 
 The next step is to call both PowerShell scripts from an ASP.NET post-build event.
 
-This couldn't be any easier. Right click the project file of your ASP.NET project and select &quot;Properties&quot; from the menu or select the project file and hit <kbd>Alt</kbd>+<kbd>Enter</kbd> on your keyboard.
+This couldn't be any easier. Right click the project file of your ASP.NET project and select &quot;Properties&quot; from the menu or select the project file and hit <kbd>Alt</kbd> + <kbd>Enter</kbd> on your keyboard.
 
 Go to the &quot;Build Events&quot; dialog and paste the following code into the post-build event command line:
 
