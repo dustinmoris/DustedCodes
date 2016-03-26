@@ -121,6 +121,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App_Data\Articles\automating-css-and-javascript-minification-in-aspnet-mvc-5-with-powershell.md" />
     <None Include="App_Data\Articles\dont-dispose-externally-created-dependencies.md" />
     <None Include="App_Data\Articles\circleci-build-history-charts-and-nuget-badges-by-buildstatsinfo.md" />
     <None Include="App_Data\Articles\sha-256-is-not-a-secure-password-hashing-algorithm.md" />
@@ -321,9 +322,7 @@ echo "Skipping JavaScript minification in debug mode."
 C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)CompileArticles.ps1" $(SolutionDir)
 C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)MinifyCss.ps1" $(SolutionDir) "WE-Markdown.css"
 C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)MinifyJavaScript.ps1" $(SolutionDir)
-)
-
-</PreBuildEvent>
+)</PreBuildEvent>
   </PropertyGroup>
   <Target Name="CollectCompiledArticles">
     <ItemGroup>

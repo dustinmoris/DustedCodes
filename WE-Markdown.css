@@ -3,3 +3,13 @@
 h1 { font-size: 2em; }
 
 h2 { font-size: 1.7em; }
+
+code {
+    font-family: Consolas;
+    font-size: .8em;
+    line-height: 1.6em;
+    white-space: pre-wrap;
+    -moz-word-break: break-all;
+    -o-word-break: break-all;
+    word-break: break-all;
+}
