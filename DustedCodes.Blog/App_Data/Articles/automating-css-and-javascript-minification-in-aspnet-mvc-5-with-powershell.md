@@ -129,8 +129,8 @@ Go to the &quot;Build Events&quot; dialog and paste the following code into the 
     echo "Skipping CSS minification in debug mode."
     echo "Skipping JavaScript minification in debug mode."
 ) else (
-    C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)MinifyCss.ps1" $(SolutionDir)
-    C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)MinifyJavaScript.ps1" $(SolutionDir)
+    %windir%\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)MinifyCss.ps1" $(SolutionDir)
+    %windir%\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)MinifyJavaScript.ps1" $(SolutionDir)
 )</code></pre>
 
 <a href="https://www.flickr.com/photos/130657798@N05/26018307816/in/dateposted-public/" title="aspnet-mvc-5-post-build-event-command-line"><img src="https://farm2.staticflickr.com/1498/26018307816_c5ed000cde_z.jpg" alt="aspnet-mvc-5-post-build-event-command-line"></a>
@@ -168,7 +168,7 @@ else
     &lt;link type="text/css" href="~/Assets/Css/site.min.css"&gt;
 }</code></pre>
 
-If you [use C# 6.0 in you razor views](https://dusted.codes/using-csharp-6-features-in-aspdotnet-mvc-5-razor-views) then you can write it even neater with this one liner where you don't have to repeat the file path twice:
+If you [use C# 6.0 in your razor views](https://dusted.codes/using-csharp-6-features-in-aspdotnet-mvc-5-razor-views) then you can write it even neater with this one liner where you don't have to repeat the file path twice:
 
 <pre><code>&lt;link type="text/css" href=@($"~/Assets/Css/site{(BuildProperties.IsDebugMode() ? "" : ".min")}.css")&gt;</code></pre>
 

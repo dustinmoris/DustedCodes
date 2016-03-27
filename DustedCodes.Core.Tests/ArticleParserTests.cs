@@ -339,7 +339,7 @@ Test Article";
         [Test]
         public void When_Parsing_File__With_Null_File__Throws_Exception()
         {
-            Assert.Throws<ArgumentNullException>(async () => await _sut.ParseAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await _sut.ParseAsync(null));
         }
 
         [Test]
@@ -368,7 +368,7 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Invalid.EmptyArticle);
 
-            Assert.Throws<FormatException>(async () => await _sut.ParseAsync(fileInfo));
+            Assert.ThrowsAsync<FormatException>(async () => await _sut.ParseAsync(fileInfo));
         }
 
         [Test]
@@ -377,7 +377,7 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Invalid.ArticleWithoutMetadata);
 
-            Assert.Throws<FormatException>(async () => await _sut.ParseAsync(fileInfo));
+            Assert.ThrowsAsync<FormatException>(async () => await _sut.ParseAsync(fileInfo));
         }
 
         [Test]
@@ -386,7 +386,7 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Invalid.ArticleWithMetadataWithoutOpeningTag);
 
-            Assert.Throws<FormatException>(async () => await _sut.ParseAsync(fileInfo));
+            Assert.ThrowsAsync<FormatException>(async () => await _sut.ParseAsync(fileInfo));
         }
 
         [Test]
@@ -395,7 +395,7 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Invalid.ArticleWithMetadataWithoutClosingTag);
 
-            Assert.Throws<FormatException>(async () => await _sut.ParseAsync(fileInfo));
+            Assert.ThrowsAsync<FormatException>(async () => await _sut.ParseAsync(fileInfo));
         }
 
         [Test]
@@ -404,7 +404,7 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Invalid.ArticleWithBadlyInitialisedMetadata);
 
-            Assert.Throws<FormatException>(async () => await _sut.ParseAsync(fileInfo));
+            Assert.ThrowsAsync<FormatException>(async () => await _sut.ParseAsync(fileInfo));
         }
 
         [Test]
@@ -413,7 +413,7 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Invalid.ArticleWithBadlyClosedMetadata);
 
-            Assert.Throws<FormatException>(async () => await _sut.ParseAsync(fileInfo));
+            Assert.ThrowsAsync<FormatException>(async () => await _sut.ParseAsync(fileInfo));
         }
 
         [Test]
@@ -422,7 +422,7 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Invalid.ArticleWithMetadataAndNoContent);
 
-            Assert.Throws<FormatException>(async () => await _sut.ParseAsync(fileInfo));
+            Assert.ThrowsAsync<FormatException>(async () => await _sut.ParseAsync(fileInfo));
         }
 
         [Test]
