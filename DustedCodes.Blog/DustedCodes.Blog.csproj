@@ -61,8 +61,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="NewRelic.Api.Agent, Version=5.9.74.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewRelic.Azure.WebSites.5.9.74.0\lib\NewRelic.Api.Agent.dll</HintPath>
+    <Reference Include="NewRelic.Api.Agent, Version=5.16.71.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewRelic.Azure.WebSites.5.16.71.0\lib\NewRelic.Api.Agent.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -169,14 +169,21 @@
     <Content Include="newrelic\Extensions\NewRelic.Core.dll" />
     <Content Include="newrelic\Extensions\NewRelic.Dispatchers.dll" />
     <Content Include="newrelic\Extensions\NewRelic.Memoization.dll" />
+    <Content Include="newrelic\Extensions\NewRelic.Parsing.dll" />
+    <Content Include="newrelic\Extensions\NewRelic.Parsing.Instrumentation.xml" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.CallStack.AsyncLocal.dll" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.TransactionContext.Asp.dll" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.TransactionContext.Default.dll" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.TransactionContext.Wcf3.dll" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.Asp35.dll" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.Asp35.Instrumentation.xml" />
+    <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.CustomInstrumentation.dll" />
+    <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.CustomInstrumentation.Instrumentation.xml" />
+    <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.CustomInstrumentationAsync.dll" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.HttpClient.dll" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.HttpClient.Instrumentation.xml" />
+    <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.HttpWebRequest.dll" />
+    <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.HttpWebRequest.Instrumentation.xml" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.MongoDb.dll" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.MongoDb.Instrumentation.xml" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.Mvc3.dll" />
@@ -187,6 +194,10 @@
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.Owin.Instrumentation.xml" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.ServiceStackRedis.dll" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.ServiceStackRedis.Instrumentation.xml" />
+    <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.Sql.dll" />
+    <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.Sql.Instrumentation.xml" />
+    <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.SqlAsync.dll" />
+    <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.SqlAsync.Instrumentation.xml" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.StackExchangeRedis.dll" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.StackExchangeRedis.Instrumentation.xml" />
     <Content Include="newrelic\Extensions\NewRelic.Providers.Wrapper.Wcf3.dll" />

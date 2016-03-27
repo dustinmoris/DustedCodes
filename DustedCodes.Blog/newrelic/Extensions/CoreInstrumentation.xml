@@ -33,13 +33,6 @@
 			</match>
 		</tracerFactory>
 
-		<!-- Ignore 404s thrown from the ScriptResourceHandler -->
-		<tracerFactory name="NewRelic.Agent.Core.Tracer.Factories.IgnoreTransactionTracerFactory">
-			<match assemblyName="System.Web.Extensions" className="System.Web.Handlers.ScriptResourceHandler">
-				<exactMethodMatcher methodName="Throw404" />
-			</match>
-		</tracerFactory>
-
 		<!-- **************************  WEB SERVICES  ***************************** -->
 
 		<tracerFactory name="NewRelic.Agent.Core.Tracer.Factories.ServiceModel.WebServiceMethodTracerFactory" transactionNamingPriority="5">
@@ -69,15 +62,10 @@
 
 		<!-- NET external calls -->
 
+		
 		<tracerFactory name="NewRelic.Agent.Core.Tracer.Factories.Net.HttpWebRequestTracerFactory">
 			<match assemblyName="System" className="System.Net.HttpWebRequest">
 				<exactMethodMatcher methodName="GetResponse" />
-			</match>
-		</tracerFactory>
-
-		<tracerFactory name="NewRelic.Agent.Core.Tracer.Factories.Net.HttpWebRequestSerializeHeadersTracerFactory">
-			<match assemblyName="System" className="System.Net.HttpWebRequest">
-				<exactMethodMatcher methodName="SerializeHeaders" />
 			</match>
 		</tracerFactory>
 
@@ -85,13 +73,16 @@
 
 		<!-- command methods -->
 		<tracerFactory name="NewRelic.Agent.Core.Tracer.Factories.Sql.DbCommandExecuteReaderTracerFactory">
-			<match assemblyName="System.Data" className="System.Data.SqlClient.SqlCommand,System.Data.OleDb.OleDbCommand,System.Data.Odbc.OdbcCommand">
-				<exactMethodMatcher methodName="ExecuteReader" />
+			<match assemblyName="System.Data" className="System.Data.OleDb.OleDbCommand,System.Data.Odbc.OdbcCommand">
+				<exactMethodMatcher methodName="ExecuteReader" parameters="System.Data.CommandBehavior" />
 				<exactMethodMatcher methodName="ExecuteNonQuery" />
 				<exactMethodMatcher methodName="ExecuteScalar" />
 			</match>
 
 			<match assemblyName="System.Data" className="System.Data.SqlClient.SqlCommand">
+				<exactMethodMatcher methodName="ExecuteReader" parameters="System.Data.CommandBehavior,System.String" />
+				<exactMethodMatcher methodName="ExecuteNonQuery" />
+				<exactMethodMatcher methodName="ExecuteScalar" />
 				<exactMethodMatcher methodName="ExecuteXmlReader" />
 			</match>
 
