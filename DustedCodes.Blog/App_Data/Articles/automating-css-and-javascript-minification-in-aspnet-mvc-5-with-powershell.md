@@ -159,7 +159,7 @@ In order to distinguish between Debug and Release mode in an MVC razor view we n
 
 With this helper method we can easily switch between the `.css` and `.min.css` files in the HTML markup:
 
-<pre><code>@if (Model.IsProductionEnvironment)
+<pre><code>@if (BuildProperties.IsDebugMode())
 {
     &lt;link type="text/css" href="~/Assets/Css/site.css"&gt;
 }
