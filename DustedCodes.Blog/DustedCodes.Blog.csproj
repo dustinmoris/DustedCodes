@@ -121,7 +121,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Data\Articles\asynchronous-fsharp-workflows-with-nancyfx-routes.md" />
+    <None Include="App_Data\Articles\asynchronous-fsharp-workflows-in-nancyfx.md" />
     <None Include="App_Data\Articles\automating-css-and-javascript-minification-in-aspnet-mvc-5-with-powershell.md" />
     <None Include="App_Data\Articles\dont-dispose-externally-created-dependencies.md" />
     <None Include="App_Data\Articles\circleci-build-history-charts-and-nuget-badges-by-buildstatsinfo.md" />
@@ -145,9 +145,6 @@
     <None Include="App_Data\Articles\making-font-awesome-awesome-using-icons-without-i-tags.md" />
     <None Include="App_Data\Articles\php-uk-conference-2015.md" />
     <None Include="App_Data\Articles\running-free-tier-and-paid-tier-web-apps-on-the-same-microsoft-azure-subscription.md" />
-    <Content Include="App_Data\Articles\asynchronous-fsharp-workflows-with-nancyfx-routes.html">
-      <DependentUpon>asynchronous-fsharp-workflows-with-nancyfx-routes.md</DependentUpon>
-    </Content>
     <Content Include="Assets\Css\error.css" />
     <Content Include="Assets\Css\site.min.css" />
     <Content Include="Assets\Css\site.css" />
