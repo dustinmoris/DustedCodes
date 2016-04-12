@@ -1,7 +1,7 @@
 ﻿<!--
-    Published: 2016-03-30 21:01
+    Published: 2016-04-12 21:01
     Author: Dustin Moris Gorski
-    Title: Asynchronous F# workflows with NancyFx
+    Title: Asynchronous F# workflows in NancyFx
     Tags: nancyfx fsharp async
 -->
 I have been playing with [F#](http://fsharp.org/) quite a lot recently and to be honest I started to really like it. Besides the fact that F# is a very [powerful language](https://fsharpforfunandprofit.com/posts/why-use-fsharp-intro/) it is a lot of fun too! As a result I began to migrate one of my smaller web services from C# and ASP.NET MVC 5 to F# and [NancyFx](http://nancyfx.org/). Nancy as a .NET web framework works perfectly fine with any .NET language, but has certainly not been written with F# much in mind. While it works really well in C#, it can feel quite clunky with F# at some times. There are [other web frameworks](https://suave.io/) which are more idiomatic, but come with other tradeoffs instead.
@@ -10,7 +10,7 @@ However, when I started to migrate from C# to NancyFx and F# I had quite some di
 
 As I said before, some of the stuff is **really** simple and probably super easy for an experienced F# developer, but for me as a beginner it was not that obvious in the beginning.
 
-A great start on NancyFx and F# was [Michal Franc's blog post](http://www.mfranc.com/blog/f-and-nancy-beyond-hello-world/), where he shows how to register a normal route in NancyFx with F#:
+A great start on NancyFx and F# is [Michal Franc's blog post](http://www.mfranc.com/blog/f-and-nancy-beyond-hello-world/), where he shows how to register a normal route in NancyFx with F#:
 
 <pre><code>type MyModule() as this =
     inherit NancyModule()
@@ -28,7 +28,7 @@ The simple example works, but is not asynchronous, because `Task.FromResult` blo
 
 [Asynchronous workflows in F# are different from Tasks in C#]() and therefore need to be converted from an <code>Async&lt;'a&gt;</code> object into a <code>Task&lt;T&gt;</code> in NancyFx.
 
-Luckily the .NET Async library offers plenty of predefined methods to make the translation very easy.
+Luckily the .NET [Async library]() offers plenty of predefined methods to make the translation very easy.
 
 With `Async.RunSynchronously` one can convert an async workflow into a C# Task and run on the current thread synchronously:
 
@@ -38,7 +38,7 @@ With `Async.RunSynchronously` one can convert an async workflow into a C# Task a
   }
   |&gt; Async.RunSynchronously</code></pre>
 
-While this might be required sometimes it is not the common use case. If you want to run the async workflow in a non-blocking fashion in NancyFx then you have to execute it with `Async.StartAsTask`:
+While this works it is probably not the solution you were hoping for. If you want to run the async workflow in a non-blocking fashion in NancyFx then you can pipe it to `Async.StartAsTask` which runs it asynchronously and returns a completed task:
 
 <pre><code>do this.Get.["/foo", true] &lt;- fun ctx ct -&gt;
   async {
@@ -46,3 +46,6 @@ While this might be required sometimes it is not the common use case. If you wan
   }
   |&gt; Async.StartAsTask</code></pre>
 
+In every case I had to upcast the string value to an object to match the expected return type. The [Async library]() is full of useful functions which can run and convert asynchronous workflows from F# to C# and vice-versa.
+
+If you are building a Nancy application in F# you might also want to check out [Fancy]() or ... blog post. Both show you some neat tricks how to make Nancy feel a bit more functional.
