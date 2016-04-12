@@ -155,6 +155,12 @@ namespace DustedCodes.Automation.Tests
                 Title = "Filtering the AWS Service Health Dashboard",
                 PermalinkId = "filtering-the-aws-service-health-dashboard",
                 Tags = new[] { "aws", "google-chrome" }
+            },
+            new BlogPost
+            {
+                Title = "Asynchronous F# workflows in NancyFx",
+                PermalinkId = "asynchronous-fsharp-workflows-in-nancyfx",
+                Tags = new[] { "nancyfx", "fsharp", "async" }
             }
         };
     }
