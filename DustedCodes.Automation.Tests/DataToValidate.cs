@@ -143,6 +143,18 @@ namespace DustedCodes.Automation.Tests
                 Title = "CircleCI build history charts and NuGet badges by Buildstats.info",
                 PermalinkId = "circleci-build-history-charts-and-nuget-badges-by-buildstatsinfo",
                 Tags = new[] { "circleci", "nuget", "github", "svg" }
+            },
+            new BlogPost
+            {
+                Title = "Automating CSS and JavaScript minification in ASP.NET MVC 5 with PowerShell",
+                PermalinkId = "automating-css-and-javascript-minification-in-aspnet-mvc-5-with-powershell",
+                Tags = new[] { "aspnet", "mvc", "powershell", "css", "javascript" }
+            },
+            new BlogPost
+            {
+                Title = "Filtering the AWS Service Health Dashboard",
+                PermalinkId = "filtering-the-aws-service-health-dashboard",
+                Tags = new[] { "aws", "google-chrome" }
             }
         };
     }

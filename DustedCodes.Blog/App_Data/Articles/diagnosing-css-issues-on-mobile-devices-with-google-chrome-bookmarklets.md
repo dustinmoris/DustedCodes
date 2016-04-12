@@ -48,7 +48,7 @@ Only seconds later it appeared on my phone as well:
 
 However, when I click on the bookmarklet from the bookmarks menu on my phone everything freezes and nothing happens. It turns out that I have to execute it from the address bar.
 
-Just start typing the name of your bookmarklet and Google Chrome will auto-suggest the rest:
+Just start typing the name of your bookmarklet and Google Chrome will auto-suggest the item for you:
 
 <a href="https://www.flickr.com/photos/130657798@N05/23991652851/in/dateposted-public/" title="outline-elements-bookmarklet-in-mobile-google-chrome"><img class="half-width" src="https://farm6.staticflickr.com/5781/23991652851_1d9acee307_o.png" alt="outline-elements-bookmarklet-in-mobile-google-chrome"></a>
 
