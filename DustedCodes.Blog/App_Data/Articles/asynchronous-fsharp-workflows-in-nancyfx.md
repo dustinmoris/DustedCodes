@@ -38,7 +38,7 @@ With `Async.RunSynchronously` one can convert an async workflow into a C# Task a
   }
   |&gt; Async.RunSynchronously</code></pre>
 
-It works but is still not asynchronous. If you want to run the async workflow in a non-blocking fashion in NancyFx then you can pipe it to `Async.StartAsTask` which runs it asynchronously and returns a completed task:
+This works, but it is still not asynchronous. If you want to run the async workflow in a non-blocking fashion in Nancy then you can pipe it to `Async.StartAsTask` which runs it asynchronously and returns a completed task:
 
 <pre><code>do this.Get.["/foo", true] &lt;- fun ctx ct -&gt;
   async {
@@ -50,4 +50,4 @@ In every case I had to upcast the string value to an object to match the expecte
 
 If you are building a Nancy application in F# then you might also be interested in [Fancy](https://github.com/simonhdickson/Fancy) or Tiny Blue Robots' [blog post](http://tinybluerobots.github.io/fsharp/2015/03/17/nancy-fsharp.html), where both show some neat tricks on how to make Nancy feel a bit more functional.
 
-With this I am going back to some more F# work and wish everyone a [happy F# day](https://fsharpforfunandprofit.com/posts/happy-fsharp-day/)!
+With this I am going back to my F# work and wish everyone a [happy F# day](https://fsharpforfunandprofit.com/posts/happy-fsharp-day/)!
