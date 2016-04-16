@@ -47,7 +47,7 @@
   "Markdown": {
     "CompileOnBuild": false,
     "CompileOnSave": true,
-    "GlobalPreviewCSSFile": null,
+    "GlobalPreviewCSSFile": "C:\\OneDrive\\Documents\\Visual Studio 2015\\Settings\\WE-Markdown.css",
     "GlobalPreviewHtmlTemplate": null,
     "MinifyInPlace": false,
     "OutputDirectory": null,
