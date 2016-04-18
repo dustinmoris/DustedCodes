@@ -51,7 +51,6 @@
       <!-- MySql (official) driver -->
       <match assemblyName="MySql.Data" className="MySql.Data.MySqlClient.MySqlCommand">
         <exactMethodMatcher methodName="ExecuteReader" parameters="System.Data.CommandBehavior" />
-        <exactMethodMatcher methodName="ExecuteScalar" />
         <exactMethodMatcher methodName="ExecuteNonQuery" />
       </match>
 
@@ -59,19 +58,11 @@
       <match assemblyName="Devart.Data.MySql" className="Devart.Data.MySql.MySqlCommand">
         <exactMethodMatcher methodName="ExecuteReader" parameters="System.Data.CommandBehavior" />
         <exactMethodMatcher methodName="ExecuteNonQuery" />
-        <exactMethodMatcher methodName="ExecuteScalar" />
       </match>
 
       <!-- Npgsql Postgres data provider -->
       <match assemblyName="Npgsql" className="Npgsql.NpgsqlCommand">
-        <exactMethodMatcher methodName="ExecuteReader" parameters="System.Data.CommandBehavior" />
-        <exactMethodMatcher methodName="ExecuteNonQuery" />
-        <exactMethodMatcher methodName="ExecuteScalar" />
-      </match>
-
-      <!-- Microsoft Enterprise Library -->
-      <match assemblyName="Microsoft.Practices.EnterpriseLibrary.Data" className="Microsoft.Practices.EnterpriseLibrary.Data.Oracle.OracleDatabase">
-        <exactMethodMatcher methodName="ExecuteReader" parameters="System.Data.CommandBehavior" />
+        <exactMethodMatcher methodName="ExecuteReader" />
         <exactMethodMatcher methodName="ExecuteNonQuery" />
         <exactMethodMatcher methodName="ExecuteScalar" />
       </match>
