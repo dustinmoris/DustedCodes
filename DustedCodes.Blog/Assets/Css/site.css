@@ -241,27 +241,18 @@ article li {
 
 article footer {
     padding: .2em 0 2em 0;
-}
-
-    article footer h1 {
-        margin: .5em 0;
-        font-size: .85em;
-        font-weight: 600;
-        color: #888;
-    }
-
-article > footer .fa::before {
-    display: inline-block;
-    margin: .5em .1em 0 0;
-    font-size: 1.5em;
+    text-align: center;
 }
 
 article > footer > a:link,
 article > footer > a:visited,
 article > footer > a:hover,
 article > footer > a:active {
-    margin: 0 1em 0 0;
+    /*margin: 0 1em 0 0;*/
     text-decoration: none;
+    font-size: .8em;
+    color: #333;
+    /*margin: .3em;*/
 }
 
 blockquote {
@@ -366,10 +357,14 @@ blockquote {
     color: #777;
     text-align: left;
     font-size: .9em;
+    font-family: Helvetica, Arial, sans-serif;
 }
 
+    .article-metadata > address {
+        display: none;
+    }
+
     .article-metadata > time,
-    .article-metadata > address,
     .article-metadata > a,
     .tags {
         font-style: normal;
@@ -476,12 +471,10 @@ blockquote {
                 }
 
     .article-metadata time,
-    .article-metadata address,
     .article-metadata a {
         display: inline;
     }
 
-    .article-metadata > address,
     .article-metadata > .edit-article,
     .article-metadata > .disqus-comment-count {
         margin-left: .5em;

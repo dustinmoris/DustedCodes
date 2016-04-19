@@ -28,29 +28,49 @@
         </div>
     </header>
     @Html.Raw(Model.Content)
-    <footer class="share-links">
-        <h1>Share it:</h1>
+    <footer>
         <a href="mailto:?subject=@Model.Title&amp;body=Check out this site @Model.PermalinkUrl."
            title="Share by Email">
-            <i class="fa fa-envelope-o"></i>
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+            </span>
         </a>
         <a href="@Model.TwitterShareUrl" title="Share on Twitter">
-            <i class="fa fa-twitter"></i>
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+            </span>
         </a>
         <a href="@Model.GooglePlusShareUrl" title="Share on Google+">
-            <i class="fa fa-google-plus"></i>
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-google fa-stack-1x fa-inverse"></i>
+            </span>
         </a>
         <a href="@Model.FacebookShareUrl" title="Share on Facebook">
-            <i class="fa fa-facebook-f"></i>
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-facebook-f fa-stack-1x fa-inverse"></i>
+            </span>
         </a>
         <a href="@Model.YammerShareUrl" title="Share on Yammer">
-            <i class="fa fa-yahoo"></i>
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-yahoo fa-stack-1x fa-inverse"></i>
+            </span>
         </a>
         <a href="@Model.LinkedInShareUrl" title="Share on LinkedIn">
-            <i class="fa fa-linkedin"></i>
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+            </span>
         </a>
         <a class="mobile-only" href="@Model.WhatsAppShareUrl" data-action="share/whatsapp/share" title="Share on WhatsApp">
-            <i class="fa fa-whatsapp"></i>
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-whatsapp fa-stack-1x fa-inverse"></i>
+            </span>
         </a>
     </footer>
 </article>
