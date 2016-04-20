@@ -4,8 +4,8 @@ code,
 kbd,
 samp,
 tt {
-  font-family: monospace, monospace;
-  font-size: 1em;
+    font-family: monospace, monospace;
+    font-size: 1em;
 }
 
 body {
@@ -46,6 +46,8 @@ body {
     body > footer {
         order: 3;
         margin-top: 2em;
+        margin-bottom: 1.5em;
+        font-family: Helvetica, Arial, sans-serif;
     }
 
     body > header h1 {
@@ -57,7 +59,7 @@ body {
         body > header h1 a:visited,
         body > header h1 a:hover,
         body > header h1 a:active {
-            color: #111;
+            color: #333;
             font-weight: 900;
             text-decoration: none;
             text-transform: uppercase;
@@ -68,7 +70,6 @@ body {
         font-size: .7em;
         font-weight: 400;
         color: #999;
-        text-transform: uppercase;
         letter-spacing: .2em;
     }
 
@@ -232,6 +233,7 @@ article h1 a::before {
     margin-right: .3em;
     content: '#';
     color: #cfca4c;
+    font-size: .75em;
 }
 
 article li {
@@ -239,21 +241,29 @@ article li {
     line-height: 2em;
 }
 
-article footer {
-    padding: .2em 0 2em 0;
+article > footer {
+    padding: 1em 0 2em 0;
     text-align: center;
 }
 
-article > footer > a:link,
-article > footer > a:visited,
-article > footer > a:hover,
-article > footer > a:active {
-    /*margin: 0 1em 0 0;*/
-    text-decoration: none;
-    font-size: .8em;
-    color: #333;
-    /*margin: .3em;*/
-}
+    article > footer .fa-stack-2x {
+        font-size: 2em;
+    }
+
+    article > footer .fa-stack-1x {
+        font-size: .8em;
+    }
+
+    article > footer > a:link,
+    article > footer > a:visited,
+    article > footer > a:hover,
+    article > footer > a:active {
+        text-decoration: none;
+        color: #333;
+        -ms-opacity: 1;
+        opacity: 1;
+        margin: .2em;
+    }
 
 blockquote {
     background: #f1f1f1;
@@ -314,7 +324,12 @@ blockquote {
 }
 
     #contact li, #subscribe li {
-        margin: .6em 0;
+        margin: .6em .5em;
+    }
+
+    #contact .icon:before, #subscribe .icon:before {
+        font-size: 1.3em;
+        margin-right: .7em;
     }
 
 .half-width {
@@ -357,8 +372,11 @@ blockquote {
     color: #777;
     text-align: left;
     font-size: .9em;
-    font-family: Helvetica, Arial, sans-serif;
 }
+
+    .article-metadata .icon:before {
+        color: #999;
+    }
 
     .article-metadata > address {
         display: none;
@@ -382,8 +400,16 @@ blockquote {
     text-align: left;
 }
 
+    .tags > a:after {
+        content: ',';
+    }
+
+    .tags > a:last-child:after {
+        content: '';
+    }
+
     .tags > a {
-        margin-right: .5em;
+        margin-right: .3em;
     }
 
         .tags > a:last-child {
@@ -412,6 +438,38 @@ blockquote {
     max-width: 250px;
     -ms-border-radius: 3px;
     border-radius: 3px;
+}
+
+.mail-colour {
+    color: #E38217;
+}
+
+.twitter-colour {
+    color: #4099ff;
+}
+
+.facebook-colour {
+    color: #3b5998;
+}
+
+.linkedin-colour {
+    color: #0077b5;
+}
+
+.google-plus-colour {
+    color: #dc4e41;
+}
+
+.yammer-colour {
+    color: #5aa8bf;
+}
+
+.reddit-colour {
+    color: #ff4500;
+}
+
+.whatsapp-colour {
+    color: #43d854;
 }
 
 @media all and (max-width: 480px) {
@@ -471,13 +529,30 @@ blockquote {
                 }
 
     .article-metadata time,
-    .article-metadata a {
+    .tags {
         display: inline;
+        margin-right: .5em;
     }
 
-    .article-metadata > .edit-article,
     .article-metadata > .disqus-comment-count {
-        margin-left: .5em;
+        display: inline-block;
+    }
+
+    article > footer > a:link,
+    article > footer > a:visited {
+        -ms-opacity: .7;
+        opacity: .7;
+        margin: .2em;
+    }
+
+    article > footer > a:hover {
+        -ms-opacity: 1;
+        opacity: 1;
+    }
+
+    article > footer > a:active {
+        -ms-opacity: .7;
+        opacity: .7;
     }
 
     .half-width {
