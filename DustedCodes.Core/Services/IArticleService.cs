@@ -17,6 +17,6 @@ namespace DustedCodes.Core.Services
 
         Task<IEnumerable<Article>> GetMostRecentAsync(int maxCount);
 
-        Task<IEnumerable<Article>> GetTrendingAsync(int maxCount);
+        Task<IEnumerable<Article>> GetTrendingAsync();
     }
 }

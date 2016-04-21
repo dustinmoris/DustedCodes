@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DustedCodes.Core.Analytics;
 using DustedCodes.Core.Collections;
 using DustedCodes.Core.Data;
 
@@ -10,10 +11,12 @@ namespace DustedCodes.Core.Services
     public sealed class ArticleService : IArticleService
     {
         private readonly IArticleRepository _articleRepository;
+        private readonly IGoogleAnalyticsClient _googleAnalyticsClient;
 
-        public ArticleService(IArticleRepository articleRepository)
+        public ArticleService(IArticleRepository articleRepository, IGoogleAnalyticsClient googleAnalyticsClient)
         {
             _articleRepository = articleRepository;
+            _googleAnalyticsClient = googleAnalyticsClient;
         }
 
         public async Task<Article> GetByIdAsync(string articleId)
@@ -61,9 +64,27 @@ namespace DustedCodes.Core.Services
             return articles.Take(maxCount);
         }
 
-        public Task<IEnumerable<Article>> GetTrendingAsync(int maxCount)
+        public async Task<IEnumerable<Article>> GetTrendingAsync()
         {
-            throw new NotImplementedException();
+            var trendingPages = await _googleAnalyticsClient.GetTrendingPagesAsync(byte.MaxValue).ConfigureAwait(false);
+            var articles = await _articleRepository.GetOrderedByDateAsync().ConfigureAwait(false);
+            var articleList = articles.ToList();
+            var top10TrendingArticles = new List<Article>();
+
+            foreach (var page in trendingPages)
+            {
+                var article = articleList.FirstOrDefault(a => page.Path.ToLower().Contains(a.Id.ToLower()));
+
+                if (article == default(Article))
+                    continue;
+
+                top10TrendingArticles.Add(article);
+
+                if (top10TrendingArticles.Count == 10)
+                    break;
+            }
+
+            return top10TrendingArticles;
         }
     }
 }
