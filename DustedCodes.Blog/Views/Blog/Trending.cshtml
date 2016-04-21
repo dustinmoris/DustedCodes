@@ -1,0 +1,12 @@
+﻿@model DustedCodes.Blog.ViewModels.Blog.TrendingViewModel
+
+<article id="archive">
+    <h1>Top @Model.Articles.Count articles by popularity</h1>
+
+    <ol>
+        @foreach (var article in Model.Articles)
+        {
+            <li>@Html.ActionLink(article.Title, "Article", "Blog", new { id = article.Id }, null)</li>
+        }
+    </ol>
+</article>

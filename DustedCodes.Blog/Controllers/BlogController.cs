@@ -62,9 +62,9 @@ namespace DustedCodes.Blog.Controllers
         public async Task<ActionResult> Trending()
         {
             var articles = await _articleService.GetTrendingAsync();
-            var viewModel = _viewModelFactory.CreateArchiveViewModel(articles, "Most popular articles of all time");
+            var viewModel = _viewModelFactory.CreateTrendingViewModel(articles);
 
-            return View("Archive", viewModel);
+            return View(viewModel);
         }
     }
 }

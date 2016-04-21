@@ -14,5 +14,7 @@ namespace DustedCodes.Blog.ViewModels
         IndexViewModel CreateIndexViewModel(IEnumerable<Article> articles, int totalPageCount, int currentPage);
 
         ArchiveViewModel CreateArchiveViewModel(IEnumerable<Article> articles, string title);
+
+        TrendingViewModel CreateTrendingViewModel(IEnumerable<Article> articles);
     }
 }

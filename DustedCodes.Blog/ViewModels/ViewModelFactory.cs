@@ -76,5 +76,10 @@ namespace DustedCodes.Blog.ViewModels
         {
             return new ArchiveViewModel(title) { Articles = articles };
         }
+
+        public TrendingViewModel CreateTrendingViewModel(IEnumerable<Article> articles)
+        {
+            return new TrendingViewModel { Articles = articles.ToList() };
+        }
     }
 }

@@ -86,11 +86,13 @@ namespace DustedCodes.Core.Analytics
                     });
 
                 var response = await request.ExecuteAsync().ConfigureAwait(false);
-                var trendingPages = new List<PageResult>();
+                var trendingPages = new List<PageResult>(); // ToDo Refactor Article to override GetHashCode and use HashSet here
+                var report = response.Reports[0];
+                var maxRows = Math.Min(report.Data.Rows.Count, maxCount);
 
-                for (var i = 0; i < maxCount; i++)
+                for (var i = 0; i < maxRows; i++)
                 {
-                    var row = response.Reports[0].Data.Rows[i];
+                    var row = report.Data.Rows[i];
                     var path = row.Dimensions[0];
                     var count = row.Metrics[0].Values[0];
                     trendingPages.Add(new PageResult { Path = path, ViewCount = count });

@@ -20,9 +20,9 @@
                 <h3>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month)</h3>
 
                 <ul>
-                    @foreach (var articleMetadata in subGroup)
+                    @foreach (var article in subGroup)
                     {
-                        <li>@Html.ActionLink(articleMetadata.Title, "Article", "Blog", new { id = articleMetadata.Id }, null)</li>
+                        <li>@Html.ActionLink(article.Title, "Article", "Blog", new { id = article.Id }, null)</li>
                     }
                 </ul>
             }
