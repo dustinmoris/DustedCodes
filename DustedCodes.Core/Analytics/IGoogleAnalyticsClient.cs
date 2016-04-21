@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DustedCodes.Analytics
+namespace DustedCodes.Core.Analytics
 {
     public interface IGoogleAnalyticsClient
     {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DustedCodes.Core.Caching;
 
-namespace DustedCodes.Analytics
+namespace DustedCodes.Core.Analytics
 {
     public class CachedGoogleAnalyticsClient : IGoogleAnalyticsClient
     {
@@ -26,7 +26,7 @@ namespace DustedCodes.Analytics
                 return cachedResult;
 
             // Don't need to worry about concurrent writes to the cache
-            var result = await _googleAnalyticsClient.GetTrendingPagesAsync(maxCount);
+            var result = await _googleAnalyticsClient.GetTrendingPagesAsync(maxCount).ConfigureAwait(false);
 
             // ToDo set expiry policy
             _cache.Set(cacheKey, result);

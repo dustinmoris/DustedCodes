@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Caching;
 using System.Threading.Tasks;
 using Google.Apis.AnalyticsReporting.v4;
 using Google.Apis.AnalyticsReporting.v4.Data;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 
-namespace DustedCodes.Analytics
+namespace DustedCodes.Core.Analytics
 {
     public class GoogleAnalyticsClient : IGoogleAnalyticsClient
     {
@@ -86,7 +85,7 @@ namespace DustedCodes.Analytics
                         }
                     });
 
-                var response = await request.ExecuteAsync();
+                var response = await request.ExecuteAsync().ConfigureAwait(false);
                 var trendingPages = new List<PageResult>();
 
                 for (var i = 0; i < maxCount; i++)

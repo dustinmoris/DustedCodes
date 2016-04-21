@@ -1,4 +1,4 @@
-namespace DustedCodes.Analytics
+namespace DustedCodes.Core.Analytics
 {
     public class PageResult
     {
