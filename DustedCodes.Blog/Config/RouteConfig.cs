@@ -31,6 +31,12 @@ namespace DustedCodes.Blog.Config
             );
 
             routes.MapRoute(
+                name: "Trending",
+                url: "Trending",
+                defaults: new { controller = "Blog", action = "Trending" }
+            );
+
+            routes.MapRoute(
                 name: "About",
                 url: "About",
                 defaults: new { controller = "Home", action = "About" }

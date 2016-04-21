@@ -58,5 +58,13 @@ namespace DustedCodes.Blog.Controllers
 
             return View(viewModel);
         }
+
+        public async Task<ActionResult> Trending()
+        {
+            var articles = await _articleService.GetTrendingAsync();
+            var viewModel = _viewModelFactory.CreateArchiveViewModel(articles, "Most popular articles of all time");
+
+            return View("Archive", viewModel);
+        }
     }
 }
