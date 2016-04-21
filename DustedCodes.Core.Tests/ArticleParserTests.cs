@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using DustedCodes.Core.Data;
-using DustedCodes.Core.Data.LocalStorage;
+using DustedCodes.Core.Data.StaticFileStorage;
 using DustedCodes.Core.IO;
 using NSubstitute;
 using NUnit.Framework;

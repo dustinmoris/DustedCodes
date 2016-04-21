@@ -1,11 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using DustedCodes.Core.Data.Comparer;
 using DustedCodes.Core.IO;
+using Guardo;
 
-namespace DustedCodes.Core.Data.LocalStorage
+namespace DustedCodes.Core.Data.StaticFileStorage
 {
     public sealed class StaticFileArticleRepository : IArticleRepository
     {
@@ -25,8 +25,7 @@ namespace DustedCodes.Core.Data.LocalStorage
 
         public async Task<Article> GetAsync(string id)
         {
-            if (string.IsNullOrEmpty(id))
-                throw new ArgumentException("id cannot be null or empty.");
+            Requires.NotNullOrEmpty(id, nameof(id));
 
             var filePath = $"{_articleDirectoryPath}\\{id}.html";
             var fileInfo = new FileInfo(filePath);

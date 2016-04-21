@@ -2,8 +2,9 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using DustedCodes.Core.IO;
+using Guardo;
 
-namespace DustedCodes.Core.Data.LocalStorage
+namespace DustedCodes.Core.Data.StaticFileStorage
 {
     public sealed class ArticleParser : IArticleParser
     {
@@ -16,8 +17,7 @@ namespace DustedCodes.Core.Data.LocalStorage
 
         public async Task<Article> ParseAsync(FileInfo fileInfo)
         {
-            if (fileInfo == null)
-                throw new ArgumentNullException(nameof(fileInfo));
+            Requires.NotNull(fileInfo, nameof(fileInfo));
 
             using (var textReader = _textReaderFactory.FromFile(fileInfo))
             {

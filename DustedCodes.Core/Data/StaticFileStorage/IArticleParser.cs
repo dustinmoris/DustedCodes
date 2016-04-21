@@ -1,7 +1,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace DustedCodes.Core.Data.LocalStorage
+namespace DustedCodes.Core.Data.StaticFileStorage
 {
     public interface IArticleParser
     {
