@@ -19,9 +19,12 @@ namespace DustedCodes.Core.Data.StaticFileStorage
         {
             Requires.NotNull(fileInfo, nameof(fileInfo));
 
+            var id = fileInfo.Name.Replace(fileInfo.Extension, string.Empty);
+            var article = new Article(id);
+
             using (var textReader = _textReaderFactory.FromFile(fileInfo))
             {
-                var article = await ParseMetadataAsync(textReader, fileInfo).ConfigureAwait(false);
+                await ParseMetadataAsync(textReader, fileInfo, article).ConfigureAwait(false);
 
                 article.Content = await textReader.ReadToEndAsync().ConfigureAwait(false);
                 article.Content = article.Content.Trim();
@@ -31,13 +34,14 @@ namespace DustedCodes.Core.Data.StaticFileStorage
                     throw new FormatException($"Cannot parse the file '{fileInfo.FullName}' to an article, because there was no content.");   
                 }
 
-                article.Id = fileInfo.Name.Replace(fileInfo.Extension, string.Empty);
-
                 return article;
             }
         }
 
-        private static async Task<Article> ParseMetadataAsync(TextReader textReader, FileSystemInfo fileInfo)
+        private static async Task<Article> ParseMetadataAsync(
+            TextReader textReader, 
+            FileSystemInfo fileInfo, 
+            Article article)
         {
             var line = await textReader.ReadLineAsync().ConfigureAwait(false);
 
@@ -45,8 +49,6 @@ namespace DustedCodes.Core.Data.StaticFileStorage
             {
                 throw new FormatException($"Cannot parse the file '{fileInfo.FullName}' to an article. The first line has to begin with an XML comment tag '<!--'.");
             }
-
-            var article = new Article();
 
             while ((line = await textReader.ReadLineAsync().ConfigureAwait(false)) != null && line != "-->")
             {

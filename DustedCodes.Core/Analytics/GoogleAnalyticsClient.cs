@@ -9,7 +9,7 @@ using Google.Apis.Services;
 
 namespace DustedCodes.Core.Analytics
 {
-    public class GoogleAnalyticsClient : IGoogleAnalyticsClient
+    public sealed class GoogleAnalyticsClient : IGoogleAnalyticsClient
     {
         private readonly string _privateKeyPath;
         private readonly string _viewId;
@@ -86,7 +86,7 @@ namespace DustedCodes.Core.Analytics
                     });
 
                 var response = await request.ExecuteAsync().ConfigureAwait(false);
-                var trendingPages = new List<PageResult>(); // ToDo Refactor Article to override GetHashCode and use HashSet here
+                var trendingPages = new List<PageResult>();
                 var report = response.Reports[0];
                 var maxRows = Math.Min(report.Data.Rows.Count, maxCount);
 

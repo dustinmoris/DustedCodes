@@ -6,7 +6,7 @@ using DustedCodes.Core.Caching;
 
 namespace DustedCodes.Core.Analytics
 {
-    public class CachedGoogleAnalyticsClient : IGoogleAnalyticsClient
+    public sealed class CachedGoogleAnalyticsClient : IGoogleAnalyticsClient
     {
         private readonly IGoogleAnalyticsClient _googleAnalyticsClient;
         private readonly ICache _cache;

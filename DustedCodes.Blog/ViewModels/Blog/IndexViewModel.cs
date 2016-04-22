@@ -2,7 +2,7 @@
 
 namespace DustedCodes.Blog.ViewModels.Blog
 {
-    public class IndexViewModel : BaseViewModel
+    public sealed class IndexViewModel : BaseViewModel
     {
         public override string PageTitle => $"{BlogTitle} - {BlogDescription}";
 

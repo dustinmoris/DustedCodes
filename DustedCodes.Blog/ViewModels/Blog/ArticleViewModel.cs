@@ -1,6 +1,6 @@
 ﻿namespace DustedCodes.Blog.ViewModels.Blog
 {
-    public class ArticleViewModel : BaseViewModel
+    public sealed class ArticleViewModel : BaseViewModel
     {
         public readonly ArticleWrapper Article;
 

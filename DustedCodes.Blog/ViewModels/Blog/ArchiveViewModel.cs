@@ -3,7 +3,7 @@ using DustedCodes.Core.Data;
 
 namespace DustedCodes.Blog.ViewModels.Blog
 {
-    public class ArchiveViewModel : BaseViewModel
+    public sealed class ArchiveViewModel : BaseViewModel
     {
         public ArchiveViewModel(string title) : base(title)
         {

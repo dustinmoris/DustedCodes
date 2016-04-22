@@ -2,7 +2,7 @@
 
 namespace DustedCodes.Blog.ViewModels.Blog
 {
-    public class ArticleWrapper
+    public sealed class ArticleWrapper
     {
         public string Id { get; set; }
         public string Author { get; set; }

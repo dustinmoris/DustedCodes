@@ -2,7 +2,7 @@
 
 namespace DustedCodes.Blog.ViewModels.Blog
 {
-    public class TrendingViewModel : BaseViewModel
+    public sealed class TrendingViewModel : BaseViewModel
     {
         public TrendingViewModel() : base("Trending")
         {

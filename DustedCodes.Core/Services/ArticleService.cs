@@ -79,13 +79,13 @@ namespace DustedCodes.Core.Services
             var trendingPages = await _googleAnalyticsClient.GetTrendingPagesAsync(byte.MaxValue).ConfigureAwait(false);
             var articles = await _articleRepository.GetOrderedByDateAsync().ConfigureAwait(false);
             var articleList = articles.ToList();
-            var top10TrendingArticles = new List<Article>();
+            var top10TrendingArticles = new HashSet<Article>();
 
             foreach (var page in trendingPages)
             {
                 var article = articleList.FirstOrDefault(a => page.Path.ToLower().Contains(a.Id.ToLower()));
 
-                if (article == default(Article))
+                if (article == null)
                     continue;
 
                 top10TrendingArticles.Add(article);

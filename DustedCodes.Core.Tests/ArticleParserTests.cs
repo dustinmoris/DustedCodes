@@ -151,7 +151,7 @@ Hello World!";
                         }
                     }
 
-                    public static Article ExpectedArticle => new Article
+                    public static Article ExpectedArticle => new Article(DefaultArticleId)
                     {
                         Title = "Valid Article",
                         Content = "Hello World!"
@@ -179,7 +179,7 @@ Test Article";
                         }
                     }
 
-                    public static Article ExpectedArticle => new Article
+                    public static Article ExpectedArticle => new Article(DefaultArticleId)
                     {
                         PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
                         Author = "Foo Bar",
@@ -211,7 +211,7 @@ Tags: tag-1 another-tag 3rd-tag-here
                         }
                     }
 
-                    public static Article ExpectedArticle => new Article
+                    public static Article ExpectedArticle => new Article(DefaultArticleId)
                     {
                         PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
                         Author = "Foo Bar",
@@ -244,7 +244,7 @@ Test Article";
                         }
                     }
 
-                    public static Article ExpectedArticle => new Article
+                    public static Article ExpectedArticle => new Article(DefaultArticleId)
                     {
                         PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
                         Author = "Foo Bar the second",
@@ -279,7 +279,7 @@ Test Article";
                         }
                     }
 
-                    public static Article ExpectedArticle => new Article
+                    public static Article ExpectedArticle => new Article(DefaultArticleId)
                     {
                         PublishDateTime = new DateTime(2015, 2, 26, 15, 0, 0),
                         Author = "Foo Bar the second",
@@ -307,7 +307,7 @@ Test Article";
                         }
                     }
 
-                    public static Article ExpectedArticle => new Article
+                    public static Article ExpectedArticle => new Article(DefaultArticleId)
                     {
                         Author = "foo Bar",
                         Content = @"Test Article"
@@ -431,7 +431,6 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Valid.ArticleWithEmptyLinesAfterMetadata.Text);
             var expectedArticle = ArticleTestRepository.Valid.ArticleWithEmptyLinesAfterMetadata.ExpectedArticle;
-            expectedArticle.Id = DefaultArticleId;
 
             var article = await _sut.ParseAsync(fileInfo);
 
@@ -444,7 +443,6 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Valid.ArticleWithAllMetadataAndHtmlFormattedContent.Text);
             var expectedArticle = ArticleTestRepository.Valid.ArticleWithAllMetadataAndHtmlFormattedContent.ExpectedArticle;
-            expectedArticle.Id = DefaultArticleId;
 
             var article = await _sut.ParseAsync(fileInfo);
 
@@ -457,7 +455,6 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Valid.ArticleWithDuplicateMetadata.Text);
             var expectedArticle = ArticleTestRepository.Valid.ArticleWithDuplicateMetadata.ExpectedArticle;
-            expectedArticle.Id = DefaultArticleId;
 
             var article = await _sut.ParseAsync(fileInfo);
 
@@ -470,7 +467,6 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Valid.ArticleWithWeirdlyFormattedMetadata.Text);
             var expectedArticle = ArticleTestRepository.Valid.ArticleWithWeirdlyFormattedMetadata.ExpectedArticle;
-            expectedArticle.Id = DefaultArticleId;
 
             var article = await _sut.ParseAsync(fileInfo);
 
@@ -483,7 +479,6 @@ Test Article";
             var fileInfo = _defaultFile;
             _textReaderFactory.FromFile(null).ReturnsForAnyArgs(ArticleTestRepository.Valid.ArticleWithNonSupportedMetadata.Text);
             var expectedArticle = ArticleTestRepository.Valid.ArticleWithNonSupportedMetadata.ExpectedArticle;
-            expectedArticle.Id = DefaultArticleId;
 
             var article = await _sut.ParseAsync(fileInfo);
 

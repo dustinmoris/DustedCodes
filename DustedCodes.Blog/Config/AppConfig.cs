@@ -3,7 +3,7 @@ using WebConfig = System.Web.Configuration.WebConfigurationManager;
 
 namespace DustedCodes.Blog.Config
 {
-    public class AppConfig : IAppConfig
+    public sealed class AppConfig : IAppConfig
     {
         public string BlogTitle => WebConfig.AppSettings["Blog_Title"];
         public string BlogDescription => WebConfig.AppSettings["Blog_Description"];
