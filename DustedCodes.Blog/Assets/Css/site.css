@@ -440,6 +440,28 @@ blockquote {
     border-radius: 3px;
 }
 
+#trending li {
+    padding-left: .5em;
+    margin-bottom: 1em;
+}
+
+#trending .article-metadata {
+    font-size: .85em;
+    padding: 0;
+    margin: 0;
+}
+
+    #trending .article-metadata > span {
+        margin: 0 .5em 0 0;
+        padding: 0;
+        line-height: 1.5em;
+    }
+
+    #trending .article-metadata > a {
+        padding: 0;
+        margin: 0;
+    }
+
 .mail-colour {
     color: #E38217;
 }
@@ -592,6 +614,10 @@ blockquote {
 
     #avatar {
         max-width: 185px;
+    }
+
+    #trending .article-metadata {
+        font-size: .8em;
     }
 
     .mobile-only {

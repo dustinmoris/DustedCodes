@@ -245,7 +245,7 @@
     <Compile Include="ViewModels\Blog\ArchiveViewModel.cs" />
     <Compile Include="ViewModels\Blog\TrendingViewModel.cs" />
     <Compile Include="ViewModels\Home\AboutViewModel.cs" />
-    <Compile Include="ViewModels\Blog\ArticlePartialViewModel.cs" />
+    <Compile Include="ViewModels\Blog\ArticleWrapper.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\Blog\ArticleViewModel.cs" />
     <Compile Include="ViewModels\Blog\IndexViewModel.cs" />

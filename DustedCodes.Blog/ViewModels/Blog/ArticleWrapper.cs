@@ -2,7 +2,7 @@
 
 namespace DustedCodes.Blog.ViewModels.Blog
 {
-    public class ArticlePartialViewModel
+    public class ArticleWrapper
     {
         public string Id { get; set; }
         public string Author { get; set; }

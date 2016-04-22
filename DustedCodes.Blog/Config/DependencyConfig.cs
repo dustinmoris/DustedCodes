@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.Caching;
 using System.Web.Mvc;
 using Autofac;
@@ -56,16 +57,7 @@ namespace DustedCodes.Blog.Config
             builder.RegisterType<GoogleAnalyticsClient>()
                 .As<IGoogleAnalyticsClient>()
                 .WithParameter("privateKeyPath", appConfig.GoogleAnalyticsPrivateKeyPath)
-                .WithParameter("viewId", appConfig.GoogleAnalyticsViewId)
-                .AsSelf();
-
-            builder.RegisterType<CachedGoogleAnalyticsClient>()
-                .As<IGoogleAnalyticsClient>()
-                .WithParameter(
-                    new ResolvedParameter(
-                        (pi, ctx) => pi.ParameterType == typeof(IGoogleAnalyticsClient),
-                        (pi, ctx) => ctx.Resolve<GoogleAnalyticsClient>()))
-                .AsSelf();
+                .WithParameter("viewId", appConfig.GoogleAnalyticsViewId);
 
             builder.RegisterType<FeedItemConverter>().As<IFeedItemConverter>();
 

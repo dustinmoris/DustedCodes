@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Threading.Tasks;
 using DustedCodes.Core.Analytics;
+using DustedCodes.Core.Caching;
 using DustedCodes.Core.Collections;
 using DustedCodes.Core.Data;
 
@@ -12,11 +14,13 @@ namespace DustedCodes.Core.Services
     {
         private readonly IArticleRepository _articleRepository;
         private readonly IGoogleAnalyticsClient _googleAnalyticsClient;
+        private readonly ICache _cache;
 
-        public ArticleService(IArticleRepository articleRepository, IGoogleAnalyticsClient googleAnalyticsClient)
+        public ArticleService(IArticleRepository articleRepository, IGoogleAnalyticsClient googleAnalyticsClient, ICache cache)
         {
             _articleRepository = articleRepository;
             _googleAnalyticsClient = googleAnalyticsClient;
+            _cache = cache;
         }
 
         public async Task<Article> GetByIdAsync(string articleId)
@@ -66,6 +70,12 @@ namespace DustedCodes.Core.Services
 
         public async Task<IEnumerable<Article>> GetTrendingAsync()
         {
+            const string cacheKey = "TrendingArticles";
+            var cachedArticles = _cache.Get<List<Article>>(cacheKey);
+
+            if (cachedArticles != null)
+                return cachedArticles;
+
             var trendingPages = await _googleAnalyticsClient.GetTrendingPagesAsync(byte.MaxValue).ConfigureAwait(false);
             var articles = await _articleRepository.GetOrderedByDateAsync().ConfigureAwait(false);
             var articleList = articles.ToList();
@@ -83,6 +93,8 @@ namespace DustedCodes.Core.Services
                 if (top10TrendingArticles.Count == 10)
                     break;
             }
+
+            _cache.Set(cacheKey, top10TrendingArticles, new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddHours(24) });
 
             return top10TrendingArticles;
         }

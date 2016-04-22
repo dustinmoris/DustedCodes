@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using DustedCodes.Core.Data;
 
 namespace DustedCodes.Blog.ViewModels.Blog
 {
@@ -9,6 +8,6 @@ namespace DustedCodes.Blog.ViewModels.Blog
         {
         }
 
-        public ICollection<Article> Articles { get; set; }
+        public ICollection<ArticleWrapper> Articles { get; set; }
     }
 }

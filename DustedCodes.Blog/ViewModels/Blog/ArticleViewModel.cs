@@ -2,12 +2,12 @@
 {
     public class ArticleViewModel : BaseViewModel
     {
-        public readonly ArticlePartialViewModel Article;
+        public readonly ArticleWrapper Article;
 
-        public ArticleViewModel(ArticlePartialViewModel articlePartialViewModel) 
-            : base(articlePartialViewModel.Title)
+        public ArticleViewModel(ArticleWrapper articleWrapper) 
+            : base(articleWrapper.Title)
         {
-            Article = articlePartialViewModel;
+            Article = articleWrapper;
         }
     }
 }

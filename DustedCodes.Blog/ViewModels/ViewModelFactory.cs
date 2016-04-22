@@ -21,12 +21,12 @@ namespace DustedCodes.Blog.ViewModels
             _urlEncoder = urlEncoder;
         }
 
-        private ArticlePartialViewModel CreateArticlePartialViewModel(Article article, bool renderTitleAsLink)
+        private ArticleWrapper WrapArticleForView(Article article, bool renderTitleAsLink)
         {
             var permalinkUrl = _urlGenerator.GeneratePermalinkUrl(article.Id);
             var encodedPermalinkUrl = _urlEncoder.EncodeUrl(permalinkUrl);
 
-            return new ArticlePartialViewModel
+            return new ArticleWrapper
             {
                 Id = article.Id,
                 Author = article.Author,
@@ -55,18 +55,18 @@ namespace DustedCodes.Blog.ViewModels
 
         public ArticleViewModel CreateArticleViewModel(Article article)
         {
-            var partialViewModel = CreateArticlePartialViewModel(article, false);
+            var wrappedArticle = WrapArticleForView(article, false);
 
-            return new ArticleViewModel(partialViewModel);
+            return new ArticleViewModel(wrappedArticle);
         }
 
         public IndexViewModel CreateIndexViewModel(IEnumerable<Article> articles, int totalPageCount, int currentPage)
         {
-            var articlePartialViewModels = articles.Select(a => CreateArticlePartialViewModel(a, true));
+            var wrappedArticles = articles.Select(a => WrapArticleForView(a, true));
 
             return new IndexViewModel
             {
-                Articles = articlePartialViewModels,
+                Articles = wrappedArticles,
                 TotalPageCount = totalPageCount,
                 CurrentPage = currentPage
             };
@@ -79,7 +79,9 @@ namespace DustedCodes.Blog.ViewModels
 
         public TrendingViewModel CreateTrendingViewModel(IEnumerable<Article> articles)
         {
-            return new TrendingViewModel { Articles = articles.ToList() };
+            var wrappedArticles = articles.Select(a => WrapArticleForView(a, true)).ToList();
+
+            return new TrendingViewModel { Articles = wrappedArticles };
         }
     }
 }

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Runtime.Caching;
 using System.Threading.Tasks;
 using DustedCodes.Core.Caching;
 
@@ -28,8 +30,7 @@ namespace DustedCodes.Core.Analytics
             // Don't need to worry about concurrent writes to the cache
             var result = await _googleAnalyticsClient.GetTrendingPagesAsync(maxCount).ConfigureAwait(false);
 
-            // ToDo set expiry policy
-            _cache.Set(cacheKey, result);
+            _cache.Set(cacheKey, result, new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddHours(24) });
 
             return result;
         }

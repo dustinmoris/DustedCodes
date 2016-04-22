@@ -6,7 +6,7 @@ namespace DustedCodes.Blog.ViewModels.Blog
     {
         public override string PageTitle => $"{BlogTitle} - {BlogDescription}";
 
-        public IEnumerable<ArticlePartialViewModel> Articles { get; set; }
+        public IEnumerable<ArticleWrapper> Articles { get; set; }
         public int TotalPageCount { get; set; }
         public int CurrentPage { get; set; }
     }
