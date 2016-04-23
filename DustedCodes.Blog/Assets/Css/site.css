@@ -2,10 +2,9 @@
 pre,
 code,
 kbd,
-samp,
-tt {
-  font-family: monospace, monospace;
-  font-size: 1em;
+samp {
+    font-family: monospace, monospace;
+    font-size: 1em;
 }
 
 body {
@@ -29,7 +28,7 @@ body {
     body > main > aside,
     body > main > div,
     body > main > p,
-    body > footer > p {
+    #inner-footer {
         margin: 1em auto;
         max-width: 600px;
         padding: 0 20px;
@@ -45,6 +44,7 @@ body {
 
     body > footer {
         order: 3;
+        background: #111;
         margin-top: 2em;
     }
 
@@ -57,7 +57,7 @@ body {
         body > header h1 a:visited,
         body > header h1 a:hover,
         body > header h1 a:active {
-            color: #111;
+            color: #333;
             font-weight: 900;
             text-decoration: none;
             text-transform: uppercase;
@@ -68,7 +68,6 @@ body {
         font-size: .7em;
         font-weight: 400;
         color: #999;
-        text-transform: uppercase;
         letter-spacing: .2em;
     }
 
@@ -104,11 +103,54 @@ body {
                 text-decoration: none;
             }
 
-    body > footer > p {
-        margin-bottom: 2em;
-        font-size: .85em;
-        color: #888;
+#inner-footer {
+    display: flex;
+    -ms-flex-flow: row wrap;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+#footer-about {
+    order: 1;
+}
+
+#footer-copyright {
+    order: 2;
+}
+
+#inner-footer h5 {
+    margin-bottom: 0;
+    font-size: .9em;
+    color: #888;
+}
+
+#inner-footer p {
+    font-size: .9em;
+    line-height: 1.7em;
+    color: #666;
+}
+
+#inner-footer a {
+    font-weight: normal;
+}
+
+#footer-social-links {
+    margin: 1em 0;
+    text-align: center;
+}
+
+    #footer-social-links a {
+        display: inline-block;
+        padding: 0 .5em;
+        font-size: .9em;
+        color: #222;
+        text-decoration: none;
     }
+
+        #footer-social-links a:hover {
+            color: #444;
+        }
 
 a:link,
 a:visited {
@@ -232,6 +274,7 @@ article h1 a::before {
     margin-right: .3em;
     content: '#';
     color: #cfca4c;
+    font-size: .75em;
 }
 
 article li {
@@ -239,45 +282,49 @@ article li {
     line-height: 2em;
 }
 
-article footer {
-    padding: .2em 0 2em 0;
+article > footer {
+    padding: 1em 0 2em 0;
+    text-align: center;
 }
 
-    article footer h1 {
-        margin: .5em 0;
-        font-size: .85em;
-        font-weight: 600;
-        color: #888;
+    article > footer .fa-stack-2x {
+        font-size: 2em;
     }
 
-article > footer .fa::before {
-    display: inline-block;
-    margin: .5em .1em 0 0;
-    font-size: 1.5em;
-}
+    article > footer .fa-stack-1x {
+        font-size: .8em;
+    }
 
-article > footer > a:link,
-article > footer > a:visited,
-article > footer > a:hover,
-article > footer > a:active {
-    margin: 0 1em 0 0;
-    text-decoration: none;
-}
+    article > footer > a:link,
+    article > footer > a:visited,
+    article > footer > a:hover,
+    article > footer > a:active {
+        display: inline-block;
+        text-decoration: none;
+        color: #333;
+        -ms-opacity: 1;
+        opacity: 1;
+        margin: .2em;
+    }
 
 blockquote {
     background: #f1f1f1;
-    border-left: 5px solid #c90;
+    border-left: 6px solid #c90;
     margin: 1.5em 0;
     padding: .6em 1em;
 }
 
-    blockquote > p:first-child {
-        margin-top: 0;
+    blockquote > p {
+        line-height: 1.7em;
     }
 
-    blockquote > p:last-child {
-        margin-bottom: 0;
-    }
+        blockquote > p:first-child {
+            margin-top: 0;
+        }
+
+        blockquote > p:last-child {
+            margin-bottom: 0;
+        }
 
     blockquote > footer {
         margin: 0 0 0.3em 0;
@@ -323,7 +370,12 @@ blockquote {
 }
 
     #contact li, #subscribe li {
-        margin: .6em 0;
+        margin: .6em .5em;
+    }
+
+    #contact .icon:before, #subscribe .icon:before {
+        font-size: 1.3em;
+        margin-right: .7em;
     }
 
 .half-width {
@@ -368,8 +420,15 @@ blockquote {
     font-size: .9em;
 }
 
+    .article-metadata .icon:before {
+        color: #999;
+    }
+
+    .article-metadata > address {
+        display: none;
+    }
+
     .article-metadata > time,
-    .article-metadata > address,
     .article-metadata > a,
     .tags {
         font-style: normal;
@@ -387,8 +446,16 @@ blockquote {
     text-align: left;
 }
 
+    .tags > a:after {
+        content: ',';
+    }
+
+    .tags > a:last-child:after {
+        content: '';
+    }
+
     .tags > a {
-        margin-right: .5em;
+        margin-right: .3em;
     }
 
         .tags > a:last-child {
@@ -417,6 +484,60 @@ blockquote {
     max-width: 250px;
     -ms-border-radius: 3px;
     border-radius: 3px;
+}
+
+#trending li {
+    padding-left: .5em;
+    margin-bottom: 1em;
+}
+
+#trending .article-metadata {
+    font-size: .85em;
+    padding: 0;
+    margin: 0;
+}
+
+    #trending .article-metadata > span {
+        margin: 0 .5em 0 0;
+        padding: 0;
+        line-height: 1.5em;
+    }
+
+    #trending .article-metadata > a {
+        padding: 0;
+        margin: 0;
+    }
+
+.mail-colour {
+    color: #E38217;
+}
+
+.twitter-colour {
+    color: #4099ff;
+}
+
+.facebook-colour {
+    color: #3b5998;
+}
+
+.linkedin-colour {
+    color: #0077b5;
+}
+
+.google-plus-colour {
+    color: #dc4e41;
+}
+
+.yammer-colour {
+    color: #5aa8bf;
+}
+
+.reddit-colour {
+    color: #ff4500;
+}
+
+.whatsapp-colour {
+    color: #43d854;
 }
 
 @media all and (max-width: 480px) {
@@ -476,15 +597,30 @@ blockquote {
                 }
 
     .article-metadata time,
-    .article-metadata address,
-    .article-metadata a {
+    .tags {
         display: inline;
+        margin-right: .5em;
     }
 
-    .article-metadata > address,
-    .article-metadata > .edit-article,
     .article-metadata > .disqus-comment-count {
-        margin-left: .5em;
+        display: inline-block;
+    }
+
+    article > footer > a:link,
+    article > footer > a:visited {
+        -ms-opacity: .7;
+        opacity: .7;
+        margin: .2em;
+    }
+
+    article > footer > a:hover {
+        -ms-opacity: 1;
+        opacity: 1;
+    }
+
+    article > footer > a:active {
+        -ms-opacity: .7;
+        opacity: .7;
     }
 
     .half-width {
@@ -495,8 +631,56 @@ blockquote {
         max-width: 66%;
     }
 
+    body > footer {
+        margin-top: 3em;
+    }
+
     #nav-toggle-button {
         display: none;
+    }
+
+    #inner-footer {
+        padding-top: .5em;
+        padding-bottom: 1.5em;
+    }
+
+        #inner-footer h5 {
+            font-size: .8em;
+        }
+
+        #inner-footer p {
+            font-size: .8em;
+        }
+
+    #footer-copyright {
+        order: 1;
+        max-width: 50%;
+        padding-right: 7px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    #footer-about {
+        order: 2;
+        max-width: 50%;
+        padding-left: 7px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    #footer-social-links {
+        font-size: .8em;
+        text-align: left;
+    }
+
+        #footer-social-links a:first-child {
+            padding-left: 0;
+        }
+
+    #trending .article-metadata {
+        font-size: .8em;
     }
 
     #about {

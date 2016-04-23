@@ -21,12 +21,12 @@ namespace DustedCodes.Blog.ViewModels
             _urlEncoder = urlEncoder;
         }
 
-        private ArticlePartialViewModel CreateArticlePartialViewModel(Article article, bool renderTitleAsLink)
+        private ArticleWrapper WrapArticleForView(Article article, bool renderTitleAsLink)
         {
             var permalinkUrl = _urlGenerator.GeneratePermalinkUrl(article.Id);
             var encodedPermalinkUrl = _urlEncoder.EncodeUrl(permalinkUrl);
 
-            return new ArticlePartialViewModel
+            return new ArticleWrapper
             {
                 Id = article.Id,
                 Author = article.Author,
@@ -41,6 +41,7 @@ namespace DustedCodes.Blog.ViewModels
                 FacebookShareUrl = string.Format(_appConfig.FacebookShareUrlFormat, encodedPermalinkUrl),
                 YammerShareUrl = string.Format(_appConfig.YammerShareUrlFormat, encodedPermalinkUrl),
                 LinkedInShareUrl = string.Format(_appConfig.LinkedInShareUrlFormat, encodedPermalinkUrl, article.Title),
+                RedditShareUrl = string.Format(_appConfig.RedditShareUrlFormat, encodedPermalinkUrl, article.Title),
                 WhatsAppShareUrl = string.Format(_appConfig.WhatsAppShareUrlFormat, article.Title, encodedPermalinkUrl),
                 RenderTitleAsLink = renderTitleAsLink,
                 HasTags = article.Tags != null && article.Tags.Any(),
@@ -55,18 +56,18 @@ namespace DustedCodes.Blog.ViewModels
 
         public ArticleViewModel CreateArticleViewModel(Article article)
         {
-            var partialViewModel = CreateArticlePartialViewModel(article, false);
+            var wrappedArticle = WrapArticleForView(article, false);
 
-            return new ArticleViewModel(partialViewModel);
+            return new ArticleViewModel(wrappedArticle);
         }
 
         public IndexViewModel CreateIndexViewModel(IEnumerable<Article> articles, int totalPageCount, int currentPage)
         {
-            var articlePartialViewModels = articles.Select(a => CreateArticlePartialViewModel(a, true));
+            var wrappedArticles = articles.Select(a => WrapArticleForView(a, true));
 
             return new IndexViewModel
             {
-                Articles = articlePartialViewModels,
+                Articles = wrappedArticles,
                 TotalPageCount = totalPageCount,
                 CurrentPage = currentPage
             };
@@ -75,6 +76,13 @@ namespace DustedCodes.Blog.ViewModels
         public ArchiveViewModel CreateArchiveViewModel(IEnumerable<Article> articles, string title)
         {
             return new ArchiveViewModel(title) { Articles = articles };
+        }
+
+        public TrendingViewModel CreateTrendingViewModel(IEnumerable<Article> articles)
+        {
+            var wrappedArticles = articles.Select(a => WrapArticleForView(a, true)).ToList();
+
+            return new TrendingViewModel { Articles = wrappedArticles };
         }
     }
 }

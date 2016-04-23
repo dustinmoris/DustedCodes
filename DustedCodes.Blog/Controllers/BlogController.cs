@@ -5,7 +5,7 @@ using DustedCodes.Core.Services;
 
 namespace DustedCodes.Blog.Controllers
 {
-    public class BlogController : Controller
+    public sealed class BlogController : Controller
     {
         private readonly IArticleService _articleService;
         private readonly IViewModelFactory _viewModelFactory;
@@ -55,6 +55,14 @@ namespace DustedCodes.Blog.Controllers
         {
             var articles = await _articleService.GetAllAsync();
             var viewModel = _viewModelFactory.CreateArchiveViewModel(articles, "Archive");
+
+            return View(viewModel);
+        }
+
+        public async Task<ActionResult> Trending()
+        {
+            var articles = await _articleService.GetTrendingAsync();
+            var viewModel = _viewModelFactory.CreateTrendingViewModel(articles);
 
             return View(viewModel);
         }

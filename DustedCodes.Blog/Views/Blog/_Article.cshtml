@@ -1,4 +1,4 @@
-﻿@model DustedCodes.Blog.ViewModels.Blog.ArticlePartialViewModel
+﻿@model DustedCodes.Blog.ViewModels.Blog.ArticleWrapper
 <article>
     <header>
         <h1>
@@ -13,44 +13,69 @@
         </h1>
         <div class="article-metadata">
             <time datetime="@Model.ValidHtml5TPublishDateTime" class="icon fa-calendar">@Model.UserFriendlyPublishDateTime</time>
-            <address class="icon fa-user author">@Model.Author</address>
-            <a class="icon fa-pencil edit-article" href="@Model.EditArticleUrl">Edit</a>
-            <a class="icon fa-comments disqus-comment-count" href="@Model.PermalinkUrl#disqus_thread" data-disqus-identifier="@Model.Id">Comments</a>
+            <address>@Model.Author</address>
             @if (Model.HasTags)
             {
-                <span class="icon fa-tags tags">
+                <span class="icon fa-tag tags">
                     @foreach (var tag in Model.Tags)
                     {
                         @Html.ActionLink(tag, "Tagged", "Blog", new { tag }, null)
                     }
                 </span>
             }
+            <a class="icon fa-comment disqus-comment-count" href="@Model.PermalinkUrl#disqus_thread" data-disqus-identifier="@Model.Id">Comments</a>
         </div>
     </header>
     @Html.Raw(Model.Content)
     <footer class="share-links">
-        <h1>Share it:</h1>
         <a href="mailto:?subject=@Model.Title&amp;body=Check out this site @Model.PermalinkUrl."
            title="Share by Email">
-            <i class="fa fa-envelope-o"></i>
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x mail-colour"></i>
+                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+            </span>
         </a>
         <a href="@Model.TwitterShareUrl" title="Share on Twitter">
-            <i class="fa fa-twitter"></i>
-        </a>
-        <a href="@Model.GooglePlusShareUrl" title="Share on Google+">
-            <i class="fa fa-google-plus"></i>
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x twitter-colour"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+            </span>
         </a>
         <a href="@Model.FacebookShareUrl" title="Share on Facebook">
-            <i class="fa fa-facebook-f"></i>
-        </a>
-        <a href="@Model.YammerShareUrl" title="Share on Yammer">
-            <i class="fa fa-yahoo"></i>
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x facebook-colour"></i>
+                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+            </span>
         </a>
         <a href="@Model.LinkedInShareUrl" title="Share on LinkedIn">
-            <i class="fa fa-linkedin"></i>
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x linkedin-colour"></i>
+                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+            </span>
+        </a>
+        <a href="@Model.GooglePlusShareUrl" title="Share on Google+">
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x google-plus-colour"></i>
+                <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+            </span>
+        </a>
+        <a href="@Model.YammerShareUrl" title="Share on Yammer">
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x yammer-colour"></i>
+                <i class="fa fa-yahoo fa-stack-1x fa-inverse"></i>
+            </span>
+        </a>
+        <a href="@Model.RedditShareUrl" title="Share on Reddit">
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x reddit-colour"></i>
+                <i class="fa fa-reddit-alien fa-stack-1x fa-inverse"></i>
+            </span>
         </a>
         <a class="mobile-only" href="@Model.WhatsAppShareUrl" data-action="share/whatsapp/share" title="Share on WhatsApp">
-            <i class="fa fa-whatsapp"></i>
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x whatsapp-colour"></i>
+                <i class="fa fa-whatsapp fa-stack-1x fa-inverse"></i>
+            </span>
         </a>
     </footer>
 </article>

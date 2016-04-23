@@ -16,5 +16,7 @@ namespace DustedCodes.Core.Services
         Task<PagedCollection<Article>> GetByPageAsync(int pageSize, int page);
 
         Task<IEnumerable<Article>> GetMostRecentAsync(int maxCount);
+
+        Task<IEnumerable<Article>> GetTrendingAsync();
     }
 }

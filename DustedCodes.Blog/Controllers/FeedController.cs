@@ -5,7 +5,7 @@ using DustedCodes.Core.Feeds;
 
 namespace DustedCodes.Blog.Controllers
 {
-    public class FeedController : Controller
+    public sealed class FeedController : Controller
     {
         private readonly IFeedFactory _feedFactory;
 

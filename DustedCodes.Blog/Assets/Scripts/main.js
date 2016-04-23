@@ -7,7 +7,7 @@
         window: {
             open: function (url, width, height) {
                 width = (typeof width === "undefined") ? 520 : width;
-                height = (typeof height === "undefined") ? 570 : height;
+                height = (typeof height === "undefined") ? 250 : height;
                 window.open(url, "_blank", "width=" + width + ", height=" + height);
             }
         },
@@ -26,8 +26,9 @@
     $(document).on("click", "#nav-toggle-button", function () {
         dustedcodes.menu.toggle();
     });
-    $(document).on("click", ".share-links>a", function (event) {
+    $(document).on("click", ".share-links > a", function (event) {
         event.defaultPrevented = true;
         dustedcodes.window.open($(this).attr("href"));
+        return false;
     });
 })(jQuery);

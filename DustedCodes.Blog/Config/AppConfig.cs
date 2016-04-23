@@ -3,7 +3,7 @@ using WebConfig = System.Web.Configuration.WebConfigurationManager;
 
 namespace DustedCodes.Blog.Config
 {
-    public class AppConfig : IAppConfig
+    public sealed class AppConfig : IAppConfig
     {
         public string BlogTitle => WebConfig.AppSettings["Blog_Title"];
         public string BlogDescription => WebConfig.AppSettings["Blog_Description"];
@@ -21,6 +21,9 @@ namespace DustedCodes.Blog.Config
         public string FacebookShareUrlFormat => WebConfig.AppSettings["Facebook_ShareUrl_Format"];
         public string YammerShareUrlFormat => WebConfig.AppSettings["Yammer_ShareUrl_Format"];
         public string LinkedInShareUrlFormat => WebConfig.AppSettings["LinkedIn_ShareUrl_Format"];
+        public string RedditShareUrlFormat => WebConfig.AppSettings["Reddit_ShareUrl_Format"];
         public string WhatsAppShareUrlFormat => WebConfig.AppSettings["WhatsApp_ShareUrl_Format"];
+        public string GoogleAnalyticsViewId => WebConfig.AppSettings["GoogleAnalytics_ViewId"];
+        public string GoogleAnalyticsPrivateKeyPath => WebConfig.AppSettings["GoogleAnalytics_PrivateKeyPath"];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace DustedCodes.Blog.ViewModels.Home
 {
-    public class AboutViewModel : BaseViewModel
+    public sealed class AboutViewModel : BaseViewModel
     {
         public AboutViewModel() : base("About")
         {

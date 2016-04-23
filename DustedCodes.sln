@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DustedCodes.Blog", "DustedCodes.Blog\DustedCodes.Blog.csproj", "{3AE893E6-61B5-4F61-A7DD-EF2380FAA97E}"
 EndProject
@@ -11,16 +11,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DustedCodes.Automation.Fram
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DustedCodes.Automation.Tests", "DustedCodes.Automation.Tests\DustedCodes.Automation.Tests.csproj", "{56276311-5B0B-4025-83F5-E16D651851FE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{1B5D3E1B-3318-4AF8-9702-82765160F3B0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{1B5D3E1B-3318-4AF8-9702-82765160F3B0}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
-		WE-Markdown.css = WE-Markdown.css
 		WebEssentials2015-Settings.json = WebEssentials2015-Settings.json
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{C169E963-BADB-4AA1-8261-55F54C571CED}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{C169E963-BADB-4AA1-8261-55F54C571CED}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
 		CompileArticles.ps1 = CompileArticles.ps1
@@ -31,6 +30,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DustedCodes.Core", "DustedCodes.Core\DustedCodes.Core.csproj", "{249F1D7B-CB40-49A6-AE53-54185C10FF8F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DustedCodes.Core.Tests", "DustedCodes.Core.Tests\DustedCodes.Core.Tests.csproj", "{E9794F23-A4EF-433C-BA7C-2C02BDBC1833}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{31BEBE9A-424F-450D-B0BD-37150D5F7C4D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{03C040D9-E35F-4860-A040-9F696ED69DE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,5 +68,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3AE893E6-61B5-4F61-A7DD-EF2380FAA97E} = {31BEBE9A-424F-450D-B0BD-37150D5F7C4D}
+		{C6145B95-3D35-44B9-A475-C710D96545C9} = {03C040D9-E35F-4860-A040-9F696ED69DE8}
+		{C9AF56E4-D009-44F2-9BDB-D31FA6302F41} = {03C040D9-E35F-4860-A040-9F696ED69DE8}
+		{56276311-5B0B-4025-83F5-E16D651851FE} = {03C040D9-E35F-4860-A040-9F696ED69DE8}
+		{249F1D7B-CB40-49A6-AE53-54185C10FF8F} = {31BEBE9A-424F-450D-B0BD-37150D5F7C4D}
+		{E9794F23-A4EF-433C-BA7C-2C02BDBC1833} = {03C040D9-E35F-4860-A040-9F696ED69DE8}
 	EndGlobalSection
 EndGlobal

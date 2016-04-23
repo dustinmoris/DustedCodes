@@ -18,6 +18,9 @@
         string FacebookShareUrlFormat { get; }
         string YammerShareUrlFormat { get; }
         string LinkedInShareUrlFormat { get; }
+        string RedditShareUrlFormat { get; }
         string WhatsAppShareUrlFormat { get; }
+        string GoogleAnalyticsViewId { get; }
+        string GoogleAnalyticsPrivateKeyPath { get; }
     }
 }

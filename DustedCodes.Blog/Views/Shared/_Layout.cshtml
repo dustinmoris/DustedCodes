@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="@Model.BlogDescription"/>
+    <meta name="description" content="@Model.BlogDescription" />
     <link rel="icon" type="image/png" href="@Model.FullQualifiedContentUrl("/Assets/Images/favicon-16x16.png")" sizes="16x16" />
     <link rel="icon" type="image/png" href="@Model.FullQualifiedContentUrl("/Assets/Images/favicon-32x32.png")" sizes="32x32" />
     <title>@Model.PageTitle</title>
@@ -37,13 +37,13 @@
     <nav>
         <ul>
             <li>
-                @Html.ActionLink("Blog", "Index", "Blog")
+                @Html.ActionLink("Home", "Index", "Blog")
             </li>
             <li>
                 @Html.ActionLink("Archive", "Archive", "Blog")
             </li>
             <li>
-                @Html.ActionLink("About", "About", "Home")
+                @Html.ActionLink("Trending", "Trending", "Blog", null, new { @class = "icon fa-line-chart icon-larger" })
             </li>
             <li>
                 <a class="icon fa-github icon-larger" href="https://github.com/dustinmoris?tab=repositories">Projects</a>
@@ -57,7 +57,45 @@
         </ul>
     </nav>
     <footer>
-        <p>Copyright &copy; @DateTime.Now.Year, Dustin Moris Gorski</p>
+        <div id="inner-footer">
+            <div id="footer-about">
+                <h5>About</h5>
+                <p>My name is Dustin and I'm a software developer from Vienna, Austria, living in the UK now. I created this blog and author it since 2015. @Html.ActionLink("Read more...", "About", "Home")</p>
+                <div id="footer-social-links">
+                    <a href="https://twitter.com/dustinmoris" title="Follow me on Twitter">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                    <a href="https://www.facebook.com/dustinmoris.gorski" title="Follow me on Facebook">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/dustinmoris" title="Follow me on LinkedIn">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                    <a href="@Url.Action("Rss", "Feed")" title="Subscribe to my RSS feed">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div id="footer-copyright">
+                <h5>Copyright &copy; @DateTime.Now.Year, Dustin Moris Gorski</h5>
+                <p>
+                    All source code is licensed under <a href="http://www.gnu.org/licenses/gpl-2.0.html">GPL v2.0</a>.
+                </p>
+                <p>All other content on this website, such as text, graphics, logos and images is the property of Dustin Moris Gorski.</p>
+            </div>
+        </div>
     </footer>
     @RenderSection("BeforeEndOfBody", required: false)
 </body>
