@@ -2,8 +2,7 @@
 pre,
 code,
 kbd,
-samp,
-tt {
+samp {
     font-family: monospace, monospace;
     font-size: 1em;
 }
@@ -29,7 +28,7 @@ body {
     body > main > aside,
     body > main > div,
     body > main > p,
-    body > footer > p {
+    #inner-footer {
         margin: 1em auto;
         max-width: 600px;
         padding: 0 20px;
@@ -45,9 +44,8 @@ body {
 
     body > footer {
         order: 3;
+        background: #111;
         margin-top: 2em;
-        margin-bottom: 1.5em;
-        font-family: Helvetica, Arial, sans-serif;
     }
 
     body > header h1 {
@@ -105,11 +103,54 @@ body {
                 text-decoration: none;
             }
 
-    body > footer > p {
-        margin-bottom: 2em;
-        font-size: .85em;
-        color: #888;
+#inner-footer {
+    display: flex;
+    -ms-flex-flow: row wrap;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+#footer-about {
+    order: 1;
+}
+
+#footer-copyright {
+    order: 2;
+}
+
+#inner-footer h5 {
+    margin-bottom: 0;
+    font-size: .9em;
+    color: #888;
+}
+
+#inner-footer p {
+    font-size: .9em;
+    line-height: 1.7em;
+    color: #666;
+}
+
+#inner-footer a {
+    font-weight: normal;
+}
+
+#footer-social-links {
+    margin: 1em 0;
+    text-align: center;
+}
+
+    #footer-social-links a {
+        display: inline-block;
+        padding: 0 .5em;
+        font-size: .9em;
+        color: #222;
+        text-decoration: none;
     }
+
+        #footer-social-links a:hover {
+            color: #444;
+        }
 
 a:link,
 a:visited {
@@ -585,8 +626,56 @@ blockquote {
         max-width: 66%;
     }
 
+    body > footer {
+        margin-top: 3em;
+    }
+
     #nav-toggle-button {
         display: none;
+    }
+
+    #inner-footer {
+        padding-top: .5em;
+        padding-bottom: 1.5em;
+    }
+
+        #inner-footer h5 {
+            font-size: .8em;
+        }
+
+        #inner-footer p {
+            font-size: .8em;
+        }
+
+    #footer-copyright {
+        order: 1;
+        max-width: 50%;
+        padding-right: 7px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    #footer-about {
+        order: 2;
+        max-width: 50%;
+        padding-left: 7px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    #footer-social-links {
+        font-size: .8em;
+        text-align: left;
+    }
+
+        #footer-social-links a:first-child {
+            padding-left: 0;
+        }
+
+    #trending .article-metadata {
+        font-size: .8em;
     }
 
     #about {
@@ -614,10 +703,6 @@ blockquote {
 
     #avatar {
         max-width: 185px;
-    }
-
-    #trending .article-metadata {
-        font-size: .8em;
     }
 
     .mobile-only {

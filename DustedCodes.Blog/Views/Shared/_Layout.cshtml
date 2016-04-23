@@ -58,17 +58,10 @@
     </nav>
     <footer>
         <div id="inner-footer">
-            <div class="half-width">
-                <h5>Copyright &copy; @DateTime.Now.Year, Dustin Moris Gorski</h5>
-                <p>
-                    All source code is licensed under <a href="http://www.gnu.org/licenses/gpl-2.0.html">GPL v2.0</a>.
-                </p>
-                <p>All other content on this website, such as text, graphics, logos and images is the property of Dustin Moris Gorski.</p>
-            </div>
-            <div class="half-width">
+            <div id="footer-about">
                 <h5>About</h5>
-                <p>I'm Dustin, a software developer from Vienna, Austria, living in the UK now. I created this blog and author it since 2015. @Html.ActionLink("Read more...", "About", "Home")</p>
-                <p id="footer-social-links">
+                <p>My name is Dustin and I'm a software developer from Vienna, Austria, living in the UK now. I created this blog and author it since 2015. @Html.ActionLink("Read more...", "About", "Home")</p>
+                <div id="footer-social-links">
                     <a href="https://twitter.com/dustinmoris" title="Follow me on Twitter">
                         <span class="fa-stack fa-lg">
                             <i class="fa fa-circle fa-stack-2x"></i>
@@ -93,7 +86,14 @@
                             <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
                         </span>
                     </a>
+                </div>
+            </div>
+            <div id="footer-copyright">
+                <h5>Copyright &copy; @DateTime.Now.Year, Dustin Moris Gorski</h5>
+                <p>
+                    All source code is licensed under <a href="http://www.gnu.org/licenses/gpl-2.0.html">GPL v2.0</a>.
                 </p>
+                <p>All other content on this website, such as text, graphics, logos and images is the property of Dustin Moris Gorski.</p>
             </div>
         </div>
     </footer>
