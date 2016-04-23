@@ -308,18 +308,22 @@ article > footer {
 
 blockquote {
     background: #f1f1f1;
-    border-left: 5px solid #c90;
+    border-left: 6px solid #c90;
     margin: 1.5em 0;
     padding: .6em 1em;
 }
 
-    blockquote > p:first-child {
-        margin-top: 0;
+    blockquote > p {
+        line-height: 1.7em;
     }
 
-    blockquote > p:last-child {
-        margin-bottom: 0;
-    }
+        blockquote > p:first-child {
+            margin-top: 0;
+        }
+
+        blockquote > p:last-child {
+            margin-bottom: 0;
+        }
 
     blockquote > footer {
         margin: 0 0 0.3em 0;
