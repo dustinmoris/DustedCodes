@@ -41,6 +41,7 @@ namespace DustedCodes.Blog.ViewModels
                 FacebookShareUrl = string.Format(_appConfig.FacebookShareUrlFormat, encodedPermalinkUrl),
                 YammerShareUrl = string.Format(_appConfig.YammerShareUrlFormat, encodedPermalinkUrl),
                 LinkedInShareUrl = string.Format(_appConfig.LinkedInShareUrlFormat, encodedPermalinkUrl, article.Title),
+                RedditShareUrl = string.Format(_appConfig.RedditShareUrlFormat, encodedPermalinkUrl, article.Title),
                 WhatsAppShareUrl = string.Format(_appConfig.WhatsAppShareUrlFormat, article.Title, encodedPermalinkUrl),
                 RenderTitleAsLink = renderTitleAsLink,
                 HasTags = article.Tags != null && article.Tags.Any(),

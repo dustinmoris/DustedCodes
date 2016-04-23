@@ -299,6 +299,7 @@ article > footer {
     article > footer > a:visited,
     article > footer > a:hover,
     article > footer > a:active {
+        display: inline-block;
         text-decoration: none;
         color: #333;
         -ms-opacity: 1;

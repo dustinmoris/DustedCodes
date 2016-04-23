@@ -17,6 +17,7 @@ namespace DustedCodes.Blog.ViewModels.Blog
         public string FacebookShareUrl { get; set; }
         public string YammerShareUrl { get; set; }
         public string LinkedInShareUrl { get; set; }
+        public string RedditShareUrl { get; set; }
         public string WhatsAppShareUrl { get; set; }
         public bool RenderTitleAsLink { get; set; }
         public bool HasTags { get; set; }
