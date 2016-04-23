@@ -21,17 +21,17 @@ namespace DustedCodes.Automation.Framework.Abstractions
 
         public static void GoToBlog()
         {
-            Driver.Instance.FindElement(By.LinkText("BLOG")).Click();
+            Driver.Instance.FindElement(By.LinkText("HOME")).Click();
+        }
+
+        public static void GoToTrending()
+        {
+            Driver.Instance.FindElement(By.LinkText("TRENDING")).Click();
         }
 
         public static void GoToArchive()
         {
             Driver.Instance.FindElement(By.LinkText("ARCHIVE")).Click();
-        }
-
-        public static void GoToAbout()
-        {
-            Driver.Instance.FindElement(By.LinkText("ABOUT")).Click();
         }
 
         public static void GoToRssFeed()

@@ -41,6 +41,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstractions\Footer.cs" />
+    <Compile Include="Abstractions\TrendingPage.cs" />
     <Compile Include="AppConfig.cs" />
     <Compile Include="Browser.cs" />
     <Compile Include="Driver.cs" />

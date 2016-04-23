@@ -13,7 +13,7 @@ namespace DustedCodes.Automation.Tests
         {
             Assert.IsTrue(HomePage.IsAt());
 
-            Navigation.GoToAbout();
+            Footer.GoToAbout();
             Assert.IsTrue(AboutPage.IsAt());
 
             AboutPage.GoToAtomFeed();
@@ -22,6 +22,9 @@ namespace DustedCodes.Automation.Tests
             Navigation.GoToRoot();
             Navigation.GoToBlog();
             Assert.IsTrue(HomePage.IsAt());
+
+            Navigation.GoToTrending();
+            TrendingPage.IsAt();
 
             Navigation.GoToArchive();
             Assert.IsTrue(ArchivePage.IsAt());
@@ -102,19 +105,20 @@ namespace DustedCodes.Automation.Tests
         [Test]
         public void Atom_Feed_Is_Working()
         {
-            Navigation.GoToAbout();
+            Footer.GoToAbout();
             AboutPage.GoToAtomFeed();
 
             foreach (var blogPost in DataToValidate.BlogPosts.Reverse().Take(10))
             {
                 AtomFeed.GoToArticle(blogPost.Title);
                 Assert.IsTrue(BlogPostPage.IsAt(blogPost.Title));
-                Navigation.GoToAbout();
+                Footer.GoToAbout();
                 AboutPage.GoToAtomFeed();
             }
         }
 
         [Test]
+        [Ignore("Removed the edit link for now")]
         public void Can_Edit_Article_In_GitHub()
         {
             // Test the edit link with the second last blog post, which should be commited to GitHub already:
