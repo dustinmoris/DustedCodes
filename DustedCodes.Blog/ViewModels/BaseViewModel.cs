@@ -8,7 +8,7 @@ namespace DustedCodes.Blog.ViewModels
     {
         private readonly string _pageTitle;
         private const int CssVersion = 23;
-        private const int JavaScriptVersion = 5;
+        private const int JavaScriptVersion = 6;
 
         protected BaseViewModel(
             string pageTitle = null)
