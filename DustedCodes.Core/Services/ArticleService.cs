@@ -71,7 +71,7 @@ namespace DustedCodes.Core.Services
         public async Task<IEnumerable<Article>> GetTrendingAsync()
         {
             const string cacheKey = "TrendingArticles";
-            var cachedArticles = _cache.Get<List<Article>>(cacheKey);
+            var cachedArticles = _cache.Get<HashSet<Article>>(cacheKey);
 
             if (cachedArticles != null)
                 return cachedArticles;
