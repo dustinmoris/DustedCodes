@@ -146,6 +146,7 @@
     <None Include="App_Data\Articles\making-font-awesome-awesome-using-icons-without-i-tags.md" />
     <None Include="App_Data\Articles\php-uk-conference-2015.md" />
     <None Include="App_Data\Articles\running-free-tier-and-paid-tier-web-apps-on-the-same-microsoft-azure-subscription.md" />
+    <None Include="App_Data\Articles\watch-us-netflix-hulu-and-more-from-anywhere-in-the-world.md" />
     <Content Include="Assets\Css\error.css" />
     <Content Include="Assets\Css\site.min.css" />
     <Content Include="Assets\Css\site.css" />
