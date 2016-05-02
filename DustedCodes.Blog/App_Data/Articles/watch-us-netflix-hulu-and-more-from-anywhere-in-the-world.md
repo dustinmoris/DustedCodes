@@ -28,7 +28,7 @@ The reason why I am telling you this is because Amazon's cloud has been so succe
 
 ## Setting up a proxy server with AWS EC2 in less than 10 minutes
 
-Let's start off with some good news first. Amazon offers a [12 months free tier](https://aws.amazon.com/free/) for new subscribers to their web services. This is an amazing offer and exactly what we are going to use to setup our private proxy. If you ask yourself what happens after those 12 months then wait until the end of this blog post.
+Let's start off with some good news first. Amazon offers a [12 months free tier](https://aws.amazon.com/free/) for new subscribers to their web services. This is an amazing offer and exactly what we are going to use to set up our private proxy. If you ask yourself what happens after those 12 months then wait until the end of this blog post.
 
 ### Step 1: Sign up with Amazon web services
 
@@ -100,7 +100,7 @@ Continue by clicking on the **Next: Add Storage** button.
 
 There is literally nothing to do here or in the next step. Click **Next: Tag Instance** and immediately move on to **Next: Configure Security Group**.
 
-This is the last important step during the configuration. Here we configure which ports will be open on the new instance. If this is the first EC2 instance you are going to create then you are likely not going to have any existing security groups setup yet.
+This is the last important step during the configuration. Here we configure which ports will be open on the new instance. If this is the first EC2 instance you are going to create then you are likely not going to have any existing security groups set up yet.
 
 By default the wizard will create a new security group for you and add one rule for port 22. This is the default port to SSH into your EC2 instance. Normally as a system administrator you would want to keep this port open, but for the simplicity of this setup we can overwrite it. We don't really need to SSH into the instance and if you really want to you can always edit the security group afterwards.
 
@@ -175,7 +175,6 @@ Now that everything is set up and running you should be able to stream US conten
 
 <a href="https://www.flickr.com/photos/130657798@N05/26664445162/in/dateposted-public/" title="proxy-server-active"><img src="https://farm2.staticflickr.com/1580/26664445162_d88255696e_z.jpg" alt="proxy-server-active"></a>
 
-And what shall you do after your first 12 months of free tier eligibility? Well, I'd suggest you sign up a new account under a different email address. It takes only a couple of minutes which you have to invest every 12 months in order to run a free private proxy server. If that is too much effort then you might as well choose to let your server run and pay for its usage. The t2.micro instance costs only [$0.013 per hour](https://aws.amazon.com/ec2/pricing/) which would come down to $9.75 per month if you'd let it run continuously. However, in this case I'd suggest to switch it on and off as you need it and reduce your cost to almost nothing.
+And what shall you do after your first 12 months of free tier eligibility? Well, I'd suggest you sign up a new account under a different email address. It takes only a couple of minutes which you have to invest every 12 months in order to run a free private proxy server. If that is too much effort then you might as well choose to let your server run and pay for its usage. The t2.micro instance costs only [$0.013 per hour](https://aws.amazon.com/ec2/pricing/) which would come down to $9.75 per month if you'd let it run continuously. However, in this case I'd suggest to switch it on and off as you need and reduce your cost to almost nothing.
 
-Oh, and if you wonder about any of the IP addresses shown on the screenshots of this blog post then let me assure you that none of those servers exist anymore and you really have to go through the few minutes of setting up your own private proxy ;)
-
+Oh, and if you wonder about any of the IP addresses shown on the screenshots of this blog post then let me assure you that none of those servers exist anymore and you really have to go through the few minutes of setting up your own private proxy server ;)
