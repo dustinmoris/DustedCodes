@@ -161,6 +161,12 @@ namespace DustedCodes.Automation.Tests
                 Title = "Asynchronous F# workflows in NancyFx",
                 PermalinkId = "asynchronous-fsharp-workflows-in-nancyfx",
                 Tags = new[] { "nancyfx", "fsharp", "async" }
+            },
+            new BlogPost
+            {
+                Title = "Watch US Netflix, Hulu and more from anywhere in the world",
+                PermalinkId = "watch-us-netflix-hulu-and-more-from-anywhere-in-the-world",
+                Tags = new[] { "aws", "cloud", "netflix" }
             }
         };
     }
