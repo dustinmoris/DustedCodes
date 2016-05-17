@@ -70,7 +70,7 @@ The `ErrorHandler` type is defined as the following:
 
 <pre><code>type ErrorHandler = Exception -&gt; String -&gt; HttpContext -&gt; WebPart</code></pre>
 
-In other words we can declare a new error handler and configure it like this:
+In other words you can declare a new error handler and configure it like this:
 
 <pre><code>let customErrorHandler ex msg ctx =
     INTERNAL_ERROR (&quot;Custom error handler: &quot; + msg) ctx
@@ -86,3 +86,12 @@ let main argv =
     startWebServer customConfig app
     0</code></pre>
 
+This gives me full control of the error handling process now. If I had a Json web service and I wanted to return my error in Json format I could change the error handler as following:
+
+<pre><code>let JSON obj =
+    JsonConvert.SerializeObject obj
+    |> OK
+    >=> setMimeType "application/json; charset=utf-8"
+
+let customErrorHandler ex msg ctx =
+    JSON ex ctx</code></pre>
