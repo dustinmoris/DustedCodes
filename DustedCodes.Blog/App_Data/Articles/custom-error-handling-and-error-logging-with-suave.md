@@ -62,5 +62,27 @@ In order to test error handling I need a route which throws an exception:
         NOT_FOUND &quot;Resource not found.&quot;
     ]</code></pre>
 
-The default Suave error handler will return a 500 Internal Server error and output the exception message in HTML.
+The [default Suave error handler](https://github.com/SuaveIO/suave/blob/master/src/Suave/Web.fs#L14) will return a 500 Internal Server error and output the exception message in plain text.
+
+If you wanted to change the default behaviour and provide a different implementation, then you can do this by providing your own error handler when configuring the web server. As per [API documentation](https://suave.io/api.html#server-configuration) you can set a function of type `ErrorHandler` in the `SuaveConfig`.
+
+The `ErrorHandler` type is defined as the following:
+
+<pre><code>type ErrorHandler = Exception -&gt; String -&gt; HttpContext -&gt; WebPart</code></pre>
+
+In other words we can declare a new error handler and configure it like this:
+
+<pre><code>let customErrorHandler ex msg ctx =
+    INTERNAL_ERROR (&quot;Custom error handler: &quot; + msg) ctx
+
+let customConfig =
+    {
+        defaultConfig with
+            errorHandler = customErrorHandler
+    }
+
+[&lt;EntryPoint&gt;]
+let main argv = 
+    startWebServer customConfig app
+    0</code></pre>
 
