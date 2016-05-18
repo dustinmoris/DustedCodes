@@ -10,11 +10,11 @@ Suave is a lightweight, non-blocking web server written in F#. It is fairly new 
 
 <img src="https://raw.githubusercontent.com/SuaveIO/resources/master/images/suave1.png" alt="Suave" class="two-third-width" />
 
-After working with Suave for more than a month now I can say that I find it very nice and intuitive. It is a well designed web framework which is easy to work with and allows rapid development if you know how it works. However, if you don't know how it works then you might struggle to get anything done at all. This is exactly what happened to me when I started adopting the framework in the beginning. The documentation is almost non existent and if you look for any advice on how to implement certain things then you are probably better off by browsing the [GitHub repository](https://github.com/SuaveIO/suave) directly. The lack of documentation is not a mistake, but rather a concious design decision which the Suave teams explains as following:
+After working with Suave for more than a month now I can say that I find it very nice and intuitive. It is a well designed web framework which is easy to work with and allows rapid development if you know how it works. However, if you don't know how it works then you might struggle to get anything done at all. This is exactly what happened to me when I started adopting the framework in the beginning. The documentation is almost non existent and if you look for any advice on how to implement certain things then you are probably better off by browsing the [GitHub repository](https://github.com/SuaveIO/suave) directly. The lack of documentation is not a mistake, but rather a concious design decision which the Suave team explains as following:
 
 > In suave, we have opted to write a lot of documentation inside the code; so just hover the function in your IDE or use an assembly browser to bring out the XML docs.
 
-Even though I found myself around I wish there would have been a little bit more documentation and more code examples which would have put me on the right track straight away. With this in mind I will try to cover proper error handling and error logging with Suave in this blog post.
+Even though I found myself around I wish there would have been a little bit more documentation and more code examples which would have put me on the right track straight away. A common topic that everyone will have to think about is proper error handling and error logging in Suave.
 
 ## Hello World in Suave
 
@@ -55,24 +55,28 @@ Now that I covered that, let's look at error handling next.
 
 In order to test error handling I need a route which throws an exception:
 
-<pre><code>let app = 
+<pre><code>let errorAction = 
+    fun _ -&gt; async { return failwith &quot;Uncaught exception!!&quot; }
+
+let app = 
     choose [
         GET &gt;=&gt; path &quot;/&quot; &gt;=&gt; OK &quot;Hello World!&quot;
-        GET &gt;=&gt; path &quot;/error&quot; &gt;=&gt; failwith &quot;Uncaught exception!!&quot;
+        GET &gt;=&gt; path &quot;/error&quot; &gt;=&gt; errorAction
         NOT_FOUND &quot;Resource not found.&quot;
     ]</code></pre>
 
-The [default Suave error handler](https://github.com/SuaveIO/suave/blob/master/src/Suave/Web.fs#L14) will return a 500 Internal Server error and output the exception message in plain text.
+The [default Suave error handler](https://github.com/SuaveIO/suave/blob/releases/v1.x/src/Suave/Web.fs#L14) will return a 500 Internal Server error and a static message in plain text, unless you run your application locally in which case it will return the exception message in HTML.
 
-If you wanted to change the default behaviour and provide a different implementation, then you can do this by providing your own error handler when configuring the web server. As per [API documentation](https://suave.io/api.html#server-configuration) you can set a function of type `ErrorHandler` in the `SuaveConfig`.
+If you wanted to change the default behaviour and provide a different implementation, then you can do this by setting a custom function of type `ErrorHandler` as part of the web server configuration.
 
-The `ErrorHandler` type is defined as the following:
+The `ErrorHandler` type is defined as following:
 
 <pre><code>type ErrorHandler = Exception -&gt; String -&gt; HttpContext -&gt; WebPart</code></pre>
 
-In other words you can declare a new error handler and configure it like this:
+For example you can declare a new error handler like this:
 
 <pre><code>let customErrorHandler ex msg ctx =
+    // Change implementation as you wish
     INTERNAL_ERROR (&quot;Custom error handler: &quot; + msg) ctx
 
 let customConfig =
@@ -86,12 +90,43 @@ let main argv =
     startWebServer customConfig app
     0</code></pre>
 
-This gives me full control of the error handling process now. If I had a Json web service and I wanted to return my error in Json format I could change the error handler as following:
+Let's say you have a RESTful service and you want to return an error in Json instead of plain text. You could do this by amending your code as follows:
 
 <pre><code>let JSON obj =
     JsonConvert.SerializeObject obj
-    |> OK
-    >=> setMimeType "application/json; charset=utf-8"
+    |&gt; INTERNAL_ERROR
+    &gt;=&gt; setMimeType &quot;application/json; charset=utf-8&quot;
 
 let customErrorHandler ex msg ctx =
     JSON ex ctx</code></pre>
+
+The `JSON` function is a new helper function, which uses [Newtonsoft.Json]() to serialize an object and pipe it to the `INTERNAL_ERROR` function in combination with a mime type of &quot;application/json; charset=utf-8&quot;.
+
+It is up to you how fancy you want your error handler to be. You could go one step further and examine the Accept header of the incoming HTTP request and return the error response in a mime type which is supported by the client. The `ctx` parameter is of type `Suave.Http.HttpContent` and holds all the information you need:
+
+<pre><code>type AcceptType =
+    | Json
+    | Xml
+    | Other
+
+let getAcceptTypeFromRequest ctx =
+    match ctx.request.header &quot;Accept&quot; with
+    | Choice1Of2 accept -&gt;
+        match accept with
+        | &quot;application/json&quot; -&gt; Json
+        | &quot;application/xml&quot;  -&gt; Xml
+        | _                  -&gt; Other
+    | _                      -&gt; Other
+
+let customErrorHandler ex msg ctx =     
+    match getAcceptTypeFromRequest ctx with
+    | Json  -&gt; JSON ex ctx
+    | Xml   -&gt; XML ex ctx
+    | Other -&gt; INTERNAL_ERROR msg ctx</code></pre>
+
+*The `XML` function doesn't exist by default and needs to be defined similarly as the `JSON` function from the previous example.*
+
+
+This code is not full proof, but you get the gist of it. There is a lot you can do with the error handler and you can tailor it to your specific application as much you like. Let's move on to error logging.
+
+## Error logging in Suave
