@@ -30,7 +30,8 @@ namespace DustedCodes.Core.Analytics
             // Don't need to worry about concurrent writes to the cache
             var result = await _googleAnalyticsClient.GetTrendingPagesAsync(maxCount).ConfigureAwait(false);
 
-            _cache.Set(cacheKey, result, new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddHours(24) });
+            if (result != null)
+                _cache.Set(cacheKey, result, new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddHours(24) });
 
             return result;
         }

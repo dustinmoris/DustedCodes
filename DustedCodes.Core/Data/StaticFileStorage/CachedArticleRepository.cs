@@ -34,7 +34,10 @@ namespace DustedCodes.Core.Data.StaticFileStorage
                 return cachedArticle;
 
             var article = await _articleRepository.GetAsync(id).ConfigureAwait(false);
-            _cache.Set(cacheKey, article, CreateDefaultCacheItemPolicy.Invoke());
+
+            if (article != null)
+                _cache.Set(cacheKey, article, CreateDefaultCacheItemPolicy.Invoke());
+
             return article;
         }
 
@@ -47,7 +50,10 @@ namespace DustedCodes.Core.Data.StaticFileStorage
                 return cachedArticles;
 
             var articles = await _articleRepository.GetOrderedByDateAsync().ConfigureAwait(false);
-            _cache.Set(cacheKey, articles, CreateDefaultCacheItemPolicy.Invoke());
+
+            if (articles != null)
+                _cache.Set(cacheKey, articles, CreateDefaultCacheItemPolicy.Invoke());
+
             return articles;
         }
     }
