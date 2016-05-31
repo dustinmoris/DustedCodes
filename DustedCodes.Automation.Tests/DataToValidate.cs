@@ -167,6 +167,12 @@ namespace DustedCodes.Automation.Tests
                 Title = "Watch US Netflix, Hulu and more from anywhere in the world",
                 PermalinkId = "watch-us-netflix-hulu-and-more-from-anywhere-in-the-world",
                 Tags = new[] { "aws", "cloud", "netflix" }
+            },
+            new BlogPost
+            {
+                Title = "Custom error handling and logging in Suave",
+                PermalinkId = "custom-error-handling-and-logging-in-suave",
+                Tags = new[] { "fsharp", "suave", "error-handling", "logging" }
             }
         };
     }
