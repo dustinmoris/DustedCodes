@@ -14,7 +14,7 @@ After working with Suave for more than a month now I can say that I find it very
 
 > In suave, we have opted to write a lot of documentation inside the code; so just hover the function in your IDE or use an assembly browser to bring out the XML docs.
 
-Even though I found myself around I wish there would have been a little bit more documentation and more code examples which would have put me on the right track straight away. A common topic that everyone will have to think about is proper error handling and error logging in Suave.
+Even though I found myself around I wish there would have been a little bit more documentation and more code examples which would have put me on the right track straight away. A common topic that everyone will have to think about at some point is proper error handling and error logging.
 
 ## Hello World in Suave
 
@@ -39,7 +39,7 @@ When I navigate to [http://localhost:8083](http://localhost:8083) I can see the 
 
 When I try to browse a path which doesn't exist then Suave will not serve the request by default. For example [http://localhost:8083/foo](http://localhost:8083/foo) will not return anything.
 
-This doesn't count as error handling yet, but I thought it would be good to mention here as well. If you want Suave to return a 404 (or anything else) for not found resources, then you have to add a fallback case to the end of the webpart options:
+It is not really part of error handling, but I thought it would be good to mention here as well. If you want Suave to return a 404 (or anything else) for non existing paths then you can append a generic fallback case to the end of the webpart options:
 
 <pre><code>let app = 
     choose [
@@ -90,19 +90,19 @@ let main argv =
     startWebServer customConfig app
     0</code></pre>
 
-Let's say you have a RESTful service and you want to return an error in Json instead of plain text. You could do this by amending your code as follows:
+Let's say you have a RESTful service and you want to return an error in Json instead of plain text. You could do this by amending the code as following:
 
-<pre><code>let JSON obj =
+<pre><code>let JSON_ERROR obj =
     JsonConvert.SerializeObject obj
     |&gt; INTERNAL_ERROR
     &gt;=&gt; setMimeType &quot;application/json; charset=utf-8&quot;
 
 let customErrorHandler ex msg ctx =
-    JSON ex ctx</code></pre>
+    JSON_ERROR ex ctx</code></pre>
 
-The `JSON` function is a new helper function, which uses [Newtonsoft.Json]() to serialize an object and pipe it to the `INTERNAL_ERROR` function in combination with a mime type of &quot;application/json; charset=utf-8&quot;.
+The `JSON_ERROR` function is a custom helper function, which uses [Newtonsoft.Json](https://www.nuget.org/packages/newtonsoft.json/) to serialize an object and pipe it to the `INTERNAL_ERROR` function in combination with a mime type of &quot;application/json; charset=utf-8&quot;.
 
-It is up to you how fancy you want your error handler to be. You could go one step further and examine the Accept header of the incoming HTTP request and return the error response in a mime type which is supported by the client. The `ctx` parameter is of type `Suave.Http.HttpContent` and holds all the information you need:
+You could go one step further and examine the Accept header of the incoming HTTP request and return the error response in a mime type which is supported by the client. The `ctx` parameter which is of type `Suave.Http.HttpContent` has all the relevant information to make that distinction:
 
 <pre><code>type AcceptType =
     | Json
@@ -120,13 +120,39 @@ let getAcceptTypeFromRequest ctx =
 
 let customErrorHandler ex msg ctx =     
     match getAcceptTypeFromRequest ctx with
-    | Json  -&gt; JSON ex ctx
-    | Xml   -&gt; XML ex ctx
+    | Json  -&gt; JSON_ERROR ex ctx
+    | Xml   -&gt; XML_ERROR ex ctx
     | Other -&gt; INTERNAL_ERROR msg ctx</code></pre>
 
-*The `XML` function doesn't exist by default and needs to be defined similarly as the `JSON` function from the previous example.*
+*The `XML_ERROR` function doesn't exist by default and needs to be defined similarly as the `JSON_ERROR` function from the previous example.*
 
 
-This code is not full proof, but you get the gist of it. There is a lot you can do with the error handler and you can tailor it to your specific application as much you like. Let's move on to error logging.
+This code is not full proof, but you get the idea of it. There is nothing you can't do with the error handler and you can provide any implementation which is 100% tailored to your application requirements. Let's move on to error logging.
 
-## Error logging in Suave
+## Custom logging in Suave
+
+Just like the error handler is set in the web server configuration the logger is set as well, but with the small difference that the logger needs to be an object of type `Suave.Logging.Logger`.
+
+The `Logger` interface has only one member for logging application events:
+
+<pre><code>abstract member Log : LogLevel -&gt; (unit -&gt; LogLine) -&gt; unit</code></pre>
+
+It's simple but enough to build powerful loggers:
+
+<pre><code>type CustomLogger() =
+    interface Logger with
+        member __.Log level line =
+            match level with
+            | LogLevel.Fatal -&gt; pressTheRedButton
+            | _ -&gt; logAsNormal level line
+
+let customConfig =
+    { defaultConfig with
+        errorHandler = customErrorHandler
+        logger = new CustomErrorLogger() }</code></pre>
+
+*The two functions `pressTheRedButton` and `logAsNormal` do not exist and are used for illustrating a custom error logger.*
+
+Suave also provides a few [default loggers](https://github.com/SuaveIO/suave/blob/releases/v1.x/src/Suave/Logging/Logger.fs) which can be used out of the box. There is a `ConsoleWindowLogger` and an `OutputWindowLogger` which do exactly what they say.
+
+Additionally there is another useful logger called `CombiningLogger`.
