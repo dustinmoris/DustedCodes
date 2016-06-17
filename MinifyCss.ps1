@@ -47,7 +47,8 @@ Write-Output "-----"
 
 Get-ChildItem $SolutionDir -Recurse -Include *.css -Exclude *.min.css | % {
 	if (!$ExcludeFiles.Contains($_.Name)) {
-		Write-Output "Compressing $_"
-		Compress-CssFile -CssFilePath $_ 
+		# Currently disabled because the website is down.
+		# Write-Output "Compressing $_"
+		# Compress-CssFile -CssFilePath $_ 
 	}
 }
