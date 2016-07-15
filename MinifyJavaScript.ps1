@@ -44,7 +44,6 @@ Write-Output "Compressing JavaScript Files"
 Write-Output "-----"
 
 Get-ChildItem $SolutionDir -Recurse -Include *.js -Exclude *.min.js | % {
-	# Currently disabled because the website is down.
-	# Write-Output "Compressing $_"
-	# Compress-JavaScriptFile -JavaScriptFilePath $_ 
+	Write-Output "Compressing $_"
+	Compress-JavaScriptFile -JavaScriptFilePath $_ 
 }

@@ -9,5 +9,11 @@
 			</match>
 		</tracerFactory>
 
+		<tracerFactory>
+			<match assemblyName="System.Web.Extentions" className="System.Web.Script.Services.WebServiceMethodData">
+				<exactMethodMatcher methodName="CallMethod"/>
+			</match>
+		</tracerFactory>
+
 	</instrumentation>
 </extension>
