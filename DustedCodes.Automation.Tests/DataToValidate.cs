@@ -173,6 +173,18 @@ namespace DustedCodes.Automation.Tests
                 Title = "Custom error handling and logging in Suave",
                 PermalinkId = "custom-error-handling-and-logging-in-suave",
                 Tags = new[] { "fsharp", "suave", "error-handling", "logging" }
+            },
+            new BlogPost
+            {
+                Title = "JMeter Load Testing from a continuous integration build",
+                PermalinkId = "jmeter-load-testing-from-a-continuous-integration-build",
+                Tags = new[] { "jmeter", "load-testing" }
+            },
+            new BlogPost
+            {
+                Title = "Buildstats.info |> F#",
+                PermalinkId = "buildstatsinfo-fsharp",
+                Tags = new[] { "fsharp", "suave", "docker", "aws" }
             }
         };
     }
