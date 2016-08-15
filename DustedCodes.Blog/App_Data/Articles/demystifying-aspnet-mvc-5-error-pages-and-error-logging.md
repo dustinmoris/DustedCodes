@@ -4,6 +4,7 @@
     Title: Demystifying ASP.NET MVC 5 Error Pages and Error Logging
     Tags: aspnet mvc error-pages error-logging
 -->
+<blockquote><a href="https://elmah.io/?utm_source=dustedcodes&utm_medium=blog&utm_content=demystifying&utm_campaign=dustedcodes">elmah.io</a> loves this post and since we already use it as part of our official documentation for implementing custom error pages, we've decided to sponsor it. Visit <a href="https://elmah.io/?utm_source=dustedcodes&utm_medium=blog&utm_content=demystifying&utm_campaign=dustedcodes">elmah.io</a> - Error Management for .NET web applications using ELMAH, powerful search, integrations with Slack and HipChat, Visual Studio integration, API and much more.</blockquote>
 <p>Custom error pages and global error logging are two elementary and yet very confusing topics in ASP.NET MVC 5.</p>
 <p>There are numerous ways of implementing error pages in ASP.NET MVC 5 and when you search for advice you will find a dozen different StackOverflow threads, each suggesting a different implementation.</p>
 <h2>Overview</h2>
@@ -190,7 +191,7 @@ public ActionResult Index()
         &lt;add name="CustomModule" type="SampleApp.CustomModule, SampleApp"/&gt;
     &lt;/modules&gt;
 &lt;/system.webServer&gt;</code></pre>
-<p>In fact someone has already created a powerful and reusable error logging module and it is open source and called <a href="https://code.google.com/p/elmah/">ELMAH</a>.</p>
+<p>In fact someone has already created a powerful and reusable error logging module and it is open source and called <a href="http://elmah.github.io/">ELMAH</a>. Be sure to check out <a href="https://elmah.io/?utm_source=dustedcodes&utm_medium=blog&utm_content=demystifying&utm_campaign=dustedcodes">elmah.io</a> as well.</p>
 <p>If you need to create application wide error logging, I highly recommend to look at this project!</p>
 <h2>Final words</h2>
 <p>I hope this overview was helpful in explaining the different error handling approaches and how they are linked together.</p>
