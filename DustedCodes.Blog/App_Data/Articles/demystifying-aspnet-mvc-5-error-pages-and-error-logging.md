@@ -191,7 +191,7 @@ public ActionResult Index()
         &lt;add name="CustomModule" type="SampleApp.CustomModule, SampleApp"/&gt;
     &lt;/modules&gt;
 &lt;/system.webServer&gt;</code></pre>
-<p>In fact someone has already created a powerful and reusable error logging module and it is open source and called <a href="https://code.google.com/p/elmah/">ELMAH</a>. Be sure to check out <a href="https://elmah.io">elmah.io</a> as well.</p>
+<p>In fact someone has already created a powerful and reusable error logging module and it is open source and called <a href="http://elmah.github.io/">ELMAH</a>. Be sure to check out <a href="https://elmah.io">elmah.io</a> as well.</p>
 <p>If you need to create application wide error logging, I highly recommend to look at this project!</p>
 <h2>Final words</h2>
 <p>I hope this overview was helpful in explaining the different error handling approaches and how they are linked together.</p>
