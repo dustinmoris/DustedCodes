@@ -185,6 +185,12 @@ namespace DustedCodes.Automation.Tests
                 Title = "Buildstats.info |> F#",
                 PermalinkId = "buildstatsinfo-fsharp",
                 Tags = new[] { "fsharp", "suave", "docker", "aws" }
+            },
+            new BlogPost
+            {
+                Title = "Creating a Slack bot with F# and Suave in less than 5 minutes",
+                PermalinkId = "creating-a-slack-bot-with-fsharp-and-suave-in-less-than-5-minutes",
+                Tags = new[] { "slack", "suave", "fsharp" }
             }
         };
     }
