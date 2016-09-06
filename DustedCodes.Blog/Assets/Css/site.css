@@ -50,7 +50,7 @@ body {
 
     body > header h1 {
         margin-bottom: 0;
-        font-size: 1.1em;
+        font-size: 1.3em;
     }
 
         body > header h1 a:link,
@@ -65,7 +65,7 @@ body {
 
     body > header h2 {
         margin-top: .5em;
-        font-size: .7em;
+        font-size: .75em;
         font-weight: 400;
         color: #999;
         letter-spacing: .2em;
@@ -206,7 +206,7 @@ code {
     font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
     line-height: 1.6em;
     font-size: .85em;
-    color: #333;
+    color: rgb(204, 34, 85);
     text-align: left;
     -moz-word-break: break-all;
     -o-word-break: break-all;
@@ -223,6 +223,7 @@ pre {
         -moz-word-break: normal;
         -o-word-break: normal;
         word-break: normal;
+        color: #333;
     }
 
 strong {
@@ -324,11 +325,20 @@ article > footer {
     }
 
 blockquote {
-    background: #f1f1f1;
-    border-left: 6px solid #c90;
+    background: #fafafa;
+    border-left: 12px solid #c90;
+    border-right: 1px solid #c90;
     margin: 1.5em 0;
     padding: .6em 1em;
+
+    -moz-box-shadow: 2px 2px 15px #ccc;
+    -webkit-box-shadow: 2px 2px 15px #ccc;
+    box-shadow: 2px 2px 15px #ccc;
 }
+
+    blockquote > header {
+        margin-bottom: -10px;
+    }
 
     blockquote > p {
         line-height: 1.7em;
@@ -354,7 +364,7 @@ blockquote {
         }
 
             blockquote > footer > cite > a:before {
-                content: '- ';
+                content: '> ';
             }
 
 #nav-toggle-button {
@@ -578,7 +588,7 @@ blockquote {
 
     body > nav {
         display: block;
-        margin: 1em 0 1em 0;
+        margin: 2em 0;
         justify-content: flex-start;
         align-items: center;
         background: #fff;
@@ -646,12 +656,12 @@ blockquote {
     }
 
     #inner-footer {
-        padding-top: .5em;
-        padding-bottom: 1.5em;
+        padding-top: 0em;
+        padding-bottom: 1em;
     }
 
         #inner-footer h5 {
-            font-size: .8em;
+            font-size: .85em;
         }
 
         #inner-footer p {
