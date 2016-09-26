@@ -191,6 +191,12 @@ namespace DustedCodes.Automation.Tests
                 Title = "Creating a Slack bot with F# and Suave in less than 5 minutes",
                 PermalinkId = "creating-a-slack-bot-with-fsharp-and-suave-in-less-than-5-minutes",
                 Tags = new[] { "slack", "suave", "fsharp" }
+            },
+            new BlogPost
+            {
+                Title = "Load testing a Docker application with JMeter and Amazon EC2",
+                PermalinkId = "load-testing-a-docker-application-with-jmeter-and-amazon-ec2",
+                Tags = new[] { "jmeter", "docker", "aws", "cloud" }
             }
         };
     }
