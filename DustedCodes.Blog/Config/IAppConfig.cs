@@ -22,5 +22,6 @@
         string WhatsAppShareUrlFormat { get; }
         string GoogleAnalyticsViewId { get; }
         string GoogleAnalyticsPrivateKeyPath { get; }
+        string SentryDsn { get; }
     }
 }

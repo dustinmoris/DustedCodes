@@ -10,7 +10,7 @@
 		</tracerFactory>
 
 		<tracerFactory>
-			<match assemblyName="System.Web.Extentions" className="System.Web.Script.Services.WebServiceMethodData">
+			<match assemblyName="System.Web.Extensions" className="System.Web.Script.Services.WebServiceMethodData">
 				<exactMethodMatcher methodName="CallMethod"/>
 			</match>
 		</tracerFactory>

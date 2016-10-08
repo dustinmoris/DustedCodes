@@ -25,5 +25,6 @@ namespace DustedCodes.Blog.Config
         public string WhatsAppShareUrlFormat => WebConfig.AppSettings["WhatsApp_ShareUrl_Format"];
         public string GoogleAnalyticsViewId => WebConfig.AppSettings["GoogleAnalytics_ViewId"];
         public string GoogleAnalyticsPrivateKeyPath => WebConfig.AppSettings["GoogleAnalytics_PrivateKeyPath"];
+        public string SentryDsn => WebConfig.AppSettings["Sentry_Dsn"];
     }
 }

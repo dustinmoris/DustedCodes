@@ -670,7 +670,40 @@
 						</xs:attribute>
 					</xs:complexType>
 				</xs:element>
-				
+
+				<xs:element name="dataTransmission" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>
+							These settings control how data is sent to New Relic.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+
+						<xs:attribute name="putForDataSend" type="xs:boolean" default="false">
+							<xs:annotation>
+								<xs:documentation>
+									 POST is the default for data transmission. This setting, when true, enforces PUT for data transmission.
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+
+						<xs:attribute name="compressedContentEncoding" default="deflate">
+							<xs:annotation>
+								<xs:documentation>
+									Controls the encoding for compressed content. deflate is the default.
+								</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="deflate"/>
+									<xs:enumeration value="gzip"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+
+					</xs:complexType>
+				</xs:element>
+
 				<xs:element name="transactionTracer" minOccurs="0" maxOccurs="1">
 					<xs:annotation>
 						<xs:documentation>

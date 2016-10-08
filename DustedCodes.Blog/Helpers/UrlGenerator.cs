@@ -2,7 +2,6 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using DustedCodes.Blog.Config;
 using DustedCodes.Core.Web;
 
 namespace DustedCodes.Blog.Helpers
