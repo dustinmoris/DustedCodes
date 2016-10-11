@@ -15,7 +15,11 @@ namespace DustedCodes.Blog.Modules
         public SentryErrorHandlerModule()
         {
             _appConfig = new AppConfig();
-            _ravenClient = new RavenClient(_appConfig.SentryDsn);
+
+            if (_appConfig.IsProductionEnvironment)
+            {
+                _ravenClient = new RavenClient(_appConfig.SentryDsn);
+            }
         }
 
         protected override void LogError(HttpApplication application, Exception exception)
