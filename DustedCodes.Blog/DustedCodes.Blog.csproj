@@ -127,6 +127,7 @@
   <ItemGroup>
     <None Include="App_Data\Articles\asynchronous-fsharp-workflows-in-nancyfx.md" />
     <None Include="App_Data\Articles\automating-css-and-javascript-minification-in-aspnet-mvc-5-with-powershell.md" />
+    <None Include="App_Data\Articles\building-and-shipping-a-dotnet-core-application-with-docker-and-travisci.md" />
     <None Include="App_Data\Articles\load-testing-a-docker-application-with-jmeter-and-amazon-ec2.md" />
     <None Include="App_Data\Articles\custom-error-handling-and-logging-in-suave.md" />
     <None Include="App_Data\Articles\dont-dispose-externally-created-dependencies.md" />

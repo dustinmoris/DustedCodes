@@ -197,6 +197,12 @@ namespace DustedCodes.Automation.Tests
                 Title = "Load testing a Docker application with JMeter and Amazon EC2",
                 PermalinkId = "load-testing-a-docker-application-with-jmeter-and-amazon-ec2",
                 Tags = new[] { "jmeter", "docker", "aws", "cloud" }
+            },
+            new BlogPost
+            {
+                Title = "Building and shipping a .NET Core application with Docker and TravisCI",
+                PermalinkId = "building-and-shipping-a-dotnet-core-application-with-docker-and-travisci",
+                Tags = new[] { "dotnet-core", "travisci", "docker" }
             }
         };
     }
