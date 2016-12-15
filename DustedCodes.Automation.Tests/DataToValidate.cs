@@ -203,6 +203,12 @@ namespace DustedCodes.Automation.Tests
                 Title = "Building and shipping a .NET Core application with Docker and TravisCI",
                 PermalinkId = "building-and-shipping-a-dotnet-core-application-with-docker-and-travisci",
                 Tags = new[] { "dotnet-core", "travisci", "docker" }
+            },
+            new BlogPost
+            {
+                Title = "Running Suave in ASP.NET Core (and on top of Kestrel)",
+                PermalinkId = "running-suave-in-aspnet-core-and-on-top-of-kestrel",
+                Tags = new[] { "fsharp", "suave", "aspnet-core", "kestrel", "dotnet-core" }
             }
         };
     }
