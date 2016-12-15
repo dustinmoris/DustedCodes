@@ -128,6 +128,7 @@
     <None Include="App_Data\Articles\asynchronous-fsharp-workflows-in-nancyfx.md" />
     <None Include="App_Data\Articles\automating-css-and-javascript-minification-in-aspnet-mvc-5-with-powershell.md" />
     <None Include="App_Data\Articles\building-and-shipping-a-dotnet-core-application-with-docker-and-travisci.md" />
+    <None Include="App_Data\Articles\running-suave-in-aspnet-core-and-on-top-of-kestrel.md" />
     <None Include="App_Data\Articles\load-testing-a-docker-application-with-jmeter-and-amazon-ec2.md" />
     <None Include="App_Data\Articles\custom-error-handling-and-logging-in-suave.md" />
     <None Include="App_Data\Articles\dont-dispose-externally-created-dependencies.md" />
@@ -157,6 +158,7 @@
     <None Include="App_Data\Articles\php-uk-conference-2015.md" />
     <None Include="App_Data\Articles\running-free-tier-and-paid-tier-web-apps-on-the-same-microsoft-azure-subscription.md" />
     <None Include="App_Data\Articles\watch-us-netflix-hulu-and-more-from-anywhere-in-the-world.md" />
+    <Content Include="App_Data\md-template.html" />
     <Content Include="Assets\Css\error.css" />
     <Content Include="Assets\Css\site.min.css" />
     <Content Include="Assets\Css\site.css" />
