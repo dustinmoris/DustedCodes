@@ -36,7 +36,7 @@ namespace DustedCodes.Blog.ViewModels
                 EditArticleUrl = string.Format(_appConfig.EditArticleUrlFormat, article.Id),
                 UserFriendlyPublishDateTime = article.PublishDateTime.ToString(_appConfig.DateTimeFormat),
                 ValidHtml5TPublishDateTime = article.PublishDateTime.ToString(_appConfig.HtmlDateTimeFormat),
-                TwitterShareUrl = string.Format(_appConfig.TwitterShareUrlFormat, encodedPermalinkUrl),
+                TwitterShareUrl = string.Format(_appConfig.TwitterShareUrlFormat, encodedPermalinkUrl, article.Title),
                 GooglePlusShareUrl = string.Format(_appConfig.GooglePlusShareUrlFormat, encodedPermalinkUrl),
                 FacebookShareUrl = string.Format(_appConfig.FacebookShareUrlFormat, encodedPermalinkUrl),
                 YammerShareUrl = string.Format(_appConfig.YammerShareUrlFormat, encodedPermalinkUrl),
