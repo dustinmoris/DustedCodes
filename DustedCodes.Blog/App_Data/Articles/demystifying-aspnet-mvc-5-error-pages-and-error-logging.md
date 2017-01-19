@@ -4,7 +4,7 @@
     Title: Demystifying ASP.NET MVC 5 Error Pages and Error Logging
     Tags: aspnet mvc error-pages error-logging
 -->
-<blockquote><a href="https://elmah.io/?utm_source=dustedcodes&utm_medium=blog&utm_content=demystifying&utm_campaign=dustedcodes">elmah.io</a> loves this post and since we already use it as part of our official documentation for implementing custom error pages, we've decided to sponsor it. Visit <a href="https://elmah.io/?utm_source=dustedcodes&utm_medium=blog&utm_content=demystifying&utm_campaign=dustedcodes">elmah.io</a> - Error Management for .NET web applications using ELMAH, powerful search, integrations with Slack and HipChat, Visual Studio integration, API and much more.</blockquote>
+<blockquote><p><a href="https://elmah.io/?utm_source=dustedcodes&utm_medium=blog&utm_content=demystifying&utm_campaign=dustedcodes">elmah.io</a> loves this post and since we already use it as part of our official documentation for implementing custom error pages, we've decided to sponsor it. Visit <a href="https://elmah.io/?utm_source=dustedcodes&utm_medium=blog&utm_content=demystifying&utm_campaign=dustedcodes">elmah.io</a> - Error Management for .NET web applications using ELMAH, powerful search, integrations with Slack and HipChat, Visual Studio integration, API and much more.</p></blockquote>
 <p>Custom error pages and global error logging are two elementary and yet very confusing topics in ASP.NET MVC 5.</p>
 <p>There are numerous ways of implementing error pages in ASP.NET MVC 5 and when you search for advice you will find a dozen different StackOverflow threads, each suggesting a different implementation.</p>
 <h2>Overview</h2>
@@ -196,3 +196,4 @@ public ActionResult Index()
 <h2>Final words</h2>
 <p>I hope this overview was helpful in explaining the different error handling approaches and how they are linked together.</p>
 <p>Each of the techniques has a certain use case and it really depends on what requirements you have. If you have any further questions feel free to ask me here or via any of the social media channels referenced on my <a href="//dusted.codes/about">about</a> page.</p>
+<p><strong>EDIT:</strong> There is a new blog post on <a href="https://dusted.codes/error-handling-in-aspnet-core">error handling in ASP.NET Core</a>.</p>

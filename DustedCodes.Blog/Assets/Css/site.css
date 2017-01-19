@@ -326,14 +326,9 @@ article > footer {
 
 blockquote {
     background: #fafafa;
-    border-left: 12px solid #c90;
-    border-right: 1px solid #c90;
+    border-left: 16px solid #ccc;
     margin: 1.5em 0;
     padding: .6em 1em;
-
-    -moz-box-shadow: 2px 2px 15px #ccc;
-    -webkit-box-shadow: 2px 2px 15px #ccc;
-    box-shadow: 2px 2px 15px #ccc;
 }
 
     blockquote > header {
