@@ -1,5 +1,5 @@
 ﻿<!--
-    Published: 2017-01-24 00:45
+    Published: 2017-01-24 00:40
     Author: Dustin Moris Gorski
     Title: Thank you Microsoft for being awesome
 	Tags: microsoft aspnet-core dotnet-core
@@ -38,11 +38,11 @@ Particularly with companies like Microsoft many people feel entitled to be overl
 
 But behind these logos there is still human beings working hard on the products which we use every day and they are not any different from us. Women and men who got into software development and IT for the same good reasons as we did, who share the same passion as we do and who make the same mistakes as us, even when they have only the best in their intention.
 
-Microsfot has made a lot of mistakes in the past (Vista, Windows 8, Silverlight, Windows Phone, Skype, you name it!) and we've not come short to let them know how much these products sucked, but in most recent years they've actually done an amazing turnaround and even taken the lead in some of the most exciting inovations in our field right now, and I am certainly not the only [one who has noticed it](http://www.technobuffalo.com/2017/01/06/microsoft-is-killing-apple-in-every-corner-what-ive-learned-at-ces-2017/).
+Microsoft has made a lot of mistakes in the past (Vista, Windows 8, Silverlight, Windows Phone, Skype, you name it!) and we've not come short to let them know how much these products sucked, but in most recent years they've actually done an amazing turnaround and even taken the lead in some of the most exciting innovations in our field right now, and I am certainly not the only [one who has noticed it](http://www.technobuffalo.com/2017/01/06/microsoft-is-killing-apple-in-every-corner-what-ive-learned-at-ces-2017/).
 
 ## Awesome things by Microsoft
 
-Here's a list of a some of the many awesome things that happenend at Microsoft in recent years (in no particular order):
+Here's a list of a some of the many awesome things that happened at Microsoft in recent years (in no particular order):
 
 
 - [.NET Core open source and on GitHub](https://blogs.msdn.microsoft.com/dotnet/2014/11/12/net-core-is-open-source/)
@@ -57,15 +57,15 @@ Here's a list of a some of the many awesome things that happenend at Microsoft i
 - [Two months later Microsoft open sourced Xamarin's SDK](http://www.zdnet.com/article/microsoft-open-sources-xamarins-software-development-kit/)
 - [Bash on Ubuntu on Windows](https://blogs.windows.com/buildingapps/2016/03/30/run-bash-on-ubuntu-on-windows/#f7WbyptVYXolXR4R.97)
 - [Docker on Windows](https://blog.docker.com/2016/09/dockerforws2016/)
-- [Microsoft Surface Pro]()
+- [Microsoft Surface Pro](https://www.youtube.com/watch?v=nSDmCPH3OWc)
 - [Microsoft Surface Book](https://www.youtube.com/watch?v=VpQTRCOECZw)
 - [Microsoft Surface Studio](http://creativity-online.com/work/microsoft-introducing-microsoft-surface-studio/49677)
 - [Office 365](http://www.techradar.com/news/office-365-crowned-king-of-all-productivity-apps)
 - [Free Online Training in the Microsoft Virtual Academy](https://mva.microsoft.com/)
-- Microsoft Azure
-- Windows 10
+- [Microsoft Azure](https://azure.microsoft.com/en-gb/)
+- [Windows 10](https://www.microsoft.com/en-gb/windows/get-windows-10)
 
-This is a lot of (radical) positive change in a comparitavely short amount of time when you think abou the size of the company!
+This is a lot of (radical) positive change in a comparatively short amount of time when you think about the size of the company!
 
 For example, check out the [Surface Studio introduction video](https://www.youtube.com/watch?v=BzMLA8YIgG0) which demonstrates 3D drawing on a Surface Studio:
 
@@ -81,11 +81,11 @@ But that is not even why I am so pleased with Microsoft in recent days. As a .NE
 
 Especially the ASP.NET Core team led by [Scott Hanselman](https://twitter.com/shanselman) and [Damian Edwards](https://twitter.com/DamianEdwards) is an excellent example of how well Microsoft functions today. Don't get me wrong, I know that ASP.NET Core is still far away from being perfect and that there's still loads of stuff that needs to be done before everyone can use it, but I am still amazed by how far this team has come today.
 
-They have taken a 10+ year old technology, completely revamped it and transitioned from an entirely closed and proprietary product team to one of the most approachable open source contributors that I have ever seen. Not only is [their code on GitHub](https://github.com/aspnet/Home), but they are putting an immense amount of time and effort into keeping a close realtionship to the .NET community. They are active on GitHub, Slack, Gitter, Twitter and heck they even [live stream a weekly standup](https://live.asp.net/) where they demo the latest stuff hot from the press, answer live questions to the community, give updates on the current development status and talk about the roadmap. They even spend time going through blog posts written by non Microsoft developers where [Jon Galloway](https://twitter.com/jongalloway) presents a whole list of community written content at the beginning of each standup. This has become a nice ritual where the Microsoft team gives back credit to other open source contributors and help nourish a friendly and healthy community.
+They have taken a 10+ year old technology, completely revamped it and transitioned from an entirely closed and proprietary product team to one of the most approachable open source contributors that I have ever seen. Not only is [their code on GitHub](https://github.com/aspnet/Home), but they are putting an immense amount of time and effort into keeping a close relationship to the .NET community. They are active on GitHub, Slack, Gitter, Twitter and heck they even [live stream a weekly standup](https://live.asp.net/) where they demo the latest stuff hot from the press, answer live questions to the community, give updates on the current development status and talk about the roadmap. They even spend time going through blog posts written by non Microsoft developers where [Jon Galloway](https://twitter.com/jongalloway) presents a whole list of community written content at the beginning of each standup. This has become a nice ritual where the Microsoft team gives back credit to other open source contributors and help nourish a friendly and healthy community.
 
 I find this is amazing work. I don't know many other teams in the world which put so much effort into their open source work.
 
-This is not Microsoft trying to put some code on GitHub and then turning on the [#OpenSource](https://twitter.com/search?q=%23OpenSource) marketig machinery. No, this is Microsoft showing the rest of the world how open source is done right (and I am not trying to undermine the open source work by others here, just trying to highlight how well it's done at MSFT).
+This is not Microsoft trying to put some code on GitHub and then turning on the [#OpenSource](https://twitter.com/search?q=%23OpenSource) marketing machinery. No, this is Microsoft showing the rest of the world how open source is done right (and I am not trying to undermine the open source work by others here, just trying to highlight how well it's done at MSFT).
 
 Also may I point out that this team is doing the difficult balancing act of developing a completely new technology which is supposed to entertain an already existing (and very spoiled) community as well as trying to attract new programmers from the open source community too. I guess this is much harder than just launching a new product into the market like Go, Rust or Node.js which didn't have an existing developer base to please.
 
@@ -95,9 +95,9 @@ I have been a C# developer for almost the entirety of my professional career and
 
 So with all of that I've got something to say which has been overdue for a while now:
 
-## Thank you Microsoft for being awesone!
+## Thank you Microsoft for being awesome!
 
-Seriously, a special thanks to all of the Microsoft teams who work on .NET Core, ASP.NET Core, Visual Studio, Visual Studio Code, C#, F# and the entire goodness around it!!! Your products are awesome and because of your great work I enjoy working in the .NET eco system more than ever before!
+Seriously, a special thanks to all of the Microsoft teams who work on .NET Core, ASP.NET Core, Visual Studio, Visual Studio Code, C#, F# and the entire goodness around it!!! Your products are awesome and because of your great work I enjoy working in the .NET eco-system more than ever before!
 
 This is not me being sarcastic, I am dead serious, so thank you guys!
 

@@ -92,9 +92,9 @@ This is why the order of the `app.Use...()` method calls matter. When you think 
 
 <a href="https://www.flickr.com/photos/130657798@N05/31564566283/in/dateposted-public/" title="aspnet-core-middleware-onion-architecture"><img src="https://c1.staticflickr.com/1/515/31564566283_cfa4105b3a_z.jpg" alt="aspnet-core-middleware-onion-architecture"></a>
 
-A HTTP request will travel from the top level middleware down to the last middleware, unless a middleware inbetween can satisfy the request and return a HTTP response earlier to the client. In contrast an unhandled exception would travel from the bottom up. Beginning at the middleware where it got thrown it would bubble up all the way to the top most middleware waiting for something to catch it.
+A HTTP request will travel from the top level middleware down to the last middleware, unless a middleware in between can satisfy the request and return a HTTP response earlier to the client. In contrast an unhandled exception would travel from the bottom up. Beginning at the middleware where it got thrown it would bubble up all the way to the top most middleware waiting for something to catch it.
 
-In theory a middleware could also attempt to make changes to the response *after* it has invoked the next middleware, but this is normally not the case and I would advise agaist it, because it could result in an exception if the other middleware already wrote to the response.
+In theory a middleware could also attempt to make changes to the response *after* it has invoked the next middleware, but this is normally not the case and I would advise against it, because it could result in an exception if the other middleware already wrote to the response.
 
 ### Error handling should be the first middleware
 
@@ -110,7 +110,7 @@ Now that middleware and exception handling hopefully makes sense I also wanted t
 
 Even though there is already quite a few useful [exception handlers](http://www.talkingdotnet.com/aspnet-core-diagnostics-middleware-error-handling/) in the [Microsoft.AspNetCore.Diagnostics](https://www.nuget.org/packages/Microsoft.AspNetCore.Diagnostics/) NuGet package available, it still might make sense to create your own one as well. For example one might want to have an exception handler which logs critical exceptions to [Sentry](https://sentry.io/welcome/) by using Sentry's [Raven Client for .NET](https://github.com/getsentry/raven-csharp) or one might want to implement an integration with a bug tracking tool and log a new ticket for every `NullReferenceException` that gets thrown. Another option would be an integration with [elmah.io](https://elmah.io/).
 
-There is many good reasons why someone might want to create additional exception handlers and it might even be useful to have multiple exception handlers registered at once. For example the first exception handler logs a ticket in a bug tracking system and re-throws the original exception. Then the next exception handler could log the error in ELMAH and re-trigger the original exception again. The final exception handler might catch the exception and return a friendly error page to the client. By having each exception handler focusing on a single responsibility they automatically become more re-usable across multiple projects and it would also enable to usedifferent combinations on different environments (think dev/staging/production).
+There is many good reasons why someone might want to create additional exception handlers and it might even be useful to have multiple exception handlers registered at once. For example the first exception handler logs a ticket in a bug tracking system and re-throws the original exception. Then the next exception handler could log the error in ELMAH and re-trigger the original exception again. The final exception handler might catch the exception and return a friendly error page to the client. By having each exception handler focusing on a single responsibility they automatically become more re-usable across multiple projects and it would also enable to use different combinations on different environments (think dev/staging/production).
 
 A good example of writing your own exception handling middleware is the default [ExceptionHandlerMiddleware](https://github.com/aspnet/Diagnostics/blob/master/src/Microsoft.AspNetCore.Diagnostics/ExceptionHandler/ExceptionHandlerMiddleware.cs) in ASP.NET Core.
 
@@ -172,6 +172,6 @@ namespace SomeApp
 
 In addition to the `RequestDelegate` the constructor also accepts an `ILoggerFactory` which can be used to instantiate a new `ILogger` object.
 
-In the `Task Invoke(HttpContext context)` method the error handler basically does nothing other than immediately calling the next middleware. Only if an exception is thrown it will come into action by capturig it in the `catch` block. What you put into the `catch` block is up to you, but it would be good practice to wrap any non trivial code in a second try-catch block and default back to basic logging if everything else falling apart.
+In the `Task Invoke(HttpContext context)` method the error handler basically does nothing other than immediately calling the next middleware. Only if an exception is thrown it will come into action by capturing it in the `catch` block. What you put into the `catch` block is up to you, but it would be good practice to wrap any non trivial code in a second try-catch block and default back to basic logging if everything else falling apart.
 
 I hope this all made sense and that this blog post was useful again. Personally I find it extremely nice to see how well ASP.NET Core has evolved from its predecessor. If you have any questions just drop it below in the comments.
