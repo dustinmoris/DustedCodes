@@ -6,19 +6,19 @@
 -->
 OK so I have to admit that I can have a pretty big mouth sometimes, which is certainly not a good quality to have. I don't shy away to be (overly) critical if things annoy me:
 
-<a data-flickr-embed="true" href="https://twitter.com/dustinmoris/status/689747287938109440" title="tweet-0"><img src="https://c1.staticflickr.com/1/745/31644773584_264b5687ac_z.jpg" alt="tweet-0"></a>
+<a href="https://twitter.com/dustinmoris/status/689747287938109440"><img src="https://c1.staticflickr.com/1/745/31644773584_264b5687ac_z.jpg" alt="tweet-0"/></a>
 
 As you can see, about a year ago I was a little bit upset that a great new product received a not so great new name. I really hoped that [ASP.NET Core](https://www.asp.net/core) would have been named something much "cooler" for my taste.
 
 So my frustration continued...
 
-<a data-flickr-embed="true" href="https://twitter.com/dustinmoris/status/689760562180415488" title="tweet-1"><img src="https://c1.staticflickr.com/1/654/31644772444_1499998ec4_z.jpg" alt="tweet-1"></a>
+<a href="https://twitter.com/dustinmoris/status/689760562180415488" title="tweet-1"><img src="https://c1.staticflickr.com/1/654/31644772444_1499998ec4_z.jpg" alt="tweet-1"/></a>
 
 *(Let's be honest, it is probably a good thing that I don't have many Twitter followers.)*
 
 And even a year later I feel like I am still suffering sometimes:
 
-<a data-flickr-embed="true" href="https://twitter.com/dustinmoris/status/817846764707389440" title="tweet-2"><img src="https://c1.staticflickr.com/1/708/32109514750_a921d9a129_z.jpg" alt="tweet-2"></a>
+<a href="https://twitter.com/dustinmoris/status/817846764707389440" title="tweet-2"><img src="https://c1.staticflickr.com/1/708/32109514750_a921d9a129_z.jpg" alt="tweet-2"/></a>
 
 But I don't care about the name anymore.
 
@@ -34,7 +34,7 @@ But I think as someone who depends a lot on the these third parties, corporation
 
 Particularly with companies like Microsoft many people feel entitled to be overly rude or critical if things don't work out immediately the way they want it to be (and not just Microsoft but really any company of similar size). It is so easy to forget good manners when one thinks of a big company logo rather than actual human beings, because it is easier to throw dirt at a logo than a person.
 
-<a data-flickr-embed="true"  href="https://www.flickr.com/photos/130657798@N05/32448458306/in/dateposted-public/" title="Microsoft_logo"><img src="https://c1.staticflickr.com/1/460/32448458306_359a2c3534_z.jpg" alt="Microsoft_logo" class="two-third-width"></a>
+<a href="https://www.flickr.com/photos/130657798@N05/32448458306/in/dateposted-public/" title="Microsoft_logo"><img src="https://c1.staticflickr.com/1/460/32448458306_359a2c3534_z.jpg" alt="Microsoft_logo" class="two-third-width"/></a>
 
 But behind these logos there is still human beings working hard on the products which we use every day and they are not any different from us. Women and men who got into software development and IT for the same good reasons as we did, who share the same passion as we do and who make the same mistakes as us, even when they have only the best in their intention.
 
@@ -69,7 +69,7 @@ This is a lot of (radical) positive change in a comparatively short amount of ti
 
 For example, check out the [Surface Studio introduction video](https://www.youtube.com/watch?v=BzMLA8YIgG0) which demonstrates 3D drawing on a Surface Studio:
 
-<a data-flickr-embed="true" href="https://gfycat.com/BreakableFlippantHapuku" title="surface-studio-3d-drawing"><img src="https://thumbs.gfycat.com/BreakableFlippantHapuku-size_restricted.gif" alt="surface-studio-3d-drawing"></a>
+<a href="https://gfycat.com/BreakableFlippantHapuku" title="surface-studio-3d-drawing"><img src="https://thumbs.gfycat.com/BreakableFlippantHapuku-size_restricted.gif" alt="surface-studio-3d-drawing"/></a>
 
 You have to admit that this is awesome. I mean I am not even a designer and I get a watery mouth by looking at it.
 
@@ -89,7 +89,7 @@ This is not Microsoft trying to put some code on GitHub and then turning on the 
 
 Also may I point out that this team is doing the difficult balancing act of developing a completely new technology which is supposed to entertain an already existing (and very spoiled) community as well as trying to attract new programmers from the open source community too. I guess this is much harder than just launching a new product into the market like Go, Rust or Node.js which didn't have an existing developer base to please.
 
-### F#
+### FSharp
 
 I have been a C# developer for almost the entirety of my professional career and only in the last year I really fell in love with functional programming and F#. For me F# is probably one of the most powerful languages (if not the most) on the market right now. It has the horse power of .NET under the hood with the beauty of a modern functional language on the surface and it has been [open source, cross platform compatible and community driven](http://fsharp.org/) from the very beginning of its time.
 
