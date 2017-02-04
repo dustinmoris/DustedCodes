@@ -5,6 +5,10 @@
     foreach (var articleModel in Model.Articles)
     {
         @Html.Partial("_Article", articleModel)
+
+        <p>
+            <a class="icon fa-comment disqus-comment-count" href="@articleModel.PermalinkUrl#disqus_thread" data-disqus-identifier="@articleModel.Id">Comments</a>
+        </p>
     }
 
     <p class="pager">
@@ -28,7 +32,7 @@
 else
 {
     <div>
-        <p>No articles matchig your search query.</p>
+        <p>No articles matching your search query.</p>
         <p>@Html.ActionLink("Return to all articles", "Index", "Blog")</p>
     </div>
 }

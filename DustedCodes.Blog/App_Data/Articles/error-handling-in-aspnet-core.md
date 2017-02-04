@@ -172,6 +172,6 @@ namespace SomeApp
 
 In addition to the `RequestDelegate` the constructor also accepts an `ILoggerFactory` which can be used to instantiate a new `ILogger` object.
 
-In the `Task Invoke(HttpContext context)` method the error handler basically does nothing other than immediately calling the next middleware. Only if an exception is thrown it will come into action by capturing it in the `catch` block. What you put into the `catch` block is up to you, but it would be good practice to wrap any non trivial code in a second try-catch block and default back to basic logging if everything else falling apart.
+In the `Task Invoke(HttpContext context)` method the error handler basically does nothing other than immediately calling the next middleware. Only if an exception is thrown it will come into action by capturing it in the `catch` block. What you put into the `catch` block is up to you, but it would be good practice to wrap any non trivial code in a second try-catch block and default back to basic logging if everything else is falling apart.
 
-I hope this all made sense and that this blog post was useful again. Personally I find it extremely nice to see how well ASP.NET Core has evolved from its predecessor. If you have any questions just drop it below in the comments.
+I hope all of this made sense and that this blog post was useful again. Personally I find it extremely nice to see how well ASP.NET Core has evolved from its predecessor. If you have any more questions just drop me a comment below.
