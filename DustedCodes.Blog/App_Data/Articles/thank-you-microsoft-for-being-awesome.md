@@ -83,7 +83,7 @@ Especially the ASP.NET Core team led by [Scott Hanselman](https://twitter.com/sh
 
 They have taken a 10+ year old technology, completely revamped it and transitioned from an entirely closed and proprietary product team to one of the most approachable open source contributors that I have ever seen. Not only is [their code on GitHub](https://github.com/aspnet/Home), but they are putting an immense amount of time and effort into keeping a close relationship to the .NET community. They are active on GitHub, Slack, Gitter, Twitter and heck they even [live stream a weekly standup](https://live.asp.net/) where they demo the latest stuff hot from the press, answer live questions to the community, give updates on the current development status and talk about the roadmap. They even spend time going through blog posts written by non-Microsofties where [Jon Galloway](https://twitter.com/jongalloway) presents a whole list of community written content at the beginning of each standup. This has become a nice ritual where the Microsoft team gives back to other open source contributors and help nourish a friendly and healthy community.
 
-I find this is amazing work. I don't know many other teams in the world who put so much effort into their open source work.
+I find this is amazing work. I don't know many other teams in the world who put this much effort into their open source work.
 
 This is not Microsoft trying to put some code on GitHub and then turning on the [#OpenSource](https://twitter.com/search?q=%23OpenSource) marketing machinery. No, this is Microsoft showing the rest of the world how open source is done right (and I am not trying to undermine the open source work by others here, just trying to highlight how well it's done at MSFT).
 
@@ -93,7 +93,7 @@ Also I'd like to point out that this team is doing the difficult balancing act o
 
 I have been a C# developer for almost the entirety of my professional career and only in the last year I really fell in love with functional programming and F#. For me F# is probably one of the most powerful languages on the market right now. It has the horse power of .NET under the hood with the beauty of a modern functional language on the surface and it has been [open source, cross platform compatible and community driven](http://fsharp.org/) from the very beginning of its time.
 
-So with all of that I've got something to say which has been overdue for a while now:
+So with all of that I've got something to say which was overdue for a while now:
 
 ## Thank you Microsoft for being awesome!
 
@@ -111,4 +111,4 @@ Oh and before someone labels me a Microsoft fanboy or thinks that there's a hidd
 
 **Sometimes is just feels damn good to be nice.**
 
-...something which I wish programmers would be much more to each other nowadays, especially in such divisive times like today.
+...something which I would wish programmers would be much more to each other, particularly in such divisive times like today.
