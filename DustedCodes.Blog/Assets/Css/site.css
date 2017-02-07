@@ -244,6 +244,23 @@ kbd {
     font-size: .85em;
 }
 
+table {
+    display: block;
+}
+
+td, th {
+    text-align: center;
+    font-size: .95em;
+    padding: .5em;
+}
+
+th:first-child {
+    text-align: left;
+}
+
+tr:nth-child(odd)  { background-color:#f6f6f6; }
+tr:nth-child(even) { background-color:#fff; }
+
 article > header > h1:first-child {
     margin-top: .5em;
     border-top: 1px solid #efefef;
