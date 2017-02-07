@@ -32,9 +32,9 @@ Suave has its own HTTP server, its own Socket server and its own HTTP abstractio
 
 This is why the [Suave.AspNetCore middleware](https://github.com/SuaveIO/Suave.AspNetCore/blob/master/src/Suave.AspNetCore/SuaveMiddleware.cs#L33) has to translate one `HttpContext` into another and then back again. It works, but it is not ideal, because there's a lot of information that gets lost along the way (e.g. the `User` object in ASP.NET Core is of type `IPrincipal` and in Suave it is a `Map<string, obj>`). This is a limiting factor. For example there's no way to access the `Authentication` property, the `Session` object or the `Features` collection of the original ASP.NET Core `HttpContext` from inside a Suave application.
 
-This means that even though I can run a Suave web application in ASP.NET Core, I still have to re-build a lot of the ground work that has been laid out for me by other ASP.NET Core middleware. In some cases this might be a minor problem, but in others I consider it a big issue. Especially when it comes to critical components such as security I would much rather rely on the implementation provided by Microsoft and other industry experts than (re-)inventing it myself.
+This means that even though I can run a Suave web application in ASP.NET Core, I still have to re-build a lot of the ground work that has been laid out for me by other ASP.NET Core middleware. In some cases this might be a minor problem, but in others I consider it a big issue. Especially when it comes to critical components such as security I would much rather want to rely on the implementation provided by Microsoft and other industry experts than (re-)inventing it myself.
 
-None of this is Suave's fault though, because it has not been designed with ASP.NET Core in mind, which is more than fair, but for people like me who want to benefit from both platforms it's still an important issue to consider.
+None of this is Suave's fault though, because it has not been designed with ASP.NET Core in mind, which is more than fair, but for people like me who want to benefit from both platforms this is still an important issue to consider.
 
 ## Why ASP.NET Core?
 
@@ -171,7 +171,7 @@ To round this up we can bind the `bind` function to the `>>=` operator:
 
 <pre><code>let (>>=) = bind</code></pre>
 
-By using the `bind` function we can combine unlimited `HttpHandler` functions to one.
+With the `bind` function we can combine unlimited `HttpHandler` functions to one.
 
 The flow would look something like this:
 
@@ -193,7 +193,7 @@ Another very useful combinator which can be borrowed from Suave is the `choose` 
 
 In order to better see the usefulness of this combinator it's best to look at an actual example.
 
-Let's define a few useful `HttpHandler` functions first:
+Let's define a few simple `HttpHandler` functions first:
 
 <pre><code>let httpVerb (verb : string) =
     fun (ctx : HttpHandlerContext) -&gt;
@@ -230,7 +230,7 @@ This already gives a good illustration of how easily one can create different `H
 
 The `route` function compares the request path with a given string and either proceeds or returns `None` again. Both, `setBody` and `setBodyAsString` write a given payload to the response of the `HttpContext`. This will trigger a response being made back to the client.
 
-Each `HttpHandler` is kept very short and has a single responsibility. Through the `bind` and `choose` combinators one can combine many `HttpHandler` functions into one larger web application:
+Each `HttpHandler` is kept very short and has a single responsibility. Through the `bind` and `choose` combinators we can combine many `HttpHandler` functions into one larger web application:
 
 <pre><code>let webApp =
     choose [
@@ -248,7 +248,7 @@ Each `HttpHandler` is kept very short and has a single responsibility. Through t
 
 Even though I've barely written any code this functional framework already proves to be quite powerful.
 
-At last I need to create a new middleware which can run such a functional web application:
+At last I need to create a new middleware which can run this functional web application:
 
 <pre><code>type HttpHandlerMiddleware (next     : RequestDelegate,
                             handler  : HttpHandler,
@@ -282,11 +282,11 @@ This web framework shows what I love about F# so much. With very little code I w
 
 By extending the above example with a few more useful `HttpHandler` functions to return JSON, XML, HTML or even templated (DotLiquid) views someone could create a very powerful ASP.NET Core functional web framework, which could be easily seen as an MVC replacement for F# developers.
 
-This is exactly what I did and I named it [ASP.NET Core Lambda](https://github.com/dustinmoris/AspNetCore.Lambda), because I simply couldn't think of a more descriptive or cooler name. It is a functional ASP.NET Core micro framework and I've built it primarily for my own use. It is still very early days and in alpha testing, but I already use it for two of my private projects and it works like a charm.
+This is exactly what I did and I named it [ASP.NET Core Lambda](https://github.com/dustinmoris/AspNetCore.Lambda), because I simply couldn't think of a more descriptive or &quot;cooler&quot; name. It is a functional ASP.NET Core micro framework and I've built it primarily for my own use. It is still very early days and in alpha testing, but I already use it for two of my private projects and it works like a charm.
 
 ### How does it compare to other .NET web frameworks
 
-Now you might ask yourself how this compares to other .NET web frameworks and particularly to Suave (since I've borrowed a lot of ideas from Suave and from Scott Wlaschin's blog).
+Now you might ask yourself how does this compare to other .NET web frameworks and particularly to Suave (since I've borrowed a lot of ideas from Suave and from Scott Wlaschin's blog)?
 
 I think this table explains it very well:
 
@@ -328,12 +328,14 @@ I think this table explains it very well:
     </tr>
 </table>
 
-MVC and NancyFx are both heavily object-oriented frameworks mainly targeting a C# audience. MVC probably the most feature rich framework and NancyFx with its [super-duper-happy-path](https://github.com/NancyFx/Nancy/wiki/Introduction). NancyFx is also very popular with .NET developers who want to run a .NET web application self-hosted on Linux (this was a big selling point pre .NET Core times).
+MVC and NancyFx are both heavily object-oriented frameworks mainly targeting a C# audience. MVC probably the most feature rich framework and NancyFx with its [super-duper-happy-path](https://github.com/NancyFx/Nancy/wiki/Introduction) are probably the most wide spread .NET web frameworks. NancyFx is also very popular with .NET developers who want to run a .NET web application self-hosted on Linux (this was a big selling point pre .NET Core times).
 
-Suave was the first functional web framework built for F# developers. It is a completely independent standalone product which was designed to be cross platform compatible (via Mono) and self-hosted. A large part of the Suave library is compounded of its own HTTP server and Socket server implementation. Unlike NancyFx it is primarily meant to be self-hosted, which is why the separation between web server and web framework is not as clean cut as in NancyFx (e.g. the Suave NuGet library contains everything at once and NancyFx has separate packages for different hosting options).
+Suave was the first functional web framework built for F# developers. It is a completely independent standalone product which was designed to be cross platform compatible (via Mono) and self-hosted. A large part of the Suave library is compounded of its own HTTP server and Socket server implementation. Unlike NancyFx it is primarily meant to be self-hosted, which is why the separation between web server and web framework is not as clean cut as in NancyFx (e.g. the Suave NuGet library contains everything in one while NancyFx has separate packages for different hosting options).
 
-[ASP.NET Core Lambda](https://github.com/dustinmoris/AspNetCore.Lambda) is the smallest of all frameworks (and is meant to stay this way). It is also a functional web framework built for F# developers, but cannot exist outside of ASP.NET Core. It has been tightly built around ASP.NET Core to leverage its features as much as possible. As a result it is currently the only (native) functional web framework which is a first class citizen in ASP.NET Core. It has its own little niche and is aimed at F# developers who want to use a ASP.NET Core in a functional way.
+[ASP.NET Core Lambda](https://github.com/dustinmoris/AspNetCore.Lambda) is the smallest of all frameworks (and is meant to stay this way). It is also a functional web framework built for F# developers, but cannot exist outside of the ASP.NET Core platform. It has been tightly built around ASP.NET Core to leverage its features as much as possible. As a result it is currently the only (native) functional web framework which is a first class citizen in ASP.NET Core.
+
+I think it has its own little niche market where it doesn't really compete with any of the other web frameworks. It is basically aimed at F# developers who want to use a ASP.NET Core in a functional way.
 
 While all these web frameworks share some similarities they still have their own appliances and target a different set of developers.
 
-Watch this space for more updates on [ASP.NET Core Lambda](https://github.com/dustinmoris/AspNetCore.Lambda) in the future and feel free to try it out and let me know how it goes! So far I've been very happy with the results and it has become my goto framework for new web projects.
+Watch this space for more updates on [ASP.NET Core Lambda](https://github.com/dustinmoris/AspNetCore.Lambda) in the future and feel free to try it out and let me know how it goes! So far I've been very happy with the results and it has become my goto framework for new web development projects.
