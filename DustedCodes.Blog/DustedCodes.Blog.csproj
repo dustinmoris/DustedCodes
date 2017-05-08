@@ -130,6 +130,10 @@
     <None Include="App_Data\Articles\building-and-shipping-a-dotnet-core-application-with-docker-and-travisci.md" />
     <None Include="App_Data\Articles\error-handling-in-aspnet-core.md" />
     <None Include="App_Data\Articles\functional-aspnet-core.md" />
+    <Content Include="App_Data\Articles\hello-world - Copy.html">
+      <DependentUpon>hello-world - Copy.md</DependentUpon>
+    </Content>
+    <Content Include="App_Data\Articles\hello-world - Copy.md" />
     <None Include="App_Data\Articles\thank-you-microsoft-for-being-awesome.md" />
     <None Include="App_Data\Articles\running-suave-in-aspnet-core-and-on-top-of-kestrel.md" />
     <None Include="App_Data\Articles\load-testing-a-docker-application-with-jmeter-and-amazon-ec2.md" />
