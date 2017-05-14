@@ -363,13 +363,13 @@ Even though breaking changes are not always the end of the world I would like to
 
 However, having said that I do want to stress that the underlying system (ASP.NET Core and Kestrel) have been very stable for a while now and as long as you don't mind that a namespace or method might still change in the near future then Giraffe is absolutely fit for production. So please go ahead and give it a try if you like what you've seen in this blog post so far :).
 
-This basically brings me to the end of this blog post and I thought the best way to round it up would be by sharing some of the moments of the happiest day of my life (in case you ever wondered what a British-Indian/Austrian-Polish wedding looks like ;)).
+This basically brings me to the end of this blog post and I thought what better way to finish it off than by sharing some of our memories from our wonderful wedding (in case you ever wondered what a British-Indian/Austrian-Polish wedding looks like ;)).
 
-It was a very long day, but really good fun I have to say! First we had a civil ceremony in the morning...
+It was a very long day, which started off with a civil ceremony in the morning...
 
 <img src="https://c1.staticflickr.com/5/4181/34654715395_b2e33aa570.jpg" alt="Civil ceremony in the morning of the day">
 
-Followed by a traditional Hindu ceremony around lunch time...
+Followed by a traditional Hindu ceremony shortly after lunch...
 
 <img src="https://c1.staticflickr.com/5/4158/34654707095_c02c769feb.jpg" alt="Drums during groom entrance at Hindu ceremony">
 
@@ -379,11 +379,11 @@ Followed by a traditional Hindu ceremony around lunch time...
 
 <img src="https://c1.staticflickr.com/5/4178/34524041711_ccb71ec2ff.jpg" alt="Listening to Hindu priest cracking jokes">
 
-I didn't know how much fun Hindu ceremonies can be! There's loads of really fun and happy traditions which take place as part of us getting married and then there's also a bit of banter going on between the families. One of those little banters is that the bride's family has to steal the groom's shoes before the ceremony ends so that the groom can't leave the house and take his newly wedded wife away from her family, at least not without having to pay for getting his shoes back. Normally this results in a bit of shoe pulling between the bride's brothers and the groomsmen, but I think in our case it is fair to say that there was a bit of a cultural clash when someone from my family rugby tackled a guy who tried to sneak away with my shoes, lol...
+I had no idea how much fun Hindu ceremonies can be! There's loads of really fun and merry traditions which take place as part of us getting married. Then there's also a bit of banter between the two families. One of those little traditions is that the bride's family has to steal the groom's shoes before the ceremony ends so that the groom can't leave the house and take his newly wedded wife away from her family - at least not without having to pay for getting his shoes back. Normally this results in a bit of shoe pulling between the bride's side and the groomsmen, but I think in our case it is fair to say that there was a bit of a cultural clash when someone from my family rugby tackled a guy who tried to sneak away with my shoes, lol...
 
 <img src="https://c1.staticflickr.com/5/4192/34271006590_549432841e.jpg" alt="Shoe fight">
 
-Luckily nothing serious happened and after everyone had a great laugh we could continue with the ceremony...
+Luckily nothing serious happened and after everyone had a great laugh we continued with the ceremony...
 
 Until finally we were able to celebrate at the reception party in the evening...
 
@@ -393,12 +393,14 @@ Until finally we were able to celebrate at the reception party in the evening...
 
 <img src="https://c1.staticflickr.com/5/4155/34524043471_2fd80942bc.jpg" alt="Our first toast as a married couple">
 
-Throughout the day our guests wrote us lovely (I think) messages on little papers and my family decided to throw all these messages into a wooden box with a nice bottle of Red, which we had to seal ourselves with nails and hammer. We are not allowed to open this box until in seven years time and then we can enjoy a nicely matured bottle of vino while reading all those memories from our big day. What a wonderful idea!
+Throughout the day our guests wrote us lovely (I think) messages on little papers and my family decided to throw all these messages into a wooden box with a nice bottle of Red, which we had to seal ourselves with nails and hammer. We are not allowed to open this box until in seven years time and then we can enjoy a nicely matured bottle of vino while reading all those wonderful memories from our big day. What a brilliant idea!
 
 <img src="https://c1.staticflickr.com/5/4187/34525341611_db7852ab32.jpg" alt="Sealing box of memories">
 
-We had a fantastic day and before everyone stormed to the dance floor there was even a surprise firework display :)
+We had a fantastic day and before everyone stormed to the dance floor there was even a pretty impressive surprise firework display...
 
 <img src="https://c1.staticflickr.com/5/4161/34492692812_6a662fdfd5.jpg" alt="Surprise firework display">
 
-Getting married was a lot more fun than I thought it would be :)
+Getting married was a lot of fun and it all worked out so much better than we could have hoped for :)
+
+Now we are ready for new adventures...
