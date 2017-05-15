@@ -254,7 +254,7 @@ let binary (dataObj : obj) =
     setHttpHeader &quot;Content-Type&quot; &quot;application/octet-stream&quot;
     &gt;=&gt; setBodyAsString (serializeBinary dataObj)</code></pre>
 
-Now you can use the two new `HttpHandler` functions to set up custom negotiation rules and use them with the `negotiateWith` handler:
+Then you can use the two new `HttpHandler` functions to set up custom negotiation rules and use them with the `negotiateWith` handler:
 
 <pre><code>let rules =
     dict [
@@ -361,11 +361,11 @@ Since all model binding functions are extension methods of the `HttpContext` typ
 
 ## What's next?
 
-There were quite a few breaking changes since the first release, but APIs are slowly maturing as I get more feedback and exposure of the framework. So far the library has been in an alpha stage and will probably remain for another few weeks before I get around to finish some more examples and test projects which will essentially lead to the beta phase.
+There were quite a few breaking changes since the first release, but APIs are slowly maturing as I get more feedback and exposure of the framework. So far the library has been in an alpha stage and will probably remain for another few weeks before I get around to finish some more examples and test projects which will eventually lead to the beta phase.
 
 Once the project is in beta I will try to focus my effort more on collecting a lot of additional feedback before I feel confident enough to declare the first RC and subsequently the official version 1.0.0.
 
-Even though breaking changes are not always the end of the world I would like to avoid drastic fundamental changes (as seen recently) once the project has entered the first stable release. Therefore I have been fairly reluctant to prematurely label Giraffe beyond an alpha and will probably want to enjoy the freedom of breaking stuff for a tiny bit longer. At the end of the day it's about setting the right expectations and I don't help anyone by labeling v1.0.0 too early when I know there's still a fair bit of danger of potentially moving stuff around.
+Even though breaking changes are not always the end of the world I would like to avoid drastic fundamental changes (as seen recently) once the project has entered the first stable release. Therefore I have been fairly reluctant to prematurely label Giraffe beyond an alpha and will probably want to enjoy the freedom of breaking stuff for a tiny bit longer. At the end of the day it's about setting the right expectations and I don't help anyone by labeling v1.0.0 too early when I know there's still a fair bit of danger to potentially move stuff around.
 
 However, having said that I do want to stress that the underlying system (ASP.NET Core and Kestrel) have been very stable for a while now and as long as you don't mind that a namespace or method might still change in the near future then Giraffe is absolutely fit for production. So please go ahead and give it a try if you like what you've seen in this blog post so far :).
 
@@ -385,7 +385,7 @@ Followed by a traditional Hindu ceremony shortly after lunch...
 
 <img src="https://c1.staticflickr.com/5/4178/34524041711_ccb71ec2ff.jpg" alt="Listening to Hindu priest cracking jokes">
 
-I had no idea how much fun Hindu ceremonies can be! There's loads of really fun and merry traditions which take place as part of us getting married. Then there's also a bit of banter between the two families. One of those little traditions is that the bride's family has to steal the groom's shoes before the ceremony ends so that the groom can't leave the house and take his newly wedded wife away from her family - at least not without having to pay for getting his shoes back. Normally this results in a bit of shoe pulling between the bride's side and the groomsmen, but I think in our case it is fair to say that there was a bit of a cultural clash when someone from my family rugby tackled a guy who tried to sneak away with my shoes, lol...
+I had no idea how much fun Hindu ceremonies can be! There's lots of really fun and merry traditions which take place as part of us getting married. Then there's also a bit of banter between the two families. One of those little traditions is that the bride's family has to steal the groom's shoes before the ceremony ends so that the groom can't leave the house and take his newly wedded wife away from her family - at least not without having to pay for getting his shoes back. Normally this results in a bit of shoe pulling between the bride's side and the groomsmen, but I think in our case it is fair to say that there was a bit of a cultural clash when someone from my family rugby tackled a guy who tried to sneak away with my shoes, lol...
 
 <img src="https://c1.staticflickr.com/5/4192/34271006590_549432841e.jpg" alt="Shoe fight">
 
