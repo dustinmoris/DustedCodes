@@ -6,7 +6,7 @@
 -->
 This is a follow up blog post on the [functional ASP.NET Core](https://dusted.codes/functional-aspnet-core) article from about two months ago. First of all I'd like to say that this has been the longest period I haven't published anything new to my blog since I started blogging in early 2015. The reason is because I have been pretty busy with a private project which I hope to write more about in the future, but more importantly I have been extremely busy organising my own wedding which took place at the end of last month :). Yes!, I've been extremely lucky to have found the love of my life and best friend and after being engaged for almost a year and a half we've finally tied the knot two weeks ago. Normally I don't blog about my private life here, but since this has been such a significant moment in my life I thought I should mention a few words here as well and let everyone know that the quiet time has been for a good reason and will not last for much longer now.
 
-While this has primarily occupied the majority of my time I was also quite happy to see my [functional ASP.NET Core project](https://github.com/dustinmoris/Giraffe) receiving some recognition from the community and some really great support from other developers who've been helping me in adding lots of new functionality since then. In this first blog post after my small break I thought I'd take the opportunity and showcase some of the work we've done since the initial release and explain some of the design decisions behind some features.
+While this has primarily occupied the majority of my time I was also quite happy to see my [functional ASP.NET Core project](https://github.com/dustinmoris/Giraffe) receiving recognition from the community and some really great support from other developers who've been helping me in adding lots of new functionality since then. In this first blog post after my small break I thought I'd take the opportunity and showcase some of the work we've done since the initial release and explain some of the design decisions behind some features.
 
 But first I shall say that the framework has been renamed to **Giraffe**.
 
@@ -21,19 +21,19 @@ However, it quickly became apparent that &quot;ASP.NET Core Lambda&quot; wasn't 
 - ASP.NET Core Lambda is a bit of a tongue twister.
 - &quot;ASP&quot;, &quot;.NET&quot;, &quot;Core&quot; and &quot;Lambda&quot; are extremely overloaded words with more than one meaning. If the project turns out to be successful then any type of search or information lookup (e.g StackOverflow) would be an absolute nightmare with this name.
 - Specifically Lambda is associated with [Amazon's serverless cloud offering](https://aws.amazon.com/lambda/) which would add even more to the confusion.
-- Finally the name is not very tasteful. Let's be honest, the mix of capitalized and pascal cased words, the additional whitespace and the dot in the wording makes the name look very busy and simply doesn't resemble an elegant or tasteful product.
+- Finally the name is not very tasteful. Let's be honest, the mix of capitalized and pascal cased words, the additional whitespace and the dot in the word makes the name look very busy and simply doesn't resemble an elegant or tasteful product.
 
-As a result I decided to rename the project to something different and [put the name up for a vote](https://github.com/dustinmoris/Giraffe/issues/15), which ultimately led to Giraffe. Looking back I think it was a great choice and I would like to thank everyone who helped me in picking the new name, as well as coming up with other great name suggestions which made the decision not easy at all.
+As a result I decided to rename the project to something different and [put the name up for a vote](https://github.com/dustinmoris/Giraffe/issues/15), which ultimately led to **Giraffe**. Looking back I think it was a great choice and I would like to thank everyone who helped me in picking the new name, as well as suggesting other great names which made the decision not easy at all.
 
-I think Giraffe is a much better name now because it is short, it is very clear and distinctive and there is no ambiguity around the spelling or pronunciation. There is also no other product called Giraffe in the .NET space and not really anything else which it could be mistaken with. The name Giraffe also hasn't been taken as a NuGet package which made things really easy. On top of that Giraffe gave lots of creative room for creating a beautiful logo for which I used [99designs.co.uk](https://99designs.co.uk/). I created a design challenge there and the winner impressed with this clever design:
+I think Giraffe is a much better name now, because it is short, it is very clear and distinctive and there is no ambiguity around the spelling or pronunciation. There is also no other product called Giraffe in the .NET space and not really anything else which it could be mistaken with. The name Giraffe also hasn't been taken as a NuGet package which made things really easy. On top of that Giraffe gave lots of creative room for creating a beautiful logo for which I used [99designs.co.uk](https://99designs.co.uk/). I set up a design challenge there and the winner impressed with this clever design:
 
 ![Giraffe Logo](https://raw.githubusercontent.com/dustinmoris/Giraffe/develop/giraffe.png)
 
-Now I can only hope that the product will live up to this beautiful logo and new name, which brings me to the actual topic of this blog post.
+Now I can only hope that the product will live up to this beautiful logo and the new name, which brings me to the actual topic of this blog post.
 
 ## Overview of new features
 
-There has been quite a few changes and new features since my last blog post and a few which I am very excited about are:
+There has been quite a few changes and new features since my last blog post and there's a few of which I am very excited about:
 
 - [Dotnet new template](#dotnet-new-template)
 - [Nested routing](#nested-routing)
@@ -44,27 +44,33 @@ There has been quite a few changes and new features since my last blog post and 
 
 <h2 id="dotnet-new-template">Dotnet new template</h2>
 
-One really cool thing you can do with the new .NET tooling is to create [project templates](https://github.com/dotnet/templating/wiki/%22Runnable-Project%22-Templates) which can be easily installed via NuGet packages.
+One really cool thing you can do with the new .NET tooling is to create [project templates](https://github.com/dotnet/templating/wiki/%22Runnable-Project%22-Templates) which can be installed via NuGet packages.
 
 Thanks to [David Sinclair](https://github.com/dsincl12) you can install a Giraffe template by running the following command:
 
 <pre><code>dotnet new -i giraffe-template::*</code></pre>
 
-This will install the [giraffe-template](https://www.nuget.org/packages/giraffe-template) NuGet package to your locally available dotnet CLI templates.
+This will install the [giraffe-template](https://www.nuget.org/packages/giraffe-template) NuGet package to your local templates folder.
 
-Then you can start using `Giraffe` as a new project type when running the `dotnet new` command:
+Afterwards you can start using `Giraffe` as a new project type when running the `dotnet new` command:
 
 <pre><code>dotnet new giraffe</code></pre>
 
-This feature makes it significantly easier to get started with Giraffe now. After runinning the `dotnet new giraffe` command you simply follow it with a `dotnet restore` and `dotnet run` to get a small hello world app in Giraffe up and running.
+This feature makes it significantly easier to get started with Giraffe now. The quickest way to get a working Giraffe application up and running is by executing these three commands:
+
+1. `dotnet new giraffe`
+2. `dotnet restore`
+3. `dotnet run`
+
+Everything should compile successfully and you should see a Hello-World Giraffe app running behind <a href="http://localhost:5000">http://localhost:5000</a>.
 
 <h2 id="nested-routing">Nested routing</h2>
 
 Another cool feature which has been added by [Stuart Lang](slang25) is nested routing.
 
-The new `subRoute` handler allows users to create nested routes which can be very useful when logically grouping certain routes.
+The new `subRoute` handler allows users to create nested routes which can be very useful when logically grouping certain paths.
 
-An example would be when an API changes it's authentication and you'd want to group routes together which implement the same type of authentication. With the help of nested routing you can enable certain features like an authentication scheme by only declaring it once per group:
+An example would be when an API changes it's authentication scheme and you'd want to group routes together which implement the same type of authentication. With the help of nested routing you can enable certain features like a new authentication scheme by only declaring it once per group:
 
 <pre><code>let app = 
     subRoute "/api"
@@ -84,9 +90,9 @@ There is also a [`subRouteCi`](https://github.com/dustinmoris/Giraffe#subrouteci
 
 <h2 id="razor-views">Razor views</h2>
 
-Next is the support of Razor views in Giraffe. [Nicol&aacute;s Herrera](https://github.com/nicolocodev) developed the first version of Razor pages by utilising the [RazorLight](https://github.com/toddams/RazorLight) engine. Shortly after I discovered that by referencing the `Microsoft.AspNetCore.Mvc` NuGet package I can easily re-use the original Razor engine and therefore offer a more complete and original Razor experience in Giraffe as well. While under the hood the engine changed from [RazorLight](https://www.nuget.org/packages/RazorLight/) to [ASP.NET Core MVC Razor](https://github.com/aspnet/Mvc/tree/dev/src/Microsoft.AspNetCore.Mvc.Razor) the functionality remained more or less the same as implemented by Nicol&aacute;s in the first place.
+Next is the support of Razor views in Giraffe. [Nicol&aacute;s Herrera](https://github.com/nicolocodev) developed the first version of Razor views by utilising the [RazorLight](https://github.com/toddams/RazorLight) engine. Shortly after that I realised that by referencing the `Microsoft.AspNetCore.Mvc` NuGet package I can easily re-use the original Razor engine in order to offer a more complete and original Razor experience in Giraffe as well. While under the hood the engine changed from [RazorLight](https://www.nuget.org/packages/RazorLight/) to [ASP.NET Core MVC](https://github.com/aspnet/Mvc/tree/dev/src/Microsoft.AspNetCore.Mvc.Razor) the functionality remained more or less the same as implemented by Nicol&aacute;s in the first place.
 
-In order to enable Razor views in Giraffe you have to register the Razor engine dependencies first:
+In order to enable Razor views in Giraffe you have to register it's dependencies first:
 
 <pre><code>type Startup() =
     member __.ConfigureServices (svc : IServiceCollection,
@@ -106,9 +112,9 @@ let app =
 
 The above example assumes that there is a `/views` folder in the project which contains an `Index.cshtml` file.
 
-One of the arguments passed into the `razorView` handler is the mime type to be returned by the handler. In this example it is set to `text/html`, but if the Razor page represents something different (like an SVG image template for example) then with the `razorView` handler a different `Content-Type` can be set as well.
+One of the parameters passed into the `razorView` handler is the mime type which should be returned by the handler. In this example it is set to `text/html`, but if the Razor page would represent something different (like an SVG image template for example) then with the `razorView` handler you can also set a different `Content-Type` as well.
 
-In most cases `text/html` is probably the desired mime type and therefore there is a second handler called `razorHtmlView` which does exactly that:
+In most cases `text/html` is probably the desired `Content-Type` of your response and therefore there is a second handler called `razorHtmlView` which does exactly that:
 
 <pre><code>let model = { WelcomeText = "Hello World" }
 
@@ -121,7 +127,7 @@ A more involved example with a layout page and a partial view can be found in th
 
 ### Using DotNet Watcher to reload the project on Razor page changes
 
-If you come from an ASP.NET Core MVC background then you might be used to have Razor pages automatically re-compile on every page change during development without having to manually restart an application. In Giraffe you can achieve the same experience by adding the [DotNet.Watcher.Tools](https://www.nuget.org/packages/Microsoft.DotNet.Watcher.Tools) to your `.fsproj` file and put a watch on all `.cshtml` files:
+If you come from an ASP.NET Core MVC background then you might be used to having Razor pages automatically re-compile on every page change during development, without having to manually restart an application. In Giraffe you can achieve the same experience by adding the [DotNet.Watcher.Tools](https://www.nuget.org/packages/Microsoft.DotNet.Watcher.Tools) to your `.fsproj` and put a watch on all `.cshtml` files:
 
 <pre><code>&lt;ItemGroup&gt;
     &lt;DotNetCliToolReference Include=&quot;Microsoft.DotNet.Watcher.Tools&quot; Version=&quot;1.0.0&quot; /&gt;
@@ -131,13 +137,13 @@ If you come from an ASP.NET Core MVC background then you might be used to have R
     &lt;Watch Include=&quot;**\*.cshtml&quot; Exclude=&quot;bin\**\*&quot; /&gt;
 &lt;/ItemGroup&gt;</code></pre>
 
-By adding these sections to your `.fsproj` file you can make changes to any `.cshtml` file in your project and immediately see the changes take effect during a running Giraffe web application without having to manually restart the app.
+By adding the watcher to your project file you can start making changes to any `.cshtml` file in your project and immediately see the changes take effect during a running Giraffe web application (without having to manually restart the app).
 
 ### Dependency on Microsoft.AspNetCore.Mvc
 
-One other thing which might sound strange is the dependency on the `Microsoft.AspNetCore.Mvc` NuGet package. It is essentially the full MVC library being referenced by Giraffe now and it has sparked a bit of confusion or disappointment amongst some users. Personally I think it really doesn't matter and I wanted to explain my thinking behind this design decision.
+One other thing which might sound a little bit strange is the dependency on the `Microsoft.AspNetCore.Mvc` NuGet package. It is essentially the full MVC library being referenced by Giraffe now and it has sparked a bit of confusion or disappointment amongst some users. Personally I think it really doesn't matter and I wanted to explain my thinking behind this design decision.
 
-In order to get Razor pages working in Giraffe there were three options available:
+In order to get Razor views working in Giraffe there were three options available:
 
 - Implement Giraffe's own Razor engine
 - Use someone else's custom Razor engine
@@ -351,19 +357,19 @@ Sometimes you might want to bind a model from a query string, which could not on
 
 At last you might want to allow a client to submit an object via any of the above mentioned options on the same endpoint. In this case your endpoint has to pick the correct model binding based on the `Content-Type` HTTP header and this can be achieved with the `ctx.BindModel<'T>()` function.
 
-Since all model binding functions are extension methods of the `HttpContext` type, they can be used from anywhere in a web application where you have access to the `HttpContext` object, which in Giraffe is every single `HttpHandler` function.
+Since all model binding functions are extension methods of the `HttpContext` type they can be used from anywhere in a web application where you have access to the `HttpContext` object, which in Giraffe's case is every single `HttpHandler` function.
 
 ## What's next?
 
 There were quite a few breaking changes since the first release, but APIs are slowly maturing as I get more feedback and exposure of the framework. So far the library has been in an alpha stage and will probably remain for another few weeks before I get around to finish some more examples and test projects which will essentially lead to the beta phase.
 
-Once the project is in beta I will try to focus my effort more on collecting a lot of feedback before I feel confident enough to declare the first RC and subsequently the official version 1.0.0.
+Once the project is in beta I will try to focus my effort more on collecting a lot of additional feedback before I feel confident enough to declare the first RC and subsequently the official version 1.0.0.
 
-Even though breaking changes are not always the end of the world I would like to avoid drastic fundamental changes (as seen recently) once the project has entered the first stable release. Therefore I have been fairly reluctant to prematurely label Giraffe beyond an alpha and will probably want to enjoy the freedom of breaking stuff for a tiny bit longer. At the end of the day it's about setting the right expectations and I don't help anyone by labeling v1.0.0 too early when I know there's still a danger of potentially moving stuff around.
+Even though breaking changes are not always the end of the world I would like to avoid drastic fundamental changes (as seen recently) once the project has entered the first stable release. Therefore I have been fairly reluctant to prematurely label Giraffe beyond an alpha and will probably want to enjoy the freedom of breaking stuff for a tiny bit longer. At the end of the day it's about setting the right expectations and I don't help anyone by labeling v1.0.0 too early when I know there's still a fair bit of danger of potentially moving stuff around.
 
 However, having said that I do want to stress that the underlying system (ASP.NET Core and Kestrel) have been very stable for a while now and as long as you don't mind that a namespace or method might still change in the near future then Giraffe is absolutely fit for production. So please go ahead and give it a try if you like what you've seen in this blog post so far :).
 
-This basically brings me to the end of this blog post and I thought what better way to finish it off than by sharing some of our memories from our wonderful wedding (in case you ever wondered what a British-Indian/Austrian-Polish wedding looks like ;)).
+This basically brings me to the end of this follow up article and I thought what better way to finish it off than by sharing some of our memories from our wonderful wedding (in case you ever wondered what a British-Indian/Austrian-Polish wedding looks like ;)).
 
 It was a very long day, which started off with a civil ceremony in the morning...
 
