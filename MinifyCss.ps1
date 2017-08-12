@@ -45,9 +45,11 @@ Write-Output "-----"
 Write-Output "Compressing CSS Files"
 Write-Output "-----"
 
-Get-ChildItem $SolutionDir -Recurse -Include *.css -Exclude *.min.css | % {
-	if (!$ExcludeFiles.Contains($_.Name)) {
-		Write-Output "Compressing $_"
-		Compress-CssFile -CssFilePath $_ 
-	}
-}
+Write-Output "Skipping"
+
+# Get-ChildItem $SolutionDir -Recurse -Include *.css -Exclude *.min.css | % {
+# 	if (!$ExcludeFiles.Contains($_.Name)) {
+# 		Write-Output "Compressing $_"
+# 		Compress-CssFile -CssFilePath $_ 
+# 	}
+# }

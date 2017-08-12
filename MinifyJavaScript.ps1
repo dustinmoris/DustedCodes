@@ -43,7 +43,9 @@ Write-Output "-----"
 Write-Output "Compressing JavaScript Files"
 Write-Output "-----"
 
-Get-ChildItem $SolutionDir -Recurse -Include *.js -Exclude *.min.js | % {
-	Write-Output "Compressing $_"
-	Compress-JavaScriptFile -JavaScriptFilePath $_ 
-}
+Write-Output "Skipping"
+
+# Get-ChildItem $SolutionDir -Recurse -Include *.js -Exclude *.min.js | % {
+# 	Write-Output "Compressing $_"
+# 	Compress-JavaScriptFile -JavaScriptFilePath $_ 
+# }
