@@ -132,6 +132,7 @@
     <None Include="App_Data\Articles\functional-aspnet-core.md" />
     <None Include="App_Data\Articles\functional-aspnet-core-part-2-hello-world-from-giraffe.md" />
     <None Include="App_Data\Articles\giraffe-goes-beta.md" />
+    <None Include="App_Data\Articles\evolving-my-open-source-project-from-a-one-man-repository-to-a-proper-organisation.md" />
     <None Include="App_Data\Articles\thank-you-microsoft-for-being-awesome.md" />
     <None Include="App_Data\Articles\running-suave-in-aspnet-core-and-on-top-of-kestrel.md" />
     <None Include="App_Data\Articles\load-testing-a-docker-application-with-jmeter-and-amazon-ec2.md" />
