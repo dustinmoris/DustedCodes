@@ -1,7 +1,7 @@
 ﻿<!--
     Published: 2017-12-06 19:00
     Author: Dustin Moris Gorski
-    Title: Evolving my open source project from a one man repository to a proper organisation
+    Title: Evolving my open source project from a one man repository to an OSS organisation
     Tags: giraffe oss aspnet-core fsharp
 -->
 Over the last couple of months I have been pretty absent from my every day life, such as keeping up with Twitter, reading and responding to emails, writing blog posts, working on my business and maintaining the Giraffe web framework. It was not exactly what I had planned for, but my wife and I decided to take a small break and [wonder through South America](https://www.instagram.com/dustedtravels/) for a bit before coming back for Christmas again. It was a truly amazing experience, but as much as travelling was fun, it was not great for [my open source project Giraffe](https://github.com/giraffe-fsharp/Giraffe) which was just about to pick up momentum after the huge exposure via [Scott Hanselman](https://www.hanselman.com/blog/AFunctionalWebWithASPNETCoreAndFsGiraffe.aspx)'s and the [Microsoft F# team](https://blogs.msdn.microsoft.com/dotnet/2017/09/26/build-a-web-service-with-f-and-net-core-2-0/)'s blog posts (huge thanks btw, feeling super stoked and grateful for it!).
