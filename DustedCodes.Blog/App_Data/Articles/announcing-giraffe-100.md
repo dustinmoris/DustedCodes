@@ -12,7 +12,7 @@ The release of Giraffe 1.0.0 continues with this trend and also brings some new 
 
 Giraffe 1.0.0 offers a new [streaming API](https://github.com/giraffe-fsharp/Giraffe/blob/master/DOCUMENTATION.md#streaming) which can be used to stream (large) files and other content directly to a client.
 
-A lot of work has been put into making this feature properly work like supporting conditional HTTP headers or range processing abilities. On top of that I was even able to help iron out a [few bugs in ASP.NET Core MVC](https://github.com/aspnet/Mvc/issues/7208)'s implementation as well.
+A lot of work has been put into making this feature properly work like supporting conditional HTTP headers and range processing capabilities. On top of that I was even able to help iron out a [few bugs in ASP.NET Core MVC](https://github.com/aspnet/Mvc/issues/7208)'s implementation as well (loving the fact that ASP.NET Core is all open source).
 
 ## Conditional HTTP Headers
 
@@ -34,21 +34,29 @@ Even though this is not a feature itself, it aims at improving the general devel
 
 When Giraffe introduced the `task {}` CE for the first time it was a copy of the single file project [TaskBuilder.fs](https://github.com/rspeele/TaskBuilder.fs) written by [Robert Peele](https://github.com/rspeele). However, maintaining our own copy of the task CE is resource expensive and not exactly my personal field of expertise. Besides that, since the initial release Robert has made great improvements to TaskBuilder.fs whereas Giraffe's version has been lacking behind. When TaksBuilder.fs has been published to NuGet it felt like a good idea to deprecate `Giraffe.Tasks` and resort back to the original.
 
-This allows me and other Giraffe contributors to focus more on the web part of Giraffe and let Robert do his excellent work on the async/task side of things. Otherwise nothing has changed and Giraffe will continue to build on top of `Task` and `Task<'T>`. If you use `Giraffe.Tasks` outside of a Giraffe web application then you can continue doing so by referencing `TaskBuilder.fs` instead. If you like the `task {}` computation expression then please go to the [official GitHub repository](https://github.com/rspeele/TaskBuilder.fs) and hit the star button to show some support!
+This allows me and other Giraffe contributors to focus more on the web part of Giraffe and let Robert do his excellent work on the async/task side of things. Otherwise nothing has changed and Giraffe will continue to build on top of `Task` and `Task<'T>`. If you use `Giraffe.Tasks` outside of a Giraffe web application then you can continue doing so by referencing `TaskBuilder.fs` instead.
+
+Giraffe also continues to use exclusively the context insensitive version of the task CE (meaning all task objects are awaited with `ConfigureAwait(false)`). If you encouter type inference issues after the upgrade to Giraffe 1.0.0 then you might have to add an extra open statement to your F# file:
+
+<pre><code>open FSharp.Control.Tasks.ContextInsensitive</code></pre>
+
+This is normally not required though unless you have <code>do!</code> bindings in your code.
+
+If you like the `task {}` computation expression then please go to the [official GitHub repository](https://github.com/rspeele/TaskBuilder.fs) and hit the star button to show some support!
 
 ## TokenRouter as NuGet package
 
-[TokenRouter](https://github.com/giraffe-fsharp/Giraffe.TokenRouter) is a popular alternative to Giraffe's default routing API aimed at providing maximum performance. Given the complexity of TokenRouter and the fact that Giraffe already ships a default version of the routing API it made only sense to decouple the TokenRouter from it.
+[TokenRouter](https://github.com/giraffe-fsharp/Giraffe.TokenRouter) is a popular alternative to Giraffe's default routing API aimed at providing maximum performance. Given the complexity of TokenRouter and the fact that Giraffe already ships a default version of the routing API it made only sense to decouple the TokenRouter into its own repository.
 
-This change will allow TokenRouter to become more independent and evolve at its own pace. TokenRouter can also benefit now from having its own release cycle and be much bolder in introducing new features and breaking changes without affecting Giraffe.
+This change will allow TokenRouter to become more independent and evolve at its own pace. TokenRouter can also benefit from having its own release cycle and be much bolder in introducing new features and breaking changes without affecting Giraffe.
 
-If your project is using the TokenRouter API then you will need to add a new dependency to the `Giraffe.TokenRouter` NuGet package going forward from now.
+If your project is using the TokenRouter API then you will need to add a new dependency to the `Giraffe.TokenRouter` NuGet package now. The rest remains unchanged.
 
 ## Improved documentation
 
 At last I have worked on improving the official [Giraffe documentation](https://github.com/giraffe-fsharp/Giraffe/blob/master/DOCUMENTATION.md) by completely restructuring the document, providing a wealth of new information and focusing on popular topics by demand.
 
-The documentation has also been broken out of the README, but remains as a Markdown file in the git repository for reasons which I hope to blog in a separate blog post soon.
+The documentation has also been broken out of the README, but remains as a Markdown file in the git repository for reasons which I hope to blog about in a separate blog post soon.
 
 The complete list of changes and new features can be found in the [official release notes](https://github.com/giraffe-fsharp/Giraffe/releases/tag/v1.0.0).
 
