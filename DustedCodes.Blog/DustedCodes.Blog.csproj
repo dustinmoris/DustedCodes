@@ -128,6 +128,7 @@
     <None Include="App_Data\Articles\asynchronous-fsharp-workflows-in-nancyfx.md" />
     <None Include="App_Data\Articles\automating-css-and-javascript-minification-in-aspnet-mvc-5-with-powershell.md" />
     <None Include="App_Data\Articles\building-and-shipping-a-dotnet-core-application-with-docker-and-travisci.md" />
+    <None Include="App_Data\Articles\announcing-giraffe-100.md" />
     <None Include="App_Data\Articles\error-handling-in-aspnet-core.md" />
     <None Include="App_Data\Articles\extending-the-giraffe-template-with-different-view-engine-options.md" />
     <None Include="App_Data\Articles\functional-aspnet-core.md" />
