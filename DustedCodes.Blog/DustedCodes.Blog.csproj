@@ -125,6 +125,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App_Data\Articles\giraffe-110-more-routing-handlers-better-model-binding-and-brand-new-model-validation-api.md" />
     <None Include="App_Data\Articles\asynchronous-fsharp-workflows-in-nancyfx.md" />
     <None Include="App_Data\Articles\automating-css-and-javascript-minification-in-aspnet-mvc-5-with-powershell.md" />
     <None Include="App_Data\Articles\building-and-shipping-a-dotnet-core-application-with-docker-and-travisci.md" />
