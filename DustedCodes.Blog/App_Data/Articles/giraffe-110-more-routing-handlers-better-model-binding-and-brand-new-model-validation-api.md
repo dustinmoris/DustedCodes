@@ -232,7 +232,7 @@ module WebApp =
 
 By implementing the `IModelValidation<'T>` interface on the `Adult` record type we can now make use of the `validateModel` http handler when composing the `/person` route. This functional composition allows us to entirely get rid of the `adultHandler` and keep a clear separation of concerns.
 
-First the `tryBindQuery<Adult>` handler will parse the request's query string and create an instance of type `Adult`. If the query string had badly formatted or missing data then the `parsingErrorHandler` will be executed, which allows a user to specify a custom error response for data contract violations. If the model could be successfully parsed, then the `validateModel` http handler will be invoked which will now validate the business rules of the model. The user can specify a different error response for business rule violations when implementing the `IModelValidation<'T>` interface. Lastly if the model validation succeeded then the `textHandler` will be executed which will simply use the object's `ToString()` method to return a `HTTP 200` text response.
+First the `tryBindQuery<Adult>` handler will parse the request's query string and create an instance of type `Adult`. If the query string had badly formatted or missing data then the `parsingErrorHandler` will be executed, which allows a user to specify a custom error response for data contract violations. If the model could be successfully parsed, then the `validateModel` http handler will be invoked which will now validate the business rules of the model (by invoking the `IModelValidation.Validate()` method). The user can specify a different error response for business rule violations when implementing the `IModelValidation<'T>` interface. Lastly if the model validation succeeded then the `textHandler` will be executed which will simply use the object's `ToString()` method to return a `HTTP 200` text response.
 
 All functions are generic now so that adding more routes for other models is just a matter of implementing a new record types for each model and registering a single route in the web application's composition:
 
@@ -243,19 +243,46 @@ All functions are generic now so that adding more routes for other models is jus
         route &quot;/dog&quot;   &gt;=&gt; tryBindQuery&lt;Dog&gt;   (validateModel textHandler)
     ]</code></pre>
 
-Currently this new improved way of model binding only works for query strings and HTTP form payloads via the `tryBindQuery<'T>` and `tryBindFrom<'T>` http handler functions. Model binding functions for JSON and XML remain with the "optimistic" parsing model due to the underlying model binding libraries (JSON.NET and `XmlSerializer`).
+Overall the new model binding and model validation API aims at providing a more functional counter part to [MVC's model validation](https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation), except that Giraffe prefers to use functions and interfaces instead of the `System.ComponentModel.DataAnnotations` attributes. The benefit is that data attributes are often ignored by the rest of the code while a simple validation function can be used from outside Giraffe as well. F# also has the benefit of having a better type system than C#, which means that things like the `[<Required>]` attribute have little use if there is already an `Option<'T>` type.
+
+Currently this new improved way of model binding in Giraffe only works for query strings and HTTP form payloads via the `tryBindQuery<'T>` and `tryBindFrom<'T>` http handler functions. Model binding functions for JSON and XML remain with the "optimistic" parsing model due to the underlying model binding libraries (JSON.NET and `XmlSerializer`), but a future update with improvements for JSON and XML is planned as well.
 
 In total you have the following new model binding http handlers at your disposal with Giraffe 1.1.0:
 
-| HttpHandler | Description |
-| :---------- | :---------- |
-| `bindJson<'T>` | Traditional model binding. This is a new http handler equivalent of `ctx.BindJsonAsync<'T>`. |
-| `bindXml<'T>` | Traditional model binding. This is a new http handler equivalent of `ctx.BindAsync<'T>`. |
-| `bindForm<'T>` | Traditional model binding. This is a new http handler equivalent of `ctx.BindFormAsync<'T>`. |
-| `tryBindForm<'T>` | New improved model binding. This is a new http handler equivalent of a new `HttpContext` extension method called `ctx.TryBindFormAsync<'T>`. |
-| `bindQuery<'T>` | Traditional model binding. This is a new http handler equivalent of `ctx.BindQueryString<'T>`. |
-| `tryBindQuery<'T>` | New improved model binding. This is a new http handler equivalent of a new `HttpContext` extension method called `ctx.TryBindQueryString<'T>`. |
-| `bindModel<'T>` | Traditional model binding. This is a new http handler equivalent of `ctx.BindModelAsync<'T>`. |
+<table>
+    <tr>
+        <th>HttpHandler</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>bindJson<'T></code></td>
+        <td>Traditional model binding. This is a new http handler equivalent of `ctx.BindJsonAsync<'T>`.</td>
+    </tr>
+    <tr>
+        <td><code>bindXml<'T></code></td>
+        <td>Traditional model binding. This is a new http handler equivalent of `ctx.BindAsync<'T>`.</td>
+    </tr>
+    <tr>
+        <td><code>bindForm<'T></code></td>
+        <td>Traditional model binding. This is a new http handler equivalent of `ctx.BindFormAsync<'T>`.</td>
+    </tr>
+    <tr>
+        <td><code>tryBindForm<'T></code></td>
+        <td>New improved model binding. This is a new http handler equivalent of a new `HttpContext` extension method called `ctx.TryBindFormAsync<'T>`.</td>
+    </tr>
+    <tr>
+        <td><code>bindQuery<'T></code></td>
+        <td>Traditional model binding. This is a new http handler equivalent of `ctx.BindQueryString<'T>`.</td>
+    </tr>
+    <tr>
+        <td><code>tryBindQuery<'T></code></td>
+        <td>New improved model binding. This is a new http handler equivalent of a new `HttpContext` extension method called `ctx.TryBindQueryString<'T>`.</td>
+    </tr>
+    <tr>
+        <td><code>bindModel<'T></code></td>
+        <td>Traditional model binding. This is a new http handler equivalent of `ctx.BindModelAsync<'T>`.</td>
+    </tr>
+</table>
 
 The new model validation API works with any http handler which returns an object of type `'T` and is not limited to `tryBindQuery<'T>` and `tryBindFrom<'T>` only.
 
