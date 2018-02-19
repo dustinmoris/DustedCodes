@@ -251,36 +251,36 @@ In total you have the following new model binding http handlers at your disposal
 
 <table>
     <tr>
-        <th>HttpHandler</th>
-        <th>Description</th>
+        <th style="text-align: left; min-width: 120px;">HttpHandler</th>
+        <th style="text-align: left">Description</th>
     </tr>
     <tr>
         <td><code>bindJson<'T></code></td>
-        <td>Traditional model binding. This is a new http handler equivalent of `ctx.BindJsonAsync<'T>`.</td>
+        <td>Traditional model binding. This is a new http handler equivalent of <code>ctx.BindJsonAsync<'T></code>.</td>
     </tr>
     <tr>
         <td><code>bindXml<'T></code></td>
-        <td>Traditional model binding. This is a new http handler equivalent of `ctx.BindAsync<'T>`.</td>
+        <td>Traditional model binding. This is a new http handler equivalent of <code>ctx.BindAsync<'T></code>.</td>
     </tr>
     <tr>
         <td><code>bindForm<'T></code></td>
-        <td>Traditional model binding. This is a new http handler equivalent of `ctx.BindFormAsync<'T>`.</td>
+        <td>Traditional model binding. This is a new http handler equivalent of <code>ctx.BindFormAsync<'T></code>.</td>
     </tr>
     <tr>
         <td><code>tryBindForm<'T></code></td>
-        <td>New improved model binding. This is a new http handler equivalent of a new `HttpContext` extension method called `ctx.TryBindFormAsync<'T>`.</td>
+        <td>New improved model binding. This is a new http handler equivalent of a new <code>HttpContext</code> extension method called <code>ctx.TryBindFormAsync<'T></code>.</td>
     </tr>
     <tr>
         <td><code>bindQuery<'T></code></td>
-        <td>Traditional model binding. This is a new http handler equivalent of `ctx.BindQueryString<'T>`.</td>
+        <td>Traditional model binding. This is a new http handler equivalent of <code>ctx.BindQueryString<'T></code>.</td>
     </tr>
     <tr>
         <td><code>tryBindQuery<'T></code></td>
-        <td>New improved model binding. This is a new http handler equivalent of a new `HttpContext` extension method called `ctx.TryBindQueryString<'T>`.</td>
+        <td>New improved model binding. This is a new http handler equivalent of a new <code>HttpContext</code> extension method called <code>ctx.TryBindQueryString<'T></code>.</td>
     </tr>
     <tr>
         <td><code>bindModel<'T></code></td>
-        <td>Traditional model binding. This is a new http handler equivalent of `ctx.BindModelAsync<'T>`.</td>
+        <td>Traditional model binding. This is a new http handler equivalent of <code>ctx.BindModelAsync<'T></code>.</td>
     </tr>
 </table>
 
