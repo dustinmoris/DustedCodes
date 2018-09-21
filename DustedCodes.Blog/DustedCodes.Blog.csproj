@@ -147,6 +147,7 @@
     <None Include="App_Data\Articles\creating-a-slack-bot-with-fsharp-and-suave-in-less-than-5-minutes.md" />
     <None Include="App_Data\Articles\jmeter-load-testing-from-a-continuous-integration-build.md" />
     <None Include="App_Data\Articles\sha-256-is-not-a-secure-password-hashing-algorithm.md" />
+    <None Include="App_Data\Articles\stop-doing-security-yourself.md" />
     <None Include="App_Data\Articles\understanding-aspnet-core-10-aka-aspnet-5-and-why-it-will-replace-classic-aspnet.md" />
     <None Include="App_Data\Articles\demystifying-aspnet-mvc-5-error-pages-and-error-logging.md" />
     <None Include="App_Data\Articles\guard-clauses-without-test-coverage-a-common-tdd-pitfall.md" />
@@ -154,7 +155,7 @@
     <None Include="App_Data\Articles\display-build-history-charts-for-appveyor-or-travisci-builds-with-an-svg-widget.md" />
     <None Include="App_Data\Articles\death-of-a-qa-in-scrum.md" />
     <None Include="App_Data\Articles\diagnosing-css-issues-on-mobile-devices-with-google-chrome-bookmarklets.md" />
-    <Content Include="App_Data\Articles\aspnet-5-like-configuration-in-regular-dotnet-applications.md" />
+    <None Include="App_Data\Articles\aspnet-5-like-configuration-in-regular-dotnet-applications.md" />
     <None Include="App_Data\Articles\running-nancyfx-in-a-docker-container-a-beginners-guide-to-build-and-run-dotnet-applications-in-docker.md" />
     <None Include="App_Data\Articles\how-to-make-an-istatuscodehandler-portable-in-nancyfx.md" />
     <None Include="App_Data\Articles\design-test-and-document-restful-apis-using-raml-in-dotnet.md" />
@@ -384,7 +385,7 @@ echo "Skipping JavaScript minification in debug mode."
       $(PipelineCollectFilesPhaseDependsOn);
     </PipelineCollectFilesPhaseDependsOn>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
