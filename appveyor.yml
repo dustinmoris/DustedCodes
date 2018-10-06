@@ -1,34 +1,14 @@
-version: 2.27.0.{build}
-os:
-  - Visual Studio 2015
-configuration: Release
-platform: Any CPU
-skip_tags: true
-assembly_info:
-  patch: true
-  file: '**\AssemblyInfo.*'
-  assembly_version: '{version}'
-  assembly_file_version: '{version}'
-  assembly_informational_version: '{version}'
-before_build:
-  - set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
-  - nuget restore
-build:
-  publish_wap: true
-  verbosity: normal
-test:
-  categories:
-    except:
-    - AutomationTests
-deploy:
-  provider: WebDeploy
-  server: https://dustedcodes.scm.azurewebsites.net:443/msdeploy.axd?site=dustedcodes
-  website: dustedcodes
-  username: $dustedcodes
-  password:
-    secure: h1vtujFnnnocUWjFBiKiIZ4LEpmTIcxcqgP8GlDxhJFYH2FKmsrvyMWY27K8ewCNhcFmenTeJYfTuuUzFX8Rbg==
-  remove_files: true
-  app_offline: true
-  skip_dirs: '\\App_Data\\Logs;\\newrelic'
-  on:
-    branch: master
+version: 0.1.0-{build}
+image:
+- Visual Studio 2017
+init:
+  - git config --global core.autocrlf true
+install:
+  - ps: .\.psscripts\install-dotnet.ps1
+build: off
+build_script:
+  - ps: .\build.ps1
+test: off
+nuget:
+  account_feed: false
+  project_feed: false

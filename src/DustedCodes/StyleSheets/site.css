@@ -1,0 +1,532 @@
+/* --------------------------
+  Default elements
+-------------------------- */
+
+/*Fixing monospace handling across browsers*/
+pre,
+code,
+kbd,
+samp {
+    font-family: monospace, monospace;
+    font-size: 1em;
+}
+
+body {
+    display: flex;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -ms-align-content: flex-start;
+    -webkit-align-content: flex-start;
+    align-content: flex-start;
+    margin: 0;
+    padding: 0;
+    color: #444;
+    font-family: 'Nunito Sans', sans-serif;
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Nunito', sans-serif;
+    color: #333;
+}
+
+h1 {
+    margin: 1em 0;
+    font-size: 2.7em;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 2em;
+}
+
+h3 {
+    font-size: 1.4em;
+}
+
+h4 {
+    font-size: 1em;
+}
+
+h5 {
+    font-size: .6em;
+}
+
+p {
+    line-height: 2em;
+    color: #555;
+}
+
+a {
+    color: #ff5252;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+code {
+    display: inline-block;
+    padding: .1em .4em;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    background: #f5f5f5;
+    font-family: 'Roboto Mono', monospace;
+    font-size: .8em;
+    line-height: 1.8em;
+    color: rgb(204, 34, 85);
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+pre {
+    width: auto;
+    overflow-x: auto;
+}
+
+pre > code {
+    display: block;
+    padding: .5em 0 .5em 1em;
+    color: #333;
+    font-size: .75em;
+}
+
+img {
+    margin: 0;
+    max-width: 100%;
+    max-height: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+kbd {
+    border: 1px solid #888;
+    padding: .2em .5em;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    font-size: .85em;
+}
+
+table {
+    display: block;
+}
+
+td, th {
+    text-align: center;
+    font-size: .95em;
+    padding: .5em;
+}
+
+th:first-child {
+    text-align: left;
+}
+
+tr:nth-child(odd)  { background-color:#f6f6f6; }
+tr:nth-child(even) { background-color:#fff; }
+
+blockquote {
+    background: #f8f8f8;
+    border-left: 5px solid #ccc;
+    margin: 1.5em 0;
+    padding: .6em 1em;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+}
+
+blockquote > header {
+    margin-bottom: -10px;
+}
+
+blockquote > p {
+    line-height: 1.7em;
+}
+
+blockquote > p:first-child {
+    margin-top: 0;
+}
+
+blockquote > p:last-child {
+    margin-bottom: 0;
+}
+
+blockquote > footer {
+    margin: 0 0 0.3em 0;
+    padding: 0;
+}
+
+blockquote > footer > cite {
+    font-size: .85em;
+    font-weight: 600;
+    font-style: italic;
+}
+
+blockquote > footer > cite > a:before {
+    content: '> ';
+}
+
+article {
+    font-size: 1em;
+}
+
+article li {
+    margin: .2em 0;
+    line-height: 2em;
+}
+
+/* --------------------------
+  Master page
+-------------------------- */
+
+body > main,
+body > nav,
+#inner-header,
+#inner-footer {
+    margin: 1em auto;
+    padding: 0 20px;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+body > header,
+body > footer {
+    font-family: 'Nunito', sans-serif;
+}
+
+body > header {
+    order: 0;
+}
+
+nav {
+    order: 1;
+}
+
+body > main {
+    order: 2;
+    border-top: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+body > footer {
+    order: 3;
+}
+
+body > header a {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5em;
+}
+
+body > header a:link,
+body > header a:visited,
+body > header a:hover,
+body > header a:active {
+    color: #333;
+    font-size: .6em;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+}
+
+body > header svg {
+    margin: 0 15px 0 0;
+    width: 25px;
+    height: 25px;
+}
+
+body > header h1 {
+    margin: 0 0 .25em 0;
+    font-weight: 900;
+    font-size: 2em;
+}
+
+body > header h2 {
+    margin: 0;
+    font-size: .9em;
+    font-weight: 400;
+    color: #bbb;
+    letter-spacing: .18em;
+}
+
+#nav-links,
+#social-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+#nav-links {
+    margin: 2em 0 0em 0;
+}
+
+#nav-links li,
+#social-links li {
+    display: inline;
+}
+
+#nav-links a:link,
+#nav-links a:visited {
+    display: inline-block;
+    margin: .3em 1em;
+    padding: .3em .5em;
+    color: #666;
+    font-size: .8em;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+#nav-links a:hover,
+#nav-links a:active {
+    color: #ff5252;
+    text-decoration: none;
+}
+
+#social-links a {
+    margin: .3em .2em;
+}
+
+#social-links svg {
+    fill: #ccc;
+    width: 20px;
+    height: 20px;
+    padding: .3em;
+}
+
+#social-links svg:hover {
+    fill: #ff5252;
+}
+
+#inner-footer {
+    margin-bottom: 4em;
+    font-size: .85em;
+}
+
+#inner-footer h5 {
+    margin: 0;
+    padding: 0;
+    color: #777;
+    font-size: .75em;
+    font-weight: 700;
+    word-spacing: 2px;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+}
+
+#inner-footer p {
+    margin: .5em 0;
+    padding: 0;
+    line-height: 1.4em;
+    color: #bbb;
+    font-weight: 300;
+}
+
+/* --------------------------
+  Unique elements
+-------------------------- */
+
+#trending-list li > div:first-child {
+    margin-bottom: .5em;
+}
+
+#avatar {
+    float: left;
+    max-width: 260px;
+    margin-right: 2em;
+    margin-bottom: .5em;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+}
+
+#avatar:after {
+    content: " ";
+    visibility: hidden;
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+#comments {
+    margin: 2em 0;
+}
+
+/* --------------------------
+  Classes
+-------------------------- */
+
+.article-list > h3 {
+    display: block;
+    text-align: center;
+    font-size: 1.6em;
+    text-transform: uppercase;
+    color: #d8d8d8;
+}
+
+.article-list > ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.article-list > ul > li {
+    display: block;
+    margin: 1.5em 0;
+    padding: 0;
+    text-align: center;
+}
+
+.article-list a:link,
+.article-list a:visited {
+    margin: 0;
+    padding: 0;
+    max-width: 510px;
+    text-decoration: none;
+    color: #666;
+    font-size: 1em;
+    font-weight: 400;
+}
+
+.article-list a:hover,
+.article-list a:active {
+    color: #ff5252;
+}
+
+.blogpost-metadata {
+    margin: 0 0 2em 0;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    color: #999;
+    font-size: .9em;
+    font-weight: 300;
+    font-family: 'Nunito', sans-serif;
+}
+
+.blogpost-metadata a {
+    color: #aaa;
+}
+
+.blogpost-metadata svg {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    fill: #aaa;
+}
+
+.blogpost-metadata div {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin: .3em 20px .3em 0;
+}
+
+.blogpost-metadata div:last-child {
+    margin-right: 0;
+}
+
+.tags {
+    text-align: left;
+}
+
+.tags > a:after {
+    content: ',';
+}
+
+.tags > a:last-child:after {
+    content: '';
+}
+
+.tags > a {
+    margin-right: .3em;
+}
+
+.tags > a:last-child {
+    margin-right: 0;
+}
+
+.share-links {
+    padding: 0;
+    margin: 3em 0;
+    list-style: none;
+    text-align: center;
+}
+
+.share-links li {
+    display: inline;
+}
+
+.share-links svg {
+    fill: #aaa;
+    width: 22px;
+    height: 22px;
+    padding: .6em;
+}
+
+.share-links svg:hover {
+    fill: #ff5252;
+}
+
+/* --------------------------
+  Mobile overrides
+-------------------------- */
+
+@media all and (max-width: 640px) {
+
+    main {
+        margin-top: 0;
+    }
+
+    #social-links svg {
+        padding: .5em;
+    }
+
+    #nav-links a:link {
+        margin: .2em;
+        padding: .5em;
+        max-width: 100%;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    #article-list li,
+    #article-list li:hover {
+        margin: 2.5em 0;
+        border: 0;
+        padding: 0;
+    }
+
+    #article-list a:hover {
+        color: #cfca4c;
+    }
+
+    #avatar {
+        margin-bottom: 3em;
+        max-width: 100%;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    .blogpost-metadata {
+        display: block;
+    }
+
+    .share-links svg {
+        padding: .8em;
+    }
+}
