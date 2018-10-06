@@ -1,5 +1,6 @@
 ﻿<!--
     Tags: security brute-force-attacks
+    Type: HTML
 -->
 
 # Effective defense against distributed brute force attacks

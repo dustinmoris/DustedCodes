@@ -1,5 +1,6 @@
 ﻿<!--
     Tags: php-uk versioning hhvm
+    Type: HTML
 -->
 
 # PHP UK Conference 2015

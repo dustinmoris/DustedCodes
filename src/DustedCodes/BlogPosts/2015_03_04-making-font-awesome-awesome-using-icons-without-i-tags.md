@@ -1,5 +1,6 @@
 ﻿<!--
     Tags: font-awesome css
+    Type: HTML
 -->
 
 # Making Font Awesome awesome - Using icons without i-tags

@@ -13,8 +13,6 @@ open DustedCodes
 // Helper functions
 // ---------------------------------
 
-let titleFormat = sprintf "%s - %s"
-
 let normalLink (url : string) (text : string) =
     a [ _href url ] [ encodedText text ]
 
@@ -95,7 +93,14 @@ let asciiArt = "
 
 "
 
-let baseMasterView (pageTitle : string) (openGraphUrl : string option) (content : XmlNode list) =
+let masterView (subject   : string option)
+               (permalink : string option)
+               (sample    : string option)
+               (content   : XmlNode list) =
+    let pageTitle =
+        match subject with
+        | Some s -> sprintf "%s - %s" s Config.blogTitle
+        | None   -> sprintf "%s - %s" Config.blogTitle Config.blogDescription
     html [] [
         comment asciiArt
         head [] [
@@ -121,7 +126,7 @@ let baseMasterView (pageTitle : string) (openGraphUrl : string option) (content 
             // RSS feed
             yield link [ _rel "alternate"; _type "application/rss+xml"; _title "RSS Feed"; _href Url.``/feed/rss`` ]
 
-            if openGraphUrl.IsSome then
+            if permalink.IsSome then
                 // Twitter card tags
                 yield twitterCard "card" "summary"
                 yield twitterCard "site" "@dustinmoris"
@@ -129,12 +134,14 @@ let baseMasterView (pageTitle : string) (openGraphUrl : string option) (content 
 
                 // Open Graph tags
                 yield openGraph "title"        pageTitle
-                yield openGraph "url"          openGraphUrl.Value
+                yield openGraph "url"          permalink.Value
                 yield openGraph "type"         "website"
                 yield openGraph "image"        Url.``/logo.svg``
                 yield openGraph "image:alt"    Config.blogTitle
-                yield openGraph "image:width"  "600"
-                yield openGraph "image:height" "600"
+                yield openGraph "image:width"  "150"
+                yield openGraph "image:height" "150"
+                if sample.IsSome then
+                    yield openGraph "description" sample.Value
 
             // Minified & bundled CSS
             yield css (Url.create minifiedCss.Path)
@@ -187,8 +194,6 @@ let baseMasterView (pageTitle : string) (openGraphUrl : string option) (content 
         ]
     ]
 
-let masterView (pageTitle : string) = baseMasterView (titleFormat pageTitle Config.blogTitle)
-
 let blogPostMetadata (blogPost : BlogPost) =
     div [ _class "blogpost-metadata" ] [
         yield div [] [
@@ -234,7 +239,7 @@ let indexView (blogPosts : BlogPost list) =
             blogPosts
             |> List.groupBy(fun post -> post.PublishDate.Year)
             |> List.map blogPostGroup
-    ] |> baseMasterView (titleFormat Config.blogTitle Config.blogDescription) (Some Url.``/``)
+    ] |> masterView None (Some Config.blogDescription) (Some Url.``/``)
 
 let trendingView (blogPosts : BlogPost list) =
     let pageTitle = "Trending"
@@ -247,7 +252,10 @@ let trendingView (blogPosts : BlogPost list) =
                 |> List.map trendingBlogPostListItem
         ]
         disqusCountScript
-    ] |> masterView pageTitle (Some Url.``/trending``)
+    ] |> masterView
+        (Some pageTitle)
+        (Some "Most popular blog posts on Dusted Codes.")
+        (Some Url.``/trending``)
 
 let tagView (tag : string) (blogPosts : BlogPost list) =
     let title = sprintf "Tagged with '%s'" tag
@@ -258,7 +266,10 @@ let tagView (tag : string) (blogPosts : BlogPost list) =
                 blogPosts
                 |> List.map trendingBlogPostListItem
         ]
-    ] |> masterView title (Some (Url.``/tagged/%s`` tag))
+    ] |> masterView
+        (Some title)
+        (Some (sprintf "See all blog posts tagged with '%s'." tag))
+        (Some (Url.``/tagged/%s`` tag))
 
 let shareBlogPostLinks (p : BlogPost) = [
     li [] [
@@ -335,7 +346,7 @@ let blogPostView (blogPost : BlogPost) =
             ]
             yield disqus blogPost.Id blogPost.Title blogPost.Permalink
         ]
-    ] |> masterView blogPost.Title (Some blogPost.Permalink)
+    ] |> masterView (Some blogPost.Title) (Some blogPost.Excerpt) (Some blogPost.Permalink)
 
 let aboutView =
     [
@@ -343,14 +354,17 @@ let aboutView =
             img [ _id "avatar"; _src "https://storage.googleapis.com/dusted-codes/dustin-moris-gorski.jpg"; _alt "Dustin Moris Gorski" ]
             rawText About.content
         ]
-    ] |> masterView "About" (Some Url.``/about``)
+    ] |> masterView
+        (Some "About")
+        (Some "Hi, welcome to my personal website, software engineering blog and...")
+        (Some Url.``/about``)
 
 let notFoundView =
     [
         h1 [] [ rawText "Page not found!" ]
         p [] [ encodedText "Sorry, the page you have requested may have been moved or deleted." ]
         p [] [ rawText "Return to the "; normalLink Url.``/`` "home page"; rawText "." ]
-    ] |> masterView "Page not found" None
+    ] |> masterView (Some "Page not found") None None
 
 let internalErrorView (errorMessage : string option) =
     [
@@ -360,4 +374,4 @@ let internalErrorView (errorMessage : string option) =
         match errorMessage with
         | Some msg -> yield p [] [ encodedText msg ]
         | None     -> ()
-    ] |> masterView "Internal error" None
+    ] |> masterView (Some "Internal error") None None

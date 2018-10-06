@@ -1,5 +1,6 @@
 ﻿<!--
     Tags: scrum kanban scrumban waterfall agile
+    Type: HTML
 -->
 
 # When to use Scrum? Waterfall vs. Scrum vs. Kanban vs. Scrumban

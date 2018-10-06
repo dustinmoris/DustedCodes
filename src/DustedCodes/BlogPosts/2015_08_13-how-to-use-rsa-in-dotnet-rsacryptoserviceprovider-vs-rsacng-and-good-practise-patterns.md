@@ -1,5 +1,6 @@
 ﻿<!--
     Tags: dotnet rsa security asymmetric-encryption cryptography
+    Type: HTML
 -->
 
 # How to use RSA in .NET: RSACryptoServiceProvider vs. RSACng and good practise patterns

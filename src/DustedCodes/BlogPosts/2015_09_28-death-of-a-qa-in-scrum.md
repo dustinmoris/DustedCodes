@@ -1,5 +1,6 @@
 ﻿<!--
     Tags: scrum agile testing
+    Type: HTML
 -->
 
 # Death of a QA in Scrum

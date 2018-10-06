@@ -1,5 +1,6 @@
 ﻿<!--
     Tags: appveyor travisci github svg
+    Type: HTML
 -->
 
 # Display build history charts for AppVeyor or TravisCI builds with an SVG widget

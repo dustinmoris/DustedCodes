@@ -1,5 +1,6 @@
 ﻿<!--
     Tags: tdd guard-clauses
+    Type: HTML
 -->
 
 # Guard clauses without test coverage, a common TDD pitfall
