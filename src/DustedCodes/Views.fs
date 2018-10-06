@@ -266,6 +266,7 @@ let tagView (tag : string) (blogPosts : BlogPost list) =
                 blogPosts
                 |> List.map trendingBlogPostListItem
         ]
+        disqusCountScript
     ] |> masterView
         (Some title)
         (Some (sprintf "See all blog posts tagged with '%s'." tag))

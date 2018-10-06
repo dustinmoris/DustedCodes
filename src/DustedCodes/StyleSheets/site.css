@@ -196,6 +196,10 @@ body > nav,
     -webkit-box-sizing: border-box;
 }
 
+#inner-header h2:hover {
+    color: #ff5252;
+}
+
 body > header,
 body > footer {
     font-family: 'Nunito', sans-serif;
