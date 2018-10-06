@@ -3,11 +3,11 @@
 
 [![Build history](https://buildstats.info/appveyor/chart/dustinmoris/dustedcodes?branch=master)](https://ci.appveyor.com/project/dustinmoris/dustedcodes/history/branch/master)
 
-My personal website - an Open Source ASP.NET MVC 5 Blog.
+My personal website - an Open Source Giraffe/ASP.NET Core Blog.
 
 # About
 
-Inspired by GitHub Pages and Jekyll this is a C# blog engine which renders static HTML pages.
+Inspired by GitHub Pages and Jekyll this is an F# blog engine which renders static HTML pages.
 
 Blog articles can be written in Markdown or HTML. Markdown pages get compiled into static HTML pages at build time.
 
