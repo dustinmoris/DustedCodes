@@ -1,5 +1,6 @@
 ﻿<!--
     Tags: microsoft-azure app-hosting-plan
+    Type: HTML
 -->
 
 # Running free tier and paid tier web apps on the same Microsoft Azure subscription

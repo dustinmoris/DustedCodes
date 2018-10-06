@@ -61,7 +61,10 @@ let cssHandler : HttpHandler =
 let notFoundHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
         let logger = ctx.GetLogger("Web")
-        logger.LogWarning("Could not serve '{url}', because it does not exist.", (getRequestUrl ctx))
+        logger.LogWarning(
+            "Could not serve '{verb} {url}', because it does not exist.",
+            ctx.Request.Method,
+            (getRequestUrl ctx))
         (setStatusCode 404
         >=> htmlView notFoundView) next ctx
 

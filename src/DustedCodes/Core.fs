@@ -240,12 +240,17 @@ module BlogPosts =
     open System.Globalization
     open Markdig
 
+    type ContentType =
+        | Html
+        | Markdown
+
     type BlogPost =
         {
             Id          : string
             Title       : string
             PublishDate : DateTimeOffset
             Tags        : string list option
+            ContentType : ContentType
             Content     : string
             HtmlContent : string
             HashCode    : string
@@ -253,6 +258,7 @@ module BlogPosts =
         member this.Permalink           = Url.``/%s`` this.Id
         member this.UrlEncodedPermalink = this.Permalink |> WebUtility.UrlEncode
         member this.UrlEncodedTitle     = this.Title     |> WebUtility.UrlEncode
+        member this.Excerpt             = this.Content.Substring(0, 100) + "..."
 
     type AttributeParser = string -> BlogPost -> Result<BlogPost, string>
 
@@ -265,6 +271,12 @@ module BlogPosts =
                 .ToString()
             |> Hash.sha1
         Ok { blogPost with HashCode = hash }
+
+
+    let private parseContentType (input : string) =
+        match input.ToLower() with
+        | "html" -> Html
+        | _      -> Markdown
 
     let private parseTags (input : string) =
         if String.IsNullOrEmpty input then None
@@ -288,6 +300,7 @@ module BlogPosts =
         |> Result.bind (fun (key, value) ->
             match key with
             | "tags" -> Ok { blogPost with Tags = value |> parseTags }
+            | "type" -> Ok { blogPost with ContentType = value |> parseContentType }
             | _      -> Ok blogPost)
 
     let private mustNotBeEmpty (lines : string array) =
@@ -331,7 +344,11 @@ module BlogPosts =
                     (fun (sb : StringBuilder) line -> sb.AppendLine line)
                     (new StringBuilder())
                 |> (fun sb -> sb.ToString())
-            Ok { blogPost with Content = content; HtmlContent = content |> Markdown.ToHtml }
+            let htmlContent =
+                match blogPost.ContentType with
+                | Html     -> content
+                | Markdown -> Markdown.ToHtml content
+            Ok { blogPost with Content = content; HtmlContent = htmlContent }
 
     let private formatError (blogPostPath : string) (result : Result<BlogPost, string>) =
         match result with
@@ -351,6 +368,7 @@ module BlogPosts =
                     Title       = ""
                     PublishDate = date
                     Tags        = None
+                    ContentType = Markdown
                     Content     = ""
                     HtmlContent = ""
                     HashCode    = ""

@@ -1,5 +1,6 @@
 ﻿<!--
     Tags: aspnet mvc error-pages error-logging
+    Type: HTML
 -->
 
 # Demystifying ASP.NET MVC 5 Error Pages and Error Logging

@@ -1,5 +1,6 @@
 ﻿<!--
     Tags: security rsa asymmetric-encryption cryptography
+    Type: HTML
 -->
 
 # The beauty of asymmetric encryption - RSA crash course for developers

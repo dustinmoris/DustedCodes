@@ -1,5 +1,6 @@
 ﻿<!--
-Tags: aspnet mvc-5 csharp-6 razor
+    Tags: aspnet mvc-5 csharp-6 razor
+    Type: HTML
 -->
 
 # Using C# 6 features in ASP.NET MVC 5 razor views
