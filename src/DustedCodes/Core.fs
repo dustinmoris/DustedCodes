@@ -478,3 +478,61 @@ module RssFeed =
                     )
             ]
         ]
+
+// ---------------------------------
+// Minification
+// ---------------------------------
+
+[<RequireQualifiedAccess>]
+module Css =
+    open System.IO
+    open System.Text
+    open NUglify
+
+    type BundledCss =
+        {
+            Content : string
+            Hash    : string
+            Path    : string
+        }
+        static member FromContent (content : string) =
+            let hash = Hash.sha1 content
+            {
+                Content = content
+                Hash    = hash
+                Path    = sprintf "/%s.css" hash
+            }
+
+    let private getErrorMsg (errors : UglifyError seq) =
+        let msg =
+            errors
+            |> Seq.fold (fun (sb : StringBuilder) t ->
+                sprintf "Error: %s, File: %s" t.Message t.File
+                |> sb.AppendLine
+            ) (new StringBuilder("Couldn't uglify content."))
+        msg.ToString()
+
+    let minify (css : string) =
+        css
+        |> Uglify.Css
+        |> (fun res ->
+            match res.HasErrors with
+            | true  -> failwith (getErrorMsg res.Errors)
+            | false -> res.Code)
+
+    let getMinifiedContent (fileName : string) =
+        fileName
+        |> File.ReadAllText
+        |> minify
+
+    let getBundledContent (fileNames : string list) =
+        let result =
+            fileNames
+            |> List.fold(
+                fun (sb : StringBuilder) fileName ->
+                    fileName
+                    |> getMinifiedContent
+                    |> sb.AppendLine
+            ) (new StringBuilder())
+        result.ToString()
+        |> BundledCss.FromContent

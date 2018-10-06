@@ -70,42 +70,9 @@ let disqus (id : string) (title : string) (url : string) =
 // Bundle and minify CSS
 // ---------------------------------
 
-let readStyleSheet (fileName : string) =
-    fileName
-    |> sprintf "StyleSheets/%s"
-    |> System.IO.File.ReadAllText
-
-let minifyCss (css : string) =
-    let css = css.Replace(Environment.NewLine, "")
-    let css = (Regex("\\s*{\\s*")).Replace(css, "{")
-    let css = (Regex("\\s*}\\s*")).Replace(css, "}")
-    let css = (Regex("\\s*:\\s*")).Replace(css, ":")
-    let css = (Regex("\\s*,\\s*")).Replace(css, ",")
-    let css = (Regex("\\s*;\\s*")).Replace(css, ";")
-    let css = (Regex("\\s*>\\s*")).Replace(css, ">")
-    let css = (Regex(";}")).Replace(css, "}")
-    css
-
-let bundleCss (css : string list) =
-    css |> String.concat Environment.NewLine
-
-let createHash (value : string) =
-    value
-    |> Encoding.UTF8.GetBytes
-    |> SHA256.Create().ComputeHash
-    |> Array.map (fun b -> b.ToString "x2")
-    |> String.concat ""
-
-let siteCss  = "site.css"  |> readStyleSheet |> minifyCss
-let fontsCss = "fonts.css" |> readStyleSheet
-
-let bundledCss =
-    [
-        fontsCss
-        siteCss
-    ] |> bundleCss
-
-let cssHashcode = createHash bundledCss
+let minifiedCss =
+    Css.getBundledContent
+        [ "StyleSheets/fonts.css"; "StyleSheets/site.css" ]
 
 // ---------------------------------
 // Views
@@ -170,7 +137,7 @@ let baseMasterView (pageTitle : string) (openGraphUrl : string option) (content 
                 yield openGraph "image:height" "600"
 
             // Minified & bundled CSS
-            yield css (Url.create (sprintf "/main.min.css?v=%s" cssHashcode))
+            yield css (Url.create minifiedCss.Path)
 
             // Google Analytics
             if Config.isProduction then yield googleAnalytics

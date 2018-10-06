@@ -52,9 +52,11 @@ let svgHandler (svg : XmlNode) : HttpHandler =
     >=> setBodyFromString (svg |> renderXmlNode)
 
 let cssHandler : HttpHandler =
-    allowCaching (TimeSpan.FromDays 365.0)
+    let eTag = EntityTagHeaderValue.FromString false minifiedCss.Hash
+    validatePreconditions (Some eTag) None
+    >=> allowCaching (TimeSpan.FromDays 365.0)
     >=> setHttpHeader "Content-Type" "text/css"
-    >=> setBodyFromString bundledCss
+    >=> setBodyFromString minifiedCss.Content
 
 let notFoundHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
@@ -173,7 +175,7 @@ let webApp =
             choose [
                 // Static cachable assets
                 route  UrlPaths.``/logo.svg``   >=> svgHandler dustedCodesIcon
-                route  "/main.min.css"          >=> cssHandler
+                route  minifiedCss.Path         >=> cssHandler
 
                 // Content paths
                 route    UrlPaths.``/``         >=> indexHandler
