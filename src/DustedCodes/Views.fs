@@ -239,7 +239,7 @@ let indexView (blogPosts : BlogPost list) =
             blogPosts
             |> List.groupBy(fun post -> post.PublishDate.Year)
             |> List.map blogPostGroup
-    ] |> masterView None (Some Config.blogDescription) (Some Url.``/``)
+    ] |> masterView None (Some Url.``/``) (Some Config.blogDescription)
 
 let trendingView (blogPosts : BlogPost list) =
     let pageTitle = "Trending"
@@ -254,8 +254,8 @@ let trendingView (blogPosts : BlogPost list) =
         disqusCountScript
     ] |> masterView
         (Some pageTitle)
-        (Some "Most popular blog posts on Dusted Codes.")
         (Some Url.``/trending``)
+        (Some "Most popular blog posts on Dusted Codes.")
 
 let tagView (tag : string) (blogPosts : BlogPost list) =
     let title = sprintf "Tagged with '%s'" tag
@@ -269,8 +269,8 @@ let tagView (tag : string) (blogPosts : BlogPost list) =
         disqusCountScript
     ] |> masterView
         (Some title)
-        (Some (sprintf "See all blog posts tagged with '%s'." tag))
         (Some (Url.``/tagged/%s`` tag))
+        (Some (sprintf "See all blog posts tagged with '%s'." tag))
 
 let shareBlogPostLinks (p : BlogPost) = [
     li [] [
@@ -347,7 +347,7 @@ let blogPostView (blogPost : BlogPost) =
             ]
             yield disqus blogPost.Id blogPost.Title blogPost.Permalink
         ]
-    ] |> masterView (Some blogPost.Title) (Some blogPost.Excerpt) (Some blogPost.Permalink)
+    ] |> masterView (Some blogPost.Title) (Some blogPost.Permalink) (Some blogPost.Excerpt)
 
 let aboutView =
     [
@@ -357,8 +357,8 @@ let aboutView =
         ]
     ] |> masterView
         (Some "About")
-        (Some "Hi, welcome to my personal website, software engineering blog and...")
         (Some Url.``/about``)
+        (Some "Hi, welcome to my personal website, software engineering blog and...")
 
 let notFoundView =
     [
