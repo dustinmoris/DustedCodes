@@ -136,10 +136,10 @@ let masterView (subject   : string option)
                 yield openGraph "title"        pageTitle
                 yield openGraph "url"          permalink.Value
                 yield openGraph "type"         "website"
-                yield openGraph "image"        Url.``/logo.svg``
+                yield openGraph "image"        "https://storage.googleapis.com/dusted-codes/og-banner.jpg"
                 yield openGraph "image:alt"    Config.blogTitle
-                yield openGraph "image:width"  "150"
-                yield openGraph "image:height" "150"
+                yield openGraph "image:width"  "1094"
+                yield openGraph "image:height" "729"
                 if sample.IsSome then
                     yield openGraph "description" sample.Value
 
