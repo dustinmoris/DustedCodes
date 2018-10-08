@@ -47,13 +47,13 @@ I once had to read the documentation of a third party software which had so many
 
 I'm sure that this issue has been fixed by now and I'm not saying that all third party tools have such a bad user experience, but regardless of what their actual UX is, each of them has a slightly different approach on how they structure their content. This is all good in the context of normal (commercial) websites, but it often forgets that documentation is much simpler than the usual website on the internet. Documentation doesn't require half of the things which a normal website can do today. Documentation is a read only exercise. Most importantly, documentation already has an ancient universally understood structure which every human is very likely to be familiar (and comfortable) with: The table of contents.
 
-[ Insert picture of a book's table of contents ]
+<img src="https://storage.googleapis.com/dusted-codes/images/book-table-of-contents.png" alt="Table of contents inside a book" style="max-width: 400px" />
 
 A table of contents is so simple and effective that it is still used across all various industries for any content which happens to be larger than a single page. Magazines, books, catalouges, contracts and manuals of all sorts of kind use a table of contents in order to structure their content in a user friendly way.
 
 A table of contents let's us structure a large document into smaller pieces without having to divide the content into multiple pages. If it works for print, e-books or large PDFs, then I don't see why it wouldn't work for a project's `DOCUMENTATION.md` file which is hosted on the web:
 
-[ Insert picture of table of contents ]
+<img src="https://storage.googleapis.com/dusted-codes/images/giraffe-table-of-contents.png" alt="Table of contents for open source project" style="max-width: 400px" />
 
 Instead of having to break up an online documentation into multiple pages which need to be maintained individually by a person or team, a table of contents allows us to have a single large `DOCUMENTATION.md` file which can be maintained a lot easier without losing the convenience of a structured document.
 
@@ -89,6 +89,8 @@ The most annoying thing about documentation is that it is extremely difficult to
 If all of the documentation is hosted in a single `DOCUMENTATION.md` file inside a project's Git repository then this responsibility can be easily shared with other contributors. There is a huge benefit in being able to search and replace function names and other code samples as part of the normal re-factoring process from an IDE. Without even having to actively think about documentation the normal search and replace feature in an IDE will automatically include any findings from the `DOCUMENTATION.md` too. It is also extremely useful to have the documentation being closely linked with the various branches of a project. This allows contributors and other maintainers to keep the documentation up to date as and when they make changes on a specific branch. Heck it can even be required to update the documentation as part of a pull request which gives the core maintainer a huge power over distributing this responsibility to other contributors as well.
 
 Apart from never being out of sync another nice token is that there is never a delay in publishing the updated version of the documentation and the actual product itself. As soon as a release is crafted and everything is merged back into master (from where the build will automatically deploy the latest version) the documentation has been merged into master as well and therefore become the latest updated iteration which matches the released code.
+
+## Overall experience
 
 Personally I've not found a single downside of having a single large documentation file written up in Markdown and kept close to my code inside my project's Git repository yet. It has proven to be an extremely powerful pattern which allows me to easily keep Giraffe's documentation up to date, well maintained and extremely user friendly for everyone who's been using it so far.
 
