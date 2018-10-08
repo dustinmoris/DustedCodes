@@ -2,15 +2,15 @@
 	Tags: documentation oss giraffe
 -->
 
-# Open Source Documentation
+# Open Source projects and documentation
 
-Since January last year - which is almost two years ago - I've been maintaining an open source project called [Giraffe](https://github.com/giraffe-fsharp/giraffe). Giraffe is a functional web framework for F# developers which allows .NET developers to build rich web applications on top of Microsoft's [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/) web framework in a functional first approach. Given that Giraffe is targeted at .NET web developers, who practise F# and who also like to use ASP.NET Core as their underlying web stack (as opposed to maybe [WebSharper](https://websharper.com/), [Suave](https://suave.io/), [Freya](https://freya.io/) or others) I would consider Giraffe a fairly niche product.
+Since January 2017, which soon will be two years ago, I've been maintaining an open source project called [Giraffe](https://github.com/giraffe-fsharp/giraffe). Giraffe is a functional web framework for F# developers which allows .NET developers to build rich web applications on top of Microsoft's [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/) web framework in a functional first approach. Given that Giraffe is targeted at .NET web developers, who practise F# and who also like to use ASP.NET Core as their underlying web stack (as opposed to maybe [WebSharper](https://websharper.com/), [Suave](https://suave.io/), [Freya](https://freya.io/) or others) I would consider Giraffe a fairly niche product.
 
 However, as niche as it may be, it still attracted a reasonable amount of developers who use it in a personal and professional capacity every day and as such documentation has become an integral part of maintaining the project from the get go.
 
 As someone who has never maintained an open source project before I didn't really have much experience with this topic and therefore went with a very straightforward, simple and sort of lazy solution in the beginning. I put all initial documentation into the `README.md` file inside my Git repository.
 
-Almost two years-, 46 releases-, 44 total contributors-, more than 800 GitHub stars and almost 100 merged pull requests later the project's simple documentation approach hasn't changed much, and to be honest I have very little motivation to change something about that.
+Almost two years-, 48 releases-, 47 total contributors-, more than 800 GitHub stars and more than 100 merged pull requests later the project's simple documentation approach hasn't changed much, and to be honest I have very little motivation to change something about that.
 
 The main reason why is because I actually believe that the current way how documentation is handled by Giraffe is  a perfectly well working solution for its users, its contributors and myself.
 
