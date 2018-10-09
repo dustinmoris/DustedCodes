@@ -487,6 +487,13 @@ body > header h2 {
     fill: #ff5252;
 }
 
+.three-quarters {
+    max-width: 75%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
 /* --------------------------
   Mobile overrides
 -------------------------- */
@@ -536,5 +543,12 @@ body > header h2 {
 
     .share-links svg {
         padding: .8em;
+    }
+
+    .three-quarters {
+        max-width: 100%;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
     }
 }
