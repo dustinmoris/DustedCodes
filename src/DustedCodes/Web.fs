@@ -174,7 +174,7 @@ let atomFeedHandler : HttpHandler =
 
 let webApp =
     choose [
-        GET >=>
+        choose [ GET; HEAD ] >=>
             choose [
                 // Static cachable assets
                 route  UrlPaths.``/logo.svg``   >=> svgHandler dustedCodesIcon
