@@ -3,6 +3,7 @@
 -->
 
 # Open Source Documentation
+
 Since January 2017, which soon will be two years ago, I've been maintaining an open source project called [Giraffe](https://github.com/giraffe-fsharp/giraffe). Giraffe is a functional web framework for F# which allows .NET developers to build rich web applications on top of Microsoft's [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/) web framework in a functional first approach. Given that [Giraffe](https://github.com/giraffe-fsharp/Giraffe) is targeted at .NET web developers, who practise F# and who also like to use ASP.NET Core as their underlying web stack (as opposed to maybe [WebSharper](https://websharper.com/), [Suave](https://suave.io/), [Freya](https://freya.io/) or others) I would consider Giraffe a fairly niche product.
 
 However as niche as it may be, it still attracted a reasonable amount of developers who use it in a personal or professional capacity every day and as such documentation has become an integral part of maintaining the project from the get go.
