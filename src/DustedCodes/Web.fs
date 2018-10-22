@@ -219,7 +219,6 @@ let errorHandler (ex : Exception) (logger : ILogger) =
 let configureServices (services : IServiceCollection) =
     services.AddResponseCaching()
             .AddMemoryCache()
-            .AddFirewall()
             .AddGiraffe()
             |> ignore
 
@@ -231,9 +230,12 @@ let configureApp (app : IApplicationBuilder) =
 
     app.UseGiraffeErrorHandler(errorHandler)
        .UseForwardedHeaders(forwardedHeadersOptions)
-       .UseCloudflareFirewall(
-           allowLocalRequests = true,
-           additionalVipList = Config.additionalVipList)
+       .UseFirewall(
+            FirewallRulesEngine
+                .DenyAllAccess()
+                .ExceptFromCloudflare()
+                .ExceptFromIPAddresses(Config.vipList)
+                .ExceptFromLocalhost())
        .UseResponseCaching()
        .UseStaticFiles()
        .UseGiraffe webApp

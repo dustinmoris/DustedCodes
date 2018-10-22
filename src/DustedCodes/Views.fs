@@ -362,17 +362,21 @@ let aboutView =
 
 let notFoundView =
     [
-        h1 [] [ rawText "Page not found!" ]
-        p [] [ encodedText "Sorry, the page you have requested may have been moved or deleted." ]
-        p [] [ rawText "Return to the "; normalLink Url.``/`` "home page"; rawText "." ]
+        div [ _class "error-view" ] [
+            h1 [] [ rawText "Page not found!" ]
+            p [] [ encodedText "Sorry, the page you have requested may have been moved or deleted." ]
+            p [] [ rawText "Return to the "; normalLink Url.``/`` "home page"; rawText "." ]
+        ]
     ] |> masterView (Some "Page not found") None None
 
 let internalErrorView (errorMessage : string option) =
     [
-        yield h1 [] [ rawText "Whoops, an error occurred!" ]
-        yield p [] [ encodedText "Sorry, there was an internal error while processing your request." ]
-        yield p [] [ rawText "Please try in a little while again or return to the "; normalLink Url.``/`` "home page"; rawText "." ]
-        match errorMessage with
-        | Some msg -> yield p [] [ encodedText msg ]
-        | None     -> ()
+        div [ _class "error-view" ] [
+            yield h1 [] [ rawText "Whoops, an error occurred!" ]
+            yield p [] [ encodedText "Sorry, there was an internal error while processing your request." ]
+            yield p [] [ rawText "Please try in a little while again or return to the "; normalLink Url.``/`` "home page"; rawText "." ]
+            match errorMessage with
+            | Some msg -> yield p [] [ encodedText msg ]
+            | None     -> ()
+        ]
     ] |> masterView (Some "Internal error") None None
