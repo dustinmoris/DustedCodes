@@ -4,13 +4,13 @@
 
 # ASP.NET Core Firewall
 
-About a month ago I experienced an issue with one of my online services which is running in the Google Cloud and also protected by [Cloudflare](https://www.cloudflare.com/). I noticed a spike in traffic which only showed up in my Google Cloud dashboard but not in Cloudflare. It was odd because all requests should normally route through Cloudflare's proxy servers but it seemed like someone was circumventing the DNS resolution and hitting my service directly via its exposed IP address. It was a significant issue, because the endpoint which was being hit was quite expensive and I had specifically configured Cloudflare to rate limit a caller to a maximum of 100 requests per second. Unfortunately someone must have spoofed my service's IP address and managed to bypass Cloudflare and the configured rate limit and was able to issue thousands of requests per second which put a huge strain on my rather cheap infrastructure.
+About a month ago I experienced an issue with one of my online services which is running in the Google Cloud and also protected by [Cloudflare](https://www.cloudflare.com/). I had noticed a spike in traffic which only showed up in my Google Cloud dashboard but not in Cloudflare. It was odd because all requests should normally route through Cloudflare's proxy servers but it seemed like someone was circumventing the DNS resolution and hitting my service directly via its exposed IP address. It was a significant issue, because the endpoint which was being hit was quite expensive and I had specifically configured Cloudflare to rate limit a caller to a maximum of 100 requests per second. Unfortunately someone must have spoofed my service's IP address and managed to bypass Cloudflare and the configured rate limit and was able to issue thousands of requests per second which put a huge strain on my rather cheap infrastructure.
 
 After a quick Google search I discovered that [bypassing Cloudflare](https://blog.christophetd.fr/bypassing-cloudflare-using-internet-wide-scan-data/) is not that difficult and actually quite [well documented on the internet](http://www.chokepoint.net/2017/10/exposing-server-ips-behind-cloudflare.html). To my rescue I also discovered that [Cloudflare publishes a list of all their IPv4 and IPv6 addresses](https://www.cloudflare.com/ips/) which web administrators (is that even still a thing?) can use to set up IP address filtering on their web services to specifically prevent scenarios like this. I needed a quick solution and therefore went on another internet search for an ASP.NET Core middleware which would block all incoming requests which did not originate from a known Cloudflare address. The closest I could find was an article on a [Client IP safelist](https://docs.microsoft.com/en-us/aspnet/core/security/ip-safelist?view=aspnetcore-2.1), but it didn't allow me to "safelist" an entire IP address range like the ones which Cloudflare has made public (e.g. `103.21.244.0/22`).
 
-Knowing that I couldn't afford to run with this issue for much longer I decided to quickly hack my own IP address filtering middleware together. After a couple of hours of mad programming and copy pasting from Stackoverflow  I had a quick and dirty solution deployed to production. It wasn't perfect, but it worked. My initial hack was able to validate an incoming IP address against all of Cloudflare's published CIDR notations and either grant or deny access to the requested resource. I was really happy of how well it worked and after my pressing issue had been solved I wanted to deploy the same solution to all of my other ASP.NET Core services too.
+Knowing that I couldn't afford to run with this issue for much longer I decided to quickly hack my own IP address filtering middleware together. After a couple of hours of mad programming and copy pasting from Stackoverflow  I had a quick and dirty solution deployed to production. It wasn't perfect, but it worked. My initial hack was able to validate an incoming IP address against all of Cloudflare's published CIDR notations and either grant or deny access to the requested resource. I was really happy how well it worked and after my pressing issue had been solved I wanted to deploy the same solution to all of my other ASP.NET Core services too.
 
-A week later I published a slightly more polished version of the middleware as a NuGet package called [Firewall](https://www.nuget.org/packages/Firewall/). Today I deployed another version with major architectural improvements which make [Firewall](https://github.com/dustinmoris/Firewall) a much more flexible and useful library to a wider range of applications. In the rest of this blog post I would like to demonstrate some of the things which Firewall can do for an ASP.NET Core application.
+A week later I published a slightly more polished version of the middleware as a NuGet package called [Firewall](https://www.nuget.org/packages/Firewall/). Today I deployed another version with major architectural improvements which made [Firewall](https://github.com/dustinmoris/Firewall) a much more flexible and useful library to a wider range of applications. In the rest of this blog post I would like to demonstrate some of the features which Firewall can do for an ASP.NET Core application.
 
 ## How Firewall works
 
@@ -81,9 +81,9 @@ app.UseFirewall(
         .ExceptFromLocalhost());
 ```
 
-In the example above an incoming request will be first checked if it came from the same host, then if it came from the web administrator's home address and afterwards if it came from one of Cloudflare's IP addresses before the request will get denied. The request needs to satisfy only one of the rules in order to gain access.
+In the example above an incoming request will be first checked if it came from the same host, then if it came from the web administrator's home address and afterwards if it came from one of Cloudflare's IP addresses before the request will get denied. The request needs to satisfy only one of the rules in order to pass validation.
 
-The reverse order of validation might seem a little bit weird at first, but it is simply explained by exposing the underlying architecture which is nothing less than the decorator composition pattern:
+The reverse order of validation might seem a little bit weird at first, but it is simply explained by exposing the underlying architecture which is nothing more than a standard decorator composition pattern:
 
 ```
 // Pseudo code:
@@ -95,7 +95,7 @@ var rules =
                 new DenyAllAccessRule())));
 ```
 
-The `FirewallRulesEngine` is only syntactic sugar which allows a user to compose a set of rules without having to new up a bunch of classes and dependencies.
+The `FirewallRulesEngine` is only syntactic sugar on top of the decorator pattern which allows a user to compose a set of rules without having to new up a bunch of classes and dependencies.
 
 ## Custom Rules
 
@@ -111,7 +111,7 @@ app.UseFirewall(
         .ExceptWhen(ctx => ctx.Connection.RemoteIpAddress == adminIPAddress));
 ```
 
-More complex rule by implementing `IFirewallRule`:
+More complex rules can be created by implementing `IFirewallRule`:
 
 ```
 public class IPCountryRule : IFirewallRule
@@ -146,7 +146,7 @@ There's a [complete example of creating a custom rule](https://github.com/dustin
 
 ## X-Forwarded-For HTTP Header
 
-There is more features like a [GeoIP2](https://dev.maxmind.com/geoip/geoip2/geolite2/) powered `CountryRule`, detailed diagnostics for debugging and examples of how to load rule settings from external configuration providers, but one more ASP.NET Core feature which I would like to specifically highlight here is the `UseForwardedHeaders` middleware.
+Firewall has more features like a [GeoIP2](https://dev.maxmind.com/geoip/geoip2/geolite2/) powered `CountryRule`, detailed diagnostics for debugging and examples of how to load rule settings from external configuration providers, but one more ASP.NET Core feature which I wanted to specifically highlight here is the `UseForwardedHeaders` middleware.
 
 If an application sits behind more than one proxy server (e.g. Cloudflare + a custom load balancer) then you'll need to enable the `ForwardedHeader` middleware in order to retrieve the correct client IP address in the `HttpContext.Connection.RemoteIpAddress` property:
 
@@ -172,4 +172,4 @@ public void Configure(IApplicationBuilder app)
 
 It is important to understand that this HTTP header is not guaranteed to be safe (as anything else which is client generated) and therefore it is not recommended to set the `ForwardedLimit` to a value greater than 1 unless the application is also set up with a list of trusted proxies (`KnownProxies` or `KnownNetworks`). If this is not done correctly then a malicious user could pretend to be a trusted source by setting the `X-Forwarded-For` header to a known (trusted) IP address.
 
-If you like what you've seen here or if you've got an ASP.NET Core website running behind Cloudflare too then go and check out [Firewall](https://github.com/dustinmoris/Firewall) and make sure to secure your application against unwanted traffic.
+If you think this short article was useful or if you've got your own ASP.NET Core website running behind Cloudflare then please go and check out the [Firewall](https://github.com/dustinmoris/Firewall) project and secure your application against unwanted traffic too.
