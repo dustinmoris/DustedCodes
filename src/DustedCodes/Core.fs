@@ -76,7 +76,7 @@ module Config =
             | false -> BASE_URL
             | true  -> if isProduction then prodUrl else localUrl
 
-    let additionalVipList =
+    let vipList =
         VIP_LIST
         |> String.IsNullOrEmpty
         |> function

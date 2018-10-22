@@ -494,6 +494,11 @@ body > header h2 {
     -webkit-box-sizing: border-box;
 }
 
+.error-view h1,
+.error-view p {
+    text-align: center;
+}
+
 /* --------------------------
   Mobile overrides
 -------------------------- */

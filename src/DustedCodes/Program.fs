@@ -30,7 +30,15 @@ let main args =
             .CreateLogger()
     try
         try
+            let lastBlogPost =
+                Web.blogPosts
+                |> List.sortByDescending (fun t -> t.PublishDate)
+                |> List.head
+
             Log.Information "Starting Dusted Codes Blog..."
+
+            Log.Information (sprintf "Parsed %i blog posts." Web.blogPosts.Length)
+            Log.Information (sprintf "Last blog post is: %s." lastBlogPost.Title)
 
             WebHostBuilder()
                 .UseSerilog()
