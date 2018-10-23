@@ -5,6 +5,7 @@ open System.Text
 open System.Linq
 open Microsoft.AspNetCore.Http
 open Microsoft.AspNetCore.HttpOverrides
+open Microsoft.AspNetCore.Http.Extensions
 open Microsoft.AspNetCore.Builder
 open Microsoft.Extensions.Logging
 open Microsoft.Extensions.Caching.Memory
@@ -19,19 +20,6 @@ open DustedCodes.BlogPosts
 open DustedCodes.GoogleAnalytics
 open DustedCodes.Icons
 open DustedCodes.Views
-
-// ---------------------------------
-// Helper methods
-// ---------------------------------
-
-let getRequestUrl (ctx : HttpContext) =
-    let req = ctx.Request
-    String.Concat(
-        req.Scheme, "://",
-        req.Host.ToString(),
-        req.PathBase.ToUriComponent(),
-        req.Path.ToUriComponent(),
-        req.QueryString.ToUriComponent())
 
 // ---------------------------------
 // Global data
@@ -64,7 +52,7 @@ let notFoundHandler =
         logger.LogWarning(
             "Could not serve '{verb} {url}', because it does not exist.",
             ctx.Request.Method,
-            (getRequestUrl ctx))
+            ctx.Request.GetEncodedUrl())
         (setStatusCode 404
         >=> htmlView notFoundView) next ctx
 
