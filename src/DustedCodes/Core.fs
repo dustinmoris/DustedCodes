@@ -154,14 +154,7 @@ module Url =
 
 [<RequireQualifiedAccess>]
 module About =
-    open System
     open System.IO
-
-    let daysInLondon =
-        let dateMovedToLondon  = DateTime(2012, 10, 16)
-        let timeLivingInLondon = DateTime.UtcNow - dateMovedToLondon
-        let daysPerYear        = 365
-        timeLivingInLondon.Days / daysPerYear
 
     let content =
         Path.Combine(Config.staticContentFolder, "About.md")
