@@ -1,9 +1,7 @@
 module DustedCodes.Views
 
 open System
-open System.Text
-open System.Text.RegularExpressions
-open System.Security.Cryptography
+open System.Net
 open Giraffe.GiraffeViewEngine
 open DustedCodes.BlogPosts
 open DustedCodes.Icons
@@ -47,7 +45,7 @@ let disqusScript (id : string) (title : string) (url : string) =
             dsq.type = 'text/javascript';
             dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();" Config.disqusShortName id title url)
+        })();" Config.disqusShortName id (WebUtility.UrlEncode title) url)
     ]
 
 let disqusCountScript =
