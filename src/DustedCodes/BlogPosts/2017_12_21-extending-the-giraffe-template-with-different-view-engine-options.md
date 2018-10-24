@@ -143,7 +143,6 @@ If you have any further questions or you would like to know more about the detai
 
 This blog post is part of the [F# Advent Calendar in English 2017](https://sergeytihon.com/2017/10/22/f-advent-calendar-in-english-2017/) blog series which has been kindly organised by [Sergey Tihon](https://twitter.com/sergey_tihon). Hope you all enjoyed this short tutorial and wish you a very Merry Christmas!
 
-
 <h4 id="templating-engine-documentation">1) Templating engine documentation</h4>
 
 Various documentation for the `dotnet new` templating engine can be found across the following resources:
