@@ -346,8 +346,14 @@ body > header h2 {
   Unique elements
 -------------------------- */
 
-#trending-list li > div:first-child {
-    margin-bottom: .5em;
+#trending-list,
+#blogpost-list {
+    list-style: none;
+}
+
+#trending-list li {
+    line-height: 1.7em;
+    margin-bottom: 1em;
 }
 
 #avatar {
@@ -505,8 +511,10 @@ body > header h2 {
 
 @media all and (max-width: 640px) {
 
-    main {
+    body > main {
         margin-top: 0;
+        border-top: 1px solid #fafafa;
+        border-bottom: 1px solid #fafafa;
     }
 
     #social-links svg {

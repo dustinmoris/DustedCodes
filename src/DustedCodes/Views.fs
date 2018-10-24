@@ -243,11 +243,17 @@ let trendingView (blogPosts : BlogPost list) =
     let pageTitle = "Trending"
     let h1Title   = "Top 10 blog posts"
     [
-        h1 [] [ rawText h1Title ]
-        ol [ _id "trending-list" ] [
-            yield!
-                blogPosts
-                |> List.map trendingBlogPostListItem
+        article[] [
+            header [] [
+                h1 [] [ rawText h1Title ]
+            ]
+            main [] [
+                ol [ _id "trending-list" ] [
+                    yield!
+                        blogPosts
+                        |> List.map trendingBlogPostListItem
+                ]
+            ]
         ]
         disqusCountScript
     ] |> masterView
@@ -258,11 +264,17 @@ let trendingView (blogPosts : BlogPost list) =
 let tagView (tag : string) (blogPosts : BlogPost list) =
     let title = sprintf "Tagged with '%s'" tag
     [
-        h1 [] [ encodedText title ]
-        ul [ _id "blogpost-list" ] [
-            yield!
-                blogPosts
-                |> List.map trendingBlogPostListItem
+        article [] [
+            header [] [
+                h1 [] [ encodedText title ]
+            ]
+            main [] [
+                ul [ _id "blogpost-list" ] [
+                    yield!
+                        blogPosts
+                        |> List.map trendingBlogPostListItem
+                ]
+            ]
         ]
         disqusCountScript
     ] |> masterView
