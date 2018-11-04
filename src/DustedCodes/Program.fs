@@ -4,45 +4,68 @@ open System
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Serilog
+open Serilog.Events
+open Serilog.Sinks.Elasticsearch
+open Elasticsearch.Net
 open Giraffe
-
-let parseLogLevel (lvl : string) =
-    match lvl with
-    | "verbose" -> Serilog.Events.LogEventLevel.Verbose
-    | "debug"   -> Serilog.Events.LogEventLevel.Debug
-    | "info"    -> Serilog.Events.LogEventLevel.Information
-    | "warning" -> Serilog.Events.LogEventLevel.Warning
-    | "fatal"   -> Serilog.Events.LogEventLevel.Fatal
-    | _         -> Serilog.Events.LogEventLevel.Error
 
 [<EntryPoint>]
 let main args =
-    let logLevel =
-        match isNotNull args && args.Length > 0 && not (String.IsNullOrEmpty args.[0]) with
+    let parseLogLevel =
+        function
+        | "verbose" -> LogEventLevel.Verbose
+        | "debug"   -> LogEventLevel.Debug
+        | "info"    -> LogEventLevel.Information
+        | "warning" -> LogEventLevel.Warning
+        | "error"   -> LogEventLevel.Error
+        | "fatal"   -> LogEventLevel.Fatal
+        | _         -> LogEventLevel.Warning
+
+    let logLevelConsole =
+        match isNotNull args && args.Length > 0 with
         | true  -> args.[0]
-        | false -> Config.logLevel
+        | false -> Config.logLevelConsole
         |> parseLogLevel
+
+    let logLevelElastic =
+        Config.logLevelElastic
+        |> parseLogLevel
+
+    let elasticOptions =
+        new ElasticsearchSinkOptions(
+            new Uri(Config.elasticUrl),
+            AutoRegisterTemplate = true,
+            AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv6,
+            MinimumLogEventLevel = new Nullable<LogEventLevel>(logLevelElastic),
+            ModifyConnectionSettings =
+                fun (config : ConnectionConfiguration) ->
+                    config.BasicAuthentication(
+                        Config.elasticUser,
+                        Config.elasticPassword))
 
     Log.Logger <-
         (new LoggerConfiguration())
-            .MinimumLevel.Is(logLevel)
-            .WriteTo.Console()
+            .MinimumLevel.Information()
+            .Enrich.WithProperty("Environment", Config.environmentName)
+            .Enrich.WithProperty("Application", "DustedCodes")
+            .WriteTo.Console(logLevelConsole)
+            .WriteTo.Elasticsearch(elasticOptions)
             .CreateLogger()
+
     try
         try
             let lastBlogPost =
-                Web.blogPosts
+                BlogPosts.all
                 |> List.sortByDescending (fun t -> t.PublishDate)
                 |> List.head
 
             Log.Information "Starting Dusted Codes Blog..."
-
-            Log.Information (sprintf "Parsed %i blog posts." Web.blogPosts.Length)
+            Log.Information (sprintf "Parsed %i blog posts." BlogPosts.all.Length)
             Log.Information (sprintf "Last blog post is: %s." lastBlogPost.Title)
 
             WebHostBuilder()
                 .UseSerilog()
-                .UseKestrel()
+                .UseKestrel(fun k -> k.AddServerHeader <- false)
                 .UseContentRoot(Config.contentRoot)
                 .UseWebRoot(Config.webRoot)
                 .Configure(Action<IApplicationBuilder> Web.configureApp)

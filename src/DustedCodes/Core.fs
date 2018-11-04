@@ -12,6 +12,11 @@ module Str =
     let equals   (s1 : string) (s2 : string) = s1.Equals s2
     let equalsCi (s1 : string) (s2 : string) = s1.Equals(s2, ignoreCase)
 
+    let toOption str =
+        match str with
+        | null | "" -> None
+        | _         -> Some str
+
 [<RequireQualifiedAccess>]
 module Hash =
     open System.Text
@@ -29,19 +34,55 @@ module Hash =
 // ---------------------------------
 
 [<RequireQualifiedAccess>]
+module DevSecrets =
+    open System
+    open System.IO
+    open System.Collections.Generic
+    open Newtonsoft.Json
+
+    let private userFolder  = Environment.GetEnvironmentVariable "HOME"
+    let private secretsFile = sprintf "%s/.secrets/dustedcodes.sec.json" userFolder
+
+    let private secrets =
+        secretsFile
+        |> File.Exists
+        |> function
+            | false -> new Dictionary<string, string>()
+            | true  ->
+                secretsFile
+                |> File.ReadAllText
+                |> JsonConvert.DeserializeObject<Dictionary<string, string>>
+
+    let get key =
+        match secrets.TryGetValue key with
+        | true , value -> value
+        | false, _     -> String.Empty
+
+[<RequireQualifiedAccess>]
 module Config =
     open System
     open System.IO
 
-    let private envVar (key : string) = Environment.GetEnvironmentVariable key
+    let private envVar key = Environment.GetEnvironmentVariable key
 
-    let private ASPNETCORE_ENVIRONMENT   = envVar "ASPNETCORE_ENVIRONMENT"
-    let private BASE_URL                 = envVar "BASE_URL"
-    let private GOOGLE_APIS_JSON_KEY     = envVar "GOOGLE_APIS_JSON_KEY"
-    let private GOOGLE_ANALYTICS_VIEW_ID = envVar "GOOGLE_ANALYTICS_VIEW_ID"
-    let private LOG_LEVEL                = envVar "LOG_LEVEL"
-    let private VIP_LIST                 = envVar "VIP_LIST"
-    let private DISQUS_SHORTNAME         = envVar "DISQUS_SHORTNAME"
+    let private getSecret key =
+        envVar key
+        |> Str.toOption
+        |> defaultArg
+        <| DevSecrets.get key
+
+    let private ASPNETCORE_ENVIRONMENT   = "ASPNETCORE_ENVIRONMENT"
+    let private BASE_URL                 = "BASE_URL"
+    let private GOOGLE_APIS_JSON_KEY     = "GOOGLE_APIS_JSON_KEY"
+    let private GOOGLE_ANALYTICS_VIEW_ID = "GOOGLE_ANALYTICS_VIEW_ID"
+    let private LOG_LEVEL_CONSOLE        = "LOG_LEVEL_CONSOLE"
+    let private LOG_LEVEL_ELASTIC        = "LOG_LEVEL_ELASTIC"
+    let private VIP_LIST                 = "VIP_LIST"
+    let private DISQUS_SHORTNAME         = "DISQUS_SHORTNAME"
+    let private API_SECRET               = "API_SECRET"
+    let private ELASTIC_URL              = "ELASTIC_URL"
+    let private ELASTIC_USER             = "ELASTIC_USER"
+    let private ELASTIC_PASSWORD         = "ELASTIC_PASSWORD"
 
     let contentRoot         = Directory.GetCurrentDirectory()
     let webRoot             = Path.Combine(contentRoot, "WebRoot")
@@ -53,63 +94,52 @@ module Config =
     let blogLanguage     = "en-GB"
     let blogAuthor       = "Dustin Moris Gorski"
 
-    let isProduction =
-        ASPNETCORE_ENVIRONMENT
-        |> String.IsNullOrEmpty
-        |> function
-            | false -> ASPNETCORE_ENVIRONMENT |> Str.equalsCi "Production"
-            | true  -> false
+    let environmentName =
+        envVar ASPNETCORE_ENVIRONMENT
+        |> Str.toOption
+        |> defaultArg
+        <| "Development"
 
-    let logLevel =
-        LOG_LEVEL
-        |> String.IsNullOrEmpty
-        |> function
-            | false -> LOG_LEVEL
-            | true  -> "error"
+    let isProduction =
+        environmentName
+        |> Str.equalsCi "Production"
+
+    let logLevelConsole =
+        envVar LOG_LEVEL_CONSOLE
+        |> Str.toOption
+        |> defaultArg
+        <| "error"
+
+    let logLevelElastic =
+        envVar LOG_LEVEL_ELASTIC
+        |> Str.toOption
+        |> defaultArg
+        <| "warning"
 
     let baseUrl =
         let prodUrl  = "https://dusted.codes"
         let localUrl = "http://localhost:5000"
-        BASE_URL
-        |> String.IsNullOrEmpty
-        |> function
-            | false -> BASE_URL
-            | true  -> if isProduction then prodUrl else localUrl
+        envVar BASE_URL
+        |> Str.toOption
+        |> defaultArg
+        <| if isProduction then prodUrl else localUrl
 
     let vipList =
-        VIP_LIST
-        |> String.IsNullOrEmpty
+        envVar VIP_LIST
+        |> Str.toOption
         |> function
-            | true  -> [||]
-            | false ->
-                VIP_LIST.Split([| ','; ' ' |], StringSplitOptions.RemoveEmptyEntries)
+            | None      -> [||]
+            | Some vips ->
+                vips.Split([| ','; ' ' |], StringSplitOptions.RemoveEmptyEntries)
                 |> Array.map System.Net.IPAddress.Parse
 
-    let googleApisJsonKey =
-        GOOGLE_APIS_JSON_KEY
-        |> String.IsNullOrEmpty
-        |> function
-            | false -> GOOGLE_APIS_JSON_KEY
-            | true  ->
-                Giraffe.Common.readFileAsStringAsync "/Users/dustinmoris/Private/google-analytics-sa-key.json"
-                |> Async.AwaitTask
-                |> Async.RunSynchronously
-
-    let googleAnalyticsViewId =
-        GOOGLE_ANALYTICS_VIEW_ID
-        |> String.IsNullOrEmpty
-        |> function
-            | true  ->
-                Giraffe.Common.readFileAsStringAsync "/Users/dustinmoris/Private/google-analytics-view-id.txt"
-                |> Async.AwaitTask
-                |> Async.RunSynchronously
-            | false -> GOOGLE_ANALYTICS_VIEW_ID
-
-    let disqusShortName =
-        DISQUS_SHORTNAME
-        |> Giraffe.Common.strOption
-        |> defaultArg
-        <| "dev-dustedcodes"
+    let apiSecret             = getSecret API_SECRET
+    let googleApisJsonKey     = getSecret GOOGLE_APIS_JSON_KEY
+    let googleAnalyticsViewId = getSecret GOOGLE_ANALYTICS_VIEW_ID
+    let disqusShortName       = getSecret DISQUS_SHORTNAME
+    let elasticUrl            = getSecret ELASTIC_URL
+    let elasticUser           = getSecret ELASTIC_USER
+    let elasticPassword       = getSecret ELASTIC_PASSWORD
 
 // ---------------------------------
 // Urls
@@ -118,6 +148,7 @@ module Config =
 [<RequireQualifiedAccess>]
 module UrlPaths =
     let ``/``          = "/"
+    let ``/ping``      = "/ping"
     let ``/about``     = "/about"
     let ``/contact``   = "/contact"
     let ``/trending``  = "/trending"
@@ -377,7 +408,7 @@ module BlogPosts =
         with ex ->
             Error (sprintf "Could not parse file '%s', because it was in an unsupported format. Error message: %s." blogPostPath ex.Message)
 
-    let getAllBlogPostsFromDisk (blogPostsPath : string) =
+    let private getAllBlogPostsFromDisk (blogPostsPath : string) =
         blogPostsPath
         |> Directory.GetFiles
         |> Array.map parseBlogPost
@@ -392,6 +423,8 @@ module BlogPosts =
                 errors
                 |> List.fold (fun acc line -> acc + Environment.NewLine + line) ""
                 |> failwith)
+
+    let all = getAllBlogPostsFromDisk Config.blogPostsFolder
 
 // ---------------------------------
 // RSS Feed
