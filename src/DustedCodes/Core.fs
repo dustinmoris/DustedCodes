@@ -12,6 +12,11 @@ module Str =
     let equals   (s1 : string) (s2 : string) = s1.Equals s2
     let equalsCi (s1 : string) (s2 : string) = s1.Equals(s2, ignoreCase)
 
+    let toOption str =
+        match str with
+        | null | "" -> None
+        | _         -> Some str
+
 [<RequireQualifiedAccess>]
 module Hash =
     open System.Text
@@ -42,6 +47,10 @@ module Config =
     let private LOG_LEVEL                = envVar "LOG_LEVEL"
     let private VIP_LIST                 = envVar "VIP_LIST"
     let private DISQUS_SHORTNAME         = envVar "DISQUS_SHORTNAME"
+    let private API_SECRET               = envVar "API_SECRET"
+    let private ELASTIC_URL              = envVar "ELASTIC_URL"
+    let private ELASTIC_USER             = envVar "ELASTIC_USER"
+    let private ELASTIC_PASSWORD         = envVar "ELASTIC_PASSWORD"
 
     let contentRoot         = Directory.GetCurrentDirectory()
     let webRoot             = Path.Combine(contentRoot, "WebRoot")
@@ -53,28 +62,29 @@ module Config =
     let blogLanguage     = "en-GB"
     let blogAuthor       = "Dustin Moris Gorski"
 
-    let isProduction =
+    let environmentName =
         ASPNETCORE_ENVIRONMENT
-        |> String.IsNullOrEmpty
-        |> function
-            | false -> ASPNETCORE_ENVIRONMENT |> Str.equalsCi "Production"
-            | true  -> false
+        |> Str.toOption
+        |> defaultArg
+        <| "Development"
+
+    let isProduction =
+        environmentName
+        |> Str.equalsCi "Production"
 
     let logLevel =
         LOG_LEVEL
-        |> String.IsNullOrEmpty
-        |> function
-            | false -> LOG_LEVEL
-            | true  -> "error"
+        |> Str.toOption
+        |> defaultArg
+        <| "error"
 
     let baseUrl =
         let prodUrl  = "https://dusted.codes"
         let localUrl = "http://localhost:5000"
         BASE_URL
-        |> String.IsNullOrEmpty
-        |> function
-            | false -> BASE_URL
-            | true  -> if isProduction then prodUrl else localUrl
+        |> Str.toOption
+        |> defaultArg
+        <| if isProduction then prodUrl else localUrl
 
     let vipList =
         VIP_LIST
@@ -85,31 +95,53 @@ module Config =
                 VIP_LIST.Split([| ','; ' ' |], StringSplitOptions.RemoveEmptyEntries)
                 |> Array.map System.Net.IPAddress.Parse
 
+    let apiSecret =
+        let devApiSecret =
+            Guid.NewGuid()
+                .ToString("n")
+                .Substring(0, 10)
+        API_SECRET
+        |> Str.toOption
+        |> defaultArg
+        <| devApiSecret
+
     let googleApisJsonKey =
         GOOGLE_APIS_JSON_KEY
-        |> String.IsNullOrEmpty
+        |> Str.toOption
         |> function
-            | false -> GOOGLE_APIS_JSON_KEY
-            | true  ->
-                Giraffe.Common.readFileAsStringAsync "/Users/dustinmoris/Private/google-analytics-sa-key.json"
-                |> Async.AwaitTask
-                |> Async.RunSynchronously
+            | Some v -> v
+            | None   -> File.ReadAllText "/Users/dustinmoris/Private/google-analytics-sa-key.json"
 
     let googleAnalyticsViewId =
         GOOGLE_ANALYTICS_VIEW_ID
-        |> String.IsNullOrEmpty
+        |> Str.toOption
         |> function
-            | true  ->
-                Giraffe.Common.readFileAsStringAsync "/Users/dustinmoris/Private/google-analytics-view-id.txt"
-                |> Async.AwaitTask
-                |> Async.RunSynchronously
-            | false -> GOOGLE_ANALYTICS_VIEW_ID
+            | Some v -> v
+            | None   -> File.ReadAllText "/Users/dustinmoris/Private/google-analytics-view-id.txt"
 
     let disqusShortName =
         DISQUS_SHORTNAME
         |> Giraffe.Common.strOption
         |> defaultArg
         <| "dev-dustedcodes"
+
+    let elasticUrl =
+        ELASTIC_URL
+        |> Str.toOption
+        |> defaultArg
+        <| "https://localhost:9090"
+
+    let elasticUser =
+        ELASTIC_USER
+        |> Str.toOption
+        |> defaultArg
+        <| String.Empty
+
+    let elasticPassword =
+        ELASTIC_PASSWORD
+        |> Str.toOption
+        |> defaultArg
+        <| String.Empty
 
 // ---------------------------------
 // Urls
@@ -118,6 +150,7 @@ module Config =
 [<RequireQualifiedAccess>]
 module UrlPaths =
     let ``/``          = "/"
+    let ``/ping``      = "/ping"
     let ``/about``     = "/about"
     let ``/contact``   = "/contact"
     let ``/trending``  = "/trending"
@@ -377,7 +410,7 @@ module BlogPosts =
         with ex ->
             Error (sprintf "Could not parse file '%s', because it was in an unsupported format. Error message: %s." blogPostPath ex.Message)
 
-    let getAllBlogPostsFromDisk (blogPostsPath : string) =
+    let private getAllBlogPostsFromDisk (blogPostsPath : string) =
         blogPostsPath
         |> Directory.GetFiles
         |> Array.map parseBlogPost
@@ -392,6 +425,8 @@ module BlogPosts =
                 errors
                 |> List.fold (fun acc line -> acc + Environment.NewLine + line) ""
                 |> failwith)
+
+    let all = getAllBlogPostsFromDisk Config.blogPostsFolder
 
 // ---------------------------------
 // RSS Feed

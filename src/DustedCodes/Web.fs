@@ -22,12 +22,6 @@ open DustedCodes.Icons
 open DustedCodes.Views
 
 // ---------------------------------
-// Global data
-// ---------------------------------
-
-let blogPosts = getAllBlogPostsFromDisk Config.blogPostsFolder
-
-// ---------------------------------
 // Web app
 // ---------------------------------
 
@@ -59,7 +53,7 @@ let notFoundHandler =
 let indexHandler =
     allowCaching (TimeSpan.FromHours 1.0)
     >=> (
-        blogPosts
+        BlogPosts.all
         |> List.sortByDescending (fun p -> p.PublishDate)
         |> indexView
         |> htmlView)
@@ -69,7 +63,7 @@ let aboutHandler =
     >=> (aboutView |> htmlView)
 
 let blogPostHandler (id : string) =
-    blogPosts
+    BlogPosts.all
     |> List.tryFind (fun x -> Str.equalsCi x.Id id)
     |> function
         | None -> notFoundHandler
@@ -85,7 +79,7 @@ let trendingHandler : HttpHandler =
             page.Path.ToLower().Contains(blogPost.Id.ToLower())
 
     let pageIsBlogPost (page : PageViewStatistic) =
-        blogPosts |> List.exists (pageMatchesBlogPost page)
+        BlogPosts.all |> List.exists (pageMatchesBlogPost page)
 
     allowCaching (TimeSpan.FromDays 5.0)
     >=> fun (next : HttpFunc) (ctx : HttpContext) ->
@@ -106,7 +100,7 @@ let trendingHandler : HttpHandler =
                     |> List.filter pageIsBlogPost
                     |> List.sortByDescending (fun p -> p.ViewCount)
                     |> List.take 10
-                    |> List.map (fun p -> blogPosts.First(fun b -> pageMatchesBlogPost p b))
+                    |> List.map (fun p -> BlogPosts.all.First(fun b -> pageMatchesBlogPost p b))
                     |> trendingView
 
                 // Cache the view for one day
@@ -120,7 +114,7 @@ let trendingHandler : HttpHandler =
 let taggedHandler (tag : string) =
     allowCaching (TimeSpan.FromDays 5.0)
     >=>(
-        blogPosts
+        BlogPosts.all
         |> List.filter (fun p -> p.Tags.IsSome && p.Tags.Value.Contains tag)
         |> List.sortByDescending (fun p -> p.PublishDate)
         |> tagView tag
@@ -128,7 +122,7 @@ let taggedHandler (tag : string) =
 
 let rssFeedHandler : HttpHandler =
     let rssFeed = new StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
-    blogPosts
+    BlogPosts.all
     |> List.sortByDescending (fun p -> p.PublishDate)
     |> List.take 10
     |> List.map (
@@ -167,6 +161,9 @@ let webApp =
                 // Static cachable assets
                 route  UrlPaths.``/logo.svg``   >=> svgHandler dustedCodesIcon
                 route  minifiedCss.Path         >=> cssHandler
+
+                // Health check
+                route UrlPaths.``/ping``        >=> text "pong"
 
                 // Content paths
                 route    UrlPaths.``/``         >=> indexHandler
@@ -216,6 +213,11 @@ let configureApp (app : IApplicationBuilder) =
             ForwardedHeaders = ForwardedHeaders.XForwardedFor,
             ForwardLimit     = new Nullable<int>(1))
 
+    let validateApiSecret (ctx : HttpContext) =
+        match ctx.TryGetRequestHeader "X-API-SECRET" with
+        | Some v -> Config.apiSecret.Equals v
+        | None   -> false
+
     app.UseGiraffeErrorHandler(errorHandler)
        .UseForwardedHeaders(forwardedHeadersOptions)
        .UseFirewall(
@@ -223,6 +225,7 @@ let configureApp (app : IApplicationBuilder) =
                 .DenyAllAccess()
                 .ExceptFromCloudflare()
                 .ExceptFromIPAddresses(Config.vipList)
+                .ExceptWhen(fun ctx -> validateApiSecret ctx)
                 .ExceptFromLocalhost())
        .UseResponseCaching()
        .UseStaticFiles()

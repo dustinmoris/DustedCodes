@@ -59,8 +59,8 @@ elseif ($Docker.IsPresent -or $Deploy.IsPresent)
         Write-Host "Deploying Docker image..." -ForegroundColor Magenta
 
         Invoke-Cmd "docker tag dustedcodes:$version us.gcr.io/dustins-private-project/dustedcodes:$version"
-        Invoke-Cmd "gcloud docker --authorize-only"
-        Invoke-Cmd "gcloud docker -- push us.gcr.io/dustins-private-project/dustedcodes:$version"
+        # Invoke-Cmd "gcloud auth configure-docker"
+        Invoke-Cmd "docker push us.gcr.io/dustins-private-project/dustedcodes:$version"
         Invoke-Cmd "kubectl set image deployment/dustedcodes dustedcodes=us.gcr.io/dustins-private-project/dustedcodes:$version"
     }
 }
