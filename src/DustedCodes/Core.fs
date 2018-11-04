@@ -34,23 +34,55 @@ module Hash =
 // ---------------------------------
 
 [<RequireQualifiedAccess>]
+module DevSecrets =
+    open System
+    open System.IO
+    open System.Collections.Generic
+    open Newtonsoft.Json
+
+    let private userFolder  = Environment.GetEnvironmentVariable "HOME"
+    let private secretsFile = sprintf "%s/.secrets/dustedcodes.sec.json" userFolder
+
+    let private secrets =
+        secretsFile
+        |> File.Exists
+        |> function
+            | false -> new Dictionary<string, string>()
+            | true  ->
+                secretsFile
+                |> File.ReadAllText
+                |> JsonConvert.DeserializeObject<Dictionary<string, string>>
+
+    let get key =
+        match secrets.TryGetValue key with
+        | true , value -> value
+        | false, _     -> String.Empty
+
+[<RequireQualifiedAccess>]
 module Config =
     open System
     open System.IO
 
-    let private envVar (key : string) = Environment.GetEnvironmentVariable key
+    let private envVar key = Environment.GetEnvironmentVariable key
 
-    let private ASPNETCORE_ENVIRONMENT   = envVar "ASPNETCORE_ENVIRONMENT"
-    let private BASE_URL                 = envVar "BASE_URL"
-    let private GOOGLE_APIS_JSON_KEY     = envVar "GOOGLE_APIS_JSON_KEY"
-    let private GOOGLE_ANALYTICS_VIEW_ID = envVar "GOOGLE_ANALYTICS_VIEW_ID"
-    let private LOG_LEVEL                = envVar "LOG_LEVEL"
-    let private VIP_LIST                 = envVar "VIP_LIST"
-    let private DISQUS_SHORTNAME         = envVar "DISQUS_SHORTNAME"
-    let private API_SECRET               = envVar "API_SECRET"
-    let private ELASTIC_URL              = envVar "ELASTIC_URL"
-    let private ELASTIC_USER             = envVar "ELASTIC_USER"
-    let private ELASTIC_PASSWORD         = envVar "ELASTIC_PASSWORD"
+    let private getSecret key =
+        envVar key
+        |> Str.toOption
+        |> defaultArg
+        <| DevSecrets.get key
+
+    let private ASPNETCORE_ENVIRONMENT   = "ASPNETCORE_ENVIRONMENT"
+    let private BASE_URL                 = "BASE_URL"
+    let private GOOGLE_APIS_JSON_KEY     = "GOOGLE_APIS_JSON_KEY"
+    let private GOOGLE_ANALYTICS_VIEW_ID = "GOOGLE_ANALYTICS_VIEW_ID"
+    let private LOG_LEVEL_CONSOLE        = "LOG_LEVEL_CONSOLE"
+    let private LOG_LEVEL_ELASTIC        = "LOG_LEVEL_ELASTIC"
+    let private VIP_LIST                 = "VIP_LIST"
+    let private DISQUS_SHORTNAME         = "DISQUS_SHORTNAME"
+    let private API_SECRET               = "API_SECRET"
+    let private ELASTIC_URL              = "ELASTIC_URL"
+    let private ELASTIC_USER             = "ELASTIC_USER"
+    let private ELASTIC_PASSWORD         = "ELASTIC_PASSWORD"
 
     let contentRoot         = Directory.GetCurrentDirectory()
     let webRoot             = Path.Combine(contentRoot, "WebRoot")
@@ -63,7 +95,7 @@ module Config =
     let blogAuthor       = "Dustin Moris Gorski"
 
     let environmentName =
-        ASPNETCORE_ENVIRONMENT
+        envVar ASPNETCORE_ENVIRONMENT
         |> Str.toOption
         |> defaultArg
         <| "Development"
@@ -72,76 +104,42 @@ module Config =
         environmentName
         |> Str.equalsCi "Production"
 
-    let logLevel =
-        LOG_LEVEL
+    let logLevelConsole =
+        envVar LOG_LEVEL_CONSOLE
         |> Str.toOption
         |> defaultArg
         <| "error"
 
+    let logLevelElastic =
+        envVar LOG_LEVEL_ELASTIC
+        |> Str.toOption
+        |> defaultArg
+        <| "warning"
+
     let baseUrl =
         let prodUrl  = "https://dusted.codes"
         let localUrl = "http://localhost:5000"
-        BASE_URL
+        envVar BASE_URL
         |> Str.toOption
         |> defaultArg
         <| if isProduction then prodUrl else localUrl
 
     let vipList =
-        VIP_LIST
-        |> String.IsNullOrEmpty
+        envVar VIP_LIST
+        |> Str.toOption
         |> function
-            | true  -> [||]
-            | false ->
-                VIP_LIST.Split([| ','; ' ' |], StringSplitOptions.RemoveEmptyEntries)
+            | None      -> [||]
+            | Some vips ->
+                vips.Split([| ','; ' ' |], StringSplitOptions.RemoveEmptyEntries)
                 |> Array.map System.Net.IPAddress.Parse
 
-    let apiSecret =
-        let devApiSecret =
-            Guid.NewGuid()
-                .ToString("n")
-                .Substring(0, 10)
-        API_SECRET
-        |> Str.toOption
-        |> defaultArg
-        <| devApiSecret
-
-    let googleApisJsonKey =
-        GOOGLE_APIS_JSON_KEY
-        |> Str.toOption
-        |> function
-            | Some v -> v
-            | None   -> File.ReadAllText "/Users/dustinmoris/Private/google-analytics-sa-key.json"
-
-    let googleAnalyticsViewId =
-        GOOGLE_ANALYTICS_VIEW_ID
-        |> Str.toOption
-        |> function
-            | Some v -> v
-            | None   -> File.ReadAllText "/Users/dustinmoris/Private/google-analytics-view-id.txt"
-
-    let disqusShortName =
-        DISQUS_SHORTNAME
-        |> Giraffe.Common.strOption
-        |> defaultArg
-        <| "dev-dustedcodes"
-
-    let elasticUrl =
-        ELASTIC_URL
-        |> Str.toOption
-        |> defaultArg
-        <| "https://localhost:9090"
-
-    let elasticUser =
-        ELASTIC_USER
-        |> Str.toOption
-        |> defaultArg
-        <| String.Empty
-
-    let elasticPassword =
-        ELASTIC_PASSWORD
-        |> Str.toOption
-        |> defaultArg
-        <| String.Empty
+    let apiSecret             = getSecret API_SECRET
+    let googleApisJsonKey     = getSecret GOOGLE_APIS_JSON_KEY
+    let googleAnalyticsViewId = getSecret GOOGLE_ANALYTICS_VIEW_ID
+    let disqusShortName       = getSecret DISQUS_SHORTNAME
+    let elasticUrl            = getSecret ELASTIC_URL
+    let elasticUser           = getSecret ELASTIC_USER
+    let elasticPassword       = getSecret ELASTIC_PASSWORD
 
 // ---------------------------------
 // Urls
