@@ -71,6 +71,12 @@ module Config =
         |> defaultArg
         <| DevSecrets.get key
 
+    let private getOrDefault key defaultValue =
+        envVar key
+        |> Str.toOption
+        |> defaultArg
+        <| defaultValue
+
     let private ASPNETCORE_ENVIRONMENT   = "ASPNETCORE_ENVIRONMENT"
     let private BASE_URL                 = "BASE_URL"
     let private GOOGLE_APIS_JSON_KEY     = "GOOGLE_APIS_JSON_KEY"
@@ -94,35 +100,15 @@ module Config =
     let blogLanguage     = "en-GB"
     let blogAuthor       = "Dustin Moris Gorski"
 
-    let environmentName =
-        envVar ASPNETCORE_ENVIRONMENT
-        |> Str.toOption
-        |> defaultArg
-        <| "Development"
-
-    let isProduction =
-        environmentName
-        |> Str.equalsCi "Production"
-
-    let logLevelConsole =
-        envVar LOG_LEVEL_CONSOLE
-        |> Str.toOption
-        |> defaultArg
-        <| "error"
-
-    let logLevelElastic =
-        envVar LOG_LEVEL_ELASTIC
-        |> Str.toOption
-        |> defaultArg
-        <| "warning"
+    let environmentName = getOrDefault ASPNETCORE_ENVIRONMENT "Development"
+    let isProduction    = environmentName |> Str.equalsCi "Production"
+    let logLevelConsole = getOrDefault LOG_LEVEL_CONSOLE "error"
+    let logLevelElastic = getOrDefault LOG_LEVEL_ELASTIC "warning"
 
     let baseUrl =
         let prodUrl  = "https://dusted.codes"
         let localUrl = "http://localhost:5000"
-        envVar BASE_URL
-        |> Str.toOption
-        |> defaultArg
-        <| if isProduction then prodUrl else localUrl
+        getOrDefault BASE_URL (if isProduction then prodUrl else localUrl)
 
     let vipList =
         envVar VIP_LIST

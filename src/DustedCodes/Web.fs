@@ -42,7 +42,7 @@ let cssHandler : HttpHandler =
 
 let notFoundHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
-        let logger = ctx.GetLogger("Web")
+        let logger = ctx.GetLogger("NotFoundHandler")
         logger.LogWarning(
             "Could not serve '{verb} {url}', because it does not exist.",
             ctx.Request.Method,
@@ -150,7 +150,7 @@ let rssFeedHandler : HttpHandler =
 
 let atomFeedHandler : HttpHandler =
     fun (next : HttpFunc) (ctx : HttpContext) ->
-        let logger = ctx.GetLogger("Web")
+        let logger = ctx.GetLogger("AtomFeedHandler")
         logger.LogWarning "Someone tried to subscribe to the Atom feed."
         ServerErrors.notImplemented (text "Atom feed is not supported at the moment. If you were using Atom to subscribe to this blog before, please file an issue on https://github.com/dustinmoris/DustedCodes to create awareness.") next ctx
 
