@@ -46,13 +46,8 @@ if ($Run)
 }
 elseif ($Docker.IsPresent -or $Deploy.IsPresent)
 {
-    Write-Host "Publishing web application..." -ForegroundColor Magenta
-    dotnet-publish $app "-c $configuration"
-
     Write-Host "Building Docker image..." -ForegroundColor Magenta
-    $targetFramework = Get-NetCoreTargetFramework $app
-    $publishFolder = "./src/DustedCodes/bin/$configuration/$targetFramework/publish"
-    Invoke-Cmd "docker build -t dustedcodes:$version $publishFolder"
+    Invoke-Cmd "docker build -t dustedcodes:$version ./src/DustedCodes/"
 
     if ($Deploy.IsPresent)
     {

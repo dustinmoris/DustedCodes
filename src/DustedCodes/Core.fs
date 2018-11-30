@@ -282,7 +282,6 @@ module BlogPosts =
             |> Hash.sha1
         Ok { blogPost with HashCode = hash }
 
-
     let private parseContentType (input : string) =
         match input.ToLower() with
         | "html" -> Html
