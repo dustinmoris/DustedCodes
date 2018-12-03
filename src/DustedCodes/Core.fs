@@ -136,7 +136,7 @@ module UrlPaths =
     let ``/``          = "/"
     let ``/ping``      = "/ping"
     let ``/about``     = "/about"
-    let ``/contact``   = "/contact"
+    let ``/hire``      = "/hire"
     let ``/trending``  = "/trending"
     let ``/feed/rss``  = "/feed/rss"
     let ``/feed/atom`` = "/feed/atom"
@@ -156,7 +156,7 @@ module Url =
 
     let ``/``          = create UrlPaths.``/``
     let ``/about``     = create UrlPaths.``/about``
-    let ``/contact``   = create UrlPaths.``/contact``
+    let ``/hire``      = create UrlPaths.``/hire``
     let ``/trending``  = create UrlPaths.``/trending``
     let ``/feed/rss``  = create UrlPaths.``/feed/rss``
     let ``/feed/atom`` = create UrlPaths.``/feed/atom``
@@ -175,6 +175,19 @@ module About =
 
     let content =
         Path.Combine(Config.staticContentFolder, "About.md")
+        |> File.ReadAllText
+        |> Markdig.Markdown.ToHtml
+
+// ---------------------------------
+// Hire
+// ---------------------------------
+
+[<RequireQualifiedAccess>]
+module Hire =
+    open System.IO
+
+    let content =
+        Path.Combine(Config.staticContentFolder, "Hire.md")
         |> File.ReadAllText
         |> Markdig.Markdown.ToHtml
 

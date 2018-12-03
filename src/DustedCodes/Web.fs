@@ -62,6 +62,10 @@ let aboutHandler =
     allowCaching (TimeSpan.FromDays 1.0)
     >=> (aboutView |> htmlView)
 
+let hireHandler =
+    allowCaching (TimeSpan.FromDays 1.0)
+    >=> (hireView |> htmlView)
+
 let blogPostHandler (id : string) =
     BlogPosts.all
     |> List.tryFind (fun x -> Str.equalsCi x.Id id)
@@ -168,7 +172,7 @@ let webApp =
                 // Content paths
                 route    UrlPaths.``/``         >=> indexHandler
                 routeCi  UrlPaths.``/about``    >=> aboutHandler
-                // routeCi  UrlPaths.``/contact``  >=> aboutHandler
+                routeCi  UrlPaths.``/hire``     >=> hireHandler
                 routeCi  UrlPaths.``/trending`` >=> trendingHandler
 
                 routeCi UrlPaths.``/feed/rss``  >=> rssFeedHandler

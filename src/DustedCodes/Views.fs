@@ -370,6 +370,16 @@ let aboutView =
         (Some Url.``/about``)
         (Some "Hi, welcome to my personal website, software engineering blog and...")
 
+let hireView =
+    [
+        article [ _id "hire" ] [
+            rawText Hire.content
+        ]
+    ] |> masterView
+        (Some "Hire")
+        (Some Url.``/hire``)
+        (Some "ToDo")
+
 let notFoundView =
     [
         div [ _class "error-view" ] [
