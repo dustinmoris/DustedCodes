@@ -134,7 +134,7 @@ let masterView (subject   : string option)
                 yield openGraph "title"        pageTitle
                 yield openGraph "url"          permalink.Value
                 yield openGraph "type"         "website"
-                yield openGraph "image"        "https://storage.googleapis.com/dusted-codes/og-banner.jpg"
+                yield openGraph "image"        "https://storage.googleapis.com/dusted-codes/stock-images/img1.jpg"
                 yield openGraph "image:alt"    Config.blogTitle
                 yield openGraph "image:width"  "1094"
                 yield openGraph "image:height" "729"
@@ -177,8 +177,8 @@ let masterView (subject   : string option)
                 ul [ _id "nav-links" ] [
                     li [] [ normalLink Url.``/`` "Home" ]
                     li [] [ normalLink Url.``/trending`` "Trending" ]
-                    // li [] [ normalLink Url.``/contact`` "Contact" ]
                     li [] [ normalLink Url.``/about`` "About"]
+                    li [] [ normalLink Url.``/hire`` "Hire" ]
                 ]
             ]
             footer [] [
@@ -361,7 +361,7 @@ let blogPostView (blogPost : BlogPost) =
 
 let aboutView =
     [
-        article [ _id "about" ] [
+        article [] [
             img [ _id "avatar"; _src "https://storage.googleapis.com/dusted-codes/dustin-moris-gorski.jpg"; _alt "Dustin Moris Gorski" ]
             rawText About.content
         ]
@@ -370,15 +370,60 @@ let aboutView =
         (Some Url.``/about``)
         (Some "Hi, welcome to my personal website, software engineering blog and...")
 
+let contactForm =
+    let actionUrl = sprintf "%s#contact" Url.``/hire``
+    form [ _method "POST"; _action actionUrl; _autocomplete "on" ]
+        [
+            div [ _class "linked-inputs" ] [
+                div [] [
+                    label [ _for "Name" ] [ rawText "Name*" ]
+                    input [ _type "text"; _name "Name"; _placeholder "Required"; _required ]
+                ]
+                div [] [
+                    label [ _for "Email" ] [ rawText "Email address*" ]
+                    input [ _type "email"; _name "Email"; _placeholder "Required"; _required ]
+                ]
+                div [] [
+                    label [ _for "Phone" ] [ rawText "Phone number" ]
+                    input [ _type "tel"; _name "Phone"; _placeholder "Optional" ]
+                ]
+                div [] [
+                    label [ _for "Subject" ] [ rawText "Subject*" ]
+                    input [ _type "text"; _name "Subject"; _placeholder "Required"; _required; _class "msg-subject" ]
+                ]
+            ]
+            div [ _class "textarea-container" ] [
+                label [ _for "Message" ] [ rawText "Message*" ]
+                textarea [ _name "Message"; _placeholder "Required"; _required ] []
+            ]
+            p [ _class "footnote" ] [
+                rawText "*) Fields marked with an asterisk are required."
+            ]
+            div [ attr "class" "form-bottom" ] [
+                div [ attr "class" "g-recaptcha"; attr "data-sitekey" "6LcCZi0UAAAAANWkgIjSpNzmIPGY6iTdkwlQeDzi"; ] []
+                button [ _type "submit"; _class "msg-button" ] [
+                    gmailIcon
+                    rawText "Send Message"
+                ]
+            ]
+        ]
+
 let hireView =
     [
         article [ _id "hire" ] [
+            h1 [] [ rawText "Hire Me" ]
+            img [ _src "https://storage.googleapis.com/dusted-codes/stock-images/img6.jpg"; _alt "Hire Me" ]
             rawText Hire.content
         ]
+        aside [ _id "contact" ] [
+            h1 [] [ rawText "Contact Me" ]
+            p [] [ rawText "Please use this form to send me a message and I'll get back to you soon." ]
+            contactForm
+        ]
     ] |> masterView
-        (Some "Hire")
+        (Some "Hire Me")
         (Some Url.``/hire``)
-        (Some "ToDo")
+        (Some (sprintf "%s..." (Hire.content.Substring(0, 288))))
 
 let notFoundView =
     [

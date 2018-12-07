@@ -183,6 +183,81 @@ article li {
     line-height: 2em;
 }
 
+form {
+    margin: 2em 0;
+}
+
+label {
+    display: inline-block;
+    color: #777;
+    font-size: .65em;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+textarea {
+    display: block;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 1px solid #fff;
+    width: 100%;
+    min-height: 100px;
+    margin: 0.7em 0;
+    padding: 1em;
+    font-size: 1em;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    background: #f1f1f1;
+    color: #333;
+}
+
+button {
+    padding: 1em;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: .8em;
+    background: #378;
+    color: #f1f1f1;
+}
+
+::placeholder {
+    color: #777;
+    font-style: italic;
+    font-weight: normal;
+    font-size: .8em;
+}
+::-webkit-input-placeholder {
+    color: #777;
+    font-style: italic;
+    font-weight: normal;
+    font-size: .8em;
+}
+::-moz-placeholder {
+    color: #777;
+    font-style: italic;
+    font-weight: normal;
+    font-size: .8em;
+}
+:-ms-input-placeholder {
+    color: #777;
+    font-style: italic;
+    font-weight: normal;
+    font-size: .8em;
+}
+:-moz-placeholder {
+    color: #777;
+    font-style: italic;
+    font-weight: normal;
+    font-size: .8em;
+}
+
 /* --------------------------
   Master page
 -------------------------- */
@@ -377,6 +452,15 @@ body > header h2 {
     margin: 2em 0;
 }
 
+#hire h1 {
+    text-align: center;
+}
+
+#hire img {
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+}
+
 /* --------------------------
   Classes
 -------------------------- */
@@ -503,6 +587,54 @@ body > header h2 {
 .error-view h1,
 .error-view p {
     text-align: center;
+}
+
+.linked-inputs label {
+    width: 20%;
+}
+
+.linked-inputs input {
+    width: 80%;
+}
+
+.linked-inputs input {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-width: 1px 1px 0 1px;
+    border-style: solid;
+    border-color: #fff;
+    margin: 0;
+    padding: 1em 1em;
+    font-size: 1em;
+    background: #f1f1f1;
+    color: #333;
+}
+
+.linked-inputs > div:first-child > input {
+    border-radius: 9px 9px 0 0;
+    -moz-border-radius: 9px 9px 0 0;
+}
+
+.linked-inputs > div:last-child > input {
+    border-radius: 0 0 9px 9px;
+    -moz-border-radius: 0 0 9px 9px;
+    border-width: 1px;
+}
+
+.textarea-container {
+    margin-top: 1em;
+}
+
+.msg-subject {
+    font-weight: bold;
+    color: #555;
+}
+
+.footnote {
+    font-style: italic;
+    font-size: .9em;
+    color: #999;
 }
 
 /* --------------------------
