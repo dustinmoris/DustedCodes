@@ -40,7 +40,7 @@ Write-SuccessFooter "Build script completed successfully!"
 if ($Run)
 {
     Write-Host "Launching application..." -ForegroundColor Magenta
-
+    $env:GOOGLE_APPLICATION_CREDENTIALS = "$env:HOME/.secrets/google-app-creds.json"
     dotnet-run $app $Run
     return
 }

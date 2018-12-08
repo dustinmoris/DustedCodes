@@ -94,7 +94,8 @@ let asciiArt = "
 let masterView (subject   : string option)
                (permalink : string option)
                (sample    : string option)
-               (content   : XmlNode list) =
+               (headerContent : XmlNode list option)
+               (bodyContent   : XmlNode list) =
     let pageTitle =
         match subject with
         | Some s -> sprintf "%s - %s" s Config.blogTitle
@@ -134,7 +135,7 @@ let masterView (subject   : string option)
                 yield openGraph "title"        pageTitle
                 yield openGraph "url"          permalink.Value
                 yield openGraph "type"         "website"
-                yield openGraph "image"        "https://storage.googleapis.com/dusted-codes/og-banner.jpg"
+                yield openGraph "image"        "https://storage.googleapis.com/dusted-codes/stock-images/img1.jpg"
                 yield openGraph "image:alt"    Config.blogTitle
                 yield openGraph "image:width"  "1094"
                 yield openGraph "image:height" "729"
@@ -146,6 +147,9 @@ let masterView (subject   : string option)
 
             // Google Analytics
             if Config.isProduction then yield googleAnalytics
+
+            // Additional (optional) header content
+            if headerContent.IsSome then yield! headerContent.Value
         ]
         body [] [
             header [] [
@@ -159,7 +163,7 @@ let masterView (subject   : string option)
                      ]
                 ]
             ]
-            main [] content
+            main [] bodyContent
             nav [] [
                 ul [ _id "social-links" ] [
                     li [] [ iconLink "https://www.facebook.com/dustinmoris.gorski" "Connect on Facebook" facebookIcon ]
@@ -177,8 +181,8 @@ let masterView (subject   : string option)
                 ul [ _id "nav-links" ] [
                     li [] [ normalLink Url.``/`` "Home" ]
                     li [] [ normalLink Url.``/trending`` "Trending" ]
-                    // li [] [ normalLink Url.``/contact`` "Contact" ]
                     li [] [ normalLink Url.``/about`` "About"]
+                    li [] [ normalLink Url.``/hire`` "Hire" ]
                 ]
             ]
             footer [] [
@@ -237,13 +241,13 @@ let indexView (blogPosts : BlogPost list) =
             blogPosts
             |> List.groupBy(fun post -> post.PublishDate.Year)
             |> List.map blogPostGroup
-    ] |> masterView None (Some Url.``/``) (Some Config.blogDescription)
+    ] |> masterView None (Some Url.``/``) (Some Config.blogDescription) None
 
 let trendingView (blogPosts : BlogPost list) =
     let pageTitle = "Trending"
     let h1Title   = "Top 10 blog posts"
     [
-        article[] [
+        article [] [
             header [] [
                 h1 [] [ rawText h1Title ]
             ]
@@ -260,6 +264,7 @@ let trendingView (blogPosts : BlogPost list) =
         (Some pageTitle)
         (Some Url.``/trending``)
         (Some "Most popular blog posts on Dusted Codes.")
+        None
 
 let tagView (tag : string) (blogPosts : BlogPost list) =
     let title = sprintf "Tagged with '%s'" tag
@@ -281,12 +286,13 @@ let tagView (tag : string) (blogPosts : BlogPost list) =
         (Some title)
         (Some (Url.``/tagged/%s`` tag))
         (Some (sprintf "See all blog posts tagged with '%s'." tag))
+        None
 
 let shareBlogPostLinks (p : BlogPost) = [
     li [] [
         iconLink
             (sprintf "mailto:?subject=%s&body=I saw this on Dusted Codes and thought you should see it: %s - %s" p.Title p.Title p.UrlEncodedPermalink)
-            "Share by Email" gmailIcon
+            "Share by Email" envelopeIcon
     ]
     li [] [
         iconLink
@@ -357,11 +363,11 @@ let blogPostView (blogPost : BlogPost) =
             ]
             yield disqus blogPost.Id blogPost.Title blogPost.Permalink
         ]
-    ] |> masterView (Some blogPost.Title) (Some blogPost.Permalink) (Some blogPost.Excerpt)
+    ] |> masterView (Some blogPost.Title) (Some blogPost.Permalink) (Some blogPost.Excerpt) None
 
 let aboutView =
     [
-        article [ _id "about" ] [
+        article [] [
             img [ _id "avatar"; _src "https://storage.googleapis.com/dusted-codes/dustin-moris-gorski.jpg"; _alt "Dustin Moris Gorski" ]
             rawText About.content
         ]
@@ -369,6 +375,100 @@ let aboutView =
         (Some "About")
         (Some Url.``/about``)
         (Some "Hi, welcome to my personal website, software engineering blog and...")
+        None
+
+let sendMessageButton =
+    button [ _type "submit"; _class "msg-button" ] [
+        envelopeIcon
+        span [] [ rawText "Send Message" ]
+    ]
+
+let contactForm (msg : ContactMessage) =
+    let actionUrl = sprintf "%s#contact" Url.``/hire``
+    form [ _method "POST"; _action actionUrl; _autocomplete "on" ]
+        [
+            div [ _class "linked-inputs" ] [
+                div [] [
+                    label [ _for "Name" ] [ rawText "Name*" ]
+                    input [
+                        _type "text"
+                        _name "Name"
+                        _placeholder "Required"
+                        _value msg.Name
+                    ]
+                ]
+                div [] [
+                    label [ _for "Email" ] [ rawText "Email address*" ]
+                    input [
+                        _type "email"
+                        _name "Email"
+                        _placeholder "Required"
+                        _value msg.Email
+                    ]
+                ]
+                div [] [
+                    label [ _for "Phone" ] [ rawText "Phone number" ]
+                    input [
+                        _type "tel"
+                        _name "Phone"
+                        _placeholder "Optional"
+                        _value msg.Phone
+                    ]
+                ]
+                div [] [
+                    label [ _for "Subject" ] [ rawText "Subject*" ]
+                    input [
+                        _type "text"
+                        _name "Subject"
+                        _placeholder "Required"
+                        _class "msg-subject"
+                        _value msg.Subject
+                    ]
+                ]
+            ]
+            div [ _class "textarea-container" ] [
+                label [ _for "Message" ] [ rawText "Message*" ]
+                textarea [
+                    _name "Message"
+                    _placeholder "Required" ] [ rawText msg.Message ]
+            ]
+            p [ _class "footnote" ] [
+                rawText "*) Fields marked with an asterisk are required."
+            ]
+            div [ attr "class" "form-bottom" ] [
+                div [ _class "g-recaptcha"; attr "data-sitekey" Config.googleRecaptchaSiteKey ] []
+                sendMessageButton
+            ]
+        ]
+
+let successMsg msg = p [ _class "success-msg" ] [ encodedText msg ]
+let errorMsg msg   = p [ _class "error-msg"   ] [ alertIcon; span [] [ encodedText msg ] ]
+
+let hireView (sendMessageResult : Result<string, ContactMessage * string> option) =
+    [
+        article [ _id "hire" ] [
+            h1 [] [ rawText "Hire Me" ]
+            img [ _src "https://storage.googleapis.com/dusted-codes/stock-images/img6.jpg"; _alt "Hire Me" ]
+            rawText Hire.content
+        ]
+        aside [ _id "contact" ] [
+            yield! [
+                h1 [] [ rawText "Contact Me" ]
+                p [] [ rawText "Please fill out this form to send me a message and I'll get back to you soon." ]
+            ]
+            yield!
+                match sendMessageResult with
+                | Some result ->
+                    match result with
+                    | Ok msg           -> [ successMsg msg; contactForm ContactMessage.Empty ]
+                    | Error (obj, msg) -> [ errorMsg msg; contactForm obj ]
+                | None                 -> [ contactForm ContactMessage.Empty ]
+        ]
+    ] |> masterView
+        (Some "Hire Me")
+        (Some Url.``/hire``)
+        (Some (sprintf "%s..." (Hire.content.Substring(0, 288))))
+        (Some [ script [ _src "https://www.google.com/recaptcha/api.js" ] [] ])
 
 let notFoundView =
     [
@@ -377,7 +477,7 @@ let notFoundView =
             p [] [ encodedText "Sorry, the page you have requested may have been moved or deleted." ]
             p [] [ rawText "Return to the "; normalLink Url.``/`` "home page"; rawText "." ]
         ]
-    ] |> masterView (Some "Page not found") None None
+    ] |> masterView (Some "Page not found") None None None
 
 let internalErrorView (errorMessage : string option) =
     [
@@ -389,4 +489,4 @@ let internalErrorView (errorMessage : string option) =
             | Some msg -> yield p [] [ encodedText msg ]
             | None     -> ()
         ]
-    ] |> masterView (Some "Internal error") None None
+    ] |> masterView (Some "Internal error") None None None

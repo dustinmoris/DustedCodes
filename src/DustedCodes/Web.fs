@@ -62,6 +62,49 @@ let aboutHandler =
     allowCaching (TimeSpan.FromDays 1.0)
     >=> (aboutView |> htmlView)
 
+let hireHandler =
+    None |> hireView |> htmlView
+
+let contactResponse next ctx result =
+    result
+    |> Some
+    |> hireView
+    |> htmlView
+    <|| (next, ctx)
+
+let contactError next ctx contactMsg errorMsg =
+    Error (contactMsg, errorMsg)
+    |> contactResponse next ctx
+
+let contactSuccess next ctx =
+    Ok "Thank you, your message has been successfully sent!"
+    |> contactResponse next ctx
+
+let contactHandler =
+    fun (next : HttpFunc) (ctx : HttpContext) ->
+        task {
+            let! message = ctx.BindFormAsync<ContactMessage>()
+            match message.ValidationResult with
+            | Error err -> return! contactError next ctx message err
+            | Ok _      ->
+                let! captchaResult =
+                    ctx.Request.Form.["g-recaptcha-response"].ToString()
+                    |> Captcha.validateAsync Config.googleRecaptchaSecretKey
+                match captchaResult with
+                | Captcha.ServerError err ->
+                    let logger = ctx.GetLogger()
+                    logger.LogError("Captcha validation failed with '{captchaError}'.", err)
+                    return! contactError next ctx message "Verification failed. Please try again."
+                | Captcha.UserError err -> return! contactError next ctx message err
+                | Captcha.Success ->
+                    match! DataService.saveContactMessageAsync message with
+                    | Error err ->
+                        let logger = ctx.GetLogger()
+                        logger.LogError("An error occurred when writing to the datastore: '{dataError}'.", err)
+                        return! contactError next ctx message "An unexpected error occurred. Please try again."
+                    | Ok _      -> return! contactSuccess next ctx
+        }
+
 let blogPostHandler (id : string) =
     BlogPosts.all
     |> List.tryFind (fun x -> Str.equalsCi x.Id id)
@@ -91,7 +134,7 @@ let trendingHandler : HttpHandler =
             | true, view -> return! htmlView (view :?> GiraffeViewEngine.XmlNode) next ctx
             | false, _   ->
                 let! mostViewedPages =
-                    GoogleAnalytics.getMostViewedPages
+                    GoogleAnalytics.getMostViewedPagesAsync
                         Config.googleApisJsonKey
                         Config.googleAnalyticsViewId
                         (int Byte.MaxValue)
@@ -168,7 +211,7 @@ let webApp =
                 // Content paths
                 route    UrlPaths.``/``         >=> indexHandler
                 routeCi  UrlPaths.``/about``    >=> aboutHandler
-                // routeCi  UrlPaths.``/contact``  >=> aboutHandler
+                routeCi  UrlPaths.``/hire``     >=> hireHandler
                 routeCi  UrlPaths.``/trending`` >=> trendingHandler
 
                 routeCi UrlPaths.``/feed/rss``  >=> rssFeedHandler
@@ -181,6 +224,7 @@ let webApp =
                 routeCif UrlPaths.``/tagged/%s`` taggedHandler
                 routeCif UrlPaths.``/%s`` blogPostHandler
             ]
+        POST >=> routeCi UrlPaths.``/hire`` >=> contactHandler
         notFoundHandler ]
 
 // ---------------------------------
