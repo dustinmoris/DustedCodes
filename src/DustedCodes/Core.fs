@@ -12,10 +12,12 @@ module Str =
     let equals   (s1 : string) (s2 : string) = s1.Equals s2
     let equalsCi (s1 : string) (s2 : string) = s1.Equals(s2, ignoreCase)
 
+    let isNullOrEmpty str = String.IsNullOrEmpty str
+
     let toOption str =
-        match str with
-        | null | "" -> None
-        | _         -> Some str
+        match isNullOrEmpty str with
+        | true  -> None
+        | false -> Some str
 
 [<RequireQualifiedAccess>]
 module Hash =
@@ -77,18 +79,20 @@ module Config =
         |> defaultArg
         <| defaultValue
 
-    let private ASPNETCORE_ENVIRONMENT   = "ASPNETCORE_ENVIRONMENT"
-    let private BASE_URL                 = "BASE_URL"
-    let private GOOGLE_APIS_JSON_KEY     = "GOOGLE_APIS_JSON_KEY"
-    let private GOOGLE_ANALYTICS_VIEW_ID = "GOOGLE_ANALYTICS_VIEW_ID"
-    let private LOG_LEVEL_CONSOLE        = "LOG_LEVEL_CONSOLE"
-    let private LOG_LEVEL_ELASTIC        = "LOG_LEVEL_ELASTIC"
-    let private VIP_LIST                 = "VIP_LIST"
-    let private DISQUS_SHORTNAME         = "DISQUS_SHORTNAME"
-    let private API_SECRET               = "API_SECRET"
-    let private ELASTIC_URL              = "ELASTIC_URL"
-    let private ELASTIC_USER             = "ELASTIC_USER"
-    let private ELASTIC_PASSWORD         = "ELASTIC_PASSWORD"
+    let private ASPNETCORE_ENVIRONMENT      = "ASPNETCORE_ENVIRONMENT"
+    let private BASE_URL                    = "BASE_URL"
+    let private GOOGLE_RECAPTCHA_SITE_KEY   = "GOOGLE_RECAPTCHA_SITE_KEY"
+    let private GOOGLE_RECAPTCHA_SECRET_KEY = "GOOGLE_RECAPTCHA_SECRET_KEY"
+    let private GOOGLE_APIS_JSON_KEY        = "GOOGLE_APIS_JSON_KEY"
+    let private GOOGLE_ANALYTICS_VIEW_ID    = "GOOGLE_ANALYTICS_VIEW_ID"
+    let private LOG_LEVEL_CONSOLE           = "LOG_LEVEL_CONSOLE"
+    let private LOG_LEVEL_ELASTIC           = "LOG_LEVEL_ELASTIC"
+    let private VIP_LIST                    = "VIP_LIST"
+    let private DISQUS_SHORTNAME            = "DISQUS_SHORTNAME"
+    let private API_SECRET                  = "API_SECRET"
+    let private ELASTIC_URL                 = "ELASTIC_URL"
+    let private ELASTIC_USER                = "ELASTIC_USER"
+    let private ELASTIC_PASSWORD            = "ELASTIC_PASSWORD"
 
     let contentRoot         = Directory.GetCurrentDirectory()
     let webRoot             = Path.Combine(contentRoot, "WebRoot")
@@ -119,13 +123,15 @@ module Config =
                 vips.Split([| ','; ' ' |], StringSplitOptions.RemoveEmptyEntries)
                 |> Array.map System.Net.IPAddress.Parse
 
-    let apiSecret             = getSecret API_SECRET
-    let googleApisJsonKey     = getSecret GOOGLE_APIS_JSON_KEY
-    let googleAnalyticsViewId = getSecret GOOGLE_ANALYTICS_VIEW_ID
-    let disqusShortName       = getSecret DISQUS_SHORTNAME
-    let elasticUrl            = getSecret ELASTIC_URL
-    let elasticUser           = getSecret ELASTIC_USER
-    let elasticPassword       = getSecret ELASTIC_PASSWORD
+    let apiSecret                = getSecret API_SECRET
+    let googleRecaptchaSiteKey   = getSecret GOOGLE_RECAPTCHA_SITE_KEY
+    let googleRecaptchaSecretKey = getSecret GOOGLE_RECAPTCHA_SECRET_KEY
+    let googleApisJsonKey        = getSecret GOOGLE_APIS_JSON_KEY
+    let googleAnalyticsViewId    = getSecret GOOGLE_ANALYTICS_VIEW_ID
+    let disqusShortName          = getSecret DISQUS_SHORTNAME
+    let elasticUrl               = getSecret ELASTIC_URL
+    let elasticUser              = getSecret ELASTIC_USER
+    let elasticPassword          = getSecret ELASTIC_PASSWORD
 
 // ---------------------------------
 // Urls
@@ -209,7 +215,7 @@ module GoogleAnalytics =
             ViewCount : int64
         }
 
-    let getMostViewedPages (jsonKey : string) (viewId : string) (maxCount : int) =
+    let getMostViewedPagesAsync (jsonKey : string) (viewId : string) (maxCount : int) =
         task {
             let credential =
                 GoogleCredential
@@ -578,3 +584,145 @@ module Css =
             ) (new StringBuilder())
         result.ToString()
         |> BundledCss.FromContent
+
+/// -------------------------------------
+/// Http
+/// -------------------------------------
+
+[<RequireQualifiedAccess>]
+module Http =
+    open System.Collections.Generic
+    open System.Net.Http
+    open FSharp.Control.Tasks.V2.ContextInsensitive
+
+    let postAsync (url : string) (data : IDictionary<string, string>) =
+        task {
+            use client    = new HttpClient()
+            let content   = new FormUrlEncodedContent(data)
+            let! result   = client.PostAsync(url, content)
+            let! response = result.Content.ReadAsStringAsync()
+            return (result.StatusCode, response)
+        }
+
+/// -------------------------------------
+/// Google reCAPTCHA
+/// -------------------------------------
+
+[<RequireQualifiedAccess>]
+module Captcha =
+    open System
+    open System.Net
+    open FSharp.Control.Tasks.V2.ContextInsensitive
+    open Newtonsoft.Json
+
+    type CaptchaValidationResult =
+        | ServerError of string
+        | UserError   of string
+        | Success
+
+    type CaptchaResult =
+        {
+            [<JsonProperty("success")>]
+            IsValid        : bool
+
+            [<JsonProperty("challenge_ts")>]
+            ChallengedTime : DateTime
+
+            [<JsonProperty("hostname")>]
+            Hostname       : string
+
+            [<JsonProperty("error-codes")>]
+            ErrorCodes     : string array
+        }
+
+    let private parseError (errorCode : string) =
+        match errorCode with
+        | "missing-input-secret"   -> ServerError "The secret parameter is missing."
+        | "invalid-input-secret"   -> ServerError "The secret parameter is invalid or malformed."
+        | "missing-input-response" -> UserError "Please verify that you're not a robot."
+        | "invalid-input-response" -> UserError "Verification failed. Please try again."
+        | _                        -> ServerError (sprintf "Unkown error code: %s" errorCode)
+
+    let validateAsync (secret : string) (captchaResponse : string) =
+        task {
+            let url = "https://www.google.com/recaptcha/api/siteverify"
+
+            let data = dict [ "secret",   secret
+                              "response", captchaResponse ]
+
+            let! statusCode, body = Http.postAsync url data
+
+            return
+                if not (statusCode.Equals HttpStatusCode.OK)
+                then ServerError body
+                else
+                    let result = JsonConvert.DeserializeObject<CaptchaResult> body
+                    match result.IsValid with
+                    | true  -> Success
+                    | false -> parseError (result.ErrorCodes.[0])
+        }
+
+
+// ---------------------------------
+// Contact page
+// ---------------------------------
+
+[<CLIMutable>]
+type ContactMessage =
+    {
+        Name    : string
+        Email   : string
+        Phone   : string
+        Subject : string
+        Message : string
+    }
+    static member Empty =
+        {
+            Name    = ""
+            Email   = ""
+            Phone   = ""
+            Subject = ""
+            Message = ""
+        }
+    member __.ValidationResult =
+        if      Str.isNullOrEmpty __.Name    then Error "Name cannot be empty."
+        else if Str.isNullOrEmpty __.Email   then Error "Email address cannot be empty."
+        else if Str.isNullOrEmpty __.Subject then Error "Subject cannot be empty."
+        else if Str.isNullOrEmpty __.Message then Error "Message cannot be empty."
+        else Ok ()
+
+[<RequireQualifiedAccess>]
+module DataService =
+    open System
+    open FSharp.Control.Tasks.V2.ContextInsensitive
+    open Google.Cloud.Datastore.V1
+
+    let private projectId = "dustins-private-project"
+    let private toStringValue    (str : string)   = Value(StringValue = str)
+    let private toBoolValue      (bln : bool)     = Value(BooleanValue = bln)
+    let private toTimestampValue (dt  : DateTime) =
+        let ts = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime dt
+        Value(TimestampValue = ts)
+
+    let saveContactMessageAsync (msg : ContactMessage) =
+        task {
+            try
+                let kind        = "ContactMessages"
+                let datastore   = DatastoreDb.Create projectId
+                let keyFactory  = datastore.CreateKeyFactory(kind)
+                let entity      = Entity()
+
+                entity.Key         <- keyFactory.CreateIncompleteKey()
+                entity.["Name"]    <- toStringValue    <| msg.Name
+                entity.["Email"]   <- toStringValue    <| msg.Email
+                entity.["Phone"]   <- toStringValue    <| msg.Phone
+                entity.["Subject"] <- toStringValue    <| msg.Subject
+                entity.["Message"] <- toStringValue    <| msg.Message
+                entity.["Date"]    <- toTimestampValue <| DateTime.UtcNow
+
+                let! _ = datastore.InsertAsync [ entity ]
+
+                return Ok "Thank you, your message has been successfully sent!"
+            with
+            | ex -> return Error ex.Message
+        }

@@ -16,7 +16,7 @@ Trustworthy automation tests, a fully managed CI pipeline, secure and scalable i
 
 ## Training
 
-Whether you would like to learn something entirely new without any prior knowledge or you'd like to refresh some old forgotten skills, I can provide personalised hands-on training on one of the following topics:
+Whether you would like to learn something entirely new without any prior knowledge or you'd like to refresh some old forgotten skills, I can provide personalised hands-on training on the following topics:
 
 - SOLID design patterns
 - TDD, BDD, DDD
@@ -29,6 +29,6 @@ Whether you would like to learn something entirely new without any prior knowled
 
 ## Open Source Development
 
-If your business heavily relies on one of [my open source projects](https://github.com/dustinmoris) or you simply want to support the cause of open source software then you can also hire me to work on one of my projects.
+If your business heavily relies on one of [my open source projects](https://github.com/dustinmoris) or you simply want to support the cause of open source software then you can also hire me to work on one of my projects, expedite a feature or help with an integration.
 
 For further information or to discuss any of my propositions please feel free to connect with me on [LinkedIn](https://www.linkedin.com/in/dustinmoris/) or message me via the concat form below.

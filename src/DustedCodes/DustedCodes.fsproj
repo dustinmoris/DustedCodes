@@ -21,6 +21,7 @@
     <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="6.5.*" />
     <PackageReference Include="Firewall" Version="2.2.*" />
     <PackageReference Include="Google.Apis.AnalyticsReporting.v4" Version="1.36.*" />
+    <PackageReference Include="Google.Cloud.Datastore.V1" Version="2.1.*" />
   </ItemGroup>
 
   <ItemGroup>
