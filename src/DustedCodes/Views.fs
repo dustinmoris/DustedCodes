@@ -247,7 +247,7 @@ let trendingView (blogPosts : BlogPost list) =
     let pageTitle = "Trending"
     let h1Title   = "Top 10 blog posts"
     [
-        article[] [
+        article [] [
             header [] [
                 h1 [] [ rawText h1Title ]
             ]
@@ -460,7 +460,7 @@ let hireView (sendMessageResult : Result<string, ContactMessage * string> option
                 match sendMessageResult with
                 | Some result ->
                     match result with
-                    | Ok msg           -> [ successMsg msg ]
+                    | Ok msg           -> [ successMsg msg; contactForm ContactMessage.Empty ]
                     | Error (obj, msg) -> [ errorMsg msg; contactForm obj ]
                 | None                 -> [ contactForm ContactMessage.Empty ]
         ]

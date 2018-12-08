@@ -692,6 +692,17 @@ body > header h2 {
     transform: scale(0.8,0.8);
 }
 
+.success-msg {
+    display: flex;
+    padding: .7em 1em;
+    font-size: .8em;
+    background: #88c082;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+}
+
 .error-msg {
     display: flex;
     padding: .7em 1em;
