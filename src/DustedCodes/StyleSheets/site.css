@@ -102,6 +102,8 @@ img {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
 }
 
 kbd {
@@ -433,6 +435,11 @@ body > header h2 {
 #trending-list,
 #blogpost-list {
     list-style: none;
+    padding-left: 0;
+}
+
+#trending-list {
+    margin-top: 2em;
 }
 
 #trending-list li {
@@ -445,8 +452,6 @@ body > header h2 {
     max-width: 260px;
     margin-right: 2em;
     margin-bottom: .5em;
-    border-radius: 6px;
-    -moz-border-radius: 6px;
 }
 
 #avatar:after {
@@ -463,11 +468,6 @@ body > header h2 {
 
 #hire h1 {
     text-align: center;
-}
-
-#hire img {
-    border-radius: 6px;
-    -moz-border-radius: 6px;
 }
 
 #contact h1 {
@@ -653,7 +653,7 @@ body > header h2 {
 .form-bottom {
   display: flex;
   flex-flow: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -741,7 +741,7 @@ body > header h2 {
 
     #nav-links a:link {
         margin: .2em;
-        padding: .5em;
+        padding: .5em 1em;
         max-width: 100%;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
