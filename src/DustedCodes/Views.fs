@@ -250,6 +250,7 @@ let trendingView (blogPosts : BlogPost list) =
         article [] [
             header [] [
                 h1 [] [ rawText h1Title ]
+                img [ _src "https://storage.googleapis.com/dusted-codes/stock-images/img5.jpg" ]
             ]
             main [] [
                 ol [ _id "trending-list" ] [
