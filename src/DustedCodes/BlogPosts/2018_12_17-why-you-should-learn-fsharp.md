@@ -423,11 +423,11 @@ We all know the importance of these principles, because they are vital in keepin
 
 In functional programming everything is a function. The only design pattern which someone has to know is that a function is a first class citizen. Functions can be composed, instantiated, partially applied, passed around and executed.
 
-There is this [famous slide](//www.slideshare.net/ScottWlaschin/fp-patterns-ndc-london2014) by [Scott Wlaschin](//www.slideshare.net/ScottWlaschin), which nicely sums it up:
+There is this [famous slide](//www.slideshare.net/ScottWlaschin/fp-patterns-ndc-london2014) by [Scott Wlaschin](//www.slideshare.net/ScottWlaschin) which nicely sums it up:
 
 <iframe src="//www.slideshare.net/slideshow/embed_code/key/oCM5TxRgKh1vme?startSlide=15" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
 
-These slides are from Scott Wlaschin's [Functional programming design patterns](https://vimeo.com/113588389) talk which can be viewed on Vimeo.
+This slide deck is from Scott Wlaschin's [Functional programming design patterns](https://vimeo.com/113588389) talk which can be viewed on Vimeo.
 
 ### To hell with interfaces
 
@@ -781,7 +781,7 @@ Secondly it allows for blazingly fast prototyping. In F# one can very quickly ha
 
 <h2 id="asynchronous-programming">Asynchronous programming</h2>
 
-Speaking of simplicity, F# makes asynchronous programming remarkably easy:
+Speaking of simplicity, F# makes asynchronous programming strikingly easy:
 
 ```
 let readFileAsync fileName =
@@ -798,7 +798,7 @@ There is a lot of great content available which explains the differences and ben
 
 So far I've talked mostly about generic concepts of the functional programming paradigm, but there is a wealth of benefits which come specifically with F#. The obvious one is [.NET Core](). As we all know Microsoft is putting a lot of work into their new open source, cross platform, multi language runtime.
 
-F# is part of .NET and therefore runs on all .NET runtimes, which include [.NET Core](), [.NET Framework]() and [Xamarin]() (Mono). This means that anyone can develop F# on either Windows, Linux or macOS. It also means that F# developers have access to a huge and extremely mature eco system of high quality libraries. Because F# is a multi paradigm language (yes you can write object oriented code too if you want) it can reference and call into any third party package no matter if it was written in F#, C# or VB.NET.
+F# is part of .NET and therefore runs on all .NET runtimes, which include [.NET Core](), [.NET Framework]() and [Xamarin]() (Mono). This means that anyone can develop F# on either Windows, Linux or macOS. It also means that F# developers have access to a large eco system of extremely mature and high quality libraries. Because F# is a multi paradigm language (yes you can write object oriented code too if you want) it can reference and call into any third party package no matter if it was written in F#, C# or VB.NET.
 
 <h2 id="open-source">Open Source</h2>
 
@@ -810,7 +810,7 @@ The F# language is under the direction of the [F# Foundation](https://fsharp.org
 
 <h2 id="tooling">Tooling</h2>
 
-There is no match when it comes to tooling. Microsoft's .NET languages have always benefited from excellent tooling. [Visual Studio]() was the uncontested leader for a long time, but in recent years the competition has racked up. [JetBrains](), the company who invented [ReSharper](), has released a new IntelliJ driven cross platform IDE called [Rider](). Meanwhile Microsoft developed a new open source editor called [Code](). [Visual Studio Code]() has quickly emerged as the [most popular development environment](https://insights.stackoverflow.com/survey/2018/#technology-most-popular-development-environments) amongst programmers and boasts a huge marketplace of useful plugins. Thanks to [Krzysztof Cieślak](https://twitter.com/k_cieslak) there is an outstanding extension called [Ionide]() for F#.
+There is no match when it comes to tooling. Microsoft's .NET languages have always benefited from excellent tooling. [Visual Studio]() was the uncontested leader for a long time, but in recent years the competition has racked up. [JetBrains](), the company who invented [ReSharper](), has released a new IntelliJ driven cross platform IDE called [Rider](). Meanwhile Microsoft developed a new open source editor called [Code](). [Visual Studio Code]() has quickly emerged as the [most popular development environment](https://insights.stackoverflow.com/survey/2018/#technology-most-popular-development-environments) amongst programmers and boasts a huge marketplace of useful plugins. Thanks to [Krzysztof Cieślak](https://twitter.com/k_cieslak) there is a superb extension called [Ionide]() for F#.
 
 Visual Studio, JetBrains Rider and Visual Studio Code with Ionide are three of the world's best programming IDEs which are cross platform compatible, run on all major operating systems and support F#.
 
@@ -820,7 +820,7 @@ As I mentioned at the very beginning F# is not just a language for algebraic stu
 
 ### F# on the Backend
 
-F# has an abundance of diverse and feature rich web frameworks. My personal favourite is a library called [Giraffe](https://github.com/giraffe-fsharp/Giraffe) (disclaimer: I am the core maintainer of this project). Giraffe sits on top of [ASP.NET Core](https://www.asp.net/core), which means that it mostly piggybacks off the entire ASP.NET Core environment, its performance attributes and community contributions. In Giraffe a web application is composed through a combination of many smaller functions all glued together via the Kleisli operator:
+F# has an abundance of diverse and feature rich web frameworks. My personal favourite is a library called [Giraffe](https://github.com/giraffe-fsharp/Giraffe) (disclaimer: I am the core maintainer of this project). Giraffe sits on top of [ASP.NET Core](https://www.asp.net/core), which means that it mostly piggybacks off the entire ASP.NET Core environment, its performance attributes and community contributions. In Giraffe a web application is composed through a combination of many smaller functions which get glued together via the Kleisli operator:
 
 ```
 let webApp =
@@ -838,13 +838,18 @@ Giraffe has also recently joined the [TechEmpower Web Framework Benchmarks](http
 However, if Giraffe is not to your taste then there are many other great F# web libraries available:
 
 - [Saturn](https://saturnframework.org/) (F# MVC framework built on top of Giraffe)
-- [Suave](https://suave.io/) (Not only a web framework, but an entire web server written in F#)
+- [Suave](https://suave.io/) (An entire web server written in F#)
 - [Freya](https://freya.io/)
 - [WebSharper](https://websharper.com/)
 
-ASP.NET Core and ASP.NET Core MVC are perfectly compatible with F# too (despite being mainly designed for C#).
+ASP.NET Core and ASP.NET Core MVC are perfectly compatible with F#.
 
 ### F# on the Frontend
+
+After F# has set its mark on the server side of things it has also seen a lot of innovation on the frontend of the web.
+
+[Fable](https://fable.io/) is an F# to JavaScript transpiler which is built on top of [Babel](https://babeljs.io/), an extremely popular and advanced JavaScript compiler.
+
 
 - Fable
 
@@ -854,9 +859,9 @@ ASP.NET Core and ASP.NET Core MVC are perfectly compatible with F# too (despite 
 
 ## Final Words
 
-I've meant to write this blog post for a long time but never found the time up until recently. My background is mainly C#, which is what I have been programming for more than ten years now and what I am still doing today. In the last three years I have taught myself F# and fallen madly in love with it. A lot of my friends and co-workers ask me what I like so much about F# and I decided to put it all down into writing. The list is obviously not complete and only a recollection of my own take on the main benefits of F#. If you think that I have missed something then please do not hesitate and let me know in the comments below. I see this blog post as an ever evolving resource where I can point people towards to who have an interest in F#.
+I've meant to write this blog post for a long time but never found the time to do it up until recently. My background is mainly C#, which is what I have been programming for more than ten years now and what I am still doing today. In the last three years I have taught myself F# and fallen madly in love with it. As a convert I get often asked what I like about F# so much and therefore I decided to put everything into writing. The list is obviously not complete and only a recollection of my own take on the main benefits of F#. If you think that I have missed something then please do not hesitate and let me know in the comments below. I see this blog post as an ever evolving resource where I hope to point people to who have an interest in F#.
 
-This blog post is also part of the [F# Advent Calendar 2018]() which has been kindly organised by [Sergey Tihon]() again. Sergey does not only organise the [yearly F# Advent Calendar](), but also runs a [weekly F#]() newsletter. [Subscribe to his newsletter]() or [follow him on Twitter]() and stay up to date with the latest on F#!
+This blog post is also part of the [F# Advent Calendar 2018]() which has been kindly organised by [Sergey Tihon]() again. Sergey does not only organise the [yearly F# Advent Calendar](), but also runs a [weekly F#]() newsletter. [Subscribe to his newsletter]() or [follow him on Twitter]() and stay up to date with the latest developments on F#!
 
 ## Useful F# Resources
 
