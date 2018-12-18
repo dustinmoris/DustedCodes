@@ -4,7 +4,7 @@
 
 # Why you should learn F#
 
-If you were thinking of learning a new programming language in 2019 then I would highly recommend to have a close look at F#. No matter if you are already a functional developer from a different community (Haskell, Clojure, Scala, etc.) or you are a complete newbie to functional programming (like I was 3 years ago) I think F# can equally impress you. F# is a [functional first language](). This means it is not a pure functional language but it is heavily geared towards the [functional programming paradigm](). However, because F# is also part of the [.NET language family]() it is equally well equipped to write object oriented code too. Secondly F# is - contrary to common believe - an extremely well designed [all purpose language](). This means that F# is not only good for all sorts of "mathematical" stuff, but also for so much more. Without doubt F# is, like most other functional (algebraic) languages, greatly suited for this kind of work, but it is certainly not at the forefront of the creators of F# and neither a very common use case by most people who I know work with F#. So what is F# really good for? Well, the honest answer is almost anything! F# is an extremely pragmatic, expressive, statically typed programming language. Whether you want to build a distributed real time application, a service oriented web backend, a fancy looking single page app, mobile games, a line of business application or the next big social internet flop, F# will satisfy most if not all of your needs. As a matter of fact F# is probably a much better language for these types of applications than let's say Python, Java or C#. If you don't believe me then please continue reading and hopefully I will have convinced you by the end of this post!
+If you were thinking of learning a new programming language in 2019 then I would highly recommend to have a close look at F#. No matter if you are already a functional developer from a different community (Haskell, Clojure, Scala, etc.) or you are a complete newbie to functional programming (like I was 3 years ago) I think F# can equally impress you. F# is a [functional first language](https://dotnet.microsoft.com/languages/fsharp). This means it is not a pure functional language but it is heavily geared towards the [functional programming paradigm](https://en.wikipedia.org/wiki/Functional_programming). However, because F# is also part of the [.NET language family](https://dotnet.microsoft.com/languages) it is equally well equipped to write object oriented code too. Secondly F# is - contrary to common believe - an extremely well designed [general purpose language](https://fsharpforfunandprofit.com/why-use-fsharp/). This means that F# is not only good for all sorts of "mathematical" stuff, but also for so much more. Without doubt F# is, like most other functional (algebraic) languages, greatly suited for this kind of work, but it is certainly not at the forefront of the creators of F# and neither a very common use case by most people who I know work with F#. So what is F# really good for? Well, the honest answer is almost anything! F# is an extremely pragmatic, expressive, statically typed programming language. Whether you want to build a distributed real time application, a service oriented web backend, a fancy looking single page app, mobile games, a line of business application or the next big social internet flop, F# will satisfy most if not all of your needs. As a matter of fact F# is probably a much better language for these types of applications than let's say Python, Java or C#. If you don't believe me then please continue reading and hopefully I will have convinced you by the end of this post!
 
 ## Table of contents
 
@@ -16,6 +16,10 @@ If you were thinking of learning a new programming language in 2019 then I would
 - [.NET Core](#net-core)
 - [Open Source](#open-source)
 - [Tooling](#tooling)
+- [F# conquering the web](#fsharp-conquering-the-web)
+- [F# Everywhere](#fsharp-everywhere)
+- [Final Words](#final-words)
+- [Useful Resources](#useful-resources)
 
 <h2 id="domain-driven-development">Domain Driven Development</h2>
 
@@ -25,7 +29,7 @@ Let's look at some code examples to demonstrate what I mean. For this task and f
 
 ### Identifying bad design
 
-A common use cases in a modern application is to read a customer object from a database. In C# this would look something like this:
+A common use case in a modern application is to read a customer object from a database. In C# this would look something like this:
 
 ```
 public Customer GetCustomerById(string customerId)
@@ -209,7 +213,7 @@ This is a perfect example where F# can provide a lot of value with very few line
 
 C# developers are not very used to model real world concepts like a `CustomerId`, an `OrderId` or an `EmailAddress` into their own types, because the language doesn't make it easy. These objects are often represented by very primitive types such as `string` or `int` and are being handled very loosely by the domain.
 
-If you would like to learn more about [Domain Driven Design]() in F# then I would highly recommend to watch [Scott Wlaschin's Domain Modeling Made Functional]() presentation from NDC London. This is a fantastic talk with lots of food for thought and also the source of some of the ideas which I have introduced in this article:
+If you would like to learn more about [Domain Driven Design](https://en.wikipedia.org/wiki/Domain-driven_design) in F# then I would highly recommend to watch [Scott Wlaschin's Domain Modeling Made Functional](https://vimeo.com/223983252) presentation from NDC London. This is a fantastic talk with lots of food for thought and also the source of some of the ideas which I have introduced in this article:
 
 <iframe src="https://www.youtube.com/embed/Up7LcbGZFuo" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -219,7 +223,7 @@ One of the greatest features of F# is that **objects in F# are immutable by defa
 
 ### Saying goodbye to nulls
 
-[Tony Hoare](), who invented (amongst many other great things) the null reference [called it his billion dollar mistake](). He even apologised for the creation of `null` during QCon London in 2009.
+[Tony Hoare](https://en.wikipedia.org/wiki/Tony_Hoare), who invented (amongst many other great things) the null reference [called it his billion dollar mistake](https://en.wikipedia.org/wiki/Null_pointer#History). He even apologised for the creation of `null` during QCon London in 2009.
 
 **The problem with `null` is that it doesn't reflect any  real state and yet has too many meanings at the same time.** It's never clear if `null` means "unknown", "empty", "does not exist", "not initialised", "invalid", "some other error" or perhaps "end of line/file/stream/etc."? Today's scholars agree that the existence of `null` is certainly a mistake and hence why languages like [C# try to slowly move away from it in their upcoming versions](https://msdn.microsoft.com/en-us/magazine/mt829270.aspx).
 
@@ -415,7 +419,7 @@ This is another great example where the stark contrast between F# and C# really 
 
 <h2 id="solid-made-easy-in-fsharp">SOLID made easy in F#</h2>
 
-Object oriented programming is all about producing [SOLID]() code. In order to understand and write decent C# one has to read at least five different books, [study 20+ design patterns](), follow [composition over inheritance](), practise [TDD]() and [BDD](), apply the [onion architecture](), layer everything into tiers, [MVP](), [MVVM]() and most importantly [single responsibility]() all the things.
+Object oriented programming is all about producing [SOLID](https://en.wikipedia.org/wiki/SOLID) code. In order to understand and write decent C# one has to read at least five different books, [study 20+ design patterns](https://en.wikipedia.org/wiki/Software_design_pattern), follow [composition over inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance), practise [TDD](https://en.wikipedia.org/wiki/Test-driven_development) and [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development), apply the [onion architecture](https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/), layer everything into tiers, [MVP](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter), [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) and most importantly [single responsibility](https://en.wikipedia.org/wiki/Single_responsibility_principle) all the things.
 
 We all know the importance of these principles, because they are vital in keeping object oriented code in maintainable shape. Object oriented developers are so used to practise these patterns that it is unimaginable to them that someone could possibly produce SOLID code without injecting everything through a constructor. I've been there myself. The first time I saw functional code it looked plain wrong to me. I think most C# developers are put off by F# when they look at functional code for the very first time and don't see anything which looks familiar to them. There is no classes, no constructors and most importantly no IoC containers.
 
@@ -423,7 +427,7 @@ We all know the importance of these principles, because they are vital in keepin
 
 In functional programming everything is a function. The only design pattern which someone has to know is that a function is a first class citizen. Functions can be composed, instantiated, partially applied, passed around and executed.
 
-There is this [famous slide](//www.slideshare.net/ScottWlaschin/fp-patterns-ndc-london2014) by [Scott Wlaschin](//www.slideshare.net/ScottWlaschin) which nicely sums it up:
+There is this [famous slide](//www.slideshare.net/ScottWlaschin/fp-patterns-ndc-london2014) by [Scott Wlaschin](https://twitter.com/ScottWlaschin) which nicely sums it up:
 
 <iframe src="//www.slideshare.net/slideshow/embed_code/key/oCM5TxRgKh1vme?startSlide=15" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
 
@@ -431,7 +435,7 @@ This slide deck is from Scott Wlaschin's [Functional programming design patterns
 
 ### To hell with interfaces
 
-In C# everything requires an interface. For example if a method requires to support multiple sort algorithms then the [strategy pattern]() can help with this:
+In C# everything requires an interface. For example if a method requires to support multiple sort algorithms then the [strategy pattern](https://en.wikipedia.org/wiki/Strategy_pattern) can help with this:
 
 ```
 public interface ISortAlgorithm
@@ -495,7 +499,7 @@ Let's look at a slightly more complex example to really demonstrate the strength
 
 ### Everything is a function
 
-One of the most useful patterns in C# and one of my personal favourites is the [decorator pattern](). It allows adding additional functionality to an existing class without violating the [open-closed principle]() of the SOLID guidelines. A password policy is a perfect example for this:
+One of the most useful patterns in C# and one of my personal favourites is the [decorator pattern](https://en.wikipedia.org/wiki/Decorator_pattern). It allows adding additional functionality to an existing class without violating the [open-closed principle](https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle) of the SOLID guidelines. A password policy is a perfect example for this:
 
 ```
 public interface IPasswordPolicy
@@ -626,9 +630,9 @@ let isValidPassword2 (password : string) =
 
 ### Inversion of Control made functional
 
-The only pattern which a functional developer has to understand is functions. To prove my point one last time I'll explore the [Inversion of Control principle]() next.
+The only pattern which a functional developer has to understand is functions. To prove my point one last time I'll explore the [Inversion of Control principle](https://en.wikipedia.org/wiki/Inversion_of_control) next.
 
-First let's be clear what the Inversion of Control principle is, because many developers wrongly confuse it with the dependency injection pattern. The Inversion of Control principle states that a class shall never instantiate its dependencies itself. [Martin Fowler]() uses the term [Hollywood Principle]() as in *"Don't call us, we'll call you"*.
+First let's be clear what the Inversion of Control principle is, because many developers wrongly confuse it with the dependency injection pattern. The Inversion of Control principle states that a class shall never instantiate its own dependencies itself. [Martin Fowler](https://martinfowler.com/) uses the term [Hollywood Principle](https://martinfowler.com/bliki/InversionOfControl.html) as in *"Don't call us, we'll call you"*.
 
 There are three distinctive design patterns which follow the IoC principle:
 
@@ -636,22 +640,22 @@ There are three distinctive design patterns which follow the IoC principle:
 - Factory
 - Service Locator
 
-The [Service Locator is considered an anti pattern]() so I won't go any further here.
+The [Service Locator is considered an anti pattern](http://blog.ploeh.dk/2010/02/03/ServiceLocatorisanAnti-Pattern/) so I won't go any further here.
 
-The [Factory pattern]() consists of two further sub-patterns:
+The Factory pattern consists of two further sub-patterns:
 
-- Abstract Factory
-- Factory Method
+- [Abstract Factory](https://en.wikipedia.org/wiki/Abstract_factory_pattern)
+- [Factory Method](https://en.wikipedia.org/wiki/Factory_method_pattern)
 
-The [Dependency Injection]() pattern breaks down into three more sub-patterns:
+The [Dependency Injection](https://en.wikipedia.org/wiki/Dependency_injection) pattern breaks down into three more sub-patterns:
 
 - Constructor Injection
 - Method Injection
 - Property Injection
 
-Despite [Constructor Injection]() being the most popular IoC pattern in object oriented programming, it is only one of many other patterns which follow the Dependency Inversion Principle. Each of these patterns is extremely useful and satisfies a specific use case which Constructor Injection couldn't do on its own.
+Despite [Constructor Injection](https://martinfowler.com/articles/injection.html#ConstructorInjectionWithPicocontainer) being the most popular IoC pattern in object oriented programming, it is only one of many other patterns which follow the Dependency Inversion Principle. Each of these patterns is extremely useful and satisfies a specific use case which Constructor Injection couldn't do on its own.
 
-This has nothing to do with F# directly, but I wanted to underline how the sheer number of different design patterns can sometimes be confusing. It may take years for OO software engineers to fully grasp the vast amount of concepts and understand how and when they play an important role.
+This has nothing to do with F# directly, but I wanted to underline how the sheer number of different design patterns can sometimes be very confusing. It may take years for an OO software engineer to fully grasp the vast amount of concepts and understand how and when they play an important role.
 
 Now that I got this out of the way let's take a look at how C# handles Dependency Injection via Constructor Injection:
 
@@ -703,7 +707,7 @@ public class EmailNotificationService : INotificationService
 }
 ```
 
-Typically in C# these dependencies would get registered in an IoC container. I've skipped this part in order to keep the C# implementation small as it's already rather large.
+Typically in C# these dependencies would get registered in an IoC container. I've skipped this part in order to keep the C# implementation small as it's already becoming large.
 
 Now let's take a look at how dependency injection can be done in F#:
 
@@ -765,7 +769,7 @@ There is a few advantages with the functional approach though:
 - No additional (third party) IoC container required.
 - Dependency Injection is a pattern which has to be taught in OO programming whereas passing a function into another function is the most fundamental/normal thing one could do in functional programming.
 
-[Mark Seeman](), author of [Dependency Injection in .NET](https://www.manning.com/books/dependency-injection-in-dot-net), did a fantastic talk on more advanced dependency patterns in F#. Watch his talk "[From dependency injection to dependency rejection](https://www.youtube.com/watch?v=xG5qP5AWQws)" on YouTube:
+[Mark Seeman](http://blog.ploeh.dk/), author of [Dependency Injection in .NET](https://www.manning.com/books/dependency-injection-in-dot-net), did a fantastic talk on more advanced dependency patterns in F#. Watch his talk "[From dependency injection to dependency rejection](https://www.youtube.com/watch?v=xG5qP5AWQws)" on YouTube:
 
 <iframe src="https://www.youtube.com/embed/xG5qP5AWQws" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -792,17 +796,17 @@ let readFileAsync fileName =
     }
 ```
 
-There is a lot of great content available which explains the differences and benefits of F#'s asynchronous programming model so that I won't rehash everything again, but I would highly recommend to read [Thomans Petricek]()'s article on [Async in C# and F#: Asynchronous gotchas in C#](http://tomasp.net/blog/csharp-async-gotchas.aspx/), followed by his blog series on [Asynchronous C# and F#](http://tomasp.net/blog/csharp-fsharp-async-intro.aspx/), including [How do they differ?](http://tomasp.net/blog/async-csharp-differences.aspx/) and [How does it work?](http://tomasp.net/blog/async-compilation-internals.aspx/).
+There is a lot of great content available which explains the differences and benefits of F#'s asynchronous programming model so that I won't rehash everything again, but I would highly recommend to read [Thomans Petricek](http://tomasp.net/)'s article on [Async in C# and F#: Asynchronous gotchas in C#](http://tomasp.net/blog/csharp-async-gotchas.aspx/), followed by his blog series on [Asynchronous C# and F#](http://tomasp.net/blog/csharp-fsharp-async-intro.aspx/), including [How do they differ?](http://tomasp.net/blog/async-csharp-differences.aspx/) and [How does it work?](http://tomasp.net/blog/async-compilation-internals.aspx/).
 
 <h2 id="net-core">.NET Core</h2>
 
-So far I've talked mostly about generic concepts of the functional programming paradigm, but there is a wealth of benefits which come specifically with F#. The obvious one is [.NET Core](). As we all know Microsoft is putting a lot of work into their new open source, cross platform, multi language runtime.
+So far I've talked mostly about generic concepts of the functional programming paradigm, but there is a wealth of benefits which come specifically with F#. The obvious one is [.NET Core](https://github.com/dotnet/core). As we all know Microsoft is putting a lot of work into their new open source, cross platform, multi language runtime.
 
-F# is part of .NET and therefore runs on all .NET runtimes, which include [.NET Core](), [.NET Framework]() and [Xamarin]() (Mono). This means that anyone can develop F# on either Windows, Linux or macOS. It also means that F# developers have access to a large eco system of extremely mature and high quality libraries. Because F# is a multi paradigm language (yes you can write object oriented code too if you want) it can reference and call into any third party package no matter if it was written in F#, C# or VB.NET.
+F# is part of .NET and therefore runs on all .NET runtimes, which include [.NET Core](https://en.wikipedia.org/wiki/.NET_Core), [.NET Framework](https://en.wikipedia.org/wiki/.NET_Framework) and [Xamarin](https://en.wikipedia.org/wiki/Xamarin) (Mono). This means that anyone can develop F# on either Windows, Linux or macOS. It also means that F# developers have access to a large eco system of extremely mature and high quality libraries. Because F# is a multi paradigm language (yes you can write object oriented code too if you want) it can reference and call into any third party package no matter if it was written in F#, C# or VB.NET.
 
 <h2 id="open-source">Open Source</h2>
 
-Long time before Microsoft embraced the OSS community they debuted with F# as their first language which was born out of [Microsoft Research]() as an open source project from the get go. The open source community behind F# is very strong, with many contributions coming from outside Microsoft and driving the general direction of the language.
+Long time before Microsoft embraced the OSS community they debuted with F# as their first language which was born out of [Microsoft Research](https://www.microsoft.com/en-us/research/) as an open source project from the get go. The open source community behind F# is very strong, with many contributions coming from outside Microsoft and driving the general direction of the language.
 
 You can find all [F# source code](https://github.com/fsharp) hosted on GitHub and start contributing by submitting an [F# language suggestion](https://github.com/fsharp/fslang-suggestions) first. When a suggestion gets approved then an [RFC](https://github.com/fsharp/fslang-design/tree/master/RFCs) gets created with a corresponding [discussion thread](https://github.com/fsharp/fslang-design/issues).
 
@@ -810,17 +814,17 @@ The F# language is under the direction of the [F# Foundation](https://fsharp.org
 
 <h2 id="tooling">Tooling</h2>
 
-There is no match when it comes to tooling. Microsoft's .NET languages have always benefited from excellent tooling. [Visual Studio]() was the uncontested leader for a long time, but in recent years the competition has racked up. [JetBrains](), the company who invented [ReSharper](), has released a new IntelliJ driven cross platform IDE called [Rider](). Meanwhile Microsoft developed a new open source editor called [Code](). [Visual Studio Code]() has quickly emerged as the [most popular development environment](https://insights.stackoverflow.com/survey/2018/#technology-most-popular-development-environments) amongst programmers and boasts a huge marketplace of useful plugins. Thanks to [Krzysztof Cieślak](https://twitter.com/k_cieslak) there is a superb extension called [Ionide]() for F#.
+There is no match when it comes to tooling. Microsoft's .NET languages have always benefited from excellent tooling. [Visual Studio](https://visualstudio.microsoft.com/vs/) was the uncontested leader for a long time, but in recent years the competition has racked up. [JetBrains](https://www.jetbrains.com/), the company who invented [ReSharper](https://www.jetbrains.com/resharper/), has released a new IntelliJ driven cross platform IDE called [Rider](https://www.jetbrains.com/rider/). Meanwhile Microsoft developed a new open source editor called [Code](https://github.com/Microsoft/vscode). [Visual Studio Code](https://code.visualstudio.com/) has quickly emerged as the [most popular development environment](https://insights.stackoverflow.com/survey/2018/#technology-most-popular-development-environments) amongst programmers and boasts a huge marketplace of useful plugins. Thanks to [Krzysztof Cieślak](https://twitter.com/k_cieslak) there is a superb extension called [Ionide](http://ionide.io/) for F#.
 
 Visual Studio, JetBrains Rider and Visual Studio Code with Ionide are three of the world's best programming IDEs which are cross platform compatible, run on all major operating systems and support F#.
 
-## F# conquering the web
+<h2 id="fsharp-conquering-the-web">F# conquering the web</h2>
 
 As I mentioned at the very beginning F# is not just a language for algebraic stuff. Functional programming in general is a perfect fit for anything web related. A web application is basically a large function with a single parameter input (HTTP request) and a single parameter output (HTTP response).
 
 ### F# on the Backend
 
-F# has an abundance of diverse and feature rich web frameworks. My personal favourite is a library called [Giraffe](https://github.com/giraffe-fsharp/Giraffe) (disclaimer: I am the core maintainer of this project). Giraffe sits on top of [ASP.NET Core](https://www.asp.net/core), which means that it mostly piggybacks off the entire ASP.NET Core environment, its performance attributes and community contributions. In Giraffe a web application is composed through a combination of many smaller functions which get glued together via the Kleisli operator:
+F# has an abundance of diverse and feature rich web frameworks. My personal favourite is a library called [Giraffe](https://github.com/giraffe-fsharp/Giraffe) (disclaimer: I am the core maintainer of this project). [Giraffe](https://github.com/giraffe-fsharp/Giraffe) sits on top of [ASP.NET Core](https://www.asp.net/core), which means that it mostly piggybacks off the entire ASP.NET Core environment, its performance attributes and community contributions. In Giraffe a web application is composed through a combination of many smaller functions which get glued together via the Kleisli operator:
 
 ```
 let webApp =
@@ -833,7 +837,7 @@ let webApp =
         POST >=> route "/submit" >=> text "Successful" ]
 ```
 
-Giraffe has also recently joined the [TechEmpower Web Framework Benchmarks](https://www.techempower.com/benchmarks/#section=data-r17&hw=ph&test=plaintext) and ranks with a total of **1,649,957 req/sec** as one of the fastest functional web frameworks available.
+[Giraffe](https://github.com/giraffe-fsharp/Giraffe) has also recently joined the [TechEmpower Web Framework Benchmarks](https://www.techempower.com/benchmarks/#section=data-r17&hw=ph&test=plaintext) and ranks with a total of **1,649,957 req/sec** as one of the fastest functional web frameworks available.
 
 However, if Giraffe is not to your taste then there are many other great F# web libraries available:
 
@@ -842,35 +846,42 @@ However, if Giraffe is not to your taste then there are many other great F# web 
 - [Freya](https://freya.io/)
 - [WebSharper](https://websharper.com/)
 
-ASP.NET Core and ASP.NET Core MVC are perfectly compatible with F#.
+ASP.NET Core and ASP.NET Core MVC are also perfectly compatible with F#.
 
 ### F# on the Frontend
 
-After F# has set its mark on the server side of things it has also seen a lot of innovation on the frontend of the web.
+After F# set its mark on the server side of things it has also seen a lot of innovation on the frontend of the web.
 
-[Fable](https://fable.io/) is an F# to JavaScript transpiler which is built on top of [Babel](https://babeljs.io/), an extremely popular and advanced JavaScript compiler.
+[Fable](https://fable.io/) is an F# to JavaScript transpiler which is built on top of [Babel](https://babeljs.io/), which itself is an extremely advanced JavaScript compiler. Babel, which is hugely popular and [backed by large organisations](https://opencollective.com/babel#contributors) such as Google, AirBnb, Adobe, Facebook, trivago and many more, is doing the heavy lifting of the compilation, whereas Fabel is transpiling from F# to Babel's own abstract syntax tree. In simple terms you get the power of F# combined with the maturity and stability of Babel which allows you to write rich frontends in F#. [Alfonso Garcia-Caro](https://twitter.com/alfonsogcnunez) has done a magnificent job in merging the F# and JavaScript communities and recently [released Fable 2](https://fable.io/blog/Introducing-2-0-beta.html) which comes with a two-fold speed boost as well as a 30%-40% reduced bundle size.
 
+[Fable](https://github.com/fable-compiler/Fable) and [Babel](https://github.com/babel/babel) are also open source and have a thriving commumity behind them.
 
-- Fable
+On a complete different front Microsoft has worked on a new project called [Balzor](https://github.com/aspnet/Blazor). Blazor is a single-page web application framework built on .NET that runs in the browser with WebAssembly. It supports all major .NET languages including F# and is [currently in beta](https://blogs.msdn.microsoft.com/webdev/2018/11/15/blazor-0-7-0-experimental-release-now-available/).
 
-- Blazor
+With the availability of Fabel and Blazor there is a huge potential of what an F# developer can do on the web today.
 
-## F# Everywhere
+<h2 id="fsharp-everywhere">F# Everywhere</h2>
 
-## Final Words
+F# is one of very few languages which can truly run anywhere! Thanks to [.NET Core](https://dotnet.microsoft.com/) one can develop F# on any OS and run on any system. It can run natively on Windows, Linux and macOS or via a [Docker](https://www.docker.com/) container in a [Kubernetes](https://kubernetes.io/) cluster. You can also run F# serverless functions in [AWS Lambda](https://aws.amazon.com/lambda/) or [Azure Functions](https://azure.microsoft.com/en-gb/services/functions/). [Xamarin App Development](https://visualstudio.microsoft.com/xamarin/) brings F# to Android, iOS and Windows apps, and [Fable](https://fable.io/) and [Blazor](https://blazor.net/) into the browser. Since [.NET Core 2.1](https://blogs.msdn.microsoft.com/dotnet/2018/05/30/announcing-net-core-2-1/) one can even run F# on [Alpine Linux](https://alpinelinux.org/) and [ARM](https://www.arm.com/)! Machine learning, IoT and games are yet other areas where F# can be used today.
 
-I've meant to write this blog post for a long time but never found the time to do it up until recently. My background is mainly C#, which is what I have been programming for more than ten years now and what I am still doing today. In the last three years I have taught myself F# and fallen madly in love with it. As a convert I get often asked what I like about F# so much and therefore I decided to put everything into writing. The list is obviously not complete and only a recollection of my own take on the main benefits of F#. If you think that I have missed something then please do not hesitate and let me know in the comments below. I see this blog post as an ever evolving resource where I hope to point people to who have an interest in F#.
+The list of supported platforms and architectures has been growing every year and I'm sure it will expand even further in the future!
 
-This blog post is also part of the [F# Advent Calendar 2018]() which has been kindly organised by [Sergey Tihon]() again. Sergey does not only organise the [yearly F# Advent Calendar](), but also runs a [weekly F#]() newsletter. [Subscribe to his newsletter]() or [follow him on Twitter]() and stay up to date with the latest developments on F#!
+<h2 id="final-words">Final Words</h2>
 
-## Useful F# Resources
+I've meant to write this blog post for a long time but never found the time to do it up until recently. My background is mainly C#, which is what I have been programming for more than ten years now and what I am still doing today. In the last three years I have taught myself F# and fallen madly in love with it. As a convert I get often asked what I like about F# and therefore I decided to put everything into writing. The list is obviously not complete and only a recollection of my own take on the main benefits of F#. If you think that I have missed something then please do not hesitate and let me know in the comments below. I see this blog post as an ever evolving resource where I hope I can point people to who have an interest in F#.
+
+This blog post is also part of the [F# Advent Calendar 2018](https://sergeytihon.com/2018/10/22/f-advent-calendar-in-english-2018/) which has been kindly organised by [Sergey Tihon](https://sergeytihon.com/) again. Sergey does not only organise the [yearly F# Advent Calendar](https://sergeytihon.com/2017/10/22/f-advent-calendar-in-english-2017/), but also runs a [weekly F#](https://sergeytihon.com/category/f-weekly/) newsletter. [Subscribe to his newsletter](https://sergeytihon.com/) or [follow him on Twitter](https://twitter.com/sergey_tihon) and stay up to date with the latest developments on F#!
+
+<h2 id="useful-resources">Useful Resources</h2>
 
 ### Blog and Websites
 
+- [F# Foundation](https://fsharp.org/)
 - [F# for fun and profit](https://fsharpforfunandprofit.com/)
 - [ploeh blog](http://blog.ploeh.dk/)
 - [Tomas Petricek](http://tomasp.net/)
-- [Sergey Tihon Weekly F#]()
+- [Sergey Tihon Weekly F#](https://sergeytihon.com/)
+- [F# all the things](https://atlemann.github.io/)
 
 ### Videos
 
@@ -880,19 +891,13 @@ This blog post is also part of the [F# Advent Calendar 2018]() which has been ki
 
 ### Books
 
-- [Get Programming with F#](https://www.manning.com/books/get-programming-with-f-sharp)
-- Book by Scott Wlaschin
-- Book by Kit Eason
+- [Get Programming with F#](https://www.manning.com/books/get-programming-with-f-sharp) by [Isaac Abraham](https://cockneycoder.wordpress.com/)
+- [Domain Modeling Made Functional](https://fsharpforfunandprofit.com/books/) by [Scott Wlaschin](https://fsharpforfunandprofit.com/)
+- [Stylish F#](https://www.amazon.com/Stylish-Writing-More-Productive-Elegant/dp/1484239997) by [Kit Eason](http://www.kiteason.com)
 
 ### Conferences
 
-- F# Exchange
-- Open FSharp
-- FableConf
-- LambdaDays
-
-
-### Community Suggestions
-
-- https://atlemann.github.io/
-- https://www.youtube.com/watch?v=Fssvnaf8bMo&list=PL-nSd-yeckKji5_4YXeU79bOQE1XApEO0
+- [F# Exchange](https://skillsmatter.com/conferences/10869-f-sharp-exchange-2019)
+- [Open FSharp](https://www.openfsharp.org/)
+- [FableConf](https://fable.io/fableconf/)
+- [Lambda Days](http://www.lambdadays.org/lambdadays2019)
