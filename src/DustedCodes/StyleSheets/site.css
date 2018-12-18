@@ -269,6 +269,13 @@ textarea:focus {
     font-size: .8em;
 }
 
+iframe {
+    width: 100%;;
+    min-height: 350px;
+    box-sizing: border-box;
+    border: none;
+}
+
 /* --------------------------
   Master page
 -------------------------- */
