@@ -852,13 +852,13 @@ ASP.NET Core and ASP.NET Core MVC are also perfectly compatible with F#.
 
 After F# set its mark on the server side of things it has also seen a lot of innovation on the frontend of the web.
 
-[Fable](https://fable.io/) is an F# to JavaScript transpiler which is built on top of [Babel](https://babeljs.io/), which itself is an extremely advanced JavaScript compiler. Babel, which is hugely popular and [backed by large organisations](https://opencollective.com/babel#contributors) such as Google, AirBnb, Adobe, Facebook, trivago and many more, is doing the heavy lifting of the compilation, whereas Fabel is transpiling from F# to Babel's own abstract syntax tree. In simple terms you get the power of F# combined with the maturity and stability of Babel which allows you to write rich frontends in F#. [Alfonso Garcia-Caro](https://twitter.com/alfonsogcnunez) has done a magnificent job in merging the F# and JavaScript communities and recently [released Fable 2](https://fable.io/blog/Introducing-2-0-beta.html) which comes with a two-fold speed boost as well as a 30%-40% reduced bundle size.
+[Fable](https://fable.io/) is an F# to JavaScript transpiler which is built on top of [Babel](https://babeljs.io/), which itself is an extremely advanced JavaScript compiler. Babel, which is hugely popular and [backed by large organisations](https://opencollective.com/babel#contributors) such as Google, AirBnb, Adobe, Facebook, trivago and many more, is doing the heavy lifting of the compilation, whereas Fable is transpiling from F# to Babel's own abstract syntax tree. In simple terms you get the power of F# combined with the maturity and stability of Babel which allows you to write rich frontends in F#. [Alfonso Garcia-Caro](https://twitter.com/alfonsogcnunez) has done a magnificent job in merging the F# and JavaScript communities and recently [released Fable 2](https://fable.io/blog/Introducing-2-0-beta.html) which comes with a two-fold speed boost as well as a 30%-40% reduced bundle size.
 
-[Fable](https://github.com/fable-compiler/Fable) and [Babel](https://github.com/babel/babel) are also open source and have a thriving commumity behind them.
+[Fable](https://github.com/fable-compiler/Fable) and [Babel](https://github.com/babel/babel) are also open source and have a thriving community behind them.
 
-On a complete different front Microsoft has worked on a new project called [Balzor](https://github.com/aspnet/Blazor). Blazor is a single-page web application framework built on .NET that runs in the browser with WebAssembly. It supports all major .NET languages including F# and is [currently in beta](https://blogs.msdn.microsoft.com/webdev/2018/11/15/blazor-0-7-0-experimental-release-now-available/).
+On a complete different front Microsoft has worked on a new project called [Blazor](https://github.com/aspnet/Blazor). Blazor is a single-page web application framework built on .NET that runs in the browser with WebAssembly. It supports all major .NET languages including F# and is [currently in beta](https://blogs.msdn.microsoft.com/webdev/2018/11/15/blazor-0-7-0-experimental-release-now-available/).
 
-With the availability of Fabel and Blazor there is a huge potential of what an F# developer can do on the web today.
+With the availability of Fable and Blazor there is a huge potential of what an F# developer can do on the web today.
 
 <h2 id="fsharp-everywhere">F# Everywhere</h2>
 
@@ -877,17 +877,20 @@ This blog post is also part of the [F# Advent Calendar 2018](https://sergeytihon
 ### Blog and Websites
 
 - [F# Foundation](https://fsharp.org/)
+- [F# Guide](https://docs.microsoft.com/en-gb/dotnet/fsharp/)
 - [F# for fun and profit](https://fsharpforfunandprofit.com/)
 - [ploeh blog](http://blog.ploeh.dk/)
 - [Tomas Petricek](http://tomasp.net/)
 - [Sergey Tihon Weekly F#](https://sergeytihon.com/)
 - [F# all the things](https://atlemann.github.io/)
+- [SAFE Stack](https://safe-stack.github.io/)
 
 ### Videos
 
 - [Domain Modeling Made Functional](https://www.youtube.com/watch?v=Up7LcbGZFuo&t=36s)
 - [F# for C# programmers](https://www.youtube.com/watch?v=KPa8Yw_Navk)
 - [Functional Design Patterns](https://www.youtube.com/watch?v=srQt1NAHYC0)
+- [A gentle introduction to F#](https://www.youtube.com/watch?v=Fssvnaf8bMo)
 
 ### Books
 
