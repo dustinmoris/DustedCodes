@@ -172,7 +172,7 @@ let masterView (subject   : string option)
                     li [] [ iconLink "https://www.instagram.com/dustedtravels/" "Follow on Instagram" instagramIcon ]
                     li [] [ iconLink "https://www.youtube.com/channel/UCtoObQtHY0TjIXwz9Ipmq7g" "Follow on YouTube" youTubeIcon ]
                     li [] [ iconLink "https://github.com/dustinmoris" "Browse GitHub repositories" githubIcon ]
-                    li [] [ iconLink "https://github.com/dustinmoris" "Browse Docker images" dockerIcon ]
+                    li [] [ iconLink "https://hub.docker.com/u/dustinmoris" "Browse Docker images" dockerIcon ]
                     li [] [ iconLink "https://stackoverflow.com/users/1693158/dustinmoris" "View StackOverflow profile" stackOverflowIcon ]
                     li [] [ iconLink "https://www.buymeacoffee.com/dustinmoris" "Buy me a coffee" buyMeACoffeeIcon ]
                     li [] [ iconLink "https://www.paypal.me/dustinmoris" "Pay me via PayPal" payPalIcon ]

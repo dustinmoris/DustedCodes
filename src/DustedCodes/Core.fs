@@ -160,6 +160,9 @@ module Url =
         route.TrimStart [| '/' |]
         |> sprintf "%s/%s" Config.baseUrl
 
+    let storage (resource : string) =
+        sprintf "https://storage.googleapis.com/dusted-codes/%s" resource
+
     let ``/``          = create UrlPaths.``/``
     let ``/about``     = create UrlPaths.``/about``
     let ``/hire``      = create UrlPaths.``/hire``
