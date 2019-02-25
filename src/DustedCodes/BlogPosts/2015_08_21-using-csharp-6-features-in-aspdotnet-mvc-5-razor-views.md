@@ -8,7 +8,7 @@
 <p>Recently I upgraded my IDE to Visual Studio 2015 and made instant use of many new C# 6 features like the <a href="https://msdn.microsoft.com/en-us/library/dn986596.aspx">nameof keyword</a> or <a href="https://msdn.microsoft.com/en-us/library/dn961160.aspx">interpolated strings</a>.
 </p>
 <p>It worked (and compiled) perfectly fine until I started using C# 6 features in ASP.NET MVC 5 razor views:</p>
-<a href="https://www.flickr.com/photos/130657798@N05/20768813781" title="Feature not available in C# 5 message by Dustin Moris Gorski, on Flickr"><img src="https://farm6.staticflickr.com/5658/20768813781_9d305e366b_o.png" alt="Feature not available in C# 5 message"></a>
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-08-21/20768813781_9d305e366b_o.png" alt="Feature not available in C# 5 message">
 
 <blockquote>
     <p>Feature 'interpolated strings' is not available in C# 5. Please use language version 6 or greater.</p>
@@ -21,7 +21,7 @@
 
 <p>However, saying that I don't get any errors at compilation time even though I made a lot of use of C# 6 features all over my project.</p>
 <p>Maybe it is an intellisense bug in Visual Studio 2015? Not really, because when I start my project I get a yellow screen of death which matches the intellisense error:</p>
-<a href="https://www.flickr.com/photos/130657798@N05/20575504479" title="Interpolated String Runtime Error in ASP.NET MVC 5 by Dustin Moris Gorski, on Flickr"><img src="https://farm1.staticflickr.com/566/20575504479_95b11bae10_o.png" alt="Interpolated String Runtime Error in ASP.NET MVC 5"></a>
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-08-21/20575504479_95b11bae10_o.png" alt="Interpolated String Runtime Error in ASP.NET MVC 5">
 
 <h3>ASP.NET Runtime compiler</h3>
 <p>The problem is at runtime when ASP.NET tries to compile the razor view. ASP.NET MVC 5 uses the <a href="https://msdn.microsoft.com/en-us/library/system.codedom.compiler.codedomprovider(v=vs.110).aspx">CodeDOM Provider</a> which doesn't support C# 6 language features.

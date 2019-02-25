@@ -41,7 +41,7 @@
 <p>ASP.NET itself is a larger framework to process incoming requests. Even though it could handle incoming requests from different sources, it is almost exclusively used with <abbr title="Internet Information Services">IIS</abbr>. It can be extended with <a href="https://msdn.microsoft.com/en-us/library/bb398986%28v=vs.140%29.aspx">HttpModules and HttpHandlers</a>.</p>
 <p>HttpModules are plugged into the pipeline to process a request at any point of the <a href="https://msdn.microsoft.com/en-us/library/ms178473(v=vs.85).aspx">ASP.NET life cycle</a>. A HttpHandler is responsible for producing a response/output for a request.</p>
 <p><a href="https://www.iis.net/">IIS</a> (Microsoft's web server technology) will create an incoming request for ASP.NET, which subsequently will start processing the request and eventually initialize the HttpApplication (which is the default handler) and create a response:</p>
-<a href="https://www.flickr.com/photos/130657798@N05/16862010839" title="IIS, ASP.NET and MVC architecture by Dustin Moris Gorski, on Flickr"><img src="https://farm9.staticflickr.com/8736/16862010839_64d17c3268_o.gif" alt="IIS, ASP.NET and MVC architecture"></a>
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-04-06/16862010839_64d17c3268_o.gif" alt="IIS, ASP.NET and MVC architecture">
 <p>The key thing to know is that ASP.NET can only handle requests which IIS forwards to it. This is determined by the registered HttpHandlers (e.g. by default a request to a .htm file is not handled by ASP.NET).</p>
 <p>And finally, MVC is only one of potentially many registered handlers in the ASP.NET pipeline.</p>
 <p>This is crucial to understand the impact of different error handling methods.</p>

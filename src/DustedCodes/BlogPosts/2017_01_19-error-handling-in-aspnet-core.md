@@ -90,7 +90,7 @@ The `RequestDelegate` is, as its name suggest, a delegate which represents the n
 
 This is why the order of the `app.Use...()` method calls matter. When you think about it the underlying pattern can be seen a little bit like an onion:
 
-<a href="https://www.flickr.com/photos/130657798@N05/31564566283/in/dateposted-public/" title="aspnet-core-middleware-onion-architecture"><img src="https://c1.staticflickr.com/1/515/31564566283_cfa4105b3a_z.jpg" alt="aspnet-core-middleware-onion-architecture"></a>
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-01-19/31564566283_dca040a066_o.png" alt="aspnet-core-middleware-onion-architecture">
 
 A HTTP request will travel from the top level middleware down to the last middleware, unless a middleware in between can satisfy the request and return a HTTP response earlier to the client. In contrast an unhandled exception would travel from the bottom up. Beginning at the middleware where it got thrown it would bubble up all the way to the top most middleware waiting for something to catch it.
 

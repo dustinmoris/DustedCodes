@@ -23,7 +23,7 @@
 
 <h2>Basics</h2>
 
-<p>Before cracking down the RSA algorithm I would like to scratch on some basics, which are essential to undertand the nature of RSA.</p>
+<p>Before cracking down the RSA algorithm I would like to scratch on some basics, which are essential to understand the nature of RSA.</p>
 
 <h3>Public-key encryption</h3>
 
@@ -33,8 +33,8 @@
 
 <h4>Alice, Bob and Eve</h4>
 <p>Alice and Bob want to communicate privately and Eve wants to eavesdrop. Both, Alice and Bob have their individual public and private key pair.</p>
-<p>Alice uses Bob's public key to encrypt a private message before sending it to Bob. Bob can use his private key to decrypt the messgae. Now Bob can use Alice's public key to reply to Alice without Eve being able to understand any of the transmitted data. Finally Alice decrypts Bob's message with her own private key.</p>
-<a href="https://www.flickr.com/photos/130657798@N05/18626777534" title="Public Key Encryption by Dustin Moris Gorski, on Flickr"><img src="https://c1.staticflickr.com/1/418/18626777534_fc5524c031_o.gif" alt="Public Key Encryption"></a>
+<p>Alice uses Bob's public key to encrypt a private message before sending it to Bob. Bob can use his private key to decrypt the message. Now Bob can use Alice's public key to reply to Alice without Eve being able to understand any of the transmitted data. Finally Alice decrypts Bob's message with her own private key.</p>
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-06-28/18626777534_fc5524c031_o.gif" alt="Public Key Encryption">
 <p>The public key is available to everyone, while the private key is only known to the key holder. There is never the requirement to share a secret key via an insecure channel.</p>
 
 <h4>Integrity and Authenticity</h4>
@@ -46,21 +46,21 @@
 <p>By providing an additional signature Alice and Bob can trust each others messages.</p>
 
 <h4>Encrypting and signing</h4>
-<p>Encrypting or signing are not exclusive. For example Alice can first encrypt her message and then use the resulting ciper as the base for computing a valid signature. Afterwards Bob has to first verify the signature based on the ciper and when that goes well he can procceed to decrypt the message. Now both have established a trusted and secure way of communicating privately.</p>
+<p>Encrypting or signing are not exclusive. For example Alice can first encrypt her message and then use the resulting cipher as the base for computing a valid signature. Afterwards Bob has to first verify the signature based on the cipher and when that goes well he can proceed to decrypt the message. Now both have established a trusted and secure way of communicating privately.</p>
 
 <h3>One-way functions</h3>
 <p>The concept of encrypting a message with one key and not being able to decrypt with the same key is based on one-way functions. As the name suggests the characteristic of a one-way function is that it is not reversible other than with a trial and error approach.</p>
-<p>This can be achieved if there is an infitie amount of values which lead to the same result, if there is some information lost as part of the algorithm or if the time to decrypt takes immensely longer than to encrypt.</p>
+<p>This can be achieved if there is an infinite amount of values which lead to the same result, if there is some information lost as part of the algorithm or if the time to decrypt takes immensely longer than to encrypt.</p>
 <h4>A simple example of a one-way function</h4>
 <p>Let's say the initial value is 264. The one-way function reads as following:</p>
-<p><em>You start from the centre of a map. Now take your value and divide it by it's last digit. The result is a new value x. Now draw a line x centimeters north east and mark a new point on the map. Next take your original value and subtract it by x. The result is y. Draw another line, starting from the last point, y centimeters south west. The final point is the end result.</em></p>
-<a href="https://www.flickr.com/photos/130657798@N05/19247927141" title="Example of a one way function by Dustin Moris Gorski, on Flickr"><img src="https://c4.staticflickr.com/4/3707/19247927141_e7b4b378a8_o.gif" alt="Example of a one way function"></a>
+<p><em>You start from the centre of a map. Now take your value and divide it by it's last digit. The result is a new value x. Now draw a line x centimetres north east and mark a new point on the map. Next take your original value and subtract it by x. The result is y. Draw another line, starting from the last point, y centimetres south west. The final point is the end result.</em></p>
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-06-28/19247927141_e7b4b378a8_o.gif" alt="Example of a one way function">
 <p>In this example we would divide 264 by 4 and retrieve 66 for x. Additionally we subtract 66 from 264 and retrieve y = 198. We draw both lines and determine the final point on the map, which represents the end result of the one-way function.</p>
 <p>Now just from knowing the final point on the map and the definition of the function it is not possible to easily deduce the original value.</p>
 
 <h3>Modular arithmetic</h3>
-<p>Modular arithemtic is full of one-way functions. It is also known as clock arithmetic, because it can be illustrated by a finite amount of numbers arranged in a loop, like on a clock:</p>
-<a href="https://www.flickr.com/photos/130657798@N05/19051127700" title="Clock Arithmetic by Dustin Moris Gorski, on Flickr"><img src="https://c1.staticflickr.com/1/294/19051127700_2dd7074ef4_o.gif" alt="Clock Arithmetic"></a>
+<p>Modular arithmetic is full of one-way functions. It is also known as clock arithmetic, because it can be illustrated by a finite amount of numbers arranged in a loop, like on a clock:</p>
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-06-28/19051127700_2dd7074ef4_o.gif" alt="Clock Arithmetic">
 <p>The dark circle represents the clock. The blue numbers represent the value 17. If you arrange all numbers from 1 to 17 clockwise in a loop, then the end value results in 5. In other words 17 mod 12 equals 5.</p>
 <p>The short-cut and common way of calculating the modulus is by dividing the original value by x. The reminder equals the modulus.</p>
 <p>The modulus operation is a great one-way function, because it is fairly simple and has an infinite amount of possible values giving the same result.</p>
@@ -76,7 +76,7 @@
 
 <h3>Prime factorisation</h3>
 <p>Factorisation is the process of decomposing a positive integer into a product of smaller numbers.</p>
-<p>For exmaple the number 759 can be decomposed into 3 and 253.<br />In other words 759 = 3 * 253.</p>
+<p>For example the number 759 can be decomposed into 3 and 253.<br />In other words 759 = 3 * 253.</p>
 <p>If one continues the process you will eventually end up with all numbers being prime numbers (= prime factorisation). In our case 253 can be further broken down into 11 and 23.</p>
 <p>Finally you can say <strong>759 = 3 * 11 * 23.</strong></p>
 <p>Primes become rarer as we progress through the integers and there is a race in finding the next highest prime number in history.</p>
@@ -141,5 +141,5 @@ var decimals = binary.Select(b => Convert.ToInt32(b)).ToArray();</code></pre>
 <p>If you use RSA in your application, then you should periodically (every few years) recycle your keys and generate a new pair to meet current length recommendations and stay secure.</p>
 
 <h2>Future</h2>
-<p>The entire security of RSA is built on the fact that it is impracticle to determine p and q by looking at n. If at some point in the future a mathematician finds a way to rapidly factor n, then RSA would become of no use.</p>
+<p>The entire security of RSA is built on the fact that it is impractical to determine p and q by looking at n. If at some point in the future a mathematician finds a way to rapidly factor n, then RSA would become of no use.</p>
 <p>Another interesting way of cracking most of today's crypto systems could be with the help of <a href="https://en.wikipedia.org/wiki/Quantum_computing#Potential">quantum computing</a>, which as of now still remains a very theoretical topic.</p>
