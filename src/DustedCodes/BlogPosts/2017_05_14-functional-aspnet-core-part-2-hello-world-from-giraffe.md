@@ -373,39 +373,39 @@ This basically brings me to the end of this follow up article and I thought what
 
 It was a very long day, which started off with a civil ceremony in the morning...
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34654715395_505f30f403_o.png" alt="Civil ceremony in the morning of the day">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34654715395_505f30f403_o.png" alt="Civil ceremony in the morning of the day, Image by Dustin Moris Gorski">
 
 Followed by a traditional Hindu ceremony shortly after lunch...
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34654707095_29a78034d4_o.jpg" alt="Drums during groom entrance at Hindu ceremony">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34654707095_29a78034d4_o.jpg" alt="Drums during groom entrance at Hindu ceremony, Image by Dustin Moris Gorski">
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34524044991_34308216d4_o.jpg" alt="Groom entrance at Hindu ceremony">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34524044991_34308216d4_o.jpg" alt="Groom entrance at Hindu ceremony, Image by Dustin Moris Gorski">
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34492683892_f8caa7cafe_o.jpg" alt="Prayers at Hindu ceremony">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34492683892_f8caa7cafe_o.jpg" alt="Prayers at Hindu ceremony, Image by Dustin Moris Gorski">
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34524041711_e19221ff3c_o.jpg" alt="Listening to Hindu priest cracking jokes">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34524041711_e19221ff3c_o.jpg" alt="Listening to Hindu priest cracking jokes, Image by Dustin Moris Gorski">
 
 I had no idea how much fun Hindu ceremonies can be! There's lots of really fun and merry traditions which take place as part of us getting married. Then there's also a bit of banter between the two families. One of those little traditions is that the bride's family has to steal the groom's shoes before the ceremony ends so that the groom can't leave the house and take his newly wedded wife away from her family - at least not without having to pay for getting his shoes back. Normally this results in a bit of shoe pulling between the bride's side and the groomsmen, but I think in our case it is fair to say that there was a bit of a cultural clash when someone from my family rugby tackled a guy who tried to sneak away with my shoes, lol...
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34271006590_4217b6d130_o.jpg" alt="Shoe fight">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34271006590_4217b6d130_o.jpg" alt="Shoe fight, Image by Dustin Moris Gorski">
 
 Luckily nothing serious happened and after everyone had a great laugh we continued with the ceremony...
 
 Until finally we were able to celebrate at the reception party in the evening...
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/33844938503_c21b395eed_o.png" alt="Entering at the reception party">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/33844938503_c21b395eed_o.png" alt="Entering at the reception party, Image by Dustin Moris Gorski">
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34654706015_1a1bd052ab_o.jpg" alt="Cake cutting">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34654706015_1a1bd052ab_o.jpg" alt="Cake cutting, Image by Dustin Moris Gorski">
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34524043471_52399b9e9f_o.jpg" alt="Our first toast as a married couple">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34524043471_52399b9e9f_o.jpg" alt="Our first toast as a married couple, Image by Dustin Moris Gorski">
 
 Throughout the day our guests wrote us lovely (I think) messages on little papers and my family decided to throw all these messages into a wooden box with a nice bottle of Red, which we had to seal ourselves with nails and hammer. We are not allowed to open this box until in seven years time and then we can enjoy a nicely matured bottle of vino while reading all those wonderful memories from our big day. What a brilliant idea!
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34525341611_cce8067f4c_o.jpg" alt="Sealing box of memories">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34525341611_cce8067f4c_o.jpg" alt="Sealing box of memories, Image by Dustin Moris Gorski">
 
 We had a fantastic day and before everyone stormed to the dance floor there was even a pretty impressive surprise firework display...
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34492692812_5e79eb9549_o.jpg" alt="Surprise firework display">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-05-14/34492692812_5e79eb9549_o.jpg" alt="Surprise firework display, Image by Dustin Moris Gorski">
 
 Getting married was a lot of fun and it all worked out so much better than we could have hoped for :)
 

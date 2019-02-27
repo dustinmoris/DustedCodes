@@ -328,33 +328,33 @@ Now that I have a detailed specification of what my API should look like it is t
 
 First I create an empty test project and include the RAML file (api.raml) in a solution folder to keep everything together:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23265040193_87ebcfdf49_o.png" alt="RAML-Demo-Solution-Tree">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23265040193_87ebcfdf49_o.png" alt="RAML-Demo-Solution-Tree, Image by Dustin Moris Gorski">
 
 For the next part I have to install the [RAML Tools for .NET](https://github.com/mulesoft-labs/raml-dotnet-tools) Visual Studio extension:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23865723396_88003023fd_o.png" alt="RAML-Demo-Visual-Studio-RAML-Extension">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23865723396_88003023fd_o.png" alt="RAML-Demo-Visual-Studio-RAML-Extension, Image by Dustin Moris Gorski">
 
 After a successful install I have an additional context menu when I right click the &quot;References&quot; item underneath my test project:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23596120010_2895ee90f2_o.png" alt="RAML-Demo-Add-RAML-Reference">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23596120010_2895ee90f2_o.png" alt="RAML-Demo-Add-RAML-Reference, Image by Dustin Moris Gorski">
 
 A click on that menu item pops up a pretty much self-explaining dialog:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23783503252_f6263a16ef_o.png" alt="RAML-Demo-Add-RAML-Reference-Dialog">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23783503252_f6263a16ef_o.png" alt="RAML-Demo-Add-RAML-Reference-Dialog, Image by Dustin Moris Gorski">
 
 I select the Upload option and navigate to the api.raml inside my solution folder. After confirmation I am presented with an Import RAML dialog:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23865723466_db487ddba7_o.png" alt="RAML-Demo-Create-Client">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23865723466_db487ddba7_o.png" alt="RAML-Demo-Create-Client, Image by Dustin Moris Gorski">
 
 The import process automatically detected my single endpoint and the only thing I had to change was the default client name to &quot;ParcelDeliveryApiClient&quot; in case I want to import another API at a later point.
 
 Hitting the Import button finishes the remaining work and once completed I am seeing a new API reference in my project tree:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23596119830_abde113f83_o.png" alt="RAML-Demo-RAML-References-in-Project">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23596119830_abde113f83_o.png" alt="RAML-Demo-RAML-References-in-Project, Image by Dustin Moris Gorski">
 
 This was a very smooth and painless process and if successfully imported I should be able to create an instance of `ParcelDeliveryApiClient` in a new class file:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23797380272_a633140864_o.png" alt="RAML-Demo-Aut-Generated-Client-in-Code">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23797380272_a633140864_o.png" alt="RAML-Demo-Aut-Generated-Client-in-Code, Image by Dustin Moris Gorski">
 
 Amazing, let's explore the auto-generated client by writing some tests in the next step!
 
@@ -521,21 +521,21 @@ Among many other features [Anypoint](https://anypoint.mulesoft.com/) allows me t
 
 The designer is exceptionally well done. It offers many features like syntax highlighting, intellisense, instant RAML validation and auto-suggestion of available nodes:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23881341396_87c12df3f3_o.png" alt="RAML-Demo-Anypoint-Designer-Editor">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23881341396_87c12df3f3_o.png" alt="RAML-Demo-Anypoint-Designer-Editor, Image by Dustin Moris Gorski">
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23548329229_70792a7a3b_o.png" alt="RAML-Demo-Anypoint-Designer-Suggested-Nodes">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23548329229_70792a7a3b_o.png" alt="RAML-Demo-Anypoint-Designer-Suggested-Nodes, Image by Dustin Moris Gorski">
 
 Another brilliant feature is the interactive preview when editing a RAML file. It visually displays every characteristic of your API in a beautiful interface, like those responses as an example:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23611739780_4be138f177_o.png" alt="RAML-Demo-Anypoint-Designer-Preview-Responses">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23611739780_4be138f177_o.png" alt="RAML-Demo-Anypoint-Designer-Preview-Responses, Image by Dustin Moris Gorski">
 
 It even goes as far as allowing me to interact with a mocked service while working on the RAML:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23881341456_e44ba5d047_o.png" alt="RAML-Demo-Anypoint-Designer-Preview">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23881341456_e44ba5d047_o.png" alt="RAML-Demo-Anypoint-Designer-Preview, Image by Dustin Moris Gorski">
 
 When I click the Try It button it displays me a form with all relevant parameters pre-populated with the values from the examples in my RAML:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23907433735_0847e4e5c9_o.png" alt="RAML-Demo-Anypoint-Designer-TryIt-Request">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-23/23907433735_0847e4e5c9_o.png" alt="RAML-Demo-Anypoint-Designer-TryIt-Request, Image by Dustin Moris Gorski">
 
 From the UI I can quickly run requests against my API with as little friction as possible.
 

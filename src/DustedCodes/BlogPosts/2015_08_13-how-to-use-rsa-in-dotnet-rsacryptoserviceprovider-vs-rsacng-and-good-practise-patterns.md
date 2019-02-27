@@ -45,7 +45,7 @@
 	<li><code>public virtual byte[] Decrypt(byte[] data, RSAEncryptionPadding padding)</code></li>
 </ul>
 <p>Interestingly they are not mentioned in <a href="https://msdn.microsoft.com/en-us/library/system.security.cryptography.rsa(v=vs.100).aspx">the official MSDN documentation</a> on the web, however when I decompile .NET 4.0's mscorlib I can see the two virtual methods:</p>
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-08-13/20377339999_8cd6511ee9_o.png" alt="Encrypt and Decrypt methods in .NET C# RSA Class">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-08-13/20377339999_8cd6511ee9_o.png" alt="Encrypt and Decrypt methods in .NET C# RSA Class, Image by Dustin Moris Gorski">
 
 <p>This was a great addition for two reasons in particular:</p>
 <ol>

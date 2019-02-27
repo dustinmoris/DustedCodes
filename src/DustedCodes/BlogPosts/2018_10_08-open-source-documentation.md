@@ -47,13 +47,13 @@ I once had to read the documentation of a third party software which had so many
 
 I'm sure that this issue has been fixed by now and I'm not saying that all third party tools have such a bad user experience, but regardless of what their actual UX is, each of them has a slightly different approach on how they structure their content. This is all good in the context of normal (commercial) websites, but it often forgets that documentation is much simpler than the usual website on the internet. Documentation doesn't require half of the things which a normal website can do today. Documentation is a read only exercise. Most importantly, documentation already has an ancient universally understood structure which every human is very likely to be familiar (and comfortable) with: The table of contents.
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2018-10-08/book-table-of-contents.jpg" alt="Table of contents inside a book" class="three-quarters" />
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2018-10-08/book-table-of-contents.jpg" alt="Table of contents inside a book, Image by Dustin Moris Gorski" class="three-quarters" />
 
 A table of contents is so simple and effective that it is still used across all various industries for any content which happens to be larger than a single page. Magazines, books, catalogues, contracts and manuals of all sorts of kind use a table of contents in order to structure their content in a user friendly way.
 
 A table of contents let's one structure a large document into smaller pieces without having to divide the content into multiple pages. If it works for print, e-books or large PDFs, then I don't see why it wouldn't work for a project's `DOCUMENTATION.md` file which is hosted on the web:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2018-10-08/giraffe-table-of-contents.png" alt="Table of contents for open source project" class="three-quarters" />
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2018-10-08/giraffe-table-of-contents.png" alt="Table of contents for open source project, Image by Dustin Moris Gorski" class="three-quarters" />
 
 Instead of having to break up an online documentation into multiple pages which need to be maintained individually by a person or team, a table of contents allows one to have a single large `DOCUMENTATION.md` file which can be maintained a lot easier without losing the convenience of a structured document.
 

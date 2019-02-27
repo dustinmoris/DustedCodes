@@ -6,7 +6,7 @@
 
 Ho ho ho, happy F# Advent my friends! This is my blog post for the [F# Advent Calendar in English 2016](https://sergeytihon.wordpress.com/2016/10/23/f-advent-calendar-in-english-2016/). First a quick thanks to [Yan Cui](https://twitter.com/theburningmonk) who has pointed out this calendar to me last year and a big thanks to [Sergey Tihon](https://twitter.com/sergey_tihon) who is organising this blogging event and was kind enough to reserve me a spot this year.
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2016-12-15/31650186205_f39501871c_o.png" alt="santa-suave">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2016-12-15/31650186205_f39501871c_o.png" alt="santa-suave, Image by Dustin Moris Gorski">
 
 In this blog post I wanted to write about two technologies which I am particularly excited about: [Suave](https://suave.io/) and [ASP.NET Core](https://www.asp.net/core). Both are frameworks for building web applications, both are written in .NET and both are open source and yet they are very different. [Suave is a lightweight web server](https://github.com/SuaveIO/suave) written entirely in F# and belongs to the family of micro frameworks similar to [NancyFx](http://nancyfx.org/). [ASP.NET Core](https://github.com/aspnet/Home) is Microsoft's new cloud optimised web framework which has been built from the ground up on top of [.NET Core](https://www.microsoft.com/net/core) and all of its goodness. Both are fairly new cutting edge technologies and both are extremely fun to work with.
 
@@ -43,7 +43,7 @@ Even in this simple example you can clearly see the core concept behind Suave. A
 
 In theory the one thing required to plug a Suave web app into ASP.NET Core would be to take an incoming HTTP request from ASP.NET Core and convert it into an `HttpContext` in Suave, execute the top level web part, and then translate the resulting `HttpContext` back into an ASP.NET Core response:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2016-12-15/31534152341_073c5b4729_o.png" alt="suave-in-aspnetcore-concept">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2016-12-15/31534152341_073c5b4729_o.png" alt="suave-in-aspnetcore-concept, Image by Dustin Moris Gorski">
 
 The other thing which you get with Suave is a self hosted web server which is built into the framework and the traditional way of starting a Suave web application. The `startWebServer` function takes a `SuaveConfig` object and the top level `WebPart` as input parameters. The config object allows web server specific configuration such as HTTP bindings, request quotas, timeout limits and many more things to be set.
 
@@ -115,11 +115,11 @@ Finally I go to the `Startup` class and hook up the Suave `catchAll` web app int
 
 Save all, `dotnet restore`, `dotnet build` and `dotnet run`:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2016-12-15/31648972855_6ca7d63719_o.png" alt="running-a-suave-aspnetcore-app">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2016-12-15/31648972855_6ca7d63719_o.png" alt="running-a-suave-aspnetcore-app, Image by Dustin Moris Gorski">
 
 If everything is correct then going to `http://localhost:5000/` should return a successful response like this:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2016-12-15/31649057355_63fb82d256_o.png" alt="suave-in-aspnetcore-simple-get-request-result">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2016-12-15/31649057355_63fb82d256_o.png" alt="suave-in-aspnetcore-simple-get-request-result, Image by Dustin Moris Gorski">
 
 You can [check out the sample app in GitHub](https://github.com/dustinmoris/Suave.AspNetCore/tree/master/test/Suave.AspNetCore.App) and try it yourself!
 

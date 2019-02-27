@@ -20,7 +20,7 @@ With a little bit of Google's help and playing around in the Google Chrome Conso
 
 When I execute this in the console it will outline every element on the page:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-31/23989595201_cf8f8f3165_o.png" alt="page-with-outlined-elements">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-31/23989595201_cf8f8f3165_o.png" alt="page-with-outlined-elements, Image by Dustin Moris Gorski">
 
 With this it should be easy to spot the overflowing element. Now I had to find a way to execute it inside the mobile version of Google Chrome.
 
@@ -44,16 +44,16 @@ When I click on the newly created bookmarklet I will get the same result as if I
 
 Only seconds later it appeared on my phone as well:
 
-<img class="half-width" src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-31/23447431843_deb816c10b_o.png" alt="mobile-google-chrome-bookmarks-bar">
+<img class="half-width" src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-31/23447431843_deb816c10b_o.png" alt="mobile-google-chrome-bookmarks-bar, Image by Dustin Moris Gorski">
 
 However, when I click on the bookmarklet from the bookmarks menu on my phone everything freezes and nothing happens. It turns out that I have to execute it from the address bar.
 
 Just start typing the name of your bookmarklet and Google Chrome will auto-suggest the item for you:
 
-<img class="half-width" src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-31/23991652851_1d9acee307_o.png" alt="outline-elements-bookmarklet-in-mobile-google-chrome">
+<img class="half-width" src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-31/23991652851_1d9acee307_o.png" alt="outline-elements-bookmarklet-in-mobile-google-chrome, Image by Dustin Moris Gorski">
 
 Executing it from the address bar delivers the correct result:
 
-<img class="half-width" src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-31/24074392275_2446d6a4fd_o.png" alt="page-with-outlined-elements-on-mobile-phone">
+<img class="half-width" src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-12-31/24074392275_2446d6a4fd_o.png" alt="page-with-outlined-elements-on-mobile-phone, Image by Dustin Moris Gorski">
 
 This little trick quickly helped me to find the overflowing element on my phone without having to modify the original website. I use the same technique to remove advertising banners and other blocking content on several websites which normally don't display the entire content when you are not logged in (or a paying customer).

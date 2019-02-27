@@ -35,7 +35,7 @@
 
 <p>What was happening is that a user story got divided into several work tasks and each task was worked on by a different person in the team. It felt a lot like a production line:</p>
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-09-28/21794643692_d42d0f0d78_o.png" alt="Scrum User Story Production Line">
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-09-28/21794643692_d42d0f0d78_o.png" alt="Scrum User Story Production Line, Image by Dustin Moris Gorski">
 
 <p>While it was possible to do some parallel work on the development and QA task at the same time, it was not possible to close one before the other. We had inter team dependencies.</p>
 
