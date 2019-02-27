@@ -380,15 +380,14 @@ let aboutView =
 
 let sendMessageButton =
     button [ _type "submit"; _class "msg-button" ] [
-        envelopeIcon
-        span [] [ rawText "Send Message" ]
+        rawText "Send Message"
     ]
 
 let contactForm (msg : ContactMessage) =
     let actionUrl = sprintf "%s#contact" Url.``/hire``
     form [ _method "POST"; _action actionUrl; _autocomplete "on" ]
         [
-            div [ _class "linked-inputs" ] [
+            div [ ] [
                 div [] [
                     label [ _for "Name" ] [ rawText "Name*" ]
                     input [
@@ -427,7 +426,7 @@ let contactForm (msg : ContactMessage) =
                     ]
                 ]
             ]
-            div [ _class "textarea-container" ] [
+            div [ ] [
                 label [ _for "Message" ] [ rawText "Message*" ]
                 textarea [
                     _name "Message"
@@ -436,7 +435,7 @@ let contactForm (msg : ContactMessage) =
             p [ _class "footnote" ] [
                 rawText "*) Fields marked with an asterisk are required."
             ]
-            div [ attr "class" "form-bottom" ] [
+            div [] [
                 div [ _class "g-recaptcha"; attr "data-sitekey" Config.googleRecaptchaSiteKey ] []
                 sendMessageButton
             ]
@@ -449,7 +448,7 @@ let hireView (sendMessageResult : Result<string, ContactMessage * string> option
     [
         article [ _id "hire" ] [
             h1 [] [ rawText "Hire Me" ]
-            img [ _src (Url.storage "images/website/hire-me-2.jpeg"); _alt "Hire Me" ]
+            img [ _src (Url.storage "images/website/hire-me.jpg"); _alt "Hire Me" ]
             rawText Hire.content
         ]
         aside [ _id "contact" ] [
