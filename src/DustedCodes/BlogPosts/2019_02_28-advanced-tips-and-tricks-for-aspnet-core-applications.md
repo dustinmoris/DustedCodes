@@ -1,5 +1,5 @@
 <!--
-    Tags: aspnet-core logging error-handling architecture mvc
+    Tags: aspnet-core logging architecture mvc
 -->
 
 # Tips and tricks for ASP.NET Core applications
@@ -67,7 +67,7 @@ Configure your logger to automatically decorate every log entry with an `Applica
 
 This is extremely useful if you write logs from more than one application into a single log stream (e.g. a single Elasticsearch database). Personally I prefer to write logs from multiple (smaller) services of a coherent system into a single logging database and filter logs by properties.
 
-Appending an additional `Application` property to all your application logs has the advantage that one can easily filter and view  the overall health of a single application as well as getting a holistic view of the entire system.
+Appending an additional `Application` property to all your application logs has the advantage that one can easily filter and view the overall health of a single application as well as getting a holistic view of the entire system.
 
 Other really useful information which could be appended to your log entries is the application version and the environment name:
 
@@ -363,13 +363,13 @@ This architecture has a few benefits:
 
 - The domain layer can throw meaningful exceptions
 - The domain layer works nicely with the higher level web layer without tight coupling
-- Domain exceptions are cearly distinguishable from other errors
+- Domain exceptions are clearly distinguishable from other errors
 - Domain exceptions are self documenting
 - The web layer can handle all domain errors in a unified way without having to replicate the same try-catch block across multiple controllers
 - The additional error code in the response can be parsed and understood by third party clients
 - The custom exception types can be easily documented through Swagger
 
-### Tip 9: Exponse an endpoint which returns all error codes
+### Tip 9: Expose an endpoint which returns all error codes
 
 When you followed tip 8 and implemented a custom exception type with a unique error code for each error case then it can be extremely handy to expose all possible error codes through a single API endpoint. This will allow third party clients to quickly retrieve a list of the latest possible error codes and their meaning:
 
@@ -427,7 +427,7 @@ public ActionResult<string> Info()
 
 ### Tip 11: Remove the 'Server' HTTP header
 
-Whilst one is at configuring their ASP.NET Core applicatoin they might as well remove the `Server` HTTP header from every HTTP response by deactivating that setting in Kestrel:
+Whilst one is at configuring their ASP.NET Core application they might as well remove the `Server` HTTP header from every HTTP response by deactivating that setting in Kestrel:
 
 ```
 .UseKestrel(k => k.AddServerHeader = false)
@@ -478,6 +478,6 @@ Or converting the `IEnumerbale` to an `IList` and use the `ForEach` LINQ extensi
 someCollection.OrEmptyIfNull().ToList().ForEach(i => i.DoSomething());
 ```
 
-## What tips and tricks have you got?
+## What tips and tricks do you have?
 
-This is it - this was my quick post on some tips and tricks which I like to apply in my personal ASP.NET Core development. I hope there was something useful in there for at least some of you. Let me know what you think and please feel free to share your own tricks which make your ASP.NET Core development easier in the comments below!
+So this is it, this was my brief post on some tips and tricks which I like to apply in my personal ASP.NET Core development. I hope there was at least something useful in there. Let me know what you think and please feel free to share your own little tips and tricks which make your ASP.NET Core developer life easier in the comments below!
