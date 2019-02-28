@@ -14,11 +14,11 @@ Almost two years-, nearly 50 releases-, 47 total contributors-, more than 800 Gi
 
 The main reason why I'm not particularly excited about migrating [Giraffe](https://github.com/giraffe-fsharp/Giraffe)'s documentation to a different place is because I actually believe that the current way of how documentation is handled by Giraffe is  a perfectly well working solution for its users, its contributors and myself.
 
-In Giraffe the entire documentation - a full reference of what the web framework can or cannot do and how it integrates and operates within the ASP.NET Core pipeline - is placed in a single [`DOCUMENTATION.md`]() file inside the [project's Git repository](), right next to the [`README.md`]() file.
+In Giraffe the entire documentation - a full reference of what the web framework can or cannot do and how it integrates and operates within the ASP.NET Core pipeline - is placed in a single [`DOCUMENTATION.md`](https://github.com/giraffe-fsharp/Giraffe/blob/master/DOCUMENTATION.md) file inside the [project's Git repository](https://github.com/giraffe-fsharp/Giraffe), right next to the [`README.md`](https://github.com/giraffe-fsharp/Giraffe/blob/master/README.md) file.
 
-The documentation is not short either. There's quite a lot of content available and somehow this hasn't become a problem yet. The fact that all of the documentation is placed  in a single large file has proven to be extremely advantagous if anything else.
+The documentation is not short either. There's quite a lot of content available and somehow this hasn't become a problem yet. The fact that all of the documentation is placed  in a single large file has proven to be extremely advantageous if anything else.
 
-Someties people ask me why I don't move the docs to a wiki page, like [GitHub's wiki feature](), or use [GitHub pages]() or perhaps even a third party tool like [Read the docs](https://readthedocs.org/) and my answer has always been the same: Because they all suck for documentation!
+Sometimes people ask me why I don't move the docs to a wiki page, like [GitHub's wiki feature](), or use [GitHub pages]() or perhaps even a third party tool like [Read the docs](https://readthedocs.org/) and my answer has always been the same: Because they all suck for documentation!
 
 I find them particularly bad for documentation because they often fail to sufficiently address one of the two most important aspects of what makes good documentation in my opinion:
 
@@ -47,13 +47,13 @@ I once had to read the documentation of a third party software which had so many
 
 I'm sure that this issue has been fixed by now and I'm not saying that all third party tools have such a bad user experience, but regardless of what their actual UX is, each of them has a slightly different approach on how they structure their content. This is all good in the context of normal (commercial) websites, but it often forgets that documentation is much simpler than the usual website on the internet. Documentation doesn't require half of the things which a normal website can do today. Documentation is a read only exercise. Most importantly, documentation already has an ancient universally understood structure which every human is very likely to be familiar (and comfortable) with: The table of contents.
 
-<img src="https://storage.googleapis.com/dusted-codes/images/book-table-of-contents.png" alt="Table of contents inside a book" class="three-quarters" />
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2018-10-08/book-table-of-contents.jpg" alt="Table of contents inside a book, Image by Dustin Moris Gorski" class="three-quarters" />
 
-A table of contents is so simple and effective that it is still used across all various industries for any content which happens to be larger than a single page. Magazines, books, catalouges, contracts and manuals of all sorts of kind use a table of contents in order to structure their content in a user friendly way.
+A table of contents is so simple and effective that it is still used across all various industries for any content which happens to be larger than a single page. Magazines, books, catalogues, contracts and manuals of all sorts of kind use a table of contents in order to structure their content in a user friendly way.
 
 A table of contents let's one structure a large document into smaller pieces without having to divide the content into multiple pages. If it works for print, e-books or large PDFs, then I don't see why it wouldn't work for a project's `DOCUMENTATION.md` file which is hosted on the web:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/giraffe-table-of-contents.png" alt="Table of contents for open source project" class="three-quarters" />
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2018-10-08/giraffe-table-of-contents.png" alt="Table of contents for open source project, Image by Dustin Moris Gorski" class="three-quarters" />
 
 Instead of having to break up an online documentation into multiple pages which need to be maintained individually by a person or team, a table of contents allows one to have a single large `DOCUMENTATION.md` file which can be maintained a lot easier without losing the convenience of a structured document.
 
@@ -69,7 +69,7 @@ For example there's a huge difference in the quality of results which I get from
 
 The loss of trust in a website's search box has a deep implication on the user experience. If I'm browsing a website and I want to search for a specific topic which I am interested in and I don't get a perfect match to my first query then I'm rarely satisfied with my initial results. Often I will start altering my search query several times before accepting that the topic which I'm looking for might not be covered by the current state of documentation. Most likely I will even go to Google and try several search queries there before making any conclusions.
 
-Another realisation which I have made is that nowadays it doesn't even matter how good the actual search of a website is. The mistrust in search boxes is so engrained in users' behaviour that even if a wiki page (or any other tool) has a perfectly functioning search box users will still go to a search engine and double check their results. It's kind of sad that users have been trained over time that the best way to search for any information is to leave the actual webstie where they want to get the information from and search for it on another estate.
+Another realisation which I have made is that nowadays it doesn't even matter how good the actual search of a website is. The mistrust in search boxes is so engrained in users' behaviour that even if a wiki page (or any other tool) has a perfectly functioning search box users will still go to a search engine and double check their results. It's kind of sad that users have been trained over time that the best way to search for any information is to leave the actual website where they want to get the information from and search for it on another estate.
 
 The only search which I have found is more trusted than Google's search box is the browser's built-in text search (often quickly accessed through the <kbd>CTRL+F</kbd> or <kbd>CMD+F</kbd> shortcut). A single page `DOCUMENTATION.md` file can be easily and confidently searched by simply using a browser's built-in full text search - and regardless of what the results are - users know to trust it. From my experience this is the only time where a user *actually* trusts their initial search results and almost *never* re-validates via Google or any other search engine. In terms of user experience this is a huge benefit for keeping all documentation in a single large file. It makes finding information easy, predictable, trustworthy and extremely fast!
 

@@ -54,9 +54,9 @@
 <pre><code>&lt;a class=&quot;fa-car&quot; href=&quot;#&quot;&gt;This is a link&lt;/a&gt;</code></pre>
 <p>Result:<br /><a class="fa-car" href="#">This is a link</a></p>
 <p>The icon isn't what we want, but at least the tag's original font remains as is. Using the Google Chrome developer tools I can quickly confirm that the icon-specific class is not doing any harm to the original tag:</p>
-<a href="https://www.flickr.com/photos/130657798@N05/16710024065" title="CSS source code of the Font Awesome car icon by Dustin Moris Gorski, on Flickr"><img src="https://farm9.staticflickr.com/8676/16710024065_9226643bf3_o.png" alt="CSS source code of the Font Awesome car icon"></a>
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-03-04/16710024065_9226643bf3_o.png" alt="CSS source code of the Font Awesome car icon, Image by Dustin Moris Gorski">
 <p>Evidently this class only adds the content to the ::before attribute of the target element. The conclusion is that the actual styling gets applied via the &quot;fa&quot; class:</p>
-<a href="https://www.flickr.com/photos/130657798@N05/16523945879" title="CSS source code of the Font Awesome fa class by Dustin Moris Gorski, on Flickr"><img src="https://farm9.staticflickr.com/8571/16523945879_3588abcda2_o.png" alt="CSS source code of the Font Awesome fa class"></a>
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-03-04/16523945879_3588abcda2_o.png" alt="CSS source code of the Font Awesome fa class, Image by Dustin Moris Gorski">
 <p>Now this makes sense. The content from the ::before attribute gets rendered inside the original tag and therefore also picks up the styling from the fa class.</p>
 <p>Everything from the fa class could equally go into the icon class as part of the ::before attribute, but I can see why the Font Awesome team has extracted it into a shared class, because it is the same for every icon and would be otherwise a maintenance nightmare.</p>
 

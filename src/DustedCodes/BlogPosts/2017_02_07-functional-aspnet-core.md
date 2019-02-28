@@ -8,7 +8,7 @@ In December 2016 I participated in the [F# Advent Calendar](https://sergeytihon.
 
 So far this has been pretty good and as of last week the [GitHub repository](https://github.com/SuaveIO/Suave.AspNetCore) has been moved to the official [SuaveIO GitHub organisation](https://github.com/SuaveIO) as well. A while ago someone even tweeted me that the performance has been pretty good too:
 
-<a href="https://twitter.com/jamesjrg/status/809923555894902784" title="suave-aspnet-core-perf-tweet"><img src="https://c1.staticflickr.com/1/469/32713608366_5d4aa668b0.jpg" alt="suave-aspnet-core-perf-tweet"></a>
+<a href="https://twitter.com/jamesjrg/status/809923555894902784" title="suave-aspnet-core-perf-tweet"><img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-02-07/32713608366_88c2eca85d_o.png" alt="suave-aspnet-core-perf-tweet, Image by Dustin Moris Gorski"></a>
 
 Even though this made me very happy there was still one thing that bugged me until today.
 
@@ -175,7 +175,7 @@ With the `bind` function we can combine unlimited `HttpHandler` functions to one
 
 The flow would look something like this:
 
-<a href="https://www.flickr.com/photos/130657798@N05/32713574026/in/dateposted-public/" title="aspnet-core-lambda-http-handler-flow-cropped"><img src="https://c1.staticflickr.com/1/569/32713574026_95e8f6fa6d.jpg" alt="aspnet-core-lambda-http-handler-flow-cropped"></a>
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2017-02-07/32713574026_7ef98d6280_o.png" alt="aspnet-core-lambda-http-handler-flow-cropped, Image by Dustin Moris Gorski">
 
 Another very useful combinator which can be borrowed from Suave is the `choose` function. The `choose` function let's you define a list of multiple `HttpHandler` functions which will be iterated one by one until the first `HttpHandler` returns `Some HttpHandlerContext`:
 

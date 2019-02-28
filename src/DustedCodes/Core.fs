@@ -161,7 +161,7 @@ module Url =
         |> sprintf "%s/%s" Config.baseUrl
 
     let storage (resource : string) =
-        sprintf "https://storage.googleapis.com/dusted-codes/%s" resource
+        sprintf "https://storage.googleapis.com/dustedcodes/%s" resource
 
     let ``/``          = create UrlPaths.``/``
     let ``/about``     = create UrlPaths.``/about``

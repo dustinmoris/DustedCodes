@@ -14,7 +14,7 @@ On a complete separate note I also added a new SVG badge for [NuGet packages](ht
 
 I did not think of adding NuGet support in the beginning, but since [Shields.io](http://shields.io/) NuGet badges are broken for more than 2 weeks now I had to look for an alternative:
 
-<a  href="https://www.flickr.com/photos/130657798@N05/25255668592/in/datetaken/" title="shields.io-broken-nuget-badges"><img src="https://farm2.staticflickr.com/1630/25255668592_5362a02717_o.png" alt="shields.io-broken-nuget-badges" class="half-width"></a>
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2016-02-29/25255668592_5362a02717_o.png" alt="shields.io-broken-nuget-badges, Image by Dustin Moris Gorski" class="half-width">
 
 The [issue has been reported](https://github.com/badges/shields/issues/655), but it doesn't look like it will get fixed any time soon and so I went with my own solution.
 

@@ -8,11 +8,10 @@
 <p>If you ever browsed a popular GitHub repository (like <a href="https://github.com/nunit/nunit">NUnit</a> or <a href="https://github.com/twbs/bootstrap">Bootstrap</a>) then you must have seen many of the available SVG badges which can be used to decorate a repository's README file.
 </p>
 <p>While some repositories keep it very simple:</p>
-<a href="https://www.flickr.com/photos/130657798@N05/20384154514" title="NUnit Project Badges by Dustin Moris Gorski, on Flickr"><img src="https://farm1.staticflickr.com/693/20384154514_4e48fdc582_o.png" alt="NUnit Project Badges"></a>
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-08-30/20384154514_4e48fdc582_o.png" alt="NUnit Project Badges, Image by Dustin Moris Gorski">
 
 <p>Others can be quite fancy:</p>
-<a href="https://www.flickr.com/photos/130657798@N05/20996898652" title="Bootstrap Project Badges by Dustin Moris Gorski, on Flickr"><img src="https://farm6.staticflickr.com/5792/20996898652_6205e41d46_o.png" alt="Bootstrap Project Badges"></a>
-
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-08-30/20996898652_6205e41d46_o.png" alt="Bootstrap Project Badges, Image by Dustin Moris Gorski">
 
 <p>These little widgets (or often called badges) are more of a gimmick rather than anything useful, but we love them because they give us an opportunity to visually highlight statistics or achievements which we are proud of.</p>
 

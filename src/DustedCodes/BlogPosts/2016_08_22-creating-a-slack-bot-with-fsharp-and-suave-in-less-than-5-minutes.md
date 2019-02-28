@@ -157,15 +157,15 @@ Once deployed I am ready to add a new Slash Commands integration.
 
 2. Pick Slash Commands and then click on the "Add Configuration" button:
 
-<a href="https://www.flickr.com/photos/130657798@N05/29087335371/in/dateposted-public/" title="slack-slash-commands-add-configuration"><img class="half-width" src="https://c4.staticflickr.com/9/8107/29087335371_efb6b57334_z.jpg" alt="slack-slash-commands-add-configuration"></a>
+<img class="half-width" src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2016-08-22/29087335371_13517d5f78_o.png" alt="slack-slash-commands-add-configuration, Image by Dustin Moris Gorski">
 
 3. Choose a command and confirm by clicking on "Add Slash Command Integration":
 
-<a href="https://www.flickr.com/photos/130657798@N05/29087334921/in/dateposted-public/" title="slack-slash-commands-choose-a-command"><img src="https://c2.staticflickr.com/9/8639/29087334921_14aca82c56_z.jpg" alt="slack-slash-commands-choose-a-command"></a>
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2016-08-22/29087334921_64c34738d3_o.png" alt="slack-slash-commands-choose-a-command, Image by Dustin Moris Gorski">
 
 4. Finally type in the URL to your public endpoint and make sure the method is set to POST:
 
-<a href="https://www.flickr.com/photos/130657798@N05/29087335691/in/dateposted-public/" title="slack-slash-commands-integration-settings"><img src="https://c4.staticflickr.com/9/8291/29087335691_36b25c554a_z.jpg" alt="slack-slash-commands-integration-settings"></a>
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2016-08-22/29087335691_dd7ae72d98_o.png" alt="slack-slash-commands-integration-settings, Image by Dustin Moris Gorski">
 
 5. Optionally you can set a name, an icon and additional meta data for the bot and then click on the "Save Integration" button.
 

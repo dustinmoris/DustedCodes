@@ -26,7 +26,7 @@ A much desired and important improvement was the ability to change the default i
 
 For the first time Giraffe has detailed XML documentation for all public facing functions available:
 
-<a href="https://www.flickr.com/photos/130657798@N05/40125759872/in/dateposted/" title="giraffe-xml-docs"><img src="https://farm5.staticflickr.com/4611/40125759872_92f6239fdf_z.jpg" alt="giraffe-xml-docs"></a>
+<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2018-02-09/40125759872_9550519cbe_o.png" alt="giraffe-xml-docs, Image by Dustin Moris Gorski">
 
 Even though this is not a feature itself, it aims at improving the general development experience by providing better IntelliSense and more detailed information when working with Giraffe.
 

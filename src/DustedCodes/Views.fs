@@ -135,7 +135,7 @@ let masterView (subject   : string option)
                 yield openGraph "title"        pageTitle
                 yield openGraph "url"          permalink.Value
                 yield openGraph "type"         "website"
-                yield openGraph "image"        "https://storage.googleapis.com/dusted-codes/stock-images/img1.jpg"
+                yield openGraph "image"        (Url.storage "images/website/opengraph.jpeg")
                 yield openGraph "image:alt"    Config.blogTitle
                 yield openGraph "image:width"  "1094"
                 yield openGraph "image:height" "729"
@@ -250,7 +250,7 @@ let trendingView (blogPosts : BlogPost list) =
         article [] [
             header [] [
                 h1 [] [ rawText h1Title ]
-                img [ _src "https://storage.googleapis.com/dusted-codes/stock-images/img5.jpg" ]
+                img [ _src (Url.storage "images/website/trending.jpg") ]
             ]
             main [] [
                 ol [ _id "trending-list" ] [
@@ -369,7 +369,7 @@ let blogPostView (blogPost : BlogPost) =
 let aboutView =
     [
         article [] [
-            img [ _id "avatar"; _src "https://storage.googleapis.com/dusted-codes/dustin-moris-gorski.jpg"; _alt "Dustin Moris Gorski" ]
+            img [ _id "avatar"; _src (Url.storage "images/avatar/dustin-moris-gorski.jpg") ; _alt "Dustin Moris Gorski" ]
             rawText About.content
         ]
     ] |> masterView
@@ -380,15 +380,14 @@ let aboutView =
 
 let sendMessageButton =
     button [ _type "submit"; _class "msg-button" ] [
-        envelopeIcon
-        span [] [ rawText "Send Message" ]
+        rawText "Send Message"
     ]
 
 let contactForm (msg : ContactMessage) =
     let actionUrl = sprintf "%s#contact" Url.``/hire``
     form [ _method "POST"; _action actionUrl; _autocomplete "on" ]
         [
-            div [ _class "linked-inputs" ] [
+            div [ ] [
                 div [] [
                     label [ _for "Name" ] [ rawText "Name*" ]
                     input [
@@ -427,7 +426,7 @@ let contactForm (msg : ContactMessage) =
                     ]
                 ]
             ]
-            div [ _class "textarea-container" ] [
+            div [ ] [
                 label [ _for "Message" ] [ rawText "Message*" ]
                 textarea [
                     _name "Message"
@@ -436,7 +435,7 @@ let contactForm (msg : ContactMessage) =
             p [ _class "footnote" ] [
                 rawText "*) Fields marked with an asterisk are required."
             ]
-            div [ attr "class" "form-bottom" ] [
+            div [] [
                 div [ _class "g-recaptcha"; attr "data-sitekey" Config.googleRecaptchaSiteKey ] []
                 sendMessageButton
             ]
@@ -449,7 +448,7 @@ let hireView (sendMessageResult : Result<string, ContactMessage * string> option
     [
         article [ _id "hire" ] [
             h1 [] [ rawText "Hire Me" ]
-            img [ _src "https://storage.googleapis.com/dusted-codes/stock-images/img6.jpg"; _alt "Hire Me" ]
+            img [ _src (Url.storage "images/website/hire-me.jpg"); _alt "Hire Me" ]
             rawText Hire.content
         ]
         aside [ _id "contact" ] [
