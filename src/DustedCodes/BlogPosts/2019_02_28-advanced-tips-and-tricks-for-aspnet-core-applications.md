@@ -394,31 +394,19 @@ public ActionResult<IDictionary<int, string>> ErrorCodes()
 
 ### Tip 10: Expose a version endpoint
 
-Another really useful thing to have in an API (or website) is a version endpoint. Often it can be extremely helpful to customer support staff, QA or other members of a team to quickly being able to establish what version of an application is being deployed to an environment.
+Another really useful thing to have in an API (or website) is a version endpoint. Often it can be extremely helpful to customer support staff, QA or other members of a team to quickly be able to establish what version of an application is being deployed to an environment.
 
 This version is different than the customer facing API version which often only includes the major version number (e.g. https://my-api.com/v3/some/resource).
 
 Exposing an endpoint which displays the current application version and the build date and time is a nice way of quickly making this information accessible to relevant people:
 
 ```
-[ApiController]
-public class HomeController : ControllerBase
-{
-    [HttpGet("/version")]
-    public ActionResult<string> About()
-    {
-        var version = typeof(Startup).Assembly.GetName().Version.ToString();
-
-        return Ok(version);
-    }
-}
-
 [HttpGet("/info")]
 public ActionResult<string> Info()
 {
     var assembly = typeof(Startup).Assembly;
 
-    var creationDate = System.IO.File.GetCreationTime(assembly.Location);
+    var creationDate = File.GetCreationTime(assembly.Location);
     var version = FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
 
     return Ok($"Version: {version}, Last Updated: {creationDate}");
@@ -480,4 +468,4 @@ someCollection.OrEmptyIfNull().ToList().ForEach(i => i.DoSomething());
 
 ## What tips and tricks do you have?
 
-So this is it, this was my brief post on some tips and tricks which I like to apply in my personal ASP.NET Core development. I hope there was at least something useful in there. Let me know what you think and please feel free to share your own little tips and tricks which make your ASP.NET Core developer life easier in the comments below!
+So this is it, this was my brief post on some tips and tricks which I like to apply in my personal ASP.NET Core development. I hope this was at least somewhat useful to someone?! Let me know what you think and please feel free to share your own tips and tricks which make your ASP.NET Core development life easier in the comments below!
