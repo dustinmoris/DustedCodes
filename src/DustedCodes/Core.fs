@@ -546,21 +546,21 @@ module Css =
             Hash    : string
             Path    : string
         }
-        static member FromContent (content : string) =
+        static member FromContent (name: string) (content : string) =
             let hash = Hash.sha1 content
             {
                 Content = content
                 Hash    = hash
-                Path    = sprintf "/%s.css" hash
+                Path    = sprintf "/%s.%s.css" name hash
             }
 
-    let private getErrorMsg (errors : UglifyError seq) =
+    let private getErrorMsg (errors : seq<UglifyError>) =
         let msg =
             errors
             |> Seq.fold (fun (sb : StringBuilder) t ->
                 sprintf "Error: %s, File: %s" t.Message t.File
                 |> sb.AppendLine
-            ) (new StringBuilder("Couldn't uglify content."))
+            ) (StringBuilder("Couldn't uglify content."))
         msg.ToString()
 
     let minify (css : string) =
@@ -576,7 +576,7 @@ module Css =
         |> File.ReadAllText
         |> minify
 
-    let getBundledContent (fileNames : string list) =
+    let getBundledContent (bundleName : string) (fileNames : string list) =
         let result =
             fileNames
             |> List.fold(
@@ -584,9 +584,9 @@ module Css =
                     fileName
                     |> getMinifiedContent
                     |> sb.AppendLine
-            ) (new StringBuilder())
+            ) (StringBuilder())
         result.ToString()
-        |> BundledCss.FromContent
+        |> BundledCss.FromContent bundleName
 
 /// -------------------------------------
 /// Http
