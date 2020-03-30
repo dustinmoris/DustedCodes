@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.2-sdk AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0-alpine AS build
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
@@ -10,9 +10,9 @@ COPY . ./
 RUN dotnet publish -c Release -o webpackage
 
 # Build runtime image
-FROM microsoft/dotnet:2.2-aspnetcore-runtime
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-alpine AS runtime
 WORKDIR /app
-COPY --from=build-env /app/webpackage .
+COPY --from=build /app/webpackage .
 ENV ASPNETCORE_URLS http://+:8080
 EXPOSE 8080
 ENTRYPOINT ["dotnet", "DustedCodes.dll"]
