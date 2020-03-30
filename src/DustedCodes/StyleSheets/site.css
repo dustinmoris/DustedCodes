@@ -25,6 +25,7 @@ body {
     font-family: 'Nunito Sans', sans-serif;
     -ms-word-wrap: break-word;
     word-wrap: break-word;
+    font-size: 1.05em;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -55,7 +56,7 @@ h5 {
 }
 
 p {
-    line-height: 2em;
+    line-height: 2.2em;
     color: #555;
 }
 
@@ -300,7 +301,7 @@ body > nav,
     margin: 1em auto;
     padding: 0 20px;
     width: 100%;
-    max-width: 600px;
+    max-width: 700px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -325,8 +326,8 @@ nav {
 
 body > main {
     order: 2;
-    border-top: 1px solid #f1f1f1;
-    border-bottom: 1px solid #f1f1f1;
+    border-top: 1px solid #efefef;
+    border-bottom: 1px solid #efefef;
 }
 
 body > footer {
@@ -427,6 +428,7 @@ body > header h2 {
 #inner-footer {
     margin-bottom: 4em;
     font-size: .85em;
+    text-align: center;
 }
 
 #inner-footer h5 {

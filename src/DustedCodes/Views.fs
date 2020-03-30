@@ -68,6 +68,7 @@ let disqus (id : string) (title : string) (url : string) =
 
 let minifiedCss =
     Css.getBundledContent
+        "bundle"
         [ "StyleSheets/fonts.css"; "StyleSheets/site.css" ]
 
 // ---------------------------------

@@ -164,7 +164,7 @@ let taggedHandler (tag : string) =
         |> htmlView)
 
 let rssFeedHandler : HttpHandler =
-    let rssFeed = new StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
+    let rssFeed = StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
     BlogPosts.all
     |> List.sortByDescending (fun p -> p.PublishDate)
     |> List.take 10
@@ -203,7 +203,9 @@ let webApp =
             choose [
                 // Static cachable assets
                 route  UrlPaths.``/logo.svg``   >=> svgHandler dustedCodesIcon
-                route  minifiedCss.Path         >=> cssHandler
+                routef "/bundle.%s.css"         (fun _ -> cssHandler)
+                // Depcrecate after a while:
+                routef "/%s.css"                (fun _ -> cssHandler)
 
                 // Health check
                 route UrlPaths.``/ping``        >=> text "pong"
