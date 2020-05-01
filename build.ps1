@@ -46,16 +46,25 @@ if ($Run)
 }
 elseif ($Docker.IsPresent -or $Deploy.IsPresent)
 {
+    $imageName = "dusted-codes:$version"
+
     Write-Host "Building Docker image..." -ForegroundColor Magenta
-    Invoke-Cmd "docker build -t dustedcodes:$version ./src/DustedCodes/"
+    Invoke-Cmd "docker build -t $imageName ./src/DustedCodes/"
 
     if ($Deploy.IsPresent)
     {
+        $gcpProjectName     = "dusted-codes"
+        $gcpRegion          = "europe-west2"
+        $gcpClusterName     = "dusted-kubes-eu"
+        $gcrName            = "eu.gcr.io/$gcpProjectName"
+        $remoteImageName    = "$gcrName/$imageName"
+
         Write-Host "Deploying Docker image..." -ForegroundColor Magenta
 
-        Invoke-Cmd "docker tag dustedcodes:$version us.gcr.io/dustins-private-project/dustedcodes:$version"
-        # Invoke-Cmd "gcloud auth configure-docker"
-        Invoke-Cmd "docker push us.gcr.io/dustins-private-project/dustedcodes:$version"
-        Invoke-Cmd "kubectl set image deployment/dustedcodes dustedcodes=us.gcr.io/dustins-private-project/dustedcodes:$version"
+
+        Invoke-Cmd "docker tag $imageName $remoteImageName"
+        Invoke-Cmd "gcloud config set project $gcpProjectName"
+        Invoke-Cmd "gcloud container clusters get-credentials $gcpClusterName --region $gcpRegion"
+        Invoke-Cmd "docker push $remoteImageName"
     }
 }

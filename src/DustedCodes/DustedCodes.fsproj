@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>2.29.0</Version>
+    <Version>2.30.0</Version>
     <AssemblyName>DustedCodes</AssemblyName>
     <OutputType>Exe</OutputType>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -12,14 +12,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SyndicationFeed.ReaderWriter" Version="1.0.*" />
-    <PackageReference Include="Giraffe" Version="4.0.*" />
-    <PackageReference Include="Markdig" Version="0.18.*" />
+    <PackageReference Include="Giraffe" Version="4.1.*" />
+    <PackageReference Include="Markdig" Version="0.20.*" />
     <PackageReference Include="NUglify" Version="1.5.*" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.*" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.*" />
     <PackageReference Include="Firewall" Version="2.2.*" />
-    <PackageReference Include="Google.Apis.AnalyticsReporting.v4" Version="1.44.*" />
+    <PackageReference Include="Google.Apis.AnalyticsReporting.v4" Version="1.45.*" />
     <PackageReference Include="Google.Cloud.Datastore.V1" Version="3.0.*" />
+    <PackageReference Include="Google.Cloud.PubSub.V1" Version="2.0.*"/>
   </ItemGroup>
 
   <ItemGroup>
