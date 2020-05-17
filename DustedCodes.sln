@@ -9,12 +9,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DustedCodes", "src\DustedCo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{1440EFDD-8E36-4942-8377-CD9FB74E8F05}"
 ProjectSection(SolutionItems) = preProject
-	.psscripts\build-functions.ps1 = .psscripts\build-functions.ps1
 	.psscripts\nuget-updates.ps1 = .psscripts\nuget-updates.ps1
-	.psscripts\install-dotnet.ps1 = .psscripts\install-dotnet.ps1
-	appveyor.yml = appveyor.yml
-	build.ps1 = build.ps1
-	build.sh = build.sh
 	global.json = global.json
 	NuGet.config = NuGet.config
 EndProjectSection
