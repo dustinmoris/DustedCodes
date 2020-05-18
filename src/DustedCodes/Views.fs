@@ -68,7 +68,7 @@ module Views =
     let minifiedCss =
         Css.getBundledContent
             "bundle"
-            [ "StyleSheets/fonts.css"; "StyleSheets/site.css" ]
+            [ "CSS/fonts.css"; "CSS/site.css" ]
 
     // ---------------------------------
     // Views
@@ -368,7 +368,7 @@ module Views =
 
     let about =
         [
-            article [] [
+            article [ _id "about" ] [
                 img [ _id "avatar"; _src (Url.storage "images/avatar/dustin-moris-gorski.jpg") ; _alt "Dustin Moris Gorski" ]
                 rawText About.content
             ]
@@ -380,7 +380,10 @@ module Views =
 
     let private sendMessageButton =
         button [ _type "submit"; _class "msg-button" ] [
-            rawText "Send Message"
+            Icons.envelope
+            span [] [
+                rawText "Send Message"
+            ]
         ]
 
     let private contactForm (msg : ContactMessage) =

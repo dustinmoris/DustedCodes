@@ -29,18 +29,21 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Nunito Sans', sans-serif;
     color: #333;
 }
 
 h1 {
     margin: 1em 0;
-    font-size: 2.7em;
-    font-weight: 700;
+    font-size: 3.2em;
+    font-weight: 800;
+    color: #444;
 }
 
 h2 {
-    font-size: 2em;
+    font-size: 2.2em;
+    font-weight: 800;
+    color: #444;
 }
 
 h3 {
@@ -197,24 +200,28 @@ label {
     font-size: .65em;
     text-transform: uppercase;
     font-weight: bold;
+    font-family: 'Nunito', sans-serif;
 }
 
 button {
-    display: block;
+    display: flex;
+    flex-flow: row wrap;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     width: 100%;
-    padding: 1.3em 1em;
+    padding: 1em 1em;
     border-radius: 6px;
     -moz-border-radius: 6px;
     border: none;
-    background: #672dfa;
+    background: #3aa6e6;
     color: #f1f1f1;
-    align-items: center;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: .8em;
+    font-size: 1.1em;
     cursor: pointer;
 }
 
@@ -237,7 +244,7 @@ textarea {
     color: #333;
     border-radius: 4px;
     -moz-border-radius: 4px;
-    font-family: 'Nunito Sans', sans-serif;
+    font-family: 'Roboto Mono', sans-serif;
 }
 
 textarea {
@@ -301,7 +308,7 @@ body > nav,
     margin: 1em auto;
     padding: 0 20px;
     width: 100%;
-    max-width: 700px;
+    max-width: 740px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -355,13 +362,14 @@ body > header a:active {
 }
 
 body > header svg {
-    margin: 0 15px 0 0;
-    width: 25px;
-    height: 25px;
+    margin: 0 20px 0 0;
+    width: 40px;
+    height: 40px;
 }
 
 body > header h1 {
     margin: 0 0 .25em 0;
+    font-family: 'Nunito', sans-serif;
     font-weight: 900;
     font-size: 2em;
 }
@@ -466,7 +474,19 @@ body > header h2 {
 
 #trending-list li {
     line-height: 1.7em;
-    margin-bottom: 1em;
+    margin: 2em 0;
+    text-align: center;
+    padding-top: 2em;
+    border-top: 1px solid #eaeaea;
+}
+
+#trending-list li > div > a {
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+#trending-list .blogpost-metadata {
+    justify-content: center;
 }
 
 #avatar {
@@ -488,6 +508,10 @@ body > header h2 {
     margin: 2em 0;
 }
 
+#about h1 {
+    margin-bottom: .5em;
+}
+
 #hire h1 {
     text-align: center;
 }
@@ -502,6 +526,13 @@ body > header h2 {
 
 .msg-button {
     margin-top: 2em;
+}
+
+.msg-button svg {
+    width: 40px;
+    height: 40px;
+    fill: #fff;
+    margin-right: 20px;
 }
 
 .article-list > h3 {
@@ -547,9 +578,9 @@ body > header h2 {
     flex-flow: row wrap;
     align-items: center;
     color: #999;
-    font-size: .9em;
-    font-weight: 300;
-    font-family: 'Nunito', sans-serif;
+    font-size: .8em;
+    font-weight: 400;
+    font-family: 'Roboto Mono', sans-serif;
 }
 
 .blogpost-metadata a {

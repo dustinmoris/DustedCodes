@@ -43,7 +43,7 @@ module Env =
         |> DevConfig.load
 
     let appRoot = Directory.GetCurrentDirectory()
-    let assetsDir = Path.Combine(appRoot, "WebRoot")
+    let assetsDir = Path.Combine(appRoot, "Public")
     let blogPostsDir = Path.Combine(appRoot, "BlogPosts")
     let contentDir = Path.Combine(appRoot, "Content")
 
