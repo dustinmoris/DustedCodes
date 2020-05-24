@@ -17,6 +17,7 @@ ProjectSection(SolutionItems) = preProject
 	.gitignore = .gitignore
 	nuget-updates.ps1 = nuget-updates.ps1
 	download-fonts.ps1 = download-fonts.ps1
+	dusted-codes-cors.json = dusted-codes-cors.json
 EndProjectSection
 EndProject
 Global
