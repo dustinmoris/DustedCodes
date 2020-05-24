@@ -21,8 +21,8 @@ module Env =
         let DOMAIN_NAME = "DOMAIN_NAME"
         let DISQUS_SHORTNAME = "DISQUS_SHORTNAME"
         let STORAGE_BASE_URL = "STORAGE_BASE_URL"
-        let MAILGUN_DOMAIN = "MAILGUN_DOMAIN"
-        let MAILGUN_SENDER = "MAILGUN_SENDER"
+        let MAIL_DOMAIN = "MAIL_DOMAIN"
+        let MAIL_SENDER = "MAIL_SENDER"
         let CONTACT_MESSAGES_RECIPIENT = "CONTACT_MESSAGES_RECIPIENT"
         let GCP_PROJECT_ID = "GCP_PROJECT_ID"
         let GCP_DS_CONTACT_MESSAGE_KIND = "GCP_DS_CONTACT_MESSAGE_KIND"
@@ -124,15 +124,15 @@ module Env =
             Keys.STORAGE_BASE_URL
             devConfig.[Keys.STORAGE_BASE_URL]
 
-    let mailgunDomain =
+    let mailDomain =
         Config.environmentVarOrDefault
-            Keys.MAILGUN_DOMAIN
-            devConfig.[Keys.MAILGUN_DOMAIN]
+            Keys.MAIL_DOMAIN
+            devConfig.[Keys.MAIL_DOMAIN]
 
-    let mailgunSender =
+    let mailSender =
         Config.environmentVarOrDefault
-            Keys.MAILGUN_SENDER
-            devConfig.[Keys.MAILGUN_SENDER]
+            Keys.MAIL_SENDER
+            devConfig.[Keys.MAIL_SENDER]
 
     let contactMessagesRecipient =
         Config.environmentVarOrDefault
@@ -232,9 +232,9 @@ module Env =
                 "Storage URL", storageBaseUrl
                 "Disqus Shortname", disqusShortname
             ]
-            "Mailgun", dict [
-                "Mailgun Domain", mailgunDomain
-                "Mailgun Sender", mailgunSender
+            "Mail", dict [
+                "Mail Domain", mailDomain
+                "Mail Sender", mailSender
                 "Contact Message Recipient", contactMessagesRecipient
             ]
             "GCP", dict [

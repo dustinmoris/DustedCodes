@@ -686,8 +686,8 @@ module EmailService =
 
     let sendContactMessage (msg : ContactMessages.Entity) =
         {
-            Domain       = Env.mailgunDomain
-            Sender       = Env.mailgunSender
+            Domain       = Env.mailDomain
+            Sender       = Env.mailSender
             Recipients   = [ Env.contactMessagesRecipient ]
             CC           = []
             BCC          = []

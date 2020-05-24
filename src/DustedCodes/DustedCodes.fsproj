@@ -41,8 +41,4 @@
     <Watch Include="**\*.css;**\*.md" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Public\fonts" />
-  </ItemGroup>
-
 </Project>
