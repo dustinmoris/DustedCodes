@@ -184,9 +184,14 @@ module Env =
             false
 
     let enableErrorEndpoint =
+        let dv =
+            getDevVar Keys.ENABLE_ERROR_ENDPOINT
+            |> Str.toOption
+            |> Option.defaultValue "false"
+            |> bool.Parse
         Config.InvariantCulture.typedEnvironmentVarOrDefault<bool>
             Keys.ENABLE_ERROR_ENDPOINT
-            (bool.Parse(getDevVar Keys.ENABLE_ERROR_ENDPOINT))
+            dv
 
     let proxyCount =
         Config.InvariantCulture.typedEnvironmentVarOrDefault<int>
