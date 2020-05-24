@@ -8,7 +8,7 @@ Some years ago when you wanted to develop a .NET web application it was almost g
 
 Suave is a lightweight, non-blocking web server written in F#. It is fairly new to the .NET space, but works wonderfully well and is very idiomatic to functional paradigms. Even though it is still early days it has probably the coolest name and logo amongst its competitors already:
 
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2016-05-31/26774440854_cf77ef2521_o.png" alt="suave, Image by Dustin Moris Gorski" class="two-third-width">
+<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-31/26774440854_cf77ef2521_o.png" alt="suave, Image by Dustin Moris Gorski" class="two-third-width">
 
 After working with Suave for more than a month now I can say that I find it very nice and intuitive. It is a well designed web framework which is easy to work with and allows rapid development if you know how it works. However, if you don't know how it works then you might struggle to get anything done at all. This is exactly what happened to me when I started adopting the framework in the beginning. The documentation is almost non existent and if you look for any advice on how to implement certain things then you are better off by browsing the [GitHub repository](https://github.com/SuaveIO/suave) directly. The lack of documentation is not a mistake, but rather a concious design decision which the Suave team explains as following:
 
