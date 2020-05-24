@@ -1,5 +1,7 @@
 namespace DustedCodes
 
+open Google.Cloud.Datastore.V1
+
 [<RequireQualifiedAccess>]
 module HttpHandlers =
     open System
@@ -7,12 +9,12 @@ module HttpHandlers =
     open System.Linq
     open Microsoft.AspNetCore.Http
     open Microsoft.AspNetCore.Http.Extensions
-    open Microsoft.Extensions.Logging
     open Microsoft.Extensions.Caching.Memory
     open Microsoft.Net.Http.Headers
     open FSharp.Control.Tasks.V2.ContextInsensitive
     open Giraffe
     open Giraffe.GiraffeViewEngine
+    open Logfella
 
     // ---------------------------------
     // Http Handlers
@@ -38,11 +40,16 @@ module HttpHandlers =
 
     let notFound =
         fun (next : HttpFunc) (ctx : HttpContext) ->
-            let logger = ctx.GetLogger("NotFoundHandler")
-            logger.LogWarning(
-                "Could not serve '{verb} {url}', because it does not exist.",
-                ctx.Request.Method,
-                ctx.Request.GetEncodedUrl())
+            let encodedUrl = ctx.Request.GetEncodedUrl()
+            Log.Notice(
+                sprintf "Could not serve '%s %s', because it does not exist."
+                    ctx.Request.Method
+                    encodedUrl,
+                dict [
+                    "httpError", "404" :> obj
+                    "httpVerb", ctx.Request.Method :> obj
+                    "encodedUrl", encodedUrl :> obj
+                ])
             (setStatusCode 404
             >=> htmlView Views.notFound) next ctx
 
@@ -66,46 +73,41 @@ module HttpHandlers =
         >=> (Views.about |> htmlView)
 
     let hire =
-        None |> Views.hire |> htmlView
-
-    let private contactResponse next ctx result =
-        result
-        |> Some
-        |> Views.hire
+        Views.hire ContactMessages.Entity.Empty None
         |> htmlView
-        <|| (next, ctx)
 
-    let private contactError next ctx contactMsg errorMsg =
-        Error (contactMsg, errorMsg)
-        |> contactResponse next ctx
-
-    let private contactSuccess next ctx =
-        Ok "Thank you, your message has been successfully sent!"
-        |> contactResponse next ctx
-
-    let contact =
-        fun (next : HttpFunc) (ctx : HttpContext) ->
+    let contact (next : HttpFunc) =
+        let internalErr =
+            "Unfortunately the message failed to send due to an unexpected error. "
+            + "The website owner has been notified about the issue. "
+            + "Please try a little bit later again."
+            |> Error
+        fun (ctx : HttpContext) ->
             task {
-                let! message = ctx.BindFormAsync<ContactMessage>()
-                match message.ValidationResult with
-                | Error err -> return! contactError next ctx message err
+                let respond msg res =
+                    htmlView (Views.hire msg (Some res)) next ctx
+
+                let! msg = ctx.BindFormAsync<ContactMessages.Entity>()
+                match msg.IsValid with
+                | Error err -> return! respond msg (Error err)
                 | Ok _      ->
                     let! captchaResult =
                         ctx.Request.Form.["g-recaptcha-response"].ToString()
-                        |> Captcha.validateAsync Env.googleCaptchaSecretKey
+                        |> Captcha.validate Env.googleCaptchaSecretKey
                     match captchaResult with
                     | Captcha.ServerError err ->
-                        let logger = ctx.GetLogger()
-                        logger.LogError("Captcha validation failed with '{captchaError}'.", err)
-                        return! contactError next ctx message "Verification failed. Please try again."
-                    | Captcha.UserError err -> return! contactError next ctx message err
+                        Log.Critical(
+                            sprintf "Captcha validation failed with: %s" err,
+                            ("captchaError", err :> obj))
+                        return! respond msg internalErr
+                    | Captcha.UserError err -> return! respond msg (Error err)
                     | Captcha.Success ->
-                        match! DataService.saveContactMessageAsync message with
-                        | Error err ->
-                            let logger = ctx.GetLogger()
-                            logger.LogError("An error occurred when writing to the datastore: '{dataError}'.", err)
-                            return! contactError next ctx message "An unexpected error occurred. Please try again."
-                        | Ok _      -> return! contactSuccess next ctx
+                        let! dataResult  = DataService.saveContactMessage msg
+                        let! emailResult = EmailService.sendContactMessage msg
+                        match dataResult, emailResult with
+                        | Ok _, _ | _, Ok _ ->
+                            return! respond ContactMessages.Entity.Empty (Ok "Thank you, your message has been successfully sent!")
+                        | _ -> return! respond msg internalErr
             }
 
     let blogPost (id : string) =
@@ -196,8 +198,7 @@ module HttpHandlers =
 
     let atomFeed : HttpHandler =
         fun (next : HttpFunc) (ctx : HttpContext) ->
-            let logger = ctx.GetLogger("AtomFeedHandler")
-            logger.LogWarning "Someone tried to subscribe to the Atom feed."
+            Log.Warning "Someone tried to subscribe to the Atom feed."
             ServerErrors.notImplemented (text "Atom feed is not supported at the moment. If you were using Atom to subscribe to this blog before, please file an issue on https://github.com/dustinmoris/DustedCodes to create awareness.") next ctx
 
 [<RequireQualifiedAccess>]

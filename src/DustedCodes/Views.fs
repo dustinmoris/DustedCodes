@@ -68,7 +68,10 @@ module Views =
     let minifiedCss =
         Css.getBundledContent
             "bundle"
-            [ "CSS/fonts.css"; "CSS/site.css" ]
+            [
+                // "CSS/fonts.css"
+                "CSS/site.css"
+            ]
 
     // ---------------------------------
     // Views
@@ -104,49 +107,53 @@ module Views =
             comment asciiArt
             head [] [
                 // Metadata
-                yield metaCharset "utf-8"
-                yield meta "viewport" "width=device-width, initial-scale=1.0"
-                yield meta "description" pageTitle
+                metaCharset "utf-8"
+                meta "viewport" "width=device-width, initial-scale=1.0"
+                meta "description" pageTitle
 
                 // Title
-                yield title [] [ encodedText pageTitle ]
+                title [] [ encodedText pageTitle ]
 
                 // Favicon
-                yield link [ _rel "apple-touch-icon"; _sizes "180x180"; _href (Url.create "/apple-touch-icon.png?v=2") ]
-                yield link [ _rel "icon"; _type "image/png"; _sizes "32x32"; _href (Url.create "/favicon-32x32.png?v=2") ]
-                yield link [ _rel "icon"; _type "image/png"; _sizes "16x16"; _href (Url.create "/favicon-16x16.png?v=2") ]
-                yield link [ _rel "manifest"; _href (Url.create "/manifest.json?v=2") ]
-                yield link [ _rel "mask-icon"; _href (Url.create "/safari-pinned-tab.svg?v=2"); attr "color" "#333333" ]
-                yield link [ _rel "shortcut icon"; _href (Url.create "/favicon.ico?v=2") ]
-                yield meta "apple-mobile-web-app-title" Env.blogTitle
-                yield meta "application-name" Env.blogTitle
-                yield meta "theme-color" "#ffffff"
+                link [ _rel "apple-touch-icon"; _sizes "180x180"; _href (Url.create "/apple-touch-icon.png?v=2") ]
+                link [ _rel "icon"; _type "image/png"; _sizes "32x32"; _href (Url.create "/favicon-32x32.png?v=2") ]
+                link [ _rel "icon"; _type "image/png"; _sizes "16x16"; _href (Url.create "/favicon-16x16.png?v=2") ]
+                link [ _rel "manifest"; _href (Url.create "/manifest.json?v=2") ]
+                link [ _rel "mask-icon"; _href (Url.create "/safari-pinned-tab.svg?v=2"); attr "color" "#333333" ]
+                link [ _rel "shortcut icon"; _href (Url.create "/favicon.ico?v=2") ]
+                meta "apple-mobile-web-app-title" Env.blogTitle
+                meta "application-name" Env.blogTitle
+                meta "theme-color" "#ffffff"
 
                 // RSS feed
-                yield link [ _rel "alternate"; _type "application/rss+xml"; _title "RSS Feed"; _href Url.``/feed/rss`` ]
+                link [ _rel "alternate"; _type "application/rss+xml"; _title "RSS Feed"; _href Url.``/feed/rss`` ]
 
                 if permalink.IsSome then
                     // Twitter card tags
-                    yield twitterCard "card" "summary"
-                    yield twitterCard "site" "@dustinmoris"
-                    yield twitterCard "creator" "@dustinmoris"
+                    twitterCard "card" "summary"
+                    twitterCard "site" "@dustinmoris"
+                    twitterCard "creator" "@dustinmoris"
 
                     // Open Graph tags
-                    yield openGraph "title"        pageTitle
-                    yield openGraph "url"          permalink.Value
-                    yield openGraph "type"         "website"
-                    yield openGraph "image"        (Url.storage "images/website/opengraph.jpeg")
-                    yield openGraph "image:alt"    Env.blogTitle
-                    yield openGraph "image:width"  "1094"
-                    yield openGraph "image:height" "729"
+                    openGraph "title"        pageTitle
+                    openGraph "url"          permalink.Value
+                    openGraph "type"         "website"
+                    openGraph "image"        (Url.storage "images/website/opengraph.jpeg")
+                    openGraph "image:alt"    Env.blogTitle
+                    openGraph "image:width"  "1094"
+                    openGraph "image:height" "729"
                     if sample.IsSome then
-                        yield openGraph "description" sample.Value
+                        openGraph "description" sample.Value
 
                 // Minified & bundled CSS
-                yield css (Url.create minifiedCss.Path)
+                css "https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap"
+                css "https://fonts.googleapis.com/css2?family=Martel:wght@700;800;900&display=swap"
+                css "https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap"
+                css "https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap"
+                css (Url.create minifiedCss.Path)
 
                 // Google Analytics
-                if Env.isProduction then yield googleAnalytics
+                if Env.isProduction then googleAnalytics
 
                 // Additional (optional) header content
                 if headerContent.IsSome then yield! headerContent.Value
@@ -183,6 +190,7 @@ module Views =
                         li [] [ normalLink Url.``/trending`` "Trending" ]
                         li [] [ normalLink Url.``/about`` "About"]
                         li [] [ normalLink Url.``/hire`` "Hire" ]
+                        li [] [ normalLink Url.``/hire#contact`` "Contact" ]
                     ]
                 ]
                 footer [] [
@@ -386,7 +394,7 @@ module Views =
             ]
         ]
 
-    let private contactForm (msg : ContactMessage) =
+    let private contactForm (msg : ContactMessages.Entity) =
         let actionUrl = sprintf "%s#contact" Url.``/hire``
         form [ _method "POST"; _action actionUrl; _autocomplete "on" ]
             [
@@ -444,10 +452,12 @@ module Views =
                 ]
             ]
 
-    let private successMsg msg = p [ _class "success-msg" ] [ encodedText msg ]
+    let private successMsg msg = p [ _class "success-msg" ] [ Icons.envelope; span [] [ encodedText msg ] ]
     let private errorMsg msg   = p [ _class "error-msg"   ] [ Icons.alert; span [] [ encodedText msg ] ]
 
-    let hire (sendMessageResult : Result<string, ContactMessage * string> option) =
+    let hire
+        (msg         : ContactMessages.Entity)
+        (msgResult   : Result<string, string> option) =
         [
             article [ _id "hire" ] [
                 h1 [] [ rawText "Hire Me" ]
@@ -460,12 +470,12 @@ module Views =
                     p [] [ rawText "Please fill out this form to send me a message and I'll get back to you soon." ]
                 ]
                 yield!
-                    match sendMessageResult with
+                    match msgResult with
                     | Some result ->
                         match result with
-                        | Ok msg           -> [ successMsg msg; contactForm ContactMessage.Empty ]
-                        | Error (obj, msg) -> [ errorMsg msg; contactForm obj ]
-                    | None                 -> [ contactForm ContactMessage.Empty ]
+                        | Ok okMsg     -> [ successMsg okMsg; contactForm msg ]
+                        | Error errMsg -> [ errorMsg errMsg;  contactForm msg ]
+                    | None             -> [ contactForm msg ]
             ]
         ] |> masterView
             (Some "Hire Me")

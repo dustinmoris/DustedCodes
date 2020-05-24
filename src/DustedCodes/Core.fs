@@ -1,30 +1,21 @@
 namespace DustedCodes
 
-//    let private GOOGLE_APIS_JSON_KEY        = "GOOGLE_APIS_JSON_KEY"
-//    let private GOOGLE_ANALYTICS_VIEW_ID    = "GOOGLE_ANALYTICS_VIEW_ID"
-
-//    let private API_SECRET                  = "API_SECRET"
-//
-//    let apiSecret                = getSecret API_SECRET
-//    let googleApisJsonKey        = getSecret GOOGLE_APIS_JSON_KEY
-//    let googleAnalyticsViewId    = getSecret GOOGLE_ANALYTICS_VIEW_ID
-
-
 // ---------------------------------
 // Urls
 // ---------------------------------
 
 [<RequireQualifiedAccess>]
 module UrlPaths =
-    let ``/``          = "/"
-    let ``/ping``      = "/ping"
-    let ``/version``   = "/version"
-    let ``/about``     = "/about"
-    let ``/hire``      = "/hire"
-    let ``/trending``  = "/trending"
-    let ``/feed/rss``  = "/feed/rss"
-    let ``/feed/atom`` = "/feed/atom"
-    let ``/logo.svg``  = "/logo.svg"
+    let ``/``              = "/"
+    let ``/ping``          = "/ping"
+    let ``/version``       = "/version"
+    let ``/about``         = "/about"
+    let ``/hire``          = "/hire"
+    let ``/hire#contact``  = "/hire#contact"
+    let ``/trending``      = "/trending"
+    let ``/feed/rss``      = "/feed/rss"
+    let ``/feed/atom``     = "/feed/atom"
+    let ``/logo.svg``      = "/logo.svg"
 
     let ``/tagged/%s`` : PrintfFormat<string -> obj, obj, obj, obj, string> = "/tagged/%s"
     let ``/%s``        : PrintfFormat<string -> obj, obj, obj, obj, string> = "/%s"
@@ -44,13 +35,14 @@ module Url =
     let storage (resource : string) =
         sprintf "https://storage.googleapis.com/dustedcodes/%s" resource
 
-    let ``/``          = create UrlPaths.``/``
-    let ``/about``     = create UrlPaths.``/about``
-    let ``/hire``      = create UrlPaths.``/hire``
-    let ``/trending``  = create UrlPaths.``/trending``
-    let ``/feed/rss``  = create UrlPaths.``/feed/rss``
-    let ``/feed/atom`` = create UrlPaths.``/feed/atom``
-    let ``/logo.svg``  = create UrlPaths.``/logo.svg``
+    let ``/``              = create UrlPaths.``/``
+    let ``/about``         = create UrlPaths.``/about``
+    let ``/hire``          = create UrlPaths.``/hire``
+    let ``/hire#contact``  = create UrlPaths.``/hire#contact``
+    let ``/trending``      = create UrlPaths.``/trending``
+    let ``/feed/rss``      = create UrlPaths.``/feed/rss``
+    let ``/feed/atom``     = create UrlPaths.``/feed/atom``
+    let ``/logo.svg``      = create UrlPaths.``/logo.svg``
 
     let ``/tagged/%s`` (tag : string) = create (sprintf "/tagged/%s" tag)
     let ``/%s``        (id  : string) = create (sprintf "/%s" id)
@@ -529,15 +521,12 @@ module Captcha =
         | "invalid-input-response" -> UserError "Verification failed. Please try again."
         | _                        -> ServerError (sprintf "Unknown error code: %s" errorCode)
 
-    let validateAsync (secret : string) (captchaResponse : string) =
+    let validate (secret : string) (captchaResponse : string) =
         task {
             let url = "https://www.google.com/recaptcha/api/siteverify"
-
             let data = dict [ "secret",   secret
                               "response", captchaResponse ]
-
             let! statusCode, body = Http.postAsync url data
-
             return
                 if not (statusCode.Equals HttpStatusCode.OK)
                 then ServerError body
@@ -548,67 +537,171 @@ module Captcha =
                     | false -> parseError (result.ErrorCodes.[0])
         }
 
-
 // ---------------------------------
-// Contact page
+// Contact Messages
 // ---------------------------------
 
-[<CLIMutable>]
-type ContactMessage =
-    {
-        Name    : string
-        Email   : string
-        Phone   : string
-        Subject : string
-        Message : string
-    }
-    static member Empty =
+[<RequireQualifiedAccess>]
+module ContactMessages =
+    open System
+
+    [<CLIMutable>]
+    type Entity =
         {
-            Name    = ""
-            Email   = ""
-            Phone   = ""
-            Subject = ""
-            Message = ""
+            Name    : string
+            Email   : string
+            Phone   : string
+            Subject : string
+            Message : string
         }
-    member __.ValidationResult =
-        if      Str.isNullOrEmpty __.Name    then Error "Name cannot be empty."
-        else if Str.isNullOrEmpty __.Email   then Error "Email address cannot be empty."
-        else if Str.isNullOrEmpty __.Subject then Error "Subject cannot be empty."
-        else if Str.isNullOrEmpty __.Message then Error "Message cannot be empty."
-        else Ok ()
+
+        static member Empty =
+            {
+                Name    = ""
+                Email   = ""
+                Phone   = ""
+                Subject = ""
+                Message = ""
+            }
+
+        member this.IsValid =
+            if      String.IsNullOrEmpty this.Name    then Error "Name cannot be empty."
+            else if String.IsNullOrEmpty this.Email   then Error "Email address cannot be empty."
+            else if String.IsNullOrEmpty this.Subject then Error "Subject cannot be empty."
+            else if String.IsNullOrEmpty this.Message then Error "Message cannot be empty."
+            else Ok ()
+
+// ---------------------------------
+// Data Service
+// ---------------------------------
 
 [<RequireQualifiedAccess>]
 module DataService =
     open System
     open FSharp.Control.Tasks.V2.ContextInsensitive
     open Google.Cloud.Datastore.V1
+    open Logfella
 
-    let private projectId = "dustins-private-project"
-    let private toStringValue    (str : string)   = Value(StringValue = str)
-    let private toBoolValue      (bln : bool)     = Value(BooleanValue = bln)
+    let private toStringValue (str : string) = Value(StringValue = str)
     let private toTimestampValue (dt  : DateTime) =
         let ts = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime dt
         Value(TimestampValue = ts)
 
-    let saveContactMessageAsync (msg : ContactMessage) =
+    let private entityFromContactMessage
+        (key : Key)
+        (msg : ContactMessages.Entity) =
+
+        let entity     = Entity()
+        entity.Key             <- key
+        entity.["Name"]        <- msg.Name        |> toStringValue
+        entity.["Email"]       <- msg.Email       |> toStringValue
+        entity.["Phone"]       <- msg.Phone       |> toStringValue
+        entity.["Subject"]     <- msg.Subject     |> toStringValue
+        entity.["Message"]     <- msg.Message     |> toStringValue
+        entity.["Date"]        <- DateTime.UtcNow  |> toTimestampValue
+        entity.["Origin"]      <- Env.appName      |> toStringValue
+        entity.["Environment"] <- Env.name         |> toStringValue
+        entity
+
+    let private save (datastore : DatastoreDb)  (entity : Entity) =
         task {
             try
-                let kind        = "ContactMessages"
-                let datastore   = DatastoreDb.Create projectId
-                let keyFactory  = datastore.CreateKeyFactory(kind)
-                let entity      = Entity()
-
-                entity.Key         <- keyFactory.CreateIncompleteKey()
-                entity.["Name"]    <- toStringValue    <| msg.Name
-                entity.["Email"]   <- toStringValue    <| msg.Email
-                entity.["Phone"]   <- toStringValue    <| msg.Phone
-                entity.["Subject"] <- toStringValue    <| msg.Subject
-                entity.["Message"] <- toStringValue    <| msg.Message
-                entity.["Date"]    <- toTimestampValue <| DateTime.UtcNow
-
-                let! _ = datastore.InsertAsync [ entity ]
-
-                return Ok "Thank you, your message has been successfully sent!"
-            with
-            | ex -> return Error ex.Message
+                let! keys = datastore.InsertAsync [ entity ]
+                let foldedKeys =
+                    keys
+                    |> Seq.fold(fun str k -> str + k.ToString() + " ") " "
+                Log.Notice(
+                    "A new entity has been successfully saved.",
+                    ("dataKeys", foldedKeys :> obj))
+                return Ok keys
+            with ex ->
+                Log.Alert("Failed to save entity in Google Cloud Datastore.", ex)
+                return Error ex.Message
         }
+
+    let saveContactMessage (msg : ContactMessages.Entity) =
+        Log.Debug "Initialising Google Cloud DatastoreDb..."
+        let datastore  = DatastoreDb.Create Env.gcpProjectId
+        Log.Debug "Creating key factory for entity kind..."
+        let keyFactory = datastore.CreateKeyFactory Env.gcpContactMessageKind
+        Log.Debug "Generating new entity key..."
+        let key        = keyFactory.CreateIncompleteKey()
+        Log.Debug "Creating and saving entity..."
+        let keys =
+            msg
+            |> entityFromContactMessage key
+            |> save datastore
+        Log.Debug "Contact message has been successfully saved."
+        keys
+
+// ---------------------------------
+// Email Service
+// ---------------------------------
+
+module EmailService =
+    open System
+    open System.Collections.Generic
+    open Google.Protobuf
+    open Google.Cloud.PubSub.V1
+    open FSharp.Control.Tasks.V2.ContextInsensitive
+    open Newtonsoft.Json
+    open Logfella
+
+    [<CLIMutable>]
+    type Message =
+        {
+            Domain       : string
+            Sender       : string
+            Recipients   : string list
+            CC           : string list
+            BCC          : string list
+            Subject      : string
+            TemplateName : string
+            TemplateData : IDictionary<string, string>
+        }
+
+    let private sendMessage (msg : Message) =
+        task {
+            try
+                let topicName  = TopicName(Env.gcpProjectId, Env.gcpContactMessageTopic)
+                let! publisher = PublisherClient.CreateAsync topicName
+                let data =
+                    msg
+                    |> JsonConvert.SerializeObject
+                    |> ByteString.CopyFromUtf8
+                let pubSubMsg = PubsubMessage(Data = data)
+                pubSubMsg.Attributes.Add("encoding", "json-utf8")
+                let! messageId = publisher.PublishAsync(pubSubMsg)
+                do! publisher.ShutdownAsync(TimeSpan.FromSeconds 15.0)
+                Log.Notice(
+                     "A new contact message has been successfully sent.",
+                     ("messageId", messageId :> obj))
+                return Ok messageId
+            with ex ->
+                Log.Alert(
+                    "Failed to publish to emails topic in Google Cloud PubSub.",
+                    ex)
+                return Error ex.Message
+        }
+
+    let sendContactMessage (msg : ContactMessages.Entity) =
+        {
+            Domain       = Env.mailgunDomain
+            Sender       = Env.mailgunSender
+            Recipients   = [ Env.contactMessagesRecipient ]
+            CC           = []
+            BCC          = []
+            Subject      = "Dusted Codes: A new message has been posted"
+            TemplateName = "contact-message"
+            TemplateData =
+                dict [
+                    "environmentName", Env.name
+                    "msgSubject",      msg.Subject
+                    "msgContent",      msg.Message
+                    "msgDate",         DateTimeOffset.Now.ToString("u")
+                    "msgSenderName",   msg.Name
+                    "msgSenderEmail",  msg.Email
+                    "msgSenderPhone",  msg.Phone
+                ]
+        }
+        |> sendMessage

@@ -21,6 +21,9 @@ module Env =
         let DOMAIN_NAME = "DOMAIN_NAME"
         let DISQUS_SHORTNAME = "DISQUS_SHORTNAME"
         let IMAGE_BASE_URL = "IMAGE_BASE_URL"
+        let MAILGUN_DOMAIN = "MAILGUN_DOMAIN"
+        let MAILGUN_SENDER = "MAILGUN_SENDER"
+        let CONTACT_MESSAGES_RECIPIENT = "CONTACT_MESSAGES_RECIPIENT"
         let GCP_PROJECT_ID = "GCP_PROJECT_ID"
         let GCP_DS_CONTACT_MESSAGE_KIND = "GCP_DS_CONTACT_MESSAGE_KIND"
         let GCP_PS_EMAILS_TOPIC = "GCP_PS_EMAILS_TOPIC"
@@ -120,6 +123,21 @@ module Env =
         Config.environmentVarOrDefault
             Keys.IMAGE_BASE_URL
             "https://storage.googleapis.com/top-10-london/images"
+
+    let mailgunDomain =
+        Config.environmentVarOrDefault
+            Keys.MAILGUN_DOMAIN
+            devConfig.[Keys.MAILGUN_DOMAIN]
+
+    let mailgunSender =
+        Config.environmentVarOrDefault
+            Keys.MAILGUN_SENDER
+            devConfig.[Keys.MAILGUN_SENDER]
+
+    let contactMessagesRecipient =
+        Config.environmentVarOrDefault
+            Keys.CONTACT_MESSAGES_RECIPIENT
+            devConfig.[Keys.CONTACT_MESSAGES_RECIPIENT]
 
     let gcpProjectId =
         Config.environmentVarOrDefault

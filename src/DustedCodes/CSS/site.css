@@ -28,26 +28,31 @@ body {
     font-size: 1.05em;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Nunito Sans', sans-serif;
-    color: #333;
+h2, h3, h4, h5, h6 {
+    font-family: 'Martel', serif;
+    font-weight: 700;
+    color: #222;
 }
 
 h1 {
     margin: 1em 0;
-    font-size: 3.2em;
-    font-weight: 800;
-    color: #444;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 3.4em;
+    font-weight: 700;
+    line-height: 1.5em;
+    color: #333;
+    text-align: center;
 }
 
 h2 {
-    font-size: 2.2em;
+    font-size: 2.6em;
     font-weight: 800;
-    color: #444;
+    color: #333;
 }
 
 h3 {
     font-size: 1.4em;
+    font-weight: 800;
 }
 
 h4 {
@@ -64,7 +69,7 @@ p {
 }
 
 a {
-    color: #ff5252;
+    color: #1bbbb6;
     text-decoration: none;
 }
 
@@ -75,8 +80,8 @@ a:hover {
 code {
     display: inline-block;
     padding: .1em .4em;
-    -ms-border-radius: 3px;
-    border-radius: 3px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
     background: #f5f5f5;
     font-family: 'Roboto Mono', monospace;
     font-size: .8em;
@@ -95,7 +100,8 @@ pre {
 pre > code {
     display: block;
     padding: .5em 0 .5em 1em;
-    color: #333;
+    background: #393434;
+    color: #efefef;
     font-size: .75em;
 }
 
@@ -180,10 +186,6 @@ article {
     font-size: 1em;
 }
 
-article > header > h1 {
-    text-align: center;
-}
-
 article li {
     margin: .2em 0;
     line-height: 2em;
@@ -199,8 +201,8 @@ label {
     color: #777;
     font-size: .65em;
     text-transform: uppercase;
-    font-weight: bold;
-    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-family: 'Nunito Sans', sans-serif;
 }
 
 button {
@@ -217,16 +219,16 @@ button {
     border-radius: 6px;
     -moz-border-radius: 6px;
     border: none;
-    background: #3aa6e6;
+    background: #1bbbb6;
     color: #f1f1f1;
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: 700;
     font-size: 1.1em;
     cursor: pointer;
 }
 
 button:hover {
-    background: #814fff;
+    background: #21c4ac;
 }
 
 input,
@@ -256,37 +258,37 @@ input[type=tel]:focus,
 input[type=email]:focus,
 textarea:focus {
     outline: none;
-    border: 1.5px solid #3aa6e6;
+    border: 1.5px solid #1bbbb6;
 }
 
 ::placeholder {
     color: #777;
     font-style: italic;
-    font-weight: normal;
+    font-weight: 400;
     font-size: .8em;
 }
 ::-webkit-input-placeholder {
     color: #777;
     font-style: italic;
-    font-weight: normal;
+    font-weight: 400;
     font-size: .8em;
 }
 ::-moz-placeholder {
     color: #777;
     font-style: italic;
-    font-weight: normal;
+    font-weight: 400;
     font-size: .8em;
 }
 :-ms-input-placeholder {
     color: #777;
     font-style: italic;
-    font-weight: normal;
+    font-weight: 400;
     font-size: .8em;
 }
 :-moz-placeholder {
     color: #777;
     font-style: italic;
-    font-weight: normal;
+    font-weight: 400;
     font-size: .8em;
 }
 
@@ -376,6 +378,7 @@ body > header h1 {
 
 body > header h2 {
     margin: 0;
+    font-family: 'Nunito', sans-serif;
     font-size: .9em;
     font-weight: 400;
     color: #bbb;
@@ -443,6 +446,7 @@ body > header h2 {
     margin: 0;
     padding: 0;
     color: #777;
+    font-family: 'Nunito', sans-serif;
     font-size: .75em;
     font-weight: 700;
     word-spacing: 2px;
@@ -455,6 +459,7 @@ body > header h2 {
     padding: 0;
     line-height: 1.4em;
     color: #bbb;
+    font-family: 'Nunito', sans-serif;
     font-weight: 300;
 }
 
@@ -481,8 +486,15 @@ body > header h2 {
 }
 
 #trending-list li > div > a {
-    font-size: 1.2em;
+    display: inline-block;
+    font-size: 1.3em;
     font-weight: 500;
+    color: #666;
+    margin-bottom: .7em;
+}
+
+#trending-list li > div > a:hover {
+    color: #ff5252;
 }
 
 #trending-list .blogpost-metadata {
@@ -510,10 +522,7 @@ body > header h2 {
 
 #about h1 {
     margin-bottom: .5em;
-}
-
-#hire h1 {
-    text-align: center;
+    text-align: left;
 }
 
 #contact h1 {
@@ -538,6 +547,7 @@ body > header h2 {
 .article-list > h3 {
     display: block;
     text-align: center;
+    font-family: 'Nunito', sans-serif;
     font-size: 1.6em;
     text-transform: uppercase;
     color: #d8d8d8;
@@ -577,10 +587,10 @@ body > header h2 {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    color: #999;
+    color: #aaa;
     font-size: .8em;
     font-weight: 400;
-    font-family: 'Roboto Mono', sans-serif;
+    font-family: 'Nunito', sans-serif;
 }
 
 .blogpost-metadata a {
@@ -660,46 +670,49 @@ body > header h2 {
 }
 
 .msg-subject {
-    font-weight: bold;
-    color: #777;
+    font-weight: 700;
+    color: #555;
 }
 
 .footnote {
     margin: 1.5em 0;
     font-style: italic;
+    font-weight: 300;
     font-size: .9em;
     color: #999;
 }
 
 .success-msg {
     display: flex;
+    align-items: center;
     padding: .7em 1em;
     font-size: .8em;
     background: #88c082;
     color: #fff;
-    font-weight: bold;
+    font-weight: 700;
     border-radius: 6px;
     -moz-border-radius: 6px;
 }
 
 .error-msg {
     display: flex;
+    align-items: center;
     padding: .7em 1em;
     font-size: .8em;
-    background: #ffe9e3;
-    border: 1px solid #db8873;
-    color: #b94528;
-    font-weight: bold;
+    background: #b96363;
+    color: #fff;
+    font-weight: 700;
     border-radius: 6px;
     -moz-border-radius: 6px;
 }
 
-.error-msg svg {
+.error-msg svg,
+.success-msg svg{
     display: inline;
     width: 22px;
     height: 22px;
     padding: 1px;
-    fill: #b94528;
+    fill: #fff;
     margin-right: 10px;
 }
 
