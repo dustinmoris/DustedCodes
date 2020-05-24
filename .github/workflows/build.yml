@@ -33,7 +33,7 @@ jobs:
       GITHUB_SHA: ${{ github.sha }}
       GKE_ZONE: europe-west2
       GKE_CLUSTER: dusted-kubes-eu
-      IMAGE: dusted-codes
+      IMAGE: dustedcodes
       REGISTRY_HOSTNAME: eu.gcr.io
     steps:
 
