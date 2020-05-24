@@ -1,152 +1,21 @@
 namespace DustedCodes
 
 // ---------------------------------
-// Common
-// ---------------------------------
-
-[<RequireQualifiedAccess>]
-module Str =
-    open System
-
-    let private ignoreCase = StringComparison.InvariantCultureIgnoreCase
-    let equals   (s1 : string) (s2 : string) = s1.Equals s2
-    let equalsCi (s1 : string) (s2 : string) = s1.Equals(s2, ignoreCase)
-
-    let isNullOrEmpty str = String.IsNullOrEmpty str
-
-    let toOption str =
-        match isNullOrEmpty str with
-        | true  -> None
-        | false -> Some str
-
-[<RequireQualifiedAccess>]
-module Hash =
-    open System.Text
-    open System.Security.Cryptography
-
-    let sha1 (str : string) =
-        str
-        |> Encoding.UTF8.GetBytes
-        |> SHA1.Create().ComputeHash
-        |> Array.map (fun b -> b.ToString "x2")
-        |> String.concat ""
-
-// ---------------------------------
-// Config
-// ---------------------------------
-
-[<RequireQualifiedAccess>]
-module DevSecrets =
-    open System
-    open System.IO
-    open System.Collections.Generic
-    open Newtonsoft.Json
-
-    let private userFolder  = Environment.GetEnvironmentVariable "HOME"
-    let private secretsFile = sprintf "%s/.secrets/dustedcodes.sec.json" userFolder
-
-    let private secrets =
-        secretsFile
-        |> File.Exists
-        |> function
-            | false -> new Dictionary<string, string>()
-            | true  ->
-                secretsFile
-                |> File.ReadAllText
-                |> JsonConvert.DeserializeObject<Dictionary<string, string>>
-
-    let get key =
-        match secrets.TryGetValue key with
-        | true , value -> value
-        | false, _     -> String.Empty
-
-[<RequireQualifiedAccess>]
-module Config =
-    open System
-    open System.IO
-
-    let private envVar key = Environment.GetEnvironmentVariable key
-
-    let private getSecret key =
-        envVar key
-        |> Str.toOption
-        |> defaultArg
-        <| DevSecrets.get key
-
-    let private getOrDefault key defaultValue =
-        envVar key
-        |> Str.toOption
-        |> defaultArg
-        <| defaultValue
-
-    let private ASPNETCORE_ENVIRONMENT      = "ASPNETCORE_ENVIRONMENT"
-    let private BASE_URL                    = "BASE_URL"
-    let private GOOGLE_RECAPTCHA_SITE_KEY   = "GOOGLE_RECAPTCHA_SITE_KEY"
-    let private GOOGLE_RECAPTCHA_SECRET_KEY = "GOOGLE_RECAPTCHA_SECRET_KEY"
-    let private GOOGLE_APIS_JSON_KEY        = "GOOGLE_APIS_JSON_KEY"
-    let private GOOGLE_ANALYTICS_VIEW_ID    = "GOOGLE_ANALYTICS_VIEW_ID"
-    let private LOG_LEVEL_CONSOLE           = "LOG_LEVEL_CONSOLE"
-    let private LOG_LEVEL_ELASTIC           = "LOG_LEVEL_ELASTIC"
-    let private VIP_LIST                    = "VIP_LIST"
-    let private DISQUS_SHORTNAME            = "DISQUS_SHORTNAME"
-    let private API_SECRET                  = "API_SECRET"
-    let private ELASTIC_URL                 = "ELASTIC_URL"
-    let private ELASTIC_USER                = "ELASTIC_USER"
-    let private ELASTIC_PASSWORD            = "ELASTIC_PASSWORD"
-
-    let contentRoot         = Directory.GetCurrentDirectory()
-    let webRoot             = Path.Combine(contentRoot, "WebRoot")
-    let blogPostsFolder     = Path.Combine(contentRoot, "BlogPosts")
-    let staticContentFolder = Path.Combine(contentRoot, "Content")
-
-    let blogTitle        = "Dusted Codes"
-    let blogDescription  = "Programming adventures"
-    let blogLanguage     = "en-GB"
-    let blogAuthor       = "Dustin Moris Gorski"
-
-    let environmentName = getOrDefault ASPNETCORE_ENVIRONMENT "Development"
-    let isProduction    = environmentName |> Str.equalsCi "Production"
-    let logLevelConsole = getOrDefault LOG_LEVEL_CONSOLE "error"
-    let logLevelElastic = getOrDefault LOG_LEVEL_ELASTIC "warning"
-
-    let baseUrl =
-        let prodUrl  = "https://dusted.codes"
-        let localUrl = "http://localhost:5000"
-        getOrDefault BASE_URL (if isProduction then prodUrl else localUrl)
-
-    let vipList =
-        envVar VIP_LIST
-        |> Str.toOption
-        |> function
-            | None      -> [||]
-            | Some vips ->
-                vips.Split([| ','; ' ' |], StringSplitOptions.RemoveEmptyEntries)
-                |> Array.map System.Net.IPAddress.Parse
-
-    let apiSecret                = getSecret API_SECRET
-    let googleRecaptchaSiteKey   = getSecret GOOGLE_RECAPTCHA_SITE_KEY
-    let googleRecaptchaSecretKey = getSecret GOOGLE_RECAPTCHA_SECRET_KEY
-    let googleApisJsonKey        = getSecret GOOGLE_APIS_JSON_KEY
-    let googleAnalyticsViewId    = getSecret GOOGLE_ANALYTICS_VIEW_ID
-    let disqusShortName          = getSecret DISQUS_SHORTNAME
-    let elasticUrl               = getSecret ELASTIC_URL
-    let elasticUser              = getSecret ELASTIC_USER
-    let elasticPassword          = getSecret ELASTIC_PASSWORD
-
-// ---------------------------------
 // Urls
 // ---------------------------------
 
 [<RequireQualifiedAccess>]
 module UrlPaths =
-    let ``/``          = "/"
-    let ``/ping``      = "/ping"
-    let ``/about``     = "/about"
-    let ``/hire``      = "/hire"
-    let ``/trending``  = "/trending"
-    let ``/feed/rss``  = "/feed/rss"
-    let ``/feed/atom`` = "/feed/atom"
-    let ``/logo.svg``  = "/logo.svg"
+    let ``/``              = "/"
+    let ``/ping``          = "/ping"
+    let ``/version``       = "/version"
+    let ``/about``         = "/about"
+    let ``/hire``          = "/hire"
+    let ``/hire#contact``  = "/hire#contact"
+    let ``/trending``      = "/trending"
+    let ``/feed/rss``      = "/feed/rss"
+    let ``/feed/atom``     = "/feed/atom"
+    let ``/logo.svg``      = "/logo.svg"
 
     let ``/tagged/%s`` : PrintfFormat<string -> obj, obj, obj, obj, string> = "/tagged/%s"
     let ``/%s``        : PrintfFormat<string -> obj, obj, obj, obj, string> = "/%s"
@@ -154,22 +23,26 @@ module UrlPaths =
     module Deprecated =
         let ``/archive`` = "/archive"
 
+    module Debug =
+        let ``/error`` = "/error"
+
 [<RequireQualifiedAccess>]
 module Url =
     let create (route : string) =
         route.TrimStart [| '/' |]
-        |> sprintf "%s/%s" Config.baseUrl
+        |> sprintf "%s/%s" Env.baseUrl
 
     let storage (resource : string) =
-        sprintf "https://storage.googleapis.com/dustedcodes/%s" resource
+        sprintf "%s/%s" Env.storageBaseUrl resource
 
-    let ``/``          = create UrlPaths.``/``
-    let ``/about``     = create UrlPaths.``/about``
-    let ``/hire``      = create UrlPaths.``/hire``
-    let ``/trending``  = create UrlPaths.``/trending``
-    let ``/feed/rss``  = create UrlPaths.``/feed/rss``
-    let ``/feed/atom`` = create UrlPaths.``/feed/atom``
-    let ``/logo.svg``  = create UrlPaths.``/logo.svg``
+    let ``/``              = create UrlPaths.``/``
+    let ``/about``         = create UrlPaths.``/about``
+    let ``/hire``          = create UrlPaths.``/hire``
+    let ``/hire#contact``  = create UrlPaths.``/hire#contact``
+    let ``/trending``      = create UrlPaths.``/trending``
+    let ``/feed/rss``      = create UrlPaths.``/feed/rss``
+    let ``/feed/atom``     = create UrlPaths.``/feed/atom``
+    let ``/logo.svg``      = create UrlPaths.``/logo.svg``
 
     let ``/tagged/%s`` (tag : string) = create (sprintf "/tagged/%s" tag)
     let ``/%s``        (id  : string) = create (sprintf "/%s" id)
@@ -183,7 +56,7 @@ module About =
     open System.IO
 
     let content =
-        Path.Combine(Config.staticContentFolder, "About.md")
+        Path.Combine(Env.contentDir, "About.md")
         |> File.ReadAllText
         |> Markdig.Markdown.ToHtml
 
@@ -196,7 +69,7 @@ module Hire =
     open System.IO
 
     let content =
-        Path.Combine(Config.staticContentFolder, "Hire.md")
+        Path.Combine(Env.contentDir, "Hire.md")
         |> File.ReadAllText
         |> Markdig.Markdown.ToHtml
 
@@ -204,6 +77,7 @@ module Hire =
 // Google Analytics
 // ---------------------------------
 
+[<RequireQualifiedAccess>]
 module GoogleAnalytics =
     open System
     open Google.Apis.Auth.OAuth2
@@ -212,7 +86,7 @@ module GoogleAnalytics =
     open Google.Apis.AnalyticsReporting.v4.Data
     open FSharp.Control.Tasks.V2.ContextInsensitive
 
-    type PageViewStatistic =
+    type PageStatistic =
         {
             Path      : string
             ViewCount : int64
@@ -264,6 +138,7 @@ module GoogleAnalytics =
 // Blog Posts
 // ---------------------------------
 
+[<RequireQualifiedAccess>]
 module BlogPosts =
     open System
     open System.IO
@@ -276,7 +151,7 @@ module BlogPosts =
         | Html
         | Markdown
 
-    type BlogPost =
+    type Article =
         {
             Id          : string
             Title       : string
@@ -292,11 +167,11 @@ module BlogPosts =
         member this.UrlEncodedTitle     = this.Title     |> WebUtility.UrlEncode
         member this.Excerpt             = this.Content.Substring(0, 100) + "..."
 
-    type AttributeParser = string -> BlogPost -> Result<BlogPost, string>
+    type AttributeParser = string -> Article -> Result<Article, string>
 
-    let private hashBlogPost (blogPost : BlogPost) =
+    let private hashBlogPost (blogPost : Article) =
         let hash =
-            (new StringBuilder())
+            (StringBuilder())
                 .Append(blogPost.Title)
                 .Append(blogPost.Content)
                 .Append(blogPost.PublishDate.ToString())
@@ -325,7 +200,7 @@ module BlogPosts =
             Ok (key, value)
         | _ -> Error "Could not parse data due to badly formatted key value pair."
 
-    let private parseAttribute (line : string) (blogPost : BlogPost) =
+    let private parseAttribute (line : string) (blogPost : Article) =
         line
         |> splitIntoKeyValue
         |> Result.bind (fun (key, value) ->
@@ -344,7 +219,7 @@ module BlogPosts =
         | true  -> Ok (lines.[1..])
         | false -> Error (sprintf "Content was expected to begin with %s" str)
 
-    let rec private continueUntil (str : string) (blogPost : BlogPost) (parse : AttributeParser) (lines : string array) =
+    let rec private continueUntil (str : string) (blogPost : Article) (parse : AttributeParser) (lines : string array) =
         match lines.Length = 0 with
         | true  -> Error "Unexpected end of lines. Could not finish parsing attributes."
         | false ->
@@ -356,7 +231,7 @@ module BlogPosts =
                 | Ok result -> continueUntil str result parse lines.[1..]
                 | Error msg -> Error msg
 
-    let rec private parseTitle (blogPost : BlogPost, lines : string array) =
+    let rec private parseTitle (blogPost : Article, lines : string array) =
         match lines.Length = 0 with
         | true  -> Error "Unexpected end of lines. Could not finish parsing title."
         | false ->
@@ -365,7 +240,7 @@ module BlogPosts =
             | line when line.StartsWith "# " -> Ok ({ blogPost with Title = line.[2..] }, lines.[1..])
             | _ -> Error "Unexpected content. Could not parse title."
 
-    let private readContentToEnd (blogPost : BlogPost, lines : string array) =
+    let private readContentToEnd (blogPost : Article, lines : string array) =
         match lines.Length = 0 with
         | true  -> Ok blogPost
         | false ->
@@ -373,7 +248,7 @@ module BlogPosts =
                 lines
                 |> Array.fold
                     (fun (sb : StringBuilder) line -> sb.AppendLine line)
-                    (new StringBuilder())
+                    (StringBuilder())
                 |> (fun sb -> sb.ToString())
             let htmlContent =
                 match blogPost.ContentType with
@@ -381,7 +256,7 @@ module BlogPosts =
                 | Markdown -> Markdown.ToHtml content
             Ok { blogPost with Content = content; HtmlContent = htmlContent }
 
-    let private formatError (blogPostPath : string) (result : Result<BlogPost, string>) =
+    let private formatError (blogPostPath : string) (result : Result<Article, string>) =
         match result with
         | Ok _      -> result
         | Error msg -> Error (sprintf "Could not parse file '%s'. Error message : %s." blogPostPath msg)
@@ -431,7 +306,7 @@ module BlogPosts =
                 |> List.fold (fun acc line -> acc + Environment.NewLine + line) ""
                 |> failwith)
 
-    let all = getAllBlogPostsFromDisk Config.blogPostsFolder
+    let all = getAllBlogPostsFromDisk Env.blogPostsDir
 
 // ---------------------------------
 // RSS Feed
@@ -644,17 +519,14 @@ module Captcha =
         | "invalid-input-secret"   -> ServerError "The secret parameter is invalid or malformed."
         | "missing-input-response" -> UserError "Please verify that you're not a robot."
         | "invalid-input-response" -> UserError "Verification failed. Please try again."
-        | _                        -> ServerError (sprintf "Unkown error code: %s" errorCode)
+        | _                        -> ServerError (sprintf "Unknown error code: %s" errorCode)
 
-    let validateAsync (secret : string) (captchaResponse : string) =
+    let validate (secret : string) (captchaResponse : string) =
         task {
             let url = "https://www.google.com/recaptcha/api/siteverify"
-
             let data = dict [ "secret",   secret
                               "response", captchaResponse ]
-
             let! statusCode, body = Http.postAsync url data
-
             return
                 if not (statusCode.Equals HttpStatusCode.OK)
                 then ServerError body
@@ -665,67 +537,171 @@ module Captcha =
                     | false -> parseError (result.ErrorCodes.[0])
         }
 
-
 // ---------------------------------
-// Contact page
+// Contact Messages
 // ---------------------------------
 
-[<CLIMutable>]
-type ContactMessage =
-    {
-        Name    : string
-        Email   : string
-        Phone   : string
-        Subject : string
-        Message : string
-    }
-    static member Empty =
+[<RequireQualifiedAccess>]
+module ContactMessages =
+    open System
+
+    [<CLIMutable>]
+    type Entity =
         {
-            Name    = ""
-            Email   = ""
-            Phone   = ""
-            Subject = ""
-            Message = ""
+            Name    : string
+            Email   : string
+            Phone   : string
+            Subject : string
+            Message : string
         }
-    member __.ValidationResult =
-        if      Str.isNullOrEmpty __.Name    then Error "Name cannot be empty."
-        else if Str.isNullOrEmpty __.Email   then Error "Email address cannot be empty."
-        else if Str.isNullOrEmpty __.Subject then Error "Subject cannot be empty."
-        else if Str.isNullOrEmpty __.Message then Error "Message cannot be empty."
-        else Ok ()
+
+        static member Empty =
+            {
+                Name    = ""
+                Email   = ""
+                Phone   = ""
+                Subject = ""
+                Message = ""
+            }
+
+        member this.IsValid =
+            if      String.IsNullOrEmpty this.Name    then Error "Name cannot be empty."
+            else if String.IsNullOrEmpty this.Email   then Error "Email address cannot be empty."
+            else if String.IsNullOrEmpty this.Subject then Error "Subject cannot be empty."
+            else if String.IsNullOrEmpty this.Message then Error "Message cannot be empty."
+            else Ok ()
+
+// ---------------------------------
+// Data Service
+// ---------------------------------
 
 [<RequireQualifiedAccess>]
 module DataService =
     open System
     open FSharp.Control.Tasks.V2.ContextInsensitive
     open Google.Cloud.Datastore.V1
+    open Logfella
 
-    let private projectId = "dustins-private-project"
-    let private toStringValue    (str : string)   = Value(StringValue = str)
-    let private toBoolValue      (bln : bool)     = Value(BooleanValue = bln)
+    let private toStringValue (str : string) = Value(StringValue = str)
     let private toTimestampValue (dt  : DateTime) =
         let ts = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime dt
         Value(TimestampValue = ts)
 
-    let saveContactMessageAsync (msg : ContactMessage) =
+    let private entityFromContactMessage
+        (key : Key)
+        (msg : ContactMessages.Entity) =
+
+        let entity     = Entity()
+        entity.Key             <- key
+        entity.["Name"]        <- msg.Name        |> toStringValue
+        entity.["Email"]       <- msg.Email       |> toStringValue
+        entity.["Phone"]       <- msg.Phone       |> toStringValue
+        entity.["Subject"]     <- msg.Subject     |> toStringValue
+        entity.["Message"]     <- msg.Message     |> toStringValue
+        entity.["Date"]        <- DateTime.UtcNow  |> toTimestampValue
+        entity.["Origin"]      <- Env.appName      |> toStringValue
+        entity.["Environment"] <- Env.name         |> toStringValue
+        entity
+
+    let private save (datastore : DatastoreDb)  (entity : Entity) =
         task {
             try
-                let kind        = "ContactMessages"
-                let datastore   = DatastoreDb.Create projectId
-                let keyFactory  = datastore.CreateKeyFactory(kind)
-                let entity      = Entity()
-
-                entity.Key         <- keyFactory.CreateIncompleteKey()
-                entity.["Name"]    <- toStringValue    <| msg.Name
-                entity.["Email"]   <- toStringValue    <| msg.Email
-                entity.["Phone"]   <- toStringValue    <| msg.Phone
-                entity.["Subject"] <- toStringValue    <| msg.Subject
-                entity.["Message"] <- toStringValue    <| msg.Message
-                entity.["Date"]    <- toTimestampValue <| DateTime.UtcNow
-
-                let! _ = datastore.InsertAsync [ entity ]
-
-                return Ok "Thank you, your message has been successfully sent!"
-            with
-            | ex -> return Error ex.Message
+                let! keys = datastore.InsertAsync [ entity ]
+                let foldedKeys =
+                    keys
+                    |> Seq.fold(fun str k -> str + k.ToString() + " ") " "
+                Log.Notice(
+                    "A new entity has been successfully saved.",
+                    ("dataKeys", foldedKeys :> obj))
+                return Ok keys
+            with ex ->
+                Log.Alert("Failed to save entity in Google Cloud Datastore.", ex)
+                return Error ex.Message
         }
+
+    let saveContactMessage (msg : ContactMessages.Entity) =
+        Log.Debug "Initialising Google Cloud DatastoreDb..."
+        let datastore  = DatastoreDb.Create Env.gcpProjectId
+        Log.Debug "Creating key factory for entity kind..."
+        let keyFactory = datastore.CreateKeyFactory Env.gcpContactMessageKind
+        Log.Debug "Generating new entity key..."
+        let key        = keyFactory.CreateIncompleteKey()
+        Log.Debug "Creating and saving entity..."
+        let keys =
+            msg
+            |> entityFromContactMessage key
+            |> save datastore
+        Log.Debug "Contact message has been successfully saved."
+        keys
+
+// ---------------------------------
+// Email Service
+// ---------------------------------
+
+module EmailService =
+    open System
+    open System.Collections.Generic
+    open Google.Protobuf
+    open Google.Cloud.PubSub.V1
+    open FSharp.Control.Tasks.V2.ContextInsensitive
+    open Newtonsoft.Json
+    open Logfella
+
+    [<CLIMutable>]
+    type Message =
+        {
+            Domain       : string
+            Sender       : string
+            Recipients   : string list
+            CC           : string list
+            BCC          : string list
+            Subject      : string
+            TemplateName : string
+            TemplateData : IDictionary<string, string>
+        }
+
+    let private sendMessage (msg : Message) =
+        task {
+            try
+                let topicName  = TopicName(Env.gcpProjectId, Env.gcpContactMessageTopic)
+                let! publisher = PublisherClient.CreateAsync topicName
+                let data =
+                    msg
+                    |> JsonConvert.SerializeObject
+                    |> ByteString.CopyFromUtf8
+                let pubSubMsg = PubsubMessage(Data = data)
+                pubSubMsg.Attributes.Add("encoding", "json-utf8")
+                let! messageId = publisher.PublishAsync(pubSubMsg)
+                do! publisher.ShutdownAsync(TimeSpan.FromSeconds 15.0)
+                Log.Notice(
+                     "A new contact message has been successfully sent.",
+                     ("messageId", messageId :> obj))
+                return Ok messageId
+            with ex ->
+                Log.Alert(
+                    "Failed to publish to emails topic in Google Cloud PubSub.",
+                    ex)
+                return Error ex.Message
+        }
+
+    let sendContactMessage (msg : ContactMessages.Entity) =
+        {
+            Domain       = Env.mailDomain
+            Sender       = Env.mailSender
+            Recipients   = [ Env.contactMessagesRecipient ]
+            CC           = []
+            BCC          = []
+            Subject      = "Dusted Codes: A new message has been posted"
+            TemplateName = "contact-message"
+            TemplateData =
+                dict [
+                    "environmentName", Env.name
+                    "msgSubject",      msg.Subject
+                    "msgContent",      msg.Message
+                    "msgDate",         DateTimeOffset.Now.ToString("u")
+                    "msgSenderName",   msg.Name
+                    "msgSenderEmail",  msg.Email
+                    "msgSenderPhone",  msg.Phone
+                ]
+        }
+        |> sendMessage

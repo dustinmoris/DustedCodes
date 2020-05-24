@@ -1,18 +1,14 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /app
 
-# Copy csproj and restore as distinct layers
-COPY *.fsproj ./
-RUN dotnet restore
-
-# Copy everything else and build
-COPY . ./
-RUN dotnet publish -c Release -o webpackage
+# Copy everything and build
+COPY src/ ./
+RUN dotnet publish DustedCodes/DustedCodes.fsproj -c Release -o published
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-alpine AS runtime
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
 WORKDIR /app
-COPY --from=build /app/webpackage .
+COPY --from=build /app/published .
 ENV ASPNETCORE_URLS http://+:8080
 EXPOSE 8080
 ENTRYPOINT ["dotnet", "DustedCodes.dll"]

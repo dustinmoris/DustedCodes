@@ -34,7 +34,7 @@
 <h4>Alice, Bob and Eve</h4>
 <p>Alice and Bob want to communicate privately and Eve wants to eavesdrop. Both, Alice and Bob have their individual public and private key pair.</p>
 <p>Alice uses Bob's public key to encrypt a private message before sending it to Bob. Bob can use his private key to decrypt the message. Now Bob can use Alice's public key to reply to Alice without Eve being able to understand any of the transmitted data. Finally Alice decrypts Bob's message with her own private key.</p>
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-06-28/18626777534_fc5524c031_o.gif" alt="Public Key Encryption, Image by Dustin Moris Gorski">
+<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2015-06-28/18626777534_fc5524c031_o.gif" alt="Public Key Encryption, Image by Dustin Moris Gorski">
 <p>The public key is available to everyone, while the private key is only known to the key holder. There is never the requirement to share a secret key via an insecure channel.</p>
 
 <h4>Integrity and Authenticity</h4>
@@ -54,13 +54,13 @@
 <h4>A simple example of a one-way function</h4>
 <p>Let's say the initial value is 264. The one-way function reads as following:</p>
 <p><em>You start from the centre of a map. Now take your value and divide it by it's last digit. The result is a new value x. Now draw a line x centimetres north east and mark a new point on the map. Next take your original value and subtract it by x. The result is y. Draw another line, starting from the last point, y centimetres south west. The final point is the end result.</em></p>
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-06-28/19247927141_e7b4b378a8_o.gif" alt="Example of a one way function, Image by Dustin Moris Gorski">
+<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2015-06-28/19247927141_e7b4b378a8_o.gif" alt="Example of a one way function, Image by Dustin Moris Gorski">
 <p>In this example we would divide 264 by 4 and retrieve 66 for x. Additionally we subtract 66 from 264 and retrieve y = 198. We draw both lines and determine the final point on the map, which represents the end result of the one-way function.</p>
 <p>Now just from knowing the final point on the map and the definition of the function it is not possible to easily deduce the original value.</p>
 
 <h3>Modular arithmetic</h3>
 <p>Modular arithmetic is full of one-way functions. It is also known as clock arithmetic, because it can be illustrated by a finite amount of numbers arranged in a loop, like on a clock:</p>
-<img src="https://storage.googleapis.com/dustedcodes/images/blog-posts/2015-06-28/19051127700_2dd7074ef4_o.gif" alt="Clock Arithmetic, Image by Dustin Moris Gorski">
+<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2015-06-28/19051127700_2dd7074ef4_o.gif" alt="Clock Arithmetic, Image by Dustin Moris Gorski">
 <p>The dark circle represents the clock. The blue numbers represent the value 17. If you arrange all numbers from 1 to 17 clockwise in a loop, then the end value results in 5. In other words 17 mod 12 equals 5.</p>
 <p>The short-cut and common way of calculating the modulus is by dividing the original value by x. The reminder equals the modulus.</p>
 <p>The modulus operation is a great one-way function, because it is fairly simple and has an infinite amount of possible values giving the same result.</p>

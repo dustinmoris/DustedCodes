@@ -28,31 +28,40 @@ body {
     font-size: 1.05em;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Nunito', sans-serif;
-    color: #333;
+h2, h3, h4, h5, h6 {
+    font-family: 'Martel', serif;
+    font-weight: 700;
+    color: #222;
 }
 
 h1 {
     margin: 1em 0;
-    font-size: 2.7em;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 3.4em;
     font-weight: 700;
+    line-height: 1.5em;
+    color: #333;
+    text-align: center;
 }
 
 h2 {
-    font-size: 2em;
+    font-size: 2.6em;
+    font-weight: 800;
+    color: #333;
 }
 
 h3 {
-    font-size: 1.4em;
+    font-size: 1.6em;
+    font-weight: 800;
 }
 
 h4 {
-    font-size: 1em;
+    font-size: 1.2em;
+    font-weight: 800;
 }
 
 h5 {
-    font-size: .6em;
+    font-size: .8em;
 }
 
 p {
@@ -61,7 +70,7 @@ p {
 }
 
 a {
-    color: #ff5252;
+    color: #1bbbb6;
     text-decoration: none;
 }
 
@@ -72,8 +81,8 @@ a:hover {
 code {
     display: inline-block;
     padding: .1em .4em;
-    -ms-border-radius: 3px;
-    border-radius: 3px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
     background: #f5f5f5;
     font-family: 'Roboto Mono', monospace;
     font-size: .8em;
@@ -92,7 +101,8 @@ pre {
 pre > code {
     display: block;
     padding: .5em 0 .5em 1em;
-    color: #333;
+    background: #393434;
+    color: #efefef;
     font-size: .75em;
 }
 
@@ -133,13 +143,13 @@ tr:nth-child(odd)  { background-color:#f6f6f6; }
 tr:nth-child(even) { background-color:#fff; }
 
 blockquote {
-    background: #f8f8f8;
+    background: #f2f2f2;
     border-left: 5px solid #ccc;
     margin: 1.5em 0;
     padding: .6em 1em;
-    border-radius: 2px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
 }
 
 blockquote > header {
@@ -148,6 +158,7 @@ blockquote > header {
 
 blockquote > p {
     line-height: 1.7em;
+    font-size: .9em;
 }
 
 blockquote > p:first-child {
@@ -164,6 +175,7 @@ blockquote > footer {
 }
 
 blockquote > footer > cite {
+    font-family: 'Nunito', sans-serif;
     font-size: .85em;
     font-weight: 600;
     font-style: italic;
@@ -175,10 +187,6 @@ blockquote > footer > cite > a:before {
 
 article {
     font-size: 1em;
-}
-
-article > header > h1 {
-    text-align: center;
 }
 
 article li {
@@ -196,30 +204,34 @@ label {
     color: #777;
     font-size: .65em;
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: 700;
+    font-family: 'Nunito Sans', sans-serif;
 }
 
 button {
-    display: block;
+    display: flex;
+    flex-flow: row wrap;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     width: 100%;
-    padding: 1.3em 1em;
+    padding: 1em 1em;
     border-radius: 6px;
     -moz-border-radius: 6px;
     border: none;
-    background: #672dfa;
+    background: #1bbbb6;
     color: #f1f1f1;
-    align-items: center;
     text-transform: uppercase;
-    font-weight: bold;
-    font-size: .8em;
+    font-weight: 700;
+    font-size: 1.1em;
     cursor: pointer;
 }
 
 button:hover {
-    background: #814fff;
+    background: #21c4ac;
 }
 
 input,
@@ -229,15 +241,15 @@ textarea {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     width: 100%;
-    border: 1px solid #e1e1e1;
     margin: 0;
     padding: 1em;
-    font-size: 1em;
-    background: transparent;
-    color: #333;
+    border: 1px solid #e1e1e1;
     border-radius: 4px;
     -moz-border-radius: 4px;
-    font-family: 'Nunito Sans', sans-serif;
+    background: transparent;
+    font-family: 'Roboto Mono', sans-serif;
+    font-size: 1em;
+    color: #333;
 }
 
 textarea {
@@ -249,42 +261,42 @@ input[type=tel]:focus,
 input[type=email]:focus,
 textarea:focus {
     outline: none;
-    border: 1.5px solid #3aa6e6;
+    border: 2px solid #1bbbb6;
 }
 
 ::placeholder {
     color: #777;
     font-style: italic;
-    font-weight: normal;
+    font-weight: 400;
     font-size: .8em;
 }
 ::-webkit-input-placeholder {
     color: #777;
     font-style: italic;
-    font-weight: normal;
+    font-weight: 400;
     font-size: .8em;
 }
 ::-moz-placeholder {
     color: #777;
     font-style: italic;
-    font-weight: normal;
+    font-weight: 400;
     font-size: .8em;
 }
 :-ms-input-placeholder {
     color: #777;
     font-style: italic;
-    font-weight: normal;
+    font-weight: 400;
     font-size: .8em;
 }
 :-moz-placeholder {
     color: #777;
     font-style: italic;
-    font-weight: normal;
+    font-weight: 400;
     font-size: .8em;
 }
 
 iframe {
-    width: 100%;;
+    width: 100%;
     min-height: 350px;
     box-sizing: border-box;
     border: none;
@@ -301,7 +313,7 @@ body > nav,
     margin: 1em auto;
     padding: 0 20px;
     width: 100%;
-    max-width: 700px;
+    max-width: 740px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -355,19 +367,21 @@ body > header a:active {
 }
 
 body > header svg {
-    margin: 0 15px 0 0;
-    width: 25px;
-    height: 25px;
+    margin: 0 20px 0 0;
+    width: 40px;
+    height: 40px;
 }
 
 body > header h1 {
     margin: 0 0 .25em 0;
+    font-family: 'Nunito', sans-serif;
     font-weight: 900;
     font-size: 2em;
 }
 
 body > header h2 {
     margin: 0;
+    font-family: 'Nunito', sans-serif;
     font-size: .9em;
     font-weight: 400;
     color: #bbb;
@@ -435,6 +449,7 @@ body > header h2 {
     margin: 0;
     padding: 0;
     color: #777;
+    font-family: 'Nunito', sans-serif;
     font-size: .75em;
     font-weight: 700;
     word-spacing: 2px;
@@ -447,6 +462,7 @@ body > header h2 {
     padding: 0;
     line-height: 1.4em;
     color: #bbb;
+    font-family: 'Nunito', sans-serif;
     font-weight: 300;
 }
 
@@ -466,7 +482,26 @@ body > header h2 {
 
 #trending-list li {
     line-height: 1.7em;
-    margin-bottom: 1em;
+    margin: 2em 0;
+    text-align: center;
+    padding-top: 2em;
+    border-top: 1px solid #eaeaea;
+}
+
+#trending-list li > div > a {
+    display: inline-block;
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: .7em;
+}
+
+#trending-list li > div > a:hover {
+    color: #ff5252;
+}
+
+#trending-list .blogpost-metadata {
+    justify-content: center;
 }
 
 #avatar {
@@ -488,8 +523,9 @@ body > header h2 {
     margin: 2em 0;
 }
 
-#hire h1 {
-    text-align: center;
+#about h1 {
+    margin-bottom: .5em;
+    text-align: left;
 }
 
 #contact h1 {
@@ -504,9 +540,18 @@ body > header h2 {
     margin-top: 2em;
 }
 
+.msg-button svg {
+    width: 40px;
+    height: 40px;
+    fill: #fff;
+    margin-right: 20px;
+}
+
 .article-list > h3 {
     display: block;
     text-align: center;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
     font-size: 1.6em;
     text-transform: uppercase;
     color: #d8d8d8;
@@ -546,9 +591,9 @@ body > header h2 {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    color: #999;
-    font-size: .9em;
-    font-weight: 300;
+    color: #aaa;
+    font-size: .8em;
+    font-weight: 400;
     font-family: 'Nunito', sans-serif;
 }
 
@@ -629,46 +674,49 @@ body > header h2 {
 }
 
 .msg-subject {
-    font-weight: bold;
-    color: #777;
+    font-weight: 700;
+    color: #555;
 }
 
 .footnote {
     margin: 1.5em 0;
     font-style: italic;
+    font-weight: 300;
     font-size: .9em;
     color: #999;
 }
 
 .success-msg {
     display: flex;
+    align-items: center;
     padding: .7em 1em;
     font-size: .8em;
     background: #88c082;
     color: #fff;
-    font-weight: bold;
+    font-weight: 700;
     border-radius: 6px;
     -moz-border-radius: 6px;
 }
 
 .error-msg {
     display: flex;
+    align-items: center;
     padding: .7em 1em;
     font-size: .8em;
-    background: #ffe9e3;
-    border: 1px solid #db8873;
-    color: #b94528;
-    font-weight: bold;
+    background: #b96363;
+    color: #fff;
+    font-weight: 700;
     border-radius: 6px;
     -moz-border-radius: 6px;
 }
 
-.error-msg svg {
+.error-msg svg,
+.success-msg svg{
     display: inline;
     width: 22px;
     height: 22px;
     padding: 1px;
-    fill: #b94528;
+    fill: #fff;
     margin-right: 10px;
 }
 

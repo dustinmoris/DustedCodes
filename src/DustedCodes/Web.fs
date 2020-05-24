@@ -1,278 +1,255 @@
-module DustedCodes.Web
+namespace DustedCodes
 
-open System
-open System.Text
-open System.Linq
-open Microsoft.AspNetCore.Http
-open Microsoft.AspNetCore.HttpOverrides
-open Microsoft.AspNetCore.Http.Extensions
-open Microsoft.AspNetCore.Builder
-open Microsoft.Extensions.Logging
-open Microsoft.Extensions.Caching.Memory
-open Microsoft.Extensions.DependencyInjection
-open Microsoft.Net.Http.Headers
-open FSharp.Control.Tasks.V2.ContextInsensitive
-open Giraffe
-open Giraffe.GiraffeViewEngine
-open Firewall
-open DustedCodes
-open DustedCodes.BlogPosts
-open DustedCodes.GoogleAnalytics
-open DustedCodes.Icons
-open DustedCodes.Views
+open Google.Cloud.Datastore.V1
 
-// ---------------------------------
-// Web app
-// ---------------------------------
+[<RequireQualifiedAccess>]
+module HttpHandlers =
+    open System
+    open System.Text
+    open System.Linq
+    open Microsoft.AspNetCore.Http
+    open Microsoft.AspNetCore.Http.Extensions
+    open Microsoft.Extensions.Caching.Memory
+    open Microsoft.Net.Http.Headers
+    open FSharp.Control.Tasks.V2.ContextInsensitive
+    open Giraffe
+    open Giraffe.GiraffeViewEngine
+    open Logfella
 
-let allowCaching (duration : TimeSpan) : HttpHandler =
-    publicResponseCaching (int duration.TotalSeconds) (Some "Accept-Encoding")
+    // ---------------------------------
+    // Http Handlers
+    // ---------------------------------
 
-let svgHandler (svg : XmlNode) : HttpHandler =
-    allowCaching (TimeSpan.FromDays 30.0)
-    >=> setHttpHeader "Content-Type" "image/svg+xml"
-    >=> setBodyFromString (svg |> renderXmlNode)
+    let private allowCaching (duration : TimeSpan) : HttpHandler =
+        publicResponseCaching (int duration.TotalSeconds) (Some "Accept-Encoding")
 
-let cssHandler : HttpHandler =
-    let eTag = EntityTagHeaderValue.FromString false minifiedCss.Hash
-    validatePreconditions (Some eTag) None
-    >=> allowCaching (TimeSpan.FromDays 365.0)
-    >=> setHttpHeader "Content-Type" "text/css"
-    >=> setBodyFromString minifiedCss.Content
+    let private svgHandler (svg : XmlNode) : HttpHandler =
+        allowCaching (TimeSpan.FromDays 30.0)
+        >=> setHttpHeader "Content-Type" "image/svg+xml"
+        >=> setBodyFromString (svg |> renderXmlNode)
 
-let notFoundHandler =
-    fun (next : HttpFunc) (ctx : HttpContext) ->
-        let logger = ctx.GetLogger("NotFoundHandler")
-        logger.LogWarning(
-            "Could not serve '{verb} {url}', because it does not exist.",
-            ctx.Request.Method,
-            ctx.Request.GetEncodedUrl())
-        (setStatusCode 404
-        >=> htmlView notFoundView) next ctx
+    let logo =
+        svgHandler Icons.logo
 
-let indexHandler =
-    allowCaching (TimeSpan.FromHours 1.0)
-    >=> (
+    let css : HttpHandler =
+        let eTag = EntityTagHeaderValue.FromString false Views.minifiedCss.Hash
+        validatePreconditions (Some eTag) None
+        >=> allowCaching (TimeSpan.FromDays 365.0)
+        >=> setHttpHeader "Content-Type" "text/css"
+        >=> setBodyFromString Views.minifiedCss.Content
+
+    let notFound =
+        fun (next : HttpFunc) (ctx : HttpContext) ->
+            let encodedUrl = ctx.Request.GetEncodedUrl()
+            Log.Notice(
+                sprintf "Could not serve '%s %s', because it does not exist."
+                    ctx.Request.Method
+                    encodedUrl,
+                dict [
+                    "httpError", "404" :> obj
+                    "httpVerb", ctx.Request.Method :> obj
+                    "encodedUrl", encodedUrl :> obj
+                ])
+            (setStatusCode 404
+            >=> htmlView Views.notFound) next ctx
+
+    let index =
+        allowCaching (TimeSpan.FromHours 1.0)
+        >=> (
+            BlogPosts.all
+            |> List.sortByDescending (fun p -> p.PublishDate)
+            |> Views.index
+            |> htmlView)
+
+    let pingPong : HttpHandler =
+        noResponseCaching >=> text "pong"
+
+    let version : HttpHandler =
+        noResponseCaching
+        >=> json {| version = Env.appVersion |}
+
+    let about =
+        allowCaching (TimeSpan.FromDays 1.0)
+        >=> (Views.about |> htmlView)
+
+    let hire =
+        Views.hire ContactMessages.Entity.Empty None
+        |> htmlView
+
+    let contact (next : HttpFunc) =
+        let internalErr =
+            "Unfortunately the message failed to send due to an unexpected error. "
+            + "The website owner has been notified about the issue. "
+            + "Please try a little bit later again."
+            |> Error
+        fun (ctx : HttpContext) ->
+            task {
+                let respond msg res =
+                    htmlView (Views.hire msg (Some res)) next ctx
+
+                let! msg = ctx.BindFormAsync<ContactMessages.Entity>()
+                match msg.IsValid with
+                | Error err -> return! respond msg (Error err)
+                | Ok _      ->
+                    let! captchaResult =
+                        ctx.Request.Form.["g-recaptcha-response"].ToString()
+                        |> Captcha.validate Env.googleCaptchaSecretKey
+                    match captchaResult with
+                    | Captcha.ServerError err ->
+                        Log.Critical(
+                            sprintf "Captcha validation failed with: %s" err,
+                            ("captchaError", err :> obj))
+                        return! respond msg internalErr
+                    | Captcha.UserError err -> return! respond msg (Error err)
+                    | Captcha.Success ->
+                        let! dataResult  = DataService.saveContactMessage msg
+                        let! emailResult = EmailService.sendContactMessage msg
+                        match dataResult, emailResult with
+                        | Ok _, _ | _, Ok _ ->
+                            return! respond ContactMessages.Entity.Empty (Ok "Thank you, your message has been successfully sent!")
+                        | _ -> return! respond msg internalErr
+            }
+
+    let blogPost (id : string) =
+        BlogPosts.all
+        |> List.tryFind (fun x -> Str.equalsCi x.Id id)
+        |> function
+            | None -> notFound
+            | Some blogPost ->
+                let eTag = EntityTagHeaderValue.FromString false blogPost.HashCode
+                validatePreconditions (Some eTag) None
+                >=> allowCaching (TimeSpan.FromDays 7.0)
+                >=> (blogPost |> Views.blogPost |> htmlView)
+
+    let trending : HttpHandler =
+        let pageMatchesBlogPost =
+            fun (pageStat : GoogleAnalytics.PageStatistic) (blogPost : BlogPosts.Article) ->
+                pageStat.Path.ToLower().Contains(blogPost.Id.ToLower())
+
+        let pageIsBlogPost (pageStat : GoogleAnalytics.PageStatistic) =
+            BlogPosts.all |> List.exists (pageMatchesBlogPost pageStat)
+
+        allowCaching (TimeSpan.FromDays 5.0)
+        >=> fun (next : HttpFunc) (ctx : HttpContext) ->
+            task {
+                let cacheKey = "trendingBlogPosts"
+                let cache = ctx.GetService<IMemoryCache>()
+
+                match cache.TryGetValue cacheKey with
+                | true, view -> return! htmlView (view :?> GiraffeViewEngine.XmlNode) next ctx
+                | false, _   ->
+                    let! mostViewedPages =
+                        GoogleAnalytics.getMostViewedPagesAsync
+                            Env.googleAnalyticsKey
+                            Env.googleAnalyticsViewId
+                            (int Byte.MaxValue)
+                    let view =
+                        mostViewedPages
+                        |> List.filter pageIsBlogPost
+                        |> List.sortByDescending (fun p -> p.ViewCount)
+                        |> List.take 10
+                        |> List.map (fun p -> BlogPosts.all.First(fun b -> pageMatchesBlogPost p b))
+                        |> Views.trending
+
+                    // Cache the view for one day
+                    let cacheOptions = MemoryCacheEntryOptions()
+                    cacheOptions.SetAbsoluteExpiration(DateTimeOffset.Now.AddDays(1.0)) |> ignore
+                    cache.Set(cacheKey, view, cacheOptions) |> ignore
+
+                    return! htmlView view next ctx
+            }
+
+    let tagged (tag : string) =
+        allowCaching (TimeSpan.FromDays 5.0)
+        >=>(
+            BlogPosts.all
+            |> List.filter (fun p -> p.Tags.IsSome && p.Tags.Value.Contains tag)
+            |> List.sortByDescending (fun p -> p.PublishDate)
+            |> Views.tagged tag
+            |> htmlView)
+
+    let rssFeed : HttpHandler =
+        let rssFeed = StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
         BlogPosts.all
         |> List.sortByDescending (fun p -> p.PublishDate)
-        |> indexView
-        |> htmlView)
+        |> List.take 10
+        |> List.map (
+            fun b ->
+                Feed.Item.Create
+                    b.Permalink
+                    b.Title
+                    b.HtmlContent
+                    b.PublishDate
+                    Env.blogAuthor
+                    Url.``/feed/rss``
+                    b.Tags)
+        |> Feed.Channel.Create
+            Url.``/feed/rss``
+            Env.blogTitle
+            Env.blogSubtitle
+            Env.blogLanguage
+            "Giraffe (https://github.com/giraffe-fsharp/Giraffe)"
+        |> RssFeed.create
+        |> ViewBuilder.buildXmlNode rssFeed
 
-let aboutHandler =
-    allowCaching (TimeSpan.FromDays 1.0)
-    >=> (aboutView |> htmlView)
+        allowCaching (TimeSpan.FromDays 1.0)
+        >=> setHttpHeader "Content-Type" "application/rss+xml"
+        >=> (rssFeed.ToString() |> setBodyFromString)
 
-let hireHandler =
-    None |> hireView |> htmlView
+    let atomFeed : HttpHandler =
+        fun (next : HttpFunc) (ctx : HttpContext) ->
+            Log.Warning "Someone tried to subscribe to the Atom feed."
+            ServerErrors.notImplemented (text "Atom feed is not supported at the moment. If you were using Atom to subscribe to this blog before, please file an issue on https://github.com/dustinmoris/DustedCodes to create awareness.") next ctx
 
-let contactResponse next ctx result =
-    result
-    |> Some
-    |> hireView
-    |> htmlView
-    <|| (next, ctx)
+[<RequireQualifiedAccess>]
+module WebApp =
+    open System
+    open Microsoft.Extensions.Logging
+    open Giraffe
 
-let contactError next ctx contactMsg errorMsg =
-    Error (contactMsg, errorMsg)
-    |> contactResponse next ctx
+    let routes : HttpHandler =
+        choose [
+            GET_HEAD >=>
+                choose [
+                    // Static assets
+                    route  UrlPaths.``/logo.svg``   >=> HttpHandlers.logo
+                    routef "/bundle.%s.css"         (fun _ -> HttpHandlers.css)
 
-let contactSuccess next ctx =
-    Ok "Thank you, your message has been successfully sent!"
-    |> contactResponse next ctx
+                    // Health check
+                    route UrlPaths.``/ping``        >=> HttpHandlers.pingPong
+                    route UrlPaths.``/version``     >=> HttpHandlers.version
 
-let contactHandler =
-    fun (next : HttpFunc) (ctx : HttpContext) ->
-        task {
-            let! message = ctx.BindFormAsync<ContactMessage>()
-            match message.ValidationResult with
-            | Error err -> return! contactError next ctx message err
-            | Ok _      ->
-                let! captchaResult =
-                    ctx.Request.Form.["g-recaptcha-response"].ToString()
-                    |> Captcha.validateAsync Config.googleRecaptchaSecretKey
-                match captchaResult with
-                | Captcha.ServerError err ->
-                    let logger = ctx.GetLogger()
-                    logger.LogError("Captcha validation failed with '{captchaError}'.", err)
-                    return! contactError next ctx message "Verification failed. Please try again."
-                | Captcha.UserError err -> return! contactError next ctx message err
-                | Captcha.Success ->
-                    match! DataService.saveContactMessageAsync message with
-                    | Error err ->
-                        let logger = ctx.GetLogger()
-                        logger.LogError("An error occurred when writing to the datastore: '{dataError}'.", err)
-                        return! contactError next ctx message "An unexpected error occurred. Please try again."
-                    | Ok _      -> return! contactSuccess next ctx
-        }
+                    // Debug
+                    if Env.enableErrorEndpoint then
+                        route UrlPaths.Debug.``/error`` >=> warbler (fun _ -> json(1/0))
 
-let blogPostHandler (id : string) =
-    BlogPosts.all
-    |> List.tryFind (fun x -> Str.equalsCi x.Id id)
-    |> function
-        | None -> notFoundHandler
-        | Some blogPost ->
-            let eTag = EntityTagHeaderValue.FromString false blogPost.HashCode
-            validatePreconditions (Some eTag) None
-            >=> allowCaching (TimeSpan.FromDays 7.0)
-            >=> (blogPost |> blogPostView |> htmlView)
+                    // Content paths
+                    route    UrlPaths.``/``         >=> HttpHandlers.index
+                    routeCi  UrlPaths.``/about``    >=> HttpHandlers.about
+                    routeCi  UrlPaths.``/hire``     >=> HttpHandlers.hire
+                    routeCi  UrlPaths.``/trending`` >=> HttpHandlers.trending
 
-let trendingHandler : HttpHandler =
-    let pageMatchesBlogPost =
-        fun (page : PageViewStatistic) (blogPost : BlogPost) ->
-            page.Path.ToLower().Contains(blogPost.Id.ToLower())
+                    routeCi UrlPaths.``/feed/rss``  >=> HttpHandlers.rssFeed
+                    routeCi UrlPaths.``/feed/atom`` >=> HttpHandlers.atomFeed
 
-    let pageIsBlogPost (page : PageViewStatistic) =
-        BlogPosts.all |> List.exists (pageMatchesBlogPost page)
+                    // Deprecated URLs kept alive in order to not break
+                    // existing links in the world wide web
+                    routeCi  UrlPaths.Deprecated.``/archive`` >=> HttpHandlers.index
 
-    allowCaching (TimeSpan.FromDays 5.0)
-    >=> fun (next : HttpFunc) (ctx : HttpContext) ->
-        task {
-            let cacheKey = "trendingBlogPosts"
-            let cache = ctx.GetService<IMemoryCache>()
+                    routeCif UrlPaths.``/tagged/%s`` HttpHandlers.tagged
+                    routeCif UrlPaths.``/%s`` HttpHandlers.blogPost
+                ]
+            POST >=> routeCi UrlPaths.``/hire`` >=> HttpHandlers.contact
+            HttpHandlers.notFound ]
 
-            match cache.TryGetValue cacheKey with
-            | true, view -> return! htmlView (view :?> GiraffeViewEngine.XmlNode) next ctx
-            | false, _   ->
-                let! mostViewedPages =
-                    GoogleAnalytics.getMostViewedPagesAsync
-                        Config.googleApisJsonKey
-                        Config.googleAnalyticsViewId
-                        (int Byte.MaxValue)
-                let view =
-                    mostViewedPages
-                    |> List.filter pageIsBlogPost
-                    |> List.sortByDescending (fun p -> p.ViewCount)
-                    |> List.take 10
-                    |> List.map (fun p -> BlogPosts.all.First(fun b -> pageMatchesBlogPost p b))
-                    |> trendingView
-
-                // Cache the view for one day
-                let cacheOptions = MemoryCacheEntryOptions()
-                cacheOptions.SetAbsoluteExpiration(DateTimeOffset.Now.AddDays(1.0)) |> ignore
-                cache.Set(cacheKey, view, cacheOptions) |> ignore
-
-                return! htmlView view next ctx
-        }
-
-let taggedHandler (tag : string) =
-    allowCaching (TimeSpan.FromDays 5.0)
-    >=>(
-        BlogPosts.all
-        |> List.filter (fun p -> p.Tags.IsSome && p.Tags.Value.Contains tag)
-        |> List.sortByDescending (fun p -> p.PublishDate)
-        |> tagView tag
-        |> htmlView)
-
-let rssFeedHandler : HttpHandler =
-    let rssFeed = StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
-    BlogPosts.all
-    |> List.sortByDescending (fun p -> p.PublishDate)
-    |> List.take 10
-    |> List.map (
-        fun b ->
-            Feed.Item.Create
-                b.Permalink
-                b.Title
-                b.HtmlContent
-                b.PublishDate
-                Config.blogAuthor
-                Url.``/feed/rss``
-                b.Tags)
-    |> Feed.Channel.Create
-        Url.``/feed/rss``
-        Config.blogTitle
-        Config.blogDescription
-        Config.blogLanguage
-        "Giraffe (https://github.com/giraffe-fsharp/Giraffe)"
-    |> RssFeed.create
-    |> ViewBuilder.buildXmlNode rssFeed
-
-    allowCaching (TimeSpan.FromDays 1.0)
-    >=> setHttpHeader "Content-Type" "application/rss+xml"
-    >=> (rssFeed.ToString() |> setBodyFromString)
-
-let atomFeedHandler : HttpHandler =
-    fun (next : HttpFunc) (ctx : HttpContext) ->
-        let logger = ctx.GetLogger("AtomFeedHandler")
-        logger.LogWarning "Someone tried to subscribe to the Atom feed."
-        ServerErrors.notImplemented (text "Atom feed is not supported at the moment. If you were using Atom to subscribe to this blog before, please file an issue on https://github.com/dustinmoris/DustedCodes to create awareness.") next ctx
-
-let webApp =
-    choose [
-        choose [ GET; HEAD ] >=>
-            choose [
-                // Static cachable assets
-                route  UrlPaths.``/logo.svg``   >=> svgHandler dustedCodesIcon
-                routef "/bundle.%s.css"         (fun _ -> cssHandler)
-                // Depcrecate after a while:
-                routef "/%s.css"                (fun _ -> cssHandler)
-
-                // Health check
-                route UrlPaths.``/ping``        >=> text "pong"
-
-                // Content paths
-                route    UrlPaths.``/``         >=> indexHandler
-                routeCi  UrlPaths.``/about``    >=> aboutHandler
-                routeCi  UrlPaths.``/hire``     >=> hireHandler
-                routeCi  UrlPaths.``/trending`` >=> trendingHandler
-
-                routeCi UrlPaths.``/feed/rss``  >=> rssFeedHandler
-                routeCi UrlPaths.``/feed/atom`` >=> atomFeedHandler
-
-                // Deprecated URLs kept alive in order to not break
-                // existing links in the world wide web
-                routeCi  UrlPaths.Deprecated.``/archive`` >=> indexHandler
-
-                routeCif UrlPaths.``/tagged/%s`` taggedHandler
-                routeCif UrlPaths.``/%s`` blogPostHandler
-            ]
-        POST >=> routeCi UrlPaths.``/hire`` >=> contactHandler
-        notFoundHandler ]
-
-// ---------------------------------
-// Error handler
-// ---------------------------------
-
-let errorHandler (ex : Exception) (logger : ILogger) =
-    logger.LogError(ex, "An unhandled exception has occurred while executing the request.")
-    clearResponse
-    >=> setStatusCode 500
-    >=> (match Config.isProduction with
-        | false -> Some ex.Message
-        | true  -> None
-        |> internalErrorView
-        |> htmlView)
-
-// ---------------------------------
-// Config middleware and dependencies
-// ---------------------------------
-
-let configureServices (services : IServiceCollection) =
-    services.AddResponseCaching()
-            .AddMemoryCache()
-            .AddGiraffe()
-            |> ignore
-
-let configureApp (app : IApplicationBuilder) =
-    let forwardedHeadersOptions =
-        new ForwardedHeadersOptions(
-            ForwardedHeaders = ForwardedHeaders.XForwardedFor,
-            ForwardLimit     = new Nullable<int>(1))
-
-    let validateApiSecret (ctx : HttpContext) =
-        match ctx.TryGetRequestHeader "X-API-SECRET" with
-        | Some v -> Config.apiSecret.Equals v
-        | None   -> false
-
-    app.UseGiraffeErrorHandler(errorHandler)
-       .UseForwardedHeaders(forwardedHeadersOptions)
-       .UseFirewall(
-            FirewallRulesEngine
-                .DenyAllAccess()
-                .ExceptFromCloudflare()
-                .ExceptFromIPAddresses(Config.vipList)
-                .ExceptWhen(fun ctx -> validateApiSecret ctx)
-                .ExceptFromLocalhost())
-       .UseResponseCaching()
-       .UseStaticFiles()
-       .UseGiraffe webApp
+    let errorHandler (ex : Exception) (logger : ILogger) =
+        // Must use the Microsoft.Extensions.Logging.ILogger, because the Sentry
+        // integration hooks into the Microsoft logging framework:
+        logger.LogError(ex, "An unhandled exception has occurred while executing the request.")
+        clearResponse
+        >=> setStatusCode 500
+        >=> (match Env.isProduction with
+            | false -> Some ex.Message
+            | true  -> None
+            |> Views.internalError
+            |> htmlView)
