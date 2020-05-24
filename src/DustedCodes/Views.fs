@@ -69,7 +69,7 @@ module Views =
         Css.getBundledContent
             "bundle"
             [
-                // "CSS/fonts.css"
+                "CSS/fonts.css"
                 "CSS/site.css"
             ]
 
@@ -146,10 +146,6 @@ module Views =
                         openGraph "description" sample.Value
 
                 // Minified & bundled CSS
-                css "https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap"
-                css "https://fonts.googleapis.com/css2?family=Martel:wght@700;800;900&display=swap"
-                css "https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap"
-                css "https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap"
                 css (Url.create minifiedCss.Path)
 
                 // Google Analytics

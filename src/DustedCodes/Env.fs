@@ -20,7 +20,7 @@ module Env =
         let SENTRY_DSN = "SENTRY_DSN"
         let DOMAIN_NAME = "DOMAIN_NAME"
         let DISQUS_SHORTNAME = "DISQUS_SHORTNAME"
-        let IMAGE_BASE_URL = "IMAGE_BASE_URL"
+        let STORAGE_BASE_URL = "STORAGE_BASE_URL"
         let MAILGUN_DOMAIN = "MAILGUN_DOMAIN"
         let MAILGUN_SENDER = "MAILGUN_SENDER"
         let CONTACT_MESSAGES_RECIPIENT = "CONTACT_MESSAGES_RECIPIENT"
@@ -119,10 +119,10 @@ module Env =
             Keys.DISQUS_SHORTNAME
             devConfig.[Keys.DISQUS_SHORTNAME]
 
-    let imageBaseUrl = // ToDo:
+    let storageBaseUrl =
         Config.environmentVarOrDefault
-            Keys.IMAGE_BASE_URL
-            "https://storage.googleapis.com/top-10-london/images"
+            Keys.STORAGE_BASE_URL
+            devConfig.[Keys.STORAGE_BASE_URL]
 
     let mailgunDomain =
         Config.environmentVarOrDefault
@@ -229,8 +229,13 @@ module Env =
             "URLs", dict [
                 "Domain", domainName
                 "Base URL", baseUrl
-                "Images URL", imageBaseUrl
+                "Storage URL", storageBaseUrl
                 "Disqus Shortname", disqusShortname
+            ]
+            "Mailgun", dict [
+                "Mailgun Domain", mailgunDomain
+                "Mailgun Sender", mailgunSender
+                "Contact Message Recipient", contactMessagesRecipient
             ]
             "GCP", dict [
                 "Project ID", gcpProjectId

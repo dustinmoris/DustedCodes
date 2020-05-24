@@ -33,7 +33,7 @@ module Url =
         |> sprintf "%s/%s" Env.baseUrl
 
     let storage (resource : string) =
-        sprintf "https://storage.googleapis.com/dustedcodes/%s" resource
+        sprintf "%s/%s" Env.storageBaseUrl resource
 
     let ``/``              = create UrlPaths.``/``
     let ``/about``         = create UrlPaths.``/about``
