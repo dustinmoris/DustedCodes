@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>2.30.2</Version>
+    <Version>2.31.0</Version>
     <AssemblyName>DustedCodes</AssemblyName>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EnableDefaultContentItems>false</EnableDefaultContentItems>
