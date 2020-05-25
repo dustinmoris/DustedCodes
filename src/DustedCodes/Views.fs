@@ -158,9 +158,12 @@ module Views =
                 header [] [
                     div [ _id "inner-header" ] [
                         a [ _href Url.``/`` ] [
-                            Icons.logo
                             hgroup [] [
-                                h1 [] [ encodedText Env.blogTitle ]
+                                h1 [] [
+                                    span [] [ encodedText "Dusted" ]
+                                    Icons.logo
+                                    span [] [ encodedText "Codes" ]
+                                ]
                                 h2 [] [ encodedText Env.blogSubtitle ]
                             ]
                          ]

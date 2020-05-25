@@ -70,7 +70,7 @@ p {
 }
 
 a {
-    color: #1bbbb6;
+    color: #5d2de3;
     text-decoration: none;
 }
 
@@ -222,7 +222,7 @@ button {
     border-radius: 6px;
     -moz-border-radius: 6px;
     border: none;
-    background: #1bbbb6;
+    background: #5d2de3;
     color: #f1f1f1;
     text-transform: uppercase;
     font-weight: 700;
@@ -231,7 +231,12 @@ button {
 }
 
 button:hover {
-    background: #21c4ac;
+    background: #420ec6;
+}
+
+input, textarea, button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 input,
@@ -250,6 +255,9 @@ textarea {
     font-family: 'Roboto Mono', sans-serif;
     font-size: 1em;
     color: #333;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 textarea {
@@ -261,7 +269,7 @@ input[type=tel]:focus,
 input[type=email]:focus,
 textarea:focus {
     outline: none;
-    border: 2px solid #1bbbb6;
+    border: 2px solid #5d2de3;
 }
 
 ::placeholder {
@@ -295,7 +303,7 @@ textarea:focus {
     font-size: .8em;
 }
 
-iframe {
+iframe.youTubeVideo {
     width: 100%;
     min-height: 350px;
     box-sizing: border-box;
@@ -366,14 +374,23 @@ body > header a:active {
     letter-spacing: .8px;
 }
 
-body > header svg {
-    margin: 0 20px 0 0;
-    width: 40px;
-    height: 40px;
+body > header h1 {
+    display: flex;
+    align-items: center;
+}
+
+body > header h1 > svg {
+    margin: 0 7px 0 10px;
+    width: 45px;
+    height: 45px;
+}
+
+body > header h1 > span {
+    color: #444;
 }
 
 body > header h1 {
-    margin: 0 0 .25em 0;
+    margin: 0 0 .5em 0;
     font-family: 'Nunito', sans-serif;
     font-weight: 900;
     font-size: 2em;
@@ -592,7 +609,7 @@ body > header h2 {
     flex-flow: row wrap;
     align-items: center;
     color: #aaa;
-    font-size: .8em;
+    font-size: .9em;
     font-weight: 400;
     font-family: 'Nunito', sans-serif;
 }
@@ -754,7 +771,7 @@ body > header h2 {
     }
 
     #article-list a:hover {
-        color: #cfca4c;
+        color: #ff5252;
     }
 
     #avatar {
@@ -765,8 +782,9 @@ body > header h2 {
         -webkit-box-sizing: border-box;
     }
 
-    .blogpost-metadata {
+    .blogpost-metadata > div {
         display: block;
+        margin: .5em 0;
     }
 
     .share-links svg {
@@ -778,5 +796,9 @@ body > header h2 {
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
+    }
+
+    #about h1 {
+        text-align: center;
     }
 }

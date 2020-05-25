@@ -11,7 +11,6 @@ module Env =
     module private Keys =
         let APP_NAME = "APP_NAME"
         let ENV_NAME = "ASPNETCORE_ENVIRONMENT"
-        let BLOG_NAME = "BLOG_NAME"
         let BLOG_TITLE = "BLOG_TITLE"
         let BLOG_SUBTITLE = "BLOG_SUBTITLE"
         let BLOG_LANG = "BLOG_LANG"
@@ -44,6 +43,11 @@ module Env =
         (userHomeDir, defaultAppName.ToLower())
         ||> sprintf "%s/Dusted/app-secrets/%s.json"
         |> DevConfig.load
+
+    let getDevVar key =
+        match devConfig.ContainsKey key with
+        | true  -> devConfig.[key]
+        | false -> ""
 
     let appRoot = Directory.GetCurrentDirectory()
     let assetsDir = Path.Combine(appRoot, "Public")
@@ -101,7 +105,7 @@ module Env =
     let sentryDsn =
         Config.environmentVarOrDefault
             Keys.SENTRY_DSN
-            devConfig.[Keys.SENTRY_DSN]
+            (getDevVar Keys.SENTRY_DSN)
         |> Str.toOption
 
     let domainName =
@@ -117,62 +121,62 @@ module Env =
     let disqusShortname =
         Config.environmentVarOrDefault
             Keys.DISQUS_SHORTNAME
-            devConfig.[Keys.DISQUS_SHORTNAME]
+            (getDevVar Keys.DISQUS_SHORTNAME)
 
     let storageBaseUrl =
         Config.environmentVarOrDefault
             Keys.STORAGE_BASE_URL
-            devConfig.[Keys.STORAGE_BASE_URL]
+            (getDevVar Keys.STORAGE_BASE_URL)
 
     let mailDomain =
         Config.environmentVarOrDefault
             Keys.MAIL_DOMAIN
-            devConfig.[Keys.MAIL_DOMAIN]
+            (getDevVar Keys.MAIL_DOMAIN)
 
     let mailSender =
         Config.environmentVarOrDefault
             Keys.MAIL_SENDER
-            devConfig.[Keys.MAIL_SENDER]
+            (getDevVar Keys.MAIL_SENDER)
 
     let contactMessagesRecipient =
         Config.environmentVarOrDefault
             Keys.CONTACT_MESSAGES_RECIPIENT
-            devConfig.[Keys.CONTACT_MESSAGES_RECIPIENT]
+            (getDevVar Keys.CONTACT_MESSAGES_RECIPIENT)
 
     let gcpProjectId =
         Config.environmentVarOrDefault
             Keys.GCP_PROJECT_ID
-            devConfig.[Keys.GCP_PROJECT_ID]
+            (getDevVar Keys.GCP_PROJECT_ID)
 
     let gcpContactMessageKind =
         Config.environmentVarOrDefault
             Keys.GCP_DS_CONTACT_MESSAGE_KIND
-            devConfig.[Keys.GCP_DS_CONTACT_MESSAGE_KIND]
+            (getDevVar Keys.GCP_DS_CONTACT_MESSAGE_KIND)
 
     let gcpContactMessageTopic =
         Config.environmentVarOrDefault
             Keys.GCP_PS_EMAILS_TOPIC
-            devConfig.[Keys.GCP_PS_EMAILS_TOPIC]
+            (getDevVar Keys.GCP_PS_EMAILS_TOPIC)
 
     let googleAnalyticsKey =
         Config.environmentVarOrDefault
             Keys.GOOGLE_ANALYTICS_KEY
-            devConfig.[Keys.GOOGLE_ANALYTICS_KEY]
+            (getDevVar Keys.GOOGLE_ANALYTICS_KEY)
 
     let googleAnalyticsViewId =
         Config.environmentVarOrDefault
             Keys.GOOGLE_ANALYTICS_VIEWID
-            devConfig.[Keys.GOOGLE_ANALYTICS_VIEWID]
+            (getDevVar Keys.GOOGLE_ANALYTICS_VIEWID)
 
     let googleCaptchaSiteKey =
         Config.environmentVarOrDefault
             Keys.GOOGLE_CAPTCHA_SITEKEY
-            devConfig.[Keys.GOOGLE_CAPTCHA_SITEKEY]
+            (getDevVar Keys.GOOGLE_CAPTCHA_SITEKEY)
 
     let googleCaptchaSecretKey =
         Config.environmentVarOrDefault
             Keys.GOOGLE_CAPTCHA_SECRETKEY
-            devConfig.[Keys.GOOGLE_CAPTCHA_SECRETKEY]
+            (getDevVar Keys.GOOGLE_CAPTCHA_SECRETKEY)
 
     let enableRequestLogging =
         Config.InvariantCulture.typedEnvironmentVarOrDefault<bool>
@@ -180,9 +184,14 @@ module Env =
             false
 
     let enableErrorEndpoint =
+        let dv =
+            getDevVar Keys.ENABLE_ERROR_ENDPOINT
+            |> Str.toOption
+            |> Option.defaultValue "false"
+            |> bool.Parse
         Config.InvariantCulture.typedEnvironmentVarOrDefault<bool>
             Keys.ENABLE_ERROR_ENDPOINT
-            (bool.Parse(devConfig.[Keys.ENABLE_ERROR_ENDPOINT]))
+            dv
 
     let proxyCount =
         Config.InvariantCulture.typedEnvironmentVarOrDefault<int>

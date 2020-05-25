@@ -215,7 +215,7 @@ C# developers are not very used to model real world concepts like a `CustomerId`
 
 If you would like to learn more about [Domain Driven Design](https://en.wikipedia.org/wiki/Domain-driven_design) in F# then I would highly recommend to watch [Scott Wlaschin's Domain Modeling Made Functional](https://vimeo.com/223983252) presentation from NDC London. This is a fantastic talk with lots of food for thought and also the source of some of the ideas which I have introduced in this article:
 
-<iframe src="https://www.youtube.com/embed/Up7LcbGZFuo" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe class="youTubeVideo" src="https://www.youtube.com/embed/Up7LcbGZFuo" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <h2 id="immutability-and-lack-of-nulls">Immutability and lack of Nulls</h2>
 
@@ -771,7 +771,7 @@ There is a few advantages with the functional approach though:
 
 [Mark Seeman](http://blog.ploeh.dk/), author of [Dependency Injection in .NET](https://www.manning.com/books/dependency-injection-in-dot-net), did a fantastic talk on more advanced dependency patterns in F#. Watch his talk "[From dependency injection to dependency rejection](https://www.youtube.com/watch?v=xG5qP5AWQws)" on YouTube:
 
-<iframe src="https://www.youtube.com/embed/xG5qP5AWQws" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe class="youTubeVideo" src="https://www.youtube.com/embed/xG5qP5AWQws" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <h2 id="simplicity">Simplicity</h2>
 
