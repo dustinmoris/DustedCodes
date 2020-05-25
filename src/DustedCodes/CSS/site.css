@@ -234,6 +234,11 @@ button:hover {
     background: #420ec6;
 }
 
+input, textarea, button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
 input,
 textarea {
     display: block;
