@@ -383,6 +383,7 @@ body > header h1 > svg {
     margin: 0 7px 0 10px;
     width: 45px;
     height: 45px;
+    fill: #000;
 }
 
 body > header h1 > span {

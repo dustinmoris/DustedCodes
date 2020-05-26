@@ -23,7 +23,6 @@ module Icons =
         svg 1240.0 1224.0 [
             g [
                 attr "transform" "translate(0.000000,1224.000000) scale(0.100000,-0.100000)"
-                attr "fill" "#000000"
                 attr "stroke" "none" ] [
                 path [
                     attr "d" "M7589 8259 c-843 -1640 -1565 -3037 -1602 -3103 -132 -232 -263 -409

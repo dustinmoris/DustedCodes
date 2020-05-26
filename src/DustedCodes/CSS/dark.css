@@ -1,0 +1,41 @@
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #171b1d;
+        color: #dfdfdf;
+    }
+
+    body main {
+        border-color: #2F363D;
+    }
+
+    body > header h1 > span  {
+        color: #ccc;
+    }
+    body > header h1 > svg {
+        fill: #ccc;
+    }
+
+    #nav-links a:link, a:visited, a:active {
+        color: #ccc;
+    }
+
+    #nav-links a:hover {
+        color: #85e89d;
+    }
+
+    #social-links li a svg {
+        fill: #2F363D;
+    }
+
+    h1, h2, h3, h4 ,h5, h6 {
+        color: #ccc;
+    }
+
+    p {
+        color: #aaa;
+    }
+
+    a {
+        color: #85e89d;
+    }
+}
