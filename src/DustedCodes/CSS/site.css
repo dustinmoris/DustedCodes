@@ -498,7 +498,8 @@ body > header h2 {
     margin-top: 2em;
 }
 
-#trending-list li {
+#trending-list li,
+#blogpost-list li {
     line-height: 1.7em;
     margin: 2em 0;
     text-align: center;
@@ -506,7 +507,8 @@ body > header h2 {
     border-top: 1px solid #eaeaea;
 }
 
-#trending-list li > div > a {
+#trending-list li > div > a,
+#blogpost-list li > div > a {
     display: inline-block;
     font-size: 1.3em;
     font-weight: 600;
@@ -514,11 +516,13 @@ body > header h2 {
     margin-bottom: .7em;
 }
 
-#trending-list li > div > a:hover {
+#trending-list li > div > a:hover,
+#blogpost-list li > div > a:hover {
     color: #ff5252;
 }
 
-#trending-list .blogpost-metadata {
+#trending-list .blogpost-metadata,
+#blogpost-list .blogpost-metadata {
     justify-content: center;
 }
 

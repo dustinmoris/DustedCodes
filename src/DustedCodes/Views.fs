@@ -71,7 +71,7 @@ module Views =
             [
                 "CSS/fonts.css"
                 "CSS/site.css"
-//                "CSS/dark.css"
+                "CSS/dark.css"
             ]
 
     // ---------------------------------
