@@ -1,6 +1,25 @@
 namespace DustedCodes
 
 // ---------------------------------
+// Str
+// ---------------------------------
+
+[<RequireQualifiedAccess>]
+module Str =
+    open System
+
+    let private ignoreCase = StringComparison.InvariantCultureIgnoreCase
+    let equals   (s1 : string) (s2 : string) = s1.Equals s2
+    let equalsCi (s1 : string) (s2 : string) = s1.Equals(s2, ignoreCase)
+
+    let isNullOrEmpty str = String.IsNullOrEmpty str
+
+    let toOption str =
+        match isNullOrEmpty str with
+        | true  -> None
+        | false -> Some str
+
+// ---------------------------------
 // Config
 // ---------------------------------
 
@@ -129,6 +148,8 @@ module NetworkExtensions =
     open System.Collections.Generic
     open Microsoft.AspNetCore.Builder
     open Microsoft.AspNetCore.HttpOverrides
+    open Microsoft.AspNetCore.Http
+    open Microsoft.AspNetCore.Hosting.Server.Features
     open Microsoft.Extensions.DependencyInjection
 
     type IPNetwork with
@@ -166,7 +187,50 @@ module NetworkExtensions =
                     cfg.ForwardLimit          <- Nullable<int> proxyCount
                     cfg.ForwardedHeaders      <- ForwardedHeaders.All)
 
+    type HttpContext with
+        member this.GetHttpsPort() =
+            let defaultPort = 443
+            let envVarPort =
+                Config.environmentVarOrDefault
+                    "HTTPS_PORT"
+                    (Config.environmentVarOrDefault
+                        "ASPNETCORE_HTTPS_PORT"
+                        (Config.environmentVarOrDefault "ANCM_HTTPS_PORT" ""))
+                |> Str.toOption
+            match envVarPort with
+            | Some port -> int port
+            | None ->
+                match this.RequestServices.GetService<IServerAddressesFeature>() with
+                | null ->
+                    match Str.equalsCi this.Request.Host.Host "localhost" with
+                    | true  -> 5001
+                    | false -> defaultPort
+                | server ->
+                    server.Addresses
+                    |> Seq.map BindingAddress.Parse
+                    |> Seq.tryFind(fun a -> Str.equalsCi a.Scheme "https")
+                    |> function
+                        | Some a -> a.Port
+                        | None   -> defaultPort
+
     type IApplicationBuilder with
+        member this.UseTrailingSlashRedirection() =
+            this.Use(
+                fun ctx next ->
+                    let hasTrailingSlash =
+                        ctx.Request.Path.HasValue
+                        && ctx.Request.Path.Value.EndsWith "/"
+                        && ctx.Request.Path.Value.Length > 1
+                    match hasTrailingSlash with
+                    | true  ->
+                        ctx.Request.Path <- PathString(ctx.Request.Path.Value.TrimEnd '/')
+                        if Str.equalsCi ctx.Request.Scheme "https" then
+                            ctx.Request.Host <- HostString(ctx.Request.Host.Host, ctx.GetHttpsPort())
+                        let url = Microsoft.AspNetCore.Http.Extensions.UriHelper.GetEncodedUrl ctx.Request
+                        ctx.Response.Redirect(url, true)
+                        Threading.Tasks.Task.CompletedTask
+                    | false -> next.Invoke())
+
         member this.UseHttpsRedirection (domainName : string) =
             this.Use(
                 fun ctx next ->
@@ -263,25 +327,6 @@ module LoggingExtensions =
                         sentry.Release          <- appVersion
                         sentry.AttachStacktrace <- true
                         sentry.Dsn              <- dsn)
-
-// ---------------------------------
-// Str
-// ---------------------------------
-
-[<RequireQualifiedAccess>]
-module Str =
-    open System
-
-    let private ignoreCase = StringComparison.InvariantCultureIgnoreCase
-    let equals   (s1 : string) (s2 : string) = s1.Equals s2
-    let equalsCi (s1 : string) (s2 : string) = s1.Equals(s2, ignoreCase)
-
-    let isNullOrEmpty str = String.IsNullOrEmpty str
-
-    let toOption str =
-        match isNullOrEmpty str with
-        | true  -> None
-        | false -> Some str
 
 // ---------------------------------
 // Hashing

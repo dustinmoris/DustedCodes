@@ -68,6 +68,7 @@ module Program =
            .UseRequestLogging(Env.enableRequestLogging, false)
            .UseForwardedHeaders()
            .UseHttpsRedirection(Env.domainName)
+           .UseTrailingSlashRedirection()
            .UseStaticFiles()
            .UseResponseCaching()
            .UseResponseCompression()

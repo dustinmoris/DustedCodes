@@ -236,6 +236,11 @@ module WebApp =
                     // existing links in the world wide web
                     routeCi  UrlPaths.Deprecated.``/archive`` >=> HttpHandlers.index
 
+                    // Keeping old links still working
+                    // (From observing 404 errors in GCP)
+                    routeCi "/demystifying-aspnet-mvc-5-error-pages"
+                    >=> redirectTo true "/demystifying-aspnet-mvc-5-error-pages-and-error-logging"
+
                     routeCif UrlPaths.``/tagged/%s`` HttpHandlers.tagged
                     routeCif UrlPaths.``/%s`` HttpHandlers.blogPost
                 ]
