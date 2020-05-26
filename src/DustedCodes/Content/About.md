@@ -1,5 +1,3 @@
-# About
-
 Hi, welcome to my personal website, software development blog and dumping ground for all my bad ideas. I'm Dustin, a software engineer, entrepreneur and open source contributor who's originally from Vienna, Austria but living in the UK now.
 
 Over the [course of my career](https://www.linkedin.com/in/dustinmoris/) I've had the pleasure of working with a great wealth of different technologies for various sized companies, mainly operating in a very agile environment following [Scrum or Kanban](https://dusted.codes/when-to-use-scrum-waterfall-vs-scrum-vs-kanban-vs-scrumban), using continuous integration and deployment and having all the joys and stresses of running mission critical production systems in most major cloud providers (AWS, Google and Azure). One of my past roles involved me to lead and manage a team of highly skilled engineers building large scale Facebook games for one of Europe's biggest gaming companies. It was experiences like these which have taught me a great deal about working efficiently with teams, collaborating productively with stakeholders and delivering projects to the satisfaction of customers and users. After almost 10 years in the corporate world, numerous battle scars and a growing appetite for a new adventure I finally threw the towel in 2017, packed my bags and decided to travel the world with my wife, [collecting some of the best memories of our life](https://www.instagram.com/dustedtravels/). After one year we eventually came back to the UK, settled in London and set up my own business, allowing me to work on stuff which I enjoy the most. Today I [maintain several open source projects](https://github.com/dustinmoris) in my spare time, take contract roles on the side whilst also trying to build my own start-up from the ground up.
@@ -23,5 +21,3 @@ All other content on this website, such as text, graphics, logos and images is t
 ## Support
 
 If you've got value from any of the content which I have created or you'd like to support the development and maintenance of any of my projects then I would very much appreciate your support by buying me a coffee.
-
-<a href="https://www.buymeacoffee.com/dustinmoris" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>

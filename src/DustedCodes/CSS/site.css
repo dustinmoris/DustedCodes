@@ -541,11 +541,6 @@ body > header h2 {
     margin: 2em 0;
 }
 
-#about h1 {
-    margin-bottom: .5em;
-    text-align: left;
-}
-
 #contact h1 {
     margin: 1em 0 .5em 0;
 }
@@ -553,6 +548,44 @@ body > header h2 {
 /* --------------------------
   Classes
 -------------------------- */
+
+.bmc-button {
+    display: inline-flex;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 5px;
+    margin: 1em 0;
+    padding: .7em .5em;
+    text-decoration: none;
+    background: #222;
+    color: #fff;
+}
+
+.bmc-button img {
+    height: 34px;
+    width: 35px;
+    margin-bottom: 1px ;
+    box-shadow: none;
+    border: none;
+    vertical-align: middle;
+}
+
+.bmc-button span {
+    margin: 0 1em 0 .5em;
+    font-family: cursive;
+    font-size: 1.8em;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+}
+
+.bmc-button:hover,
+.bmc-button:active,
+.bmc-button:focus {
+    text-decoration: none;
+    opacity: 0.85;
+    color: #ffffff;
+}
 
 .msg-button {
     margin-top: 2em;
@@ -801,5 +834,10 @@ body > header h2 {
 
     #about h1 {
         text-align: center;
+    }
+
+    .bmc-button {
+        width: 100%;
+        display: flex;
     }
 }
