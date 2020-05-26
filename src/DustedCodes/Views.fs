@@ -377,8 +377,22 @@ module Views =
     let about =
         [
             article [ _id "about" ] [
+                h1 [] [ rawText "About" ]
                 img [ _id "avatar"; _src (Url.storage "images/avatar/dustin-moris-gorski.jpg") ; _alt "Dustin Moris Gorski" ]
                 rawText About.content
+                p [] [
+                    a [
+                        _class "bmc-button"
+                        _target "_blank"
+                        _href "https://www.buymeacoffee.com/dustinmoris"
+                    ] [
+                        img [
+                            _src "https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+                            _alt "Buy me a coffee"
+                        ]
+                        span [] [ rawText "Buy me a coffee" ]
+                    ]
+                ]
             ]
         ] |> masterView
             (Some "About")
