@@ -204,7 +204,8 @@ label {
     color: #777;
     font-size: .65em;
     text-transform: uppercase;
-    font-weight: 700;
+    letter-spacing: .5px;
+    font-weight: 300;
     font-family: 'Nunito Sans', sans-serif;
 }
 
@@ -328,7 +329,7 @@ body > nav,
 }
 
 #inner-header h2:hover {
-    color: #ff5252;
+    color: #5614ff;
 }
 
 body > header,
@@ -406,6 +407,22 @@ body > header h2 {
     letter-spacing: .18em;
 }
 
+#inner-header a hgroup:hover {
+    color: #5614ff;
+}
+
+#inner-header a hgroup:hover h1 > svg {
+    fill: #5614ff;
+}
+
+#inner-header a hgroup:hover h1 > span {
+    color: #222;
+}
+
+#inner-header a hgroup:hover h2 {
+    color: #5614ff;
+}
+
 #nav-links,
 #social-links {
     margin: 0;
@@ -438,7 +455,7 @@ body > header h2 {
 
 #nav-links a:hover,
 #nav-links a:active {
-    color: #ff5252;
+    color: #5614ff;
     text-decoration: none;
 }
 
@@ -454,7 +471,7 @@ body > header h2 {
 }
 
 #social-links svg:hover {
-    fill: #ff5252;
+    fill: #5614ff;
 }
 
 #inner-footer {
@@ -518,7 +535,7 @@ body > header h2 {
 
 #trending-list li > div > a:hover,
 #blogpost-list li > div > a:hover {
-    color: #ff5252;
+    color: #5614ff;
 }
 
 #trending-list .blogpost-metadata,
@@ -638,7 +655,7 @@ body > header h2 {
 
 .article-list a:hover,
 .article-list a:active {
-    color: #ff5252;
+    color: #5614ff;
 }
 
 .blogpost-metadata {
@@ -713,7 +730,7 @@ body > header h2 {
 }
 
 .share-links svg:hover {
-    fill: #ff5252;
+    fill: #5614ff;
 }
 
 .three-quarters {
@@ -809,7 +826,7 @@ body > header h2 {
     }
 
     #article-list a:hover {
-        color: #ff5252;
+        color: #5614ff;
     }
 
     #avatar {
