@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Watch Include="**\*.css;**\*.md" />
+    <Watch Include="**\*.js;**\*.css;**\*.md" />
   </ItemGroup>
 
 </Project>

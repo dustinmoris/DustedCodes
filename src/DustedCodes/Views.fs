@@ -461,7 +461,8 @@ module Views =
                     rawText "*) Fields marked with an asterisk are required."
                 ]
                 div [] [
-                    div [ _class "g-recaptcha"; attr "data-sitekey" Env.googleCaptchaSiteKey ] []
+                    input [ _id "captchaSiteKey"; _type "hidden"; _value Env.googleCaptchaSiteKey ]
+                    div [ _id "captcha" ] []
                     sendMessageButton
                 ]
             ]
@@ -495,7 +496,18 @@ module Views =
             (Some "Hire Me")
             (Some Url.``/hire``)
             (Some (sprintf "%s..." (Hire.content.Substring(0, 288))))
-            (Some [ script [ _src "https://www.google.com/recaptcha/api.js" ] [] ])
+            (Some [
+                script [
+                    _src (sprintf "%s/captcha.js" Env.baseUrl)
+                    _async
+                    _defer
+                ] []
+                script [
+                    _src "https://www.google.com/recaptcha/api.js?onload=captchaOnload&render=explicit"
+                    _async
+                    _defer
+                ] []
+        ])
 
     let notFound =
         [

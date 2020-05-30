@@ -1,11 +1,14 @@
 @media (prefers-color-scheme: dark) {
+    :root {
+        --table-odd-bg-color: #3f3f3f;
+        --table-even-bg-color: #282a2a;
+        --thin-border-color: rgba(255, 255, 255, 0.1);
+        --thiner-border-color: rgba(200, 200, 200, 0.1);
+    }
+
     body {
         background: #282a2a;
         color: #ddd;
-    }
-
-    body main {
-        border-color: rgba(255, 255, 255, 0.1);
     }
 
     body > header h1 > span  {
@@ -109,30 +112,31 @@
     }
 
     .bmc-button {
-        border: 2px solid rgb(243, 213, 7);
-        background: rgb(243, 213, 7);
-        color: #333;
-    }
-
-    .bmc-button:hover {
+        padding: .9em .7em;
         border: 2px solid rgb(243, 213, 7);
         background: #282a2a;
         color: rgb(243, 213, 7);
     }
 
-    button {
-        border: 2px solid rgba(133, 232, 157, 0.8);
-        background: rgba(133, 232, 157, 0.8);
-        color: #fff;
+    .bmc-button:hover {
+        border: 2px solid rgb(243, 213, 7);
+        background: #3f3f3f;
+        color: rgb(243, 213, 7);
     }
 
-    button:hover {
+    .msg-button {
+        border: 2px solid #85e89d;
         background: #282a2a;
         color: #85e89d;
     }
 
-    button:hover svg {
+    .msg-button svg {
         fill: #85e89d;
+    }
+
+    .msg-button:hover {
+        background: #3f3f3f;
+        color: #85e89d;
     }
 
     label {
