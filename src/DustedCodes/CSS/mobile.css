@@ -1,0 +1,73 @@
+@media all and (max-width: 640px) {
+
+    body {
+        font-size: 1.05em;
+    }
+
+    body > main {
+        margin-top: 0;
+        border-top: 1px solid var(--thiner-border-color);
+        border-bottom: 1px solid var(--thiner-border-color);
+    }
+
+    main > article > header > h1 {
+        font-size: 2.8em;
+    }
+
+    h2 {
+        font-size: 2.2em;
+    }
+
+    #social-links svg {
+        padding: .5em;
+    }
+
+    #nav-links a:link {
+        margin: .2em;
+        padding: .5em 1em;
+        max-width: 100%;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    #article-list li,
+    #article-list li:hover {
+        margin: 2.5em 0;
+        border: 0;
+        padding: 0;
+    }
+
+    #avatar {
+        margin-bottom: 3em;
+        max-width: 100%;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    .blogpost-metadata {
+        flex-flow: column wrap;
+    }
+
+    .blogpost-metadata > div {
+        margin: .5em 0;
+    }
+
+    .share-links svg {
+        padding: .8em;
+    }
+
+    .three-quarters {
+        max-width: 100%;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+    .bmc-button {
+        width: 100%;
+        display: flex;
+    }
+}
