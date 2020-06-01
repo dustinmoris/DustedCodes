@@ -4,6 +4,7 @@
         --table-even-bg-color: #282a2a;
         --thin-border-color: rgba(255, 255, 255, 0.1);
         --thiner-border-color: rgba(200, 200, 200, 0.1);
+        --label-fg-color: rgba(255, 255, 255, 0.5);
     }
 
     body {
@@ -82,7 +83,7 @@
         color: #85e89d;
     }
 
-    h1, h2, h3, h4 ,h5, h6 {
+    h1, h2, h3, h4 ,h5 {
         color: #ddd;
     }
 
@@ -137,10 +138,6 @@
     .msg-button:hover {
         background: #3f3f3f;
         color: #85e89d;
-    }
-
-    label {
-        color: rgba(255, 255, 255, 0.5);
     }
 
     input,
