@@ -1,14 +1,15 @@
 @media (prefers-color-scheme: dark) {
     :root {
+        --bg-color: #2c2f2f;
+        --bg-color-dark: #2c2f2f;
         --table-odd-bg-color: #3f3f3f;
-        --table-even-bg-color: #282a2a;
+        --table-even-bg-color: #2f3131;
         --thin-border-color: rgba(255, 255, 255, 0.1);
         --thiner-border-color: rgba(200, 200, 200, 0.1);
         --label-fg-color: rgba(255, 255, 255, 0.5);
     }
 
     body {
-        background: #282a2a;
         color: #ddd;
     }
 
@@ -115,7 +116,7 @@
     .bmc-button {
         padding: .9em .7em;
         border: 2px solid rgb(243, 213, 7);
-        background: #282a2a;
+        background: var(--bg-color);
         color: rgb(243, 213, 7);
     }
 
