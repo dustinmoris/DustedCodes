@@ -4,6 +4,7 @@
 
 :root {
     --bg-color: #fff;
+    --bg-color-dark: #fff;
     --fg-color: #444;
 
     --link-fg-color: #f1f1f1;
@@ -374,8 +375,13 @@ iframe.youTubeVideo {
   Master page
 -------------------------- */
 
+body > header,
+body > nav {
+    background-color: var(--bg-color-dark);
+}
+
 body > main,
-body > nav,
+#inner-nav ,
 #inner-header,
 #inner-footer {
     margin: 1em auto;
@@ -653,7 +659,8 @@ body > header h2 {
 
 .bmc-button span {
     margin: 0 1em 0 .5em;
-    font-family: cursive;
+    font-family: 'Martel', serif;
+    font-style: italic;
     font-size: 1.8em;
     font-weight: 600;
     letter-spacing: 0.6px;
