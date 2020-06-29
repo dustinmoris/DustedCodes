@@ -2,6 +2,8 @@
 
 My personal website - an Open Source Giraffe (ASP.NET Core) Blog.
 
+[![Build History](https://buildstats.info/github/chart/dustinmoris/dustedcodes?branch=develop)](https://github.com/dustinmoris/DustedCodes/actions?query=branch%3Adevelop)
+
 # About
 
 Inspired by GitHub Pages and Jekyll this is an F# blog engine which renders static HTML pages.
