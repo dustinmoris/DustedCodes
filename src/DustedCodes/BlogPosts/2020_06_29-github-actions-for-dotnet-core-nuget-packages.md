@@ -10,18 +10,18 @@ Here's a quick summary of what I did, why I did it and most importantly how you 
 
 ## Overview
 
-- [CI/CD pipeline for .NET Core NuGet packages]()
-    - [Branch and pull request trigger]()
-    - [Test on Linux, macOS and Windows]()
-    - [Create build artifacts]()
-    - [Push nightly releases to GitHub packages]()
-    - [GitHub release trigger for official NuGet release]()
-    - [Drive NuGet version from Git Tags]()
-    - [Speed]()
-- [Environment Variables]()
-- [The End Result]()
-    - [Four stages of a release]()
-    - [Workflow YAML]()
+- [CI/CD pipeline for .NET Core NuGet packages](#cicd-pipeline-for-net-core-nuget-packages)
+    - [Branch and pull request trigger](#branch-and-pull-request-trigger)
+    - [Test on Linux, macOS and Windows](#test-on-linux-macos-and-windows)
+    - [Create build artifacts](#create-build-artifacts)
+    - [Push nightly releases to GitHub packages](#push-nightly-releases-to-github-packages)
+    - [GitHub release trigger for official NuGet release](#github-release-trigger-for-official-nuget-release)
+    - [Drive NuGet version from Git Tags](#drive-nuget-version-from-git-tags)
+    - [Speed](#speed)
+- [Environment Variables](#environment-variables)
+- [The End Result](#the-end-result)
+    - [Four stages of a release](#four-stages-of-a-release)
+    - [Workflow YAML](#workflow-yaml)
 
 ## CI/CD pipeline for .NET Core NuGet packages
 
