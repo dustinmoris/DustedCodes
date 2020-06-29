@@ -173,25 +173,27 @@ module Views =
                 ]
                 main [] bodyContent
                 nav [] [
-                    ul [ _id "social-links" ] [
-                        li [] [ iconLink "https://www.facebook.com/dustinmoris.gorski" "Connect on Facebook" Icons.facebook ]
-                        li [] [ iconLink "https://twitter.com/dustinmoris" "Follow on Twitter" Icons.twitter ]
-                        li [] [ iconLink "https://www.linkedin.com/in/dustinmoris/" "Connect on LinkedIn" Icons.linkedIn ]
-                        li [] [ iconLink "https://www.instagram.com/dustedtravels/" "Follow on Instagram" Icons.instagram ]
-                        li [] [ iconLink "https://www.youtube.com/channel/UCtoObQtHY0TjIXwz9Ipmq7g" "Follow on YouTube" Icons.youTube ]
-                        li [] [ iconLink "https://github.com/dustinmoris" "Browse GitHub repositories" Icons.github ]
-                        li [] [ iconLink "https://hub.docker.com/u/dustinmoris" "Browse Docker images" Icons.docker ]
-                        li [] [ iconLink "https://stackoverflow.com/users/1693158/dustinmoris" "View StackOverflow profile" Icons.stackOverflow ]
-                        li [] [ iconLink "https://www.buymeacoffee.com/dustinmoris" "Buy me a coffee" Icons.buyMeACoffee ]
-                        li [] [ iconLink "https://www.paypal.me/dustinmoris" "Pay me via PayPal" Icons.payPal ]
-                        li [] [ iconLink Url.``/feed/rss`` "Subscribe to feed" Icons.rssFeed ]
-                    ]
-                    ul [ _id "nav-links" ] [
-                        li [] [ normalLink Url.``/`` "Home" ]
-                        li [] [ normalLink Url.``/trending`` "Trending" ]
-                        li [] [ normalLink Url.``/about`` "About"]
-                        li [] [ normalLink Url.``/hire`` "Hire" ]
-                        li [] [ normalLink Url.``/hire#contact`` "Contact" ]
+                    div [ _id "inner-nav" ] [
+                        ul [ _id "social-links" ] [
+                            li [] [ iconLink "https://www.facebook.com/dustinmoris.gorski" "Connect on Facebook" Icons.facebook ]
+                            li [] [ iconLink "https://twitter.com/dustinmoris" "Follow on Twitter" Icons.twitter ]
+                            li [] [ iconLink "https://www.linkedin.com/in/dustinmoris/" "Connect on LinkedIn" Icons.linkedIn ]
+                            li [] [ iconLink "https://www.instagram.com/dustedtravels/" "Follow on Instagram" Icons.instagram ]
+                            li [] [ iconLink "https://www.youtube.com/channel/UCtoObQtHY0TjIXwz9Ipmq7g" "Follow on YouTube" Icons.youTube ]
+                            li [] [ iconLink "https://github.com/dustinmoris" "Browse GitHub repositories" Icons.github ]
+                            li [] [ iconLink "https://hub.docker.com/u/dustinmoris" "Browse Docker images" Icons.docker ]
+                            li [] [ iconLink "https://stackoverflow.com/users/1693158/dustinmoris" "View StackOverflow profile" Icons.stackOverflow ]
+                            li [] [ iconLink "https://www.buymeacoffee.com/dustinmoris" "Buy me a coffee" Icons.buyMeACoffee ]
+                            li [] [ iconLink "https://www.paypal.me/dustinmoris" "Pay me via PayPal" Icons.payPal ]
+                            li [] [ iconLink Url.``/feed/rss`` "Subscribe to feed" Icons.rssFeed ]
+                        ]
+                        ul [ _id "nav-links" ] [
+                            li [] [ normalLink Url.``/`` "Home" ]
+                            li [] [ normalLink Url.``/trending`` "Trending" ]
+                            li [] [ normalLink Url.``/about`` "About"]
+                            li [] [ normalLink Url.``/hire`` "Hire" ]
+                            li [] [ normalLink Url.``/hire#contact`` "Contact" ]
+                        ]
                     ]
                 ]
                 footer [] [
