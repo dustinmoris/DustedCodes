@@ -52,13 +52,30 @@ module Url =
 // ---------------------------------
 
 [<RequireQualifiedAccess>]
+module MarkDog =
+    open Markdig
+    open Markdig.Extensions.AutoIdentifiers
+
+    let private bone =
+        MarkdownPipelineBuilder()
+            .UseAutoIdentifiers(AutoIdentifierOptions.GitHub)
+            .Build()
+
+    let toHtml (value : string) =
+        Markdown.ToHtml(value, bone)
+
+// ---------------------------------
+// About
+// ---------------------------------
+
+[<RequireQualifiedAccess>]
 module About =
     open System.IO
 
     let content =
         Path.Combine(Env.contentDir, "About.md")
         |> File.ReadAllText
-        |> Markdig.Markdown.ToHtml
+        |> MarkDog.toHtml
 
 // ---------------------------------
 // Hire
@@ -71,7 +88,7 @@ module Hire =
     let content =
         Path.Combine(Env.contentDir, "Hire.md")
         |> File.ReadAllText
-        |> Markdig.Markdown.ToHtml
+        |> MarkDog.toHtml
 
 // ---------------------------------
 // Google Analytics
@@ -145,7 +162,6 @@ module BlogPosts =
     open System.Text
     open System.Net
     open System.Globalization
-    open Markdig
 
     type ContentType =
         | Html
@@ -253,7 +269,7 @@ module BlogPosts =
             let htmlContent =
                 match blogPost.ContentType with
                 | Html     -> content
-                | Markdown -> Markdown.ToHtml content
+                | Markdown -> MarkDog.toHtml content
             Ok { blogPost with Content = content; HtmlContent = htmlContent }
 
     let private formatError (blogPostPath : string) (result : Result<Article, string>) =
