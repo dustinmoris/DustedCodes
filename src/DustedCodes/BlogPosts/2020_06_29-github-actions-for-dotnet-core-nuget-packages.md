@@ -2,11 +2,26 @@
     Tags: devops github dotnet-core ci-cd nuget
 -->
 
-# GitHub Action for .NET Core NuGet packages
+# GitHub Actions for .NET Core NuGet packages
 
 Last weekend I migrated the [Giraffe web framework](https://github.com/giraffe-fsharp/Giraffe) from [AppVeyor](https://www.appveyor.com) to [GitHub Actions](https://github.com/features/actions). It proved to be incredibly easy to do so despite me having some very specific requirements on how I wanted the final solution to work and that it should be flexible enough to apply to all my other projects too. Even though it was mostly a very straight forward job, there were a few things which I learned along the way which I thought would be worth sharing! 
 
 Here's a quick summary of what I did, why I did it and most importantly how you can apply the same GitHub workflow to your own .NET Core NuGet project as well!
+
+## Overview
+
+- [CI/CD pipeline for .NET Core NuGet packages]()
+    - [Branch and pull request trigger]()
+    - [Test on Linux, macOS and Windows]()
+    - [Create build artifacts]()
+    - [Push nightly releases to GitHub packages]()
+    - [GitHub release trigger for official NuGet release]()
+    - [Drive NuGet version from Git Tags]()
+    - [Speed]()
+- [Environment Variables]()
+- [The End Result]()
+    - [Four stages of a release]()
+    - [Workflow YAML]()
 
 ## CI/CD pipeline for .NET Core NuGet packages
 
@@ -386,6 +401,8 @@ The value for the `NUGET_KEY` secret has to be generated on [www.nuget.org](http
 
 The end result is a pretty elaborate CI/CD pipeline. All commits and pull requests will trigger a new run against a Linux, macOS and Windows environment and build and test the code across all these platforms. Additionally each build will produce a NuGet package as an artifact which can be downloaded and added to a local NuGet feed for test purposes or urgent matters. When features and bug fixes get eventually merged into the `develop` branch it will kick off a nightly build and publish an early pre-release version into the organisation's own GitHub packages feed. Finally when a release is being published an official NuGet package will be produced and not only pushed to the Github packages feed, but also to the official NuGet gallery. Nightly build packages are tagged with the workflow run ID and official packages with the associated git tag version. Everything is optimised for speed.
 
+### Four stages of a release
+
 In total this set up supports the four stages of a release:
 
 #### 1. YOLO Release
@@ -400,7 +417,7 @@ Merges into the `develop` branch will create an official nightly build which get
 
 The next step in the release pipeline is an official pre-release package. It is basically the same as an official release package except that the git version tag follows the pre-release convention (e.g. `v2.0.0-beta-23`). Those packages are being released into the public NuGet gallery, but clearly marked as not a proper release candidate.
 
-#### 4. Official release package
+#### 4. Official release packages
 
 Finally the last release stage is a proper stable release. Same as before, it's triggered by a git tag, but this time with a stable release version (e.g. `v2.0.0`).
 
