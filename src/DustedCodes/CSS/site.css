@@ -215,6 +215,15 @@ blockquote > header {
     margin-bottom: -10px;
 }
 
+blockquote > header > h1,
+blockquote > header > h2,
+blockquote > header > h3,
+blockquote > header > h4,
+blockquote > header > h5,
+blockquote > header > h6 {
+    margin-top: 0;
+}
+
 blockquote > p {
     line-height: 1.7em;
     font-size: .9em;
