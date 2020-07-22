@@ -599,6 +599,12 @@ module DataService =
     open Logfella
 
     let private toStringValue (str : string) = Value(StringValue = str)
+
+    let private toTextValue (str : string) =
+        let v = Value(StringValue = str)
+        v.ExcludeFromIndexes <- true
+        v
+
     let private toTimestampValue (dt  : DateTime) =
         let ts = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime dt
         Value(TimestampValue = ts)
@@ -609,11 +615,11 @@ module DataService =
 
         let entity     = Entity()
         entity.Key             <- key
-        entity.["Name"]        <- msg.Name        |> toStringValue
-        entity.["Email"]       <- msg.Email       |> toStringValue
-        entity.["Phone"]       <- msg.Phone       |> toStringValue
-        entity.["Subject"]     <- msg.Subject     |> toStringValue
-        entity.["Message"]     <- msg.Message     |> toStringValue
+        entity.["Name"]        <- msg.Name         |> toStringValue
+        entity.["Email"]       <- msg.Email        |> toStringValue
+        entity.["Phone"]       <- msg.Phone        |> toStringValue
+        entity.["Subject"]     <- msg.Subject      |> toStringValue
+        entity.["Message"]     <- msg.Message      |> toTextValue
         entity.["Date"]        <- DateTime.UtcNow  |> toTimestampValue
         entity.["Origin"]      <- Env.appName      |> toStringValue
         entity.["Environment"] <- Env.name         |> toStringValue
