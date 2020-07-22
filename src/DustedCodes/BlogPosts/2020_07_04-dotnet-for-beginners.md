@@ -35,7 +35,7 @@ Let me introduce you to the **6 Sins of .NET**:
 - [.NET Everywhere](#net-everywhere)
 - [All Eyez on Me](#all-eyez-on-me)
 - [Architecture Break Down](#architecture-break-down)
-- [Fame for Name Shame](#fame-for-name-shame)
+- [Lame Name Fame](#lame-name-fame)
 
 ### Language Spaghetti
 
