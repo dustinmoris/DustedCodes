@@ -35,7 +35,7 @@ Let me introduce you to the **6 Sins of .NET**:
 - [.NET Everywhere](#net-everywhere)
 - [All Eyez on Me](#all-eyez-on-me)
 - [Architecture Break Down](#architecture-break-down)
-- [Lame Name Fame](#lame-name-fame)
+- [Name Overload](#name-overload)
 
 ### Language Spaghetti
 
@@ -211,7 +211,7 @@ There is no actual need to do any of this, only self imposed deadlines which for
 
 There is really not much else to say other than **\*slow - down\***. I wish the .NET and ASP.NET Core teams would take this criticism (which isn't new) more serious and realise how bad things have become. I know I keep banging about Go, but surely there is some valuable lesson to learn given how popular and successful Go has become in a relatively short amount of time? Maybe Go is too simple in comparison to .NET, but maybe the current pace of .NET is not the right approach either? It's important to remember that a less breaking .NET would pose such a smaller mental and financial burden on new developers from all across the world!
 
-### Lame Name Fame
+### Name Overload
 
 This blog post wouldn't be complete without mentioning Microsoft's complete failure of naming .NET properly in a user and beginner friendly way. I mean what is &quot;.NET&quot; anyway? First and foremost it's a TLD, which has nothing to do with Microsoft! Secondly there is no clear or uniform way of spelling .NET. Is it &quot;.NET&quot; or &quot;dot net&quot;? Maybe it was &quot;DOTNET&quot; or it could be &quot;dot.net&quot; like the newly registered domain [dot.net](https://dot.net)? My friends still tease me by calling it &quot;DOT NOT&quot; whenever I mention it to them!
 
