@@ -12,7 +12,7 @@ Last night I came across this question on Reddit:
        I can see that he is using .NET Framework but i have read that .NET Core is newer and is the future? I am really not sure where to start and would appreicate if anyone could help me. I would like to learn C# to have a better understanding with OOP and to learn a programming language to help with my Univeristy course. Thank you</p>
 </blockquote>
 
-First of all congratulations to the author for learning C# which is a great choice of programming language and for putting in the extra effort into better understanding the concepts of OOP (object oriented programming)! I genuinely hope that they'll have a great experience learning .NET and most importantly that they'll enjoy picking up some new skills and have fun along the way! I remember when I started to code (more than 20 years ago) and how much fun it was for me! It is also great to see how many people have replied with really helpful answers and provided some useful guidance to the original thread! It is a true testament to how supportive and welcoming the .NET community is! However, despite these positive observations I'm still a little bit gutted that such a question had to be even asked in the first place. I don't imply any fault on the author themselves - quite contrary - I actually really sympathise with them and can see the sort of struggles which a new C# or F# developer may face. Questions like these really demonstrate how complex .NET has become over the years. It is a good time to take a step back and reflect!
+First of all congratulations to the author for learning C# which is a great choice of programming language and for putting in the extra effort into better understanding the concepts of OOP (object oriented programming)! I genuinely hope that they'll have a great experience learning .NET and most importantly that they'll enjoy picking up some new skills and have fun along the way! I remember when I started to code (more than 20 years ago) and how much fun it was for me! It is also great to see how many people have replied with really helpful answers and provided some useful guidance to the original thread! It is a true testament to how supportive and welcoming the .NET community is! However, despite these positive observations I'm still a little bit gutted that such a question had to be even asked in the first place. I don't imply any fault on the author themselves - quite contrary - I actually really sympathise with them and can understand the sort of struggles which a new C# or F# developer may face. Questions like these really demonstrate how complex .NET has become over the years. It is a good time to take a step back and reflect!
 
 ## High cognitive entry barrier
 
@@ -30,16 +30,16 @@ Why is .NET so complicated? Well, the answer is perhaps not that easy itself. It
 
 Let me introduce you to the **6 Sins of .NET**:
 
-- [Language Mash Up](#language-mash-up)
+- [Language Spaghetti](#language-spaghetti)
 - [Version Overflow](#version-overflow)
 - [.NET Everywhere](#net-everywhere)
-- [Fear of being ignored](#fear-of-being-ignored)
+- [All Eyez on Me](#all-eyez-on-me)
 - [Architecture Break Down](#architecture-break-down)
-- [Bad Naming](#bad-naming)
+- [Fame for Name Shame](#fame-for-name-shame)
 
-### Language Mash Up
+### Language Spaghetti
 
-If a person sets out to learn C# (like the author from the question above), what do they learn? Is it C# or .NET? The answer is both. C# doesn't exist without .NET and you cannot program .NET without C# (or F# or VB.NET for that matter). This is not a problem in itself, but certainly where some of the issues begin. A new beginner doesn't just learn C# but also has to learn the inner workings of .NET. Things get even more confusing when C# isn't the initial .NET language to learn. The loose relationship between .NET languages shouldn't really matter because they compile into IL and become cross compatible. [Except when they don't](https://github.com/dotnet/vblang/issues/300):
+If a person sets out to learn C# (like the author from the question above), what do they learn? Is it C# or .NET? The answer is both. C# doesn't exist without .NET and you cannot program .NET without C# (or F# or VB.NET for that matter). This is not a problem in itself, but certainly where some of the issues begin. A new beginner doesn't just learn C# but also has to learn the inner workings of .NET. Things get even more confusing when C# isn't the initial .NET language to learn. Supposedly the loose relationship between .NET languages shouldn't really matter because they compile into IL and become cross compatible. [Except when they don't](https://github.com/dotnet/vblang/issues/300):
 
 [![C# unmanaged constraint language leak](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/csharp-unmanaged-constraint-leak.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/csharp-unmanaged-constraint-leak.png)
 
@@ -85,15 +85,15 @@ Some people raised a good point that it might be time to consider making some ol
 
 [![.NET is hard](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/tweet-dotnet-reboot-1.png)](https://twitter.com/RehanSaeedUK/status/1281943982189228032)
 
-Whatever one's personal opinion is, &quot;feature bloat&quot; is certainly becoming a growing concern in the C# community and Microsoft would be stupid to not listen or take some notes.
+Whatever one's personal opinion is, &quot;feature bloat&quot; is certainly becoming a growing concern in the C# community and Microsoft would be stupid not to listen or at least take some notes.
 
-Given that F# is already a [functional first multi paradigm language](https://dusted.codes/why-you-should-learn-fsharp), and C# is definitely heading towards that direction too, maybe one day there's a future opportunity to consolidate both languages into one? (YES, I dared to suggest it!) Either that, or Microsoft should establish 100% feature parity so that interop is seamless and the only differentiating factor remains in the language's syntax - one geared towards a functional first experience and the other towards the object oriented equivalent.
+Given that F# is already a [functional first multi paradigm language](https://dusted.codes/why-you-should-learn-fsharp), and C# is definitely heading towards that direction too, maybe one day there's a future opportunity to consolidate both languages into one? (YES, I dared to suggest it!) Either that, or Microsoft should establish 100% feature parity so that interop is seamless between the languages and the only differentiating factor remains in their syntax - one geared towards a functional first experience and the other towards the object oriented equivalent.
 
 ### Version Overflow
 
 As mentioned above, all three .NET languages evolve independently from .NET. C# is heading towards [version 9](https://devblogs.microsoft.com/dotnet/welcome-to-c-9-0/), F# is approaching [version 5](https://devblogs.microsoft.com/dotnet/announcing-f-5-preview-1/) and VB.NET is already on [version 16](https://docs.microsoft.com/en-us/dotnet/visual-basic/getting-started/whats-new#visual-basic-160). Meanwhile .NET Framework is on [version 4.8](https://dotnet.microsoft.com/download/dotnet-framework/net48) and .NET Core on [version 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1). Don't even get me started on [Mono](https://www.mono-project.com), [Xamarin](https://dotnet.microsoft.com/apps/xamarin) or [ASP.NET](https://docs.microsoft.com/en-us/aspnet/core).
 
-Now I understand that all these things are very different and I'm comparing apples with oranges, but how is a new developer supposed to know all of that? All these components are independent and yet correlated enough to overwhelm a new developer with screens like these:
+Now I understand that all these things are very different and I'm comparing apples with oranges, but how is a new developer supposed to know all of that? All these components are independent and yet correlated enough to overwhelm a new developer with screens like this:
 
 [![.NET Core Versions](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/dotnet-core-versions.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/dotnet-core-versions.png)
 
@@ -105,7 +105,7 @@ In contrast to .NET this is the cognitive load which is thrown at a beginner in 
 
 It's much simpler in every way. Admittedly it's not an entirely fair comparison because Go gets compiled directly into machine code and therefore there isn't a real distinction between SDK and runtime, but my point is still the same. There is certainly plenty of room for improvement and I don't think what we see there today is the best we can do.
 
-Maybe there's some value in officially aligning language, ASP.NET Core and .NET (Core) versions together and ship one coherent release every time? Fortunately .NET 5 is a step towards that direction but in my opinion there's still more to do!
+Maybe there's some value in officially aligning language, ASP.NET Core and .NET (Core) versions together and ship one coherent release every time? Fortunately .NET 5 is the right step in that direction but in my opinion there's still more to do!
 
 ### .NET Everywhere
 
@@ -139,9 +139,9 @@ For example, here's the output of all the default .NET templates which get shipp
 
 [![.NET Project Templates](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/dotnet-new-command.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/dotnet-new-command.png)
 
-They barely fit on a single screen. Again, it's great that Microsoft has Blazor as an answer to WASM, or that they have WPF as an option for Windows, but why are these things shipped together as one big ugly thing? Why can't there just be be a template for a console app or class library and then some text which explains how to download more? This is a classic example of when &quot;.NET Everywhere&quot; is getting into the common user's way!
+They barely fit on a single screen. Again, it's great that Microsoft has Blazor as an answer to WASM, or that they have WPF as an option for Windows, but why are these things shipped together as one big ugly thing? Why can't there just be be a template for a console app or class library and then some text which explains how to download more? This is a classic example where &quot;.NET Everywhere&quot; is getting into most users' way!
 
-Speaking of fitting things on a single screen...
+Speaking of fitting things into a single screen...
 
 [![Visual Studio Chaos](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/visual-studio-chaos.png)](https://twitter.com/dylanbeattie/status/832326857798348800)
 
@@ -151,13 +151,13 @@ My honest constructive feedback is **\*less is more\***!
 
 It's rarely the case that a new .NET developer wants to be drowned in a sea of options before they can get started with some basic code. Most newcomers just want to set up the bare bones minimum to get up and running and write their first lines of code. They don't even care if it's a console app or an ASP.NET Core application.
 
-I totally support the idea of a single .NET which can cater to all sorts of different needs, but it must be applied in a much less overwhelming way. Visual Studio's new project dialogue doesn't need to match Microsoft's marketing slides and the `dotnet new` command doesn't have to ship a template for every single type of app. It doesn't happen very often that a developer is first tasked to work on a line of business web application, then told to build a Windows forms app and later asked to build a game. Absolutely nobody needs twenty different templates which span across ten different industries on their machine.
+I totally support the idea of a single .NET which can cater to all sorts of different needs, but it must be applied in a much less overwhelming way. Visual Studio's new project dialogue doesn't need to match Microsoft's marketing slides and the `dotnet new` command doesn't have to ship a template for every single type of app. It doesn't happen very often that a developer is first tasked to work on a line of business web application, then told to build a Windows forms store app and later asked to build a game. Absolutely nobody needs twenty different templates which span across ten different industries on their machine.
 
 My advice would be to optimise the .NET experience for beginners and not worry about advanced developers at all. There's a reason why advanced users are called advanced. If a senior developer wants to switch from iOS to IoT development then they will know where to find the tools. Currently the .NET CLI ships FIFTEEN!!! different web application templates for a user to pick. How is a new C# developer supposed to decide on the right template if even experienced .NET developers scratch their head? Microsoft must understand that not bloating every tool or IDE with a million different options doesn't mean that users don't understand that these options do exist.
 
-&quot;.NET Everywhere&quot; should be a side effect and not the goal.
+In my opinion the whole mentality around &quot;.NET Everywhere&quot; is entirely wrong. It should be a positive side effect and not the goal.
 
-### Fear of being ignored
+### All Eyez on Me
 
 Another problem which I have observed is Microsoft's fear of being ignored. Microsoft has a solution for almost every problem which a developer might face. It's an amazing achievement and something to be really proud of (and I really mean it), but at the same time Microsoft has to learn how to give developers some space.
 
@@ -167,7 +167,7 @@ Microsoft does not miss a single opportunity to advertise a whole range of produ
 
 Again, I totally understand why Microsoft does what they do (and I'm sure there's a lot of good intention there), but it comes across the complete wrong and opposite way.
 
-No wonder that the outside perception of .NET hasn't changed much:
+No wonder that the perception of .NET hasn't changed much in the outside world:
 
 [![.NET coming across the wrong way](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/dotnet-microsoft-bloatware.png)](https://twitter.com/blazorguy/status/1279092538490736640)
 
@@ -175,11 +175,11 @@ What Microsoft really tries to say is:
 
 > Hey folks, look we're different now, we are cross platform, we run everywhere and we want you to have a great experience. Here's a bunch of things which can help you on your journey.
 
-Unfortunately what users \*actually\* understand:
+Unfortunately what users \*actually\* understand is:
 
-> Hey, so .NET is a Microsoft product and it mostly only works with other Microsoft products, so here's a bunch of stuff which you really should use!
+> Hey, so .NET is a Microsoft product and it mostly only works with other Microsoft products, so here's a bunch of stuff which you will have to use!
 
-On one hand Microsoft wants to create this new brand of an open source, cross platform development tool chain and yet on another they push Visual Studio and Azure whenever they talk .NET. This is sending mixed messaging and confusing new developers, detracting from .NET's actual brilliance and doing a massive disservice to the entire development platform. The frustrating thing is that the more .NET is becoming open to the world, the more Microsoft is pushing for their proprietary tools. Nowadays when you watch some of the most iconic .NET employees give a talk it's only 50% .NET and the other 50% advertising Windows, Edge and Bing. This is not what most .NET developers came to see and it doesn't happen in other programming communities either such as Node.js, Rust or Go. Besides that, if someone advertises every new Microsoft flavour of the month then they also lose credibility over time.
+On one hand Microsoft wants to create this new brand of an open source, cross platform development tool chain and yet on another they push Visual Studio and Azure whenever they talk .NET. This is sending mixed messages and confusing new developers, detracting from .NET's actual brilliance and doing a massive disservice to the entire development platform. The frustrating thing is that the more .NET is becoming open to the world, the more Microsoft is pushing for their own proprietary tools. Nowadays when you watch some of the most iconic .NET employees giving a talk on .NET then it's only 50% .NET and the rest advertising Windows, Edge and Bing. This is not what most .NET developers came to see and it doesn't happen in other programming communities such as Node.js, Rust or Go either. Besides that, if someone constantly advertises every new Microsoft flavour of the month then they also lose developer credibility over time.
 
 The other thing is that [questions and answers like these](https://www.reddit.com/r/csharp/comments/htlgsr/vs_or_vs_code_problem/) need to stop:
 
@@ -189,7 +189,7 @@ This question and particularly the answer are really bad, because they demonstra
 
 Microsoft needs to decouple .NET from everything else and make it a great standalone development environment if they want to compete with the rest.
 
-C#, F# and .NET will always be perceived as a very Microsoft and Windows centric development environment when even the [official .NET documentation](https://docs.microsoft.com/en-us/dotnet/) page looks like this:
+C#, F# and .NET will always be perceived as a very Microsoft and Windows centric development environment when even the [official .NET documentation](https://docs.microsoft.com/en-us/dotnet/) page confirms a critic's worst fears:
 
 [![.NET Documentation](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/official-dotnet-docs.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/official-dotnet-docs.png)
 
@@ -201,32 +201,34 @@ Go is 10 years old.
 
 Go is currently on version 1.14 and .NET Core is already on its third major version. Both have been written from the ground up, but Microsoft has had arguably more experience developing .NET Core given that it was re-written from scratch with the knowledge of more than 14 years of supporting .NET Framework. How on earth did .NET Core end up with so many architectural changes that it is already on version 3.x?
 
-Microsoft prides itself with developing .NET Core so fast and offering a comprehensive out of the box solution, but it is one of the most unstable and tiresome development environments which I have ever worked with. It is exhausting trying to keep up with .NET Core's constant change of architecture. Microsoft would implement one thing one day and then completely replace it the other. Just think about the constant changes to the `Startup.cs` class, or the ever evolving `HttpClient` and its related helper types, the invention and demise of the JSON project file, .NET Standard or various JSON serialisers. The list goes on, features such as CORS, routing and autorisation keep changing as more code gets rewritten and pushed down the pipeline and more types are being made obsolete from the `Microsoft.AspNetCore.*` namespace and replaced with new ones emerging in `Microsoft.Extensions.*`. It's hard to keep up with .NET as an experienced developer let alone as a beginner. With such constant change books, videos, online tutorials, StackOverflow questions, Reddit threads and community blog posts have a very short lifespan and make learning .NET by an order of magnitude harder than learning any other programming language which is more stable.
+Microsoft prides itself with developing .NET Core extremely fast and offering a comprehensive out of the box solution, but it is one of the most unstable and tiresome development environments which I have worked with in recent years. It is becoming increasingly exhausting trying to keep up with .NET Core's constant change. Microsoft would implement one thing one day and then completely replace it the other. Just think about the constant changes to the `Startup.cs` class, or the ever evolving `HttpClient` and its related helper types, the invention and demise of the JSON project file, .NET Standard or various JSON serialisers. The list goes on. Features such as CORS, routing and authorisation keep changing as more code gets rewritten and pushed down the pipeline and more types are being made obsolete from the `Microsoft.AspNetCore.*` namespace and replaced with new ones emerging in `Microsoft.Extensions.*`.
 
-Good software and framework architecture should provide a stable foundation which is open for extension, but closed for change (sound familiar?). There was no need to implement v1 of ASP.NET Core in such a way that it now requires constant architectural change in order to support new innovation. Why has endpoint routing not been build on day one? Why does Microsoft not provide an adequate and feature complete replacement for `Newtonsoft.Json` before they release and encourage the usage of `System.Text.Json`? Why are light weight and easy to understand routing handlers such as `MapGet` only an afterthought? Why is it that Microsoft never creates a GitHub issue for an existing successful .NET OSS project when they need something similar (maybe with a few changes or improvements) and rather invent their own competing in-house product which \*always\* causes pain in the community and indirectly forces users to re-write their codebase yet again?
+It's hard to keep up with .NET as an experienced developer let alone as a beginner. This constant change significantly reduces the lifespan and usefulness of books, videos, online tutorials, StackOverflow questions, Reddit threads and community blog posts. It's not only making .NET by an order of magnitude harder to learn but also financially less viable than others.
 
-There is no actual need to do any of this, only self imposed deadlines which force Microsoft to release ill written software, badly thought out framework features and an unnecessary burden on its current developer community. This constant change is extremely painful to say the least. It's the single worst feature of .NET and the main reason why I honestly couldn't recommend .NET to a programming novice in good conscience.
+Good software and framework architecture should provide a stable foundation which is open for extension, but closed for change (sound familiar?). There was no need to implement v1 of ASP.NET Core in such a way that it now requires constant architectural change in order to support new innovation. Why has endpoint routing not been build on day one? Why does Microsoft not provide an adequate and feature complete replacement for `Newtonsoft.Json` before they released and encouraged the usage of `System.Text.Json`? Why are light weight and easy to understand routing handlers such as `MapGet` only an afterthought? Why is it that Microsoft never creates a GitHub issue for an existing successful .NET OSS project when they need something similar (maybe with a few changes or improvements) and rather invent their own competing in-house product which \*always\* causes pain in the community and indirectly forces users to re-write their codebase yet again?
 
-There is really not much else to say other than **\*slow - down\***. I wish the .NET and ASP.NET teams would take this criticism (which isn't new) more serious and realise how bad things have become. I know I keep banging about Go, but surely there is some valuable lesson to learn given how popular and successful Go has become in a relatively short amount of time? Maybe Go is too simple in comparison to .NET, but maybe the current pace of .NET is not the right answer either? Sometimes offering fewer but more stable features can be better and it would be certainly more beginner friendly!
+There is no actual need to do any of this, only self imposed deadlines which force Microsoft to release ill written software, badly thought out framework features and an unnecessary burden on its current developer community. This constant change is extremely painful to say the least. It's the single worst feature of .NET and the main reason why I honestly couldn't recommend .NET to a programming novice in good faith.
 
-### Bad Naming
+There is really not much else to say other than **\*slow - down\***. I wish the .NET and ASP.NET Core teams would take this criticism (which isn't new) more serious and realise how bad things have become. I know I keep banging about Go, but surely there is some valuable lesson to learn given how popular and successful Go has become in a relatively short amount of time? Maybe Go is too simple in comparison to .NET, but maybe the current pace of .NET is not the right approach either? It's important to remember that a less breaking .NET would pose such a smaller mental and financial burden on new developers from all across the world!
 
-This blog post wouldn't be complete without mentioning Microsoft's complete failure of naming .NET properly in a user and beginner friendly way. I mean what the hell is &quot;.NET&quot; anyway? First and foremost it's a TLD, which has nothing to do with Microsoft! Secondly there is no clear or uniform way of spelling .NET. Is it &quot;.NET&quot; or &quot;dot net&quot;? Maybe it was &quot;DOTNET&quot; or it could be &quot;dot.net&quot; like the newly registered domain [dot.net](https://dot.net)? My friends still tease me by calling it &quot;DOT NOT&quot; whenever I mention it to them!
+### Lame Name Fame
+
+This blog post wouldn't be complete without mentioning Microsoft's complete failure of naming .NET properly in a user and beginner friendly way. I mean what is &quot;.NET&quot; anyway? First and foremost it's a TLD, which has nothing to do with Microsoft! Secondly there is no clear or uniform way of spelling .NET. Is it &quot;.NET&quot; or &quot;dot net&quot;? Maybe it was &quot;DOTNET&quot; or it could be &quot;dot.net&quot; like the newly registered domain [dot.net](https://dot.net)? My friends still tease me by calling it &quot;DOT NOT&quot; whenever I mention it to them!
 
 Finally when there was an opportunity to correct this long standing mistake by re-writing the entire platform and possibly giving it a new name then Microsoft decided to call it &quot;.NET Core&quot;. If anyone thought it couldn't get any worse then Microsoft surely didn't disappoint! I cannot think of a more internet unfriendly name than &quot;.NET Core&quot;. How do you even hashtag this? I've seen it all ranging from [#dotnet](https://twitter.com/hashtag/dotnet) to [#dot-net](https://twitter.com/hashtag/dot-net), [#dot-net-core](https://twitter.com/hashtag/dot-net-core), [#dotnet-core](https://twitter.com/hashtag/dotnet-core), [#netcore](https://twitter.com/hashtag/netcore), [#net-core](https://twitter.com/hashtag/net-core), [#dot-netcore](https://twitter.com/hashtag/dot-netcore) and [#dotnetcore](https://twitter.com/hashtag/dotnetcore).
 
-Whatever one's personal opinion is, I think everyone can agree that objectively speaking &quot;.NET Core&quot; was never a great name. Needless to say that &quot;.NET Core&quot; also completely messes with the internet history of &quot;.NET Framework&quot;, which is exactly what most people predicted as well.
+I think everyone can agree that objectively speaking &quot;.NET Core&quot; was never a great name. Needless to say that &quot;.NET Core&quot; also completely messes with the internet history for &quot;.NET Framework&quot;, which is exactly what everyone predicted before.
 
-At least Microsoft is consistent with its naming. There's something comical in the fact that the only three supported languages in .NET are called CSharp, F# and VB.NET. Or was it C#, fsharp and Visual Basic? Anyway, it was three of those!
+At least Microsoft is consistent with its naming. There's something comical in the fact that the only three supported languages in .NET are called CSharp, F# and VB.NET. Or was it C#, F Sharp and Visual Basic? Anyway, it was some combination of the three!
 
 ## Final words
 
-C#, F# and the whole of .NET is a great development platform, but it has some serious problems which are holding new developers back. I've been working with it for many years and mostly enjoyed myself, however I won't lie and say that things haven't gotten a bit out of hand lately. There is something to tell that after 20 years of .NET the programming community hasn't seen anything new or noteworthy since the creation of [stackoverflow.com](https://stackoverflow.com):
+C#, F# and the whole of .NET is a great development platform to code, but it is also getting overly complex which is holding new developers back. I've been working with it for many years and mostly enjoyed myself, however I won't lie and say that things haven't gotten a bit out of hand lately. There is something to tell that after 20 years of .NET the programming community hasn't seen anything new or noteworthy since the creation of [stackoverflow.com](https://stackoverflow.com):
 
 [![Famous .NET website question on Quora](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/famous-dotnet-websites.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/famous-dotnet-websites.png)
 
-Meanwhile we've seen hugely prominent products being built with other languages spanning across many domains such as developer technologies ([Docker](https://www.docker.com), [Kubernetes](https://kubernetes.io), [Prometheus](https://github.com/prometheus)) to smaller static site generators ([Hugo](https://gohugo.io)) or some of the most successful FinTech startups ([Monzo](https://monzo.com) challenger bank).
+Meanwhile we've seen very prominent products being built with other languages spanning across many domains such as developer technologies ([Docker](https://www.docker.com), [Kubernetes](https://kubernetes.io), [Prometheus](https://github.com/prometheus)) to smaller static site generators ([Hugo](https://gohugo.io)) or some of the most successful FinTech startups ([Monzo](https://monzo.com) challenger bank).
 
-.NET is great for experienced developers like myself who grew up with the platform as it matured, but I'm not sure if I'd have as much fun learning it today than when I did in 2008. Today's complexity allows me to charge a great amount for my time, but I wouldn't recommend .NET to a friend or build my own company on the base of it. It's disheartening to say, but .NET feels more like a product designed for B2B, whereas programming languages such as Go feel more like B2C. There is power in simplicity.
+.NET is a great technology for experienced developers who grew up with the platform as it matured, but I'm not sure if I'd still enjoy learning it today as much as I did in 2008. Whilst the complexity allows me to charge great fees to develop in .NET, I'd probably not recommend to it to a friend who wants to learn how to code or build my own startup on the grounds of it.
 
-The future success of .NET will be based on the developers which it can attract today. The success of .NET in ten years will be based on the decisions made today.
+The future success of .NET will be based on the developers which it can attract today. The success of .NET in ten years will be based on the decisions made today. I hope those decisions will be made wisely.
