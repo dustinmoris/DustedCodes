@@ -225,12 +225,16 @@ At least Microsoft is consistent with its naming. There's something comical in t
 
 ## Final words
 
-C#, F# and the whole of .NET is a great development platform to code, but it is also getting overly complex which is holding new developers back. I've been working with it for many years and mostly enjoyed myself, however I won't lie and say that things haven't gotten a bit out of hand lately. There is something to tell that after 20 years of .NET the programming community hasn't seen anything new or noteworthy since the creation of [stackoverflow.com](https://stackoverflow.com):
+C#, F# and the whole of .NET is a great development platform to code, but it has also become overly complex which is holding new developers back. I've been working with it for many years and mostly enjoyed myself, however I won't lie and say that things haven't gotten a little bit out of hand lately. There is something to tell that after having .NET for 20 years the programming community still hasn't seen anything new or noteworthy since the creation of [stackoverflow.com](https://stackoverflow.com):
 
 [![Famous .NET website question on Quora](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/famous-dotnet-websites.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/famous-dotnet-websites.png)
 
-Meanwhile we've seen very prominent products being built with other languages spanning across many domains such as developer technologies ([Docker](https://www.docker.com), [Kubernetes](https://kubernetes.io), [Prometheus](https://github.com/prometheus)) to smaller static site generators ([Hugo](https://gohugo.io)) or some of the most successful FinTech startups ([Monzo](https://monzo.com) challenger bank).
+Meanwhile we've seen very prominent products being built with other languages spanning across multiple domains such as developer technologies ([Docker](https://www.docker.com), [Kubernetes](https://kubernetes.io), [Prometheus](https://github.com/prometheus)) to smaller static website generators ([Hugo](https://gohugo.io)) or some of the most successful FinTech startups ([Monzo](https://monzo.com)) in the world.
 
-.NET is a great technology for experienced developers who grew up with the platform as it matured, but I'm not sure if I'd still enjoy learning it today as much as I did in 2008. Whilst the complexity allows me to charge great fees to develop in .NET, I'd probably not recommend to it to a friend who wants to learn how to code or build my own startup on the grounds of it.
+.NET is a great technology for experienced developers who grew up with the platform as it matured, but I'm not sure if I'd still enjoy learning it today as much as I did in 2008. Whilst the complexity allows me to charge great fees to clients for writing software in .NET, I'd probably not recommend it to a friend who wants to learn how to code or I wouldn't use it for building my own startup from the grounds up.
 
-The future success of .NET will be based on the developers which it can attract today. The success of .NET in ten years will be based on the decisions made today. I hope those decisions will be made wisely.
+The future success of .NET will be based on the developers which it can attract today.
+
+The success of .NET in ten years will be based on the decisions made today.
+
+I hope those decisions will be made wisely!
