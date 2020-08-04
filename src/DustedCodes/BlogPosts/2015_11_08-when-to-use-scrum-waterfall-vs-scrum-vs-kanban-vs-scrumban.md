@@ -139,7 +139,7 @@
 <h2>Scrumban</h2>
 
 <p>While Scrum is a continuous sequence of time boxed iterations, Kanban has only one continuous flow. The repetition of process establishes routine and familarity. A well accustomed team could struggle to adopt Kanban and give up the routine.</p>
-<p>This is where <a href="http://leansoftwareengineering.com/ksse/scrum-ban/">Scrumban</a> comes into play, initially invented to help teams with the transition from Scrum to Kanban. In Scrumban a team primarily uses Scrum as their chosen way of work and mixes in concepts from Kanban to allow for specialised roles, work policies and a better flow.</p>
+<p>This is where <a href="https://www.agilealliance.org/what-is-scrumban/">Scrumban</a> comes into play, initially invented to help teams with the transition from Scrum to Kanban. In Scrumban a team primarily uses Scrum as their chosen way of work and mixes in concepts from Kanban to allow for specialised roles, work policies and a better flow.</p>
 <p>One fundamental idea of Scrumban is to help teams and organizations develop their own set of Scrum-based processes and practices that work best for them.</p>
 
 <h2>Which process will you pick?</h2>

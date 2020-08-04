@@ -10,7 +10,7 @@ However, when I started to migrate from C# to NancyFx and F# I had quite some di
 
 As I said before, some of the stuff is **really simple** and probably super easy for an experienced F# developer, but for me as a beginner it was not that obvious in the beginning.
 
-A great start on NancyFx and F# is [Michal Franc's blog post](http://www.mfranc.com/blog/f-and-nancy-beyond-hello-world/), where he shows how to register a normal route in NancyFx with F#:
+A great start on NancyFx and F# is [Michal Franc's blog post](https://mfranc.com/f/f-and-nancy-beyond-hello-world/), where he shows how to register a normal route in NancyFx with F#:
 
 <pre><code>type MyModule() as this =
     inherit NancyModule()

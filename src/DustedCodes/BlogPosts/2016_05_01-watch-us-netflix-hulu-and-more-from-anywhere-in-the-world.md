@@ -77,7 +77,7 @@ On the third step there's a bunch of information available, but luckily the defa
 
 <img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-01/26141065614_171cd62fa3_o.png" alt="aws-ec2-instance-advanced-details, Image by Dustin Moris Gorski" class="half-width">
 
-You will be presented with a text field which can be used to specify additional commands which will run when launching the new EC2 instance. We will add a few commands which will automatically install and configure the [Tinyproxy](https://tinyproxy.github.io/) software. Tinyproxy is a [free and open source proxy server](https://en.wikipedia.org/wiki/Tinyproxy) for POSIX operating systems.
+You will be presented with a text field which can be used to specify additional commands which will run when launching the new EC2 instance. We will add a few commands which will automatically install and configure the [Tinyproxy](https://tinyproxy.github.io/) software. Tinyproxy is a [free and open source proxy server](https://github.com/tinyproxy/tinyproxy) for POSIX operating systems.
 
 Copy the following code snippet into the text field:
 

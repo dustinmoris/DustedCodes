@@ -51,7 +51,7 @@ Here's a list of a some of the many awesome things that happened at Microsoft in
 - [Visual Studio Code, an open source free IDE for Windows, Mac and Linux](http://www.hanselman.com/blog/IntroducingVisualStudioCodeForWindowsMacAndLinux.aspx)
 - [PowerShell became open source and available on Linux](http://open.microsoft.com/2016/08/19/powershell-is-open-sourced-and-available-on-linux/)
 - [Microsoft made SQL Server available on Linux](https://techcrunch.com/2016/03/07/microsoft-is-bringing-sql-server-to-linux/)
-- [Microsoft joined the Linux Foundation](https://www.linuxfoundation.org/announcements/microsoft-fortifies-commitment-to-open-source-becomes-linux-foundation-platinum)
+- [Microsoft joined the Linux Foundation](https://www.linuxfoundation.org/press-release/2016/11/microsoft-fortifies-commitment-to-open-source-becomes-linux-foundation-platinum-member/)
 - [Microsoft even offers certification for Linux on Azure](http://news.microsoft.com/2015/12/09/microsoft-offers-new-certification-for-linux-on-azure/#hdYyJXK4A7pp2Eh2.97)
 - [Microsoft acquired Xamarin](http://blogs.microsoft.com/blog/2016/02/24/microsoft-to-acquire-xamarin-and-empower-more-developers-to-build-apps-on-any-device/)
 - [Two months later Microsoft open sourced Xamarin's SDK](http://www.zdnet.com/article/microsoft-open-sources-xamarins-software-development-kit/)

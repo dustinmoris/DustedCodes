@@ -213,7 +213,7 @@ This is a perfect example where F# can provide a lot of value with very few line
 
 C# developers are not very used to model real world concepts like a `CustomerId`, an `OrderId` or an `EmailAddress` into their own types, because the language doesn't make it easy. These objects are often represented by very primitive types such as `string` or `int` and are being handled very loosely by the domain.
 
-If you would like to learn more about [Domain Driven Design](https://en.wikipedia.org/wiki/Domain-driven_design) in F# then I would highly recommend to watch [Scott Wlaschin's Domain Modeling Made Functional](https://vimeo.com/223983252) presentation from NDC London. This is a fantastic talk with lots of food for thought and also the source of some of the ideas which I have introduced in this article:
+If you would like to learn more about [Domain Driven Design](https://en.wikipedia.org/wiki/Domain-driven_design) in F# then I would highly recommend to watch [Scott Wlaschin's Domain Modeling Made Functional](https://www.youtube.com/watch?v=Up7LcbGZFuo) presentation from NDC London. This is a fantastic talk with lots of food for thought and also the source of some of the ideas which I have introduced in this article:
 
 <iframe class="youTubeVideo" src="https://www.youtube.com/embed/Up7LcbGZFuo" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -431,7 +431,7 @@ There is this [famous slide](//www.slideshare.net/ScottWlaschin/fp-patterns-ndc-
 
 <iframe src="//www.slideshare.net/slideshow/embed_code/key/oCM5TxRgKh1vme?startSlide=15" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
 
-This slide deck is from Scott Wlaschin's [Functional programming design patterns](https://vimeo.com/113588389) talk which can be viewed on Vimeo.
+This slide deck is from Scott Wlaschin's [Functional programming design patterns](https://www.youtube.com/watch?v=srQt1NAHYC0) talk which can be viewed on Vimeo.
 
 ### To hell with interfaces
 
