@@ -175,7 +175,7 @@ module Views =
                 nav [] [
                     div [ _id "inner-nav" ] [
                         ul [ _id "social-links" ] [
-                            li [] [ iconLink "https://www.facebook.com/dustinmoris.gorski" "Connect on Facebook" Icons.facebook ]
+                            // li [] [ iconLink "https://www.facebook.com/dustinmoris.gorski" "Connect on Facebook" Icons.facebook ]
                             li [] [ iconLink "https://twitter.com/dustinmoris" "Follow on Twitter" Icons.twitter ]
                             li [] [ iconLink "https://www.linkedin.com/in/dustinmoris/" "Connect on LinkedIn" Icons.linkedIn ]
                             li [] [ iconLink "https://www.instagram.com/dustedtravels/" "Follow on Instagram" Icons.instagram ]

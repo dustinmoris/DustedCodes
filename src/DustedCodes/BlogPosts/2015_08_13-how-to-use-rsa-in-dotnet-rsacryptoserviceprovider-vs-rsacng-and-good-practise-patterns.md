@@ -173,7 +173,7 @@
 <ol>
     <li>MyClass is not the owner of the RSA instance. It didn't create it and therefore shouldn't dispose it.</li>
     <li>The RSA instance could have been injected somewhere else as well, therefore disposing it would cause a bug.</li>
-    <li>There is a <a href="http://dailydotnettips.com/2014/01/15/benefit-of-using-in-dispose-for-net-objects-why-and-when/">benefit of the using statement</a> and the constructor injection pattern doesn't allow me to make use of it</li>
+    <li>There is a <a href="http://dailydotnettips.com/benefit-of-using-in-dispose-for-net-objects-why-and-when/">benefit of the using statement</a> and the constructor injection pattern doesn't allow me to make use of it</li>
 </ol>
 <p>This means we are better off by using a different dependency injection pattern. In this instance the factory pattern is more suitable:</p>
 <pre><code>public interface IRSAFactory

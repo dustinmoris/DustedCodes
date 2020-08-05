@@ -103,7 +103,7 @@ You can always open a JMeter results file with one of the existing listeners fro
 
 If you want to analyse and evaluate your results from an automated build then you will have to do some more scripting. It mostly depends what type of analysis you would like to perform, but in most cases you will be able to extract the relevant information with only a few simple commands.
 
-For that purpose you could use PowerShell as the native language on Windows machines or if you are looking for something more portable then you could write a small C# or F# library, which can be either invoked directly from tools like [CAKE](http://cakebuild.net/), [FAKE](http://fsharp.github.io/FAKE/), the [FSI](https://msdn.microsoft.com/en-us/visualfsharpdocs/conceptual/fsharp-interactive-%5Bfsi.exe%5D-reference) or from a console application build on Mono. Just to give you a taster of how simple that can be you an check out [this small F# application](https://github.com/dustinmoris/JMeterResultsAnalyser).
+For that purpose you could use PowerShell as the native language on Windows machines or if you are looking for something more portable then you could write a small C# or F# library, which can be either invoked directly from tools like [CAKE](http://cakebuild.net/), [FAKE](http://fsharp.github.io/FAKE/), the [FSI](https://docs.microsoft.com/en-us/dotnet/fsharp/tutorials/fsharp-interactive/) or from a console application build on Mono. Just to give you a taster of how simple that can be you an check out [this small F# application](https://github.com/dustinmoris/JMeterResultsAnalyser).
 
 ## BlazeMeter for everyone
 

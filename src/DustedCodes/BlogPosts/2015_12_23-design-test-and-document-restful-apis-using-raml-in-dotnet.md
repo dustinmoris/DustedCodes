@@ -34,8 +34,8 @@ If you have worked with [Swagger](http://swagger.io/) or [API Blueprint](https:/
 
 At the time of writing there are two public specifications:
 
--   [RAML 0.8](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md)
--   [RAML 1.0 RC](http://docs.raml.org/specs/1.0/)
+-   [RAML 0.8](https://github.com/raml-org/raml-spec/blob/master/versions/raml-08/raml-08.md)
+-   [RAML 1.0 RC](https://github.com/raml-org/raml-spec/blob/master/versions/raml-10/raml-10.md/)
 
 In this blog post I will be using RAML 0.8 and assume that you are familiar enough with the spec to follow my simple examples as part of the demo.
 

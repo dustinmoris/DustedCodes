@@ -66,7 +66,7 @@ Everything should compile successfully and you should see a Hello-World Giraffe 
 
 <h2 id="nested-routing">Nested routing</h2>
 
-Another cool feature which has been added by [Stuart Lang](slang25) is nested routing.
+Another cool feature which has been added by [Stuart Lang](https://twitter.com/stuartblang) is nested routing.
 
 The new `subRoute` handler allows users to create nested routes which can be very useful when logically grouping certain paths.
 
@@ -90,7 +90,7 @@ There is also a [`subRouteCi`](https://github.com/dustinmoris/Giraffe#subrouteci
 
 <h2 id="razor-views">Razor views</h2>
 
-Next is the support of Razor views in Giraffe. [Nicol&aacute;s Herrera](https://github.com/nicolocodev) developed the first version of Razor views by utilising the [RazorLight](https://github.com/toddams/RazorLight) engine. Shortly after that I realised that by referencing the `Microsoft.AspNetCore.Mvc` NuGet package I can easily re-use the original Razor engine in order to offer a more complete and original Razor experience in Giraffe as well. While under the hood the engine changed from [RazorLight](https://www.nuget.org/packages/RazorLight/) to [ASP.NET Core MVC](https://github.com/aspnet/Mvc/tree/dev/src/Microsoft.AspNetCore.Mvc.Razor) the functionality remained more or less the same as implemented by Nicol&aacute;s in the first place.
+Next is the support of Razor views in Giraffe. [Nicol&aacute;s Herrera](https://github.com/nicolocodev) developed the first version of Razor views by utilising the [RazorLight](https://github.com/toddams/RazorLight) engine. Shortly after that I realised that by referencing the `Microsoft.AspNetCore.Mvc` NuGet package I can easily re-use the original Razor engine in order to offer a more complete and original Razor experience in Giraffe as well. While under the hood the engine changed from [RazorLight](https://www.nuget.org/packages/RazorLight/) to [ASP.NET Core MVC](https://github.com/dotnet/aspnetcore) the functionality remained more or less the same as implemented by Nicol&aacute;s in the first place.
 
 In order to enable Razor views in Giraffe you have to register it's dependencies first:
 
@@ -123,7 +123,7 @@ let app =
         route  "/" >=> razorHtmlView "Index" model
     ]</code></pre>
 
-A more involved example with a layout page and a partial view can be found in the [SampleApp](https://github.com/dustinmoris/Giraffe/tree/develop/samples/SampleApp/SampleApp/views) project in the [Giraffe repository](https://github.com/dustinmoris/Giraffe).
+A more involved example with a layout page and a partial view can be found in the [SampleApp](https://github.com/giraffe-fsharp/samples/blob/master/demo-apps/SampleApp/SampleApp/HtmlViews.fs) project in the [Giraffe samples repository](https://github.com/giraffe-fsharp/samples).
 
 ### Using DotNet Watcher to reload the project on Razor page changes
 
@@ -163,7 +163,7 @@ For me it's really about making smart choices and I truly believe that the stren
 
 <h2 id="functional-html-view-engine">Functional HTML view engine</h2>
 
-Speaking of the Razor view engine, another really cool feature which has been added to Giraffe is a new programmatic way of creating views. [Florian Verdonck](https://github.com/nojaf) helped me a lot with Giraffe over the last few weeks and one of his contributions was to port [Suave's experimental Html engine](https://github.com/SuaveIO/suave/blob/master/src/Experimental/Html.fs) to Giraffe.
+Speaking of the Razor view engine, another really cool feature which has been added to Giraffe is a new programmatic way of creating views. [Florian Verdonck](https://github.com/nojaf) helped me a lot with Giraffe over the last few weeks and one of his contributions was to port [Suave's experimental Html engine](https://github.com/SuaveIO/suave/blob/master/src/Suave.Experimental/Html.fs) to Giraffe.
 
 I think the best way to describe the new `Giraffe.HtmlEngine` is by showing some code:
 
