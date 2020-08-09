@@ -140,7 +140,7 @@ module Views =
                     openGraph "title"        pageTitle
                     openGraph "url"          permalink.Value
                     openGraph "type"         "website"
-                    openGraph "image"        (Url.storage "images/website/opengraph.jpeg")
+                    openGraph "image"        (Url.storage "images/website/open-graph-2.jpg")
                     openGraph "image:alt"    Env.blogTitle
                     openGraph "image:width"  "1094"
                     openGraph "image:height" "729"
