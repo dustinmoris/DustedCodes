@@ -412,6 +412,7 @@ body > footer {
 }
 
 body > header {
+    font-size: 1.2em;
     order: 0;
 }
 
