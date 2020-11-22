@@ -2,7 +2,7 @@ namespace DustedCodes
 
 [<RequireQualifiedAccess>]
 module Icons =
-    open Giraffe.GiraffeViewEngine
+    open Giraffe.ViewEngine
 
     let private svg (width : float) (height : float) =
         tag "svg" [

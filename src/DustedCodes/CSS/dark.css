@@ -1,7 +1,7 @@
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg-color: #2c2f2f;
-        --bg-color-dark: #2c2f2f;
+        --bg-color: #2f2f2f;
+        --bg-color-dark: #2f2f2f;
         --table-odd-bg-color: #3f3f3f;
         --table-even-bg-color: #2f3131;
         --thin-border-color: rgba(255, 255, 255, 0.1);

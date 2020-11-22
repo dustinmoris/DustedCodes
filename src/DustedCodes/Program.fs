@@ -55,7 +55,7 @@ module Program =
            .UseWhen(
                 (fun _ -> Env.isProduction),
                 fun x ->
-                    x.UseRequestBasedLogWriter(
+                    x.UseRequestScopedLogWriter(
                         fun ctx ->
                             Mute.When(muteFilter)
                                 .Otherwise(
@@ -65,7 +65,9 @@ module Program =
                                         .AsLogWriter()))
                     |> ignore)
            .UseGiraffeErrorHandler(WebApp.errorHandler)
-           .UseRequestLogging(Env.enableRequestLogging, false)
+           .UseWhen(
+                (fun _ -> Env.enableRequestLogging),
+                fun x -> x.UseRequestLogging() |> ignore)
            .UseForwardedHeaders()
            .UseHttpsRedirection(Env.domainName)
            .UseTrailingSlashRedirection()

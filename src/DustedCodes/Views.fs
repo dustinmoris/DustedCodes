@@ -4,7 +4,7 @@ namespace DustedCodes
 module Views =
     open System
     open System.Net
-    open Giraffe.GiraffeViewEngine
+    open Giraffe.ViewEngine
 
     // ---------------------------------
     // Helper functions
@@ -485,7 +485,7 @@ module Views =
             aside [ _id "contact" ] [
                 yield! [
                     h1 [] [ rawText "Contact Me" ]
-                    p [] [ rawText "Please fill out this form to send me a message and I'll get back to you soon." ]
+                    p [] [ rawText "Please fill out this form to send me a message and I'll get back to you as soon as I can." ]
                 ]
                 yield!
                     match msgResult with
