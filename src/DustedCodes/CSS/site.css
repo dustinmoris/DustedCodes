@@ -221,6 +221,7 @@ blockquote > header > h3,
 blockquote > header > h4,
 blockquote > header > h5,
 blockquote > header > h6 {
+    font-family: 'Nunito', sans-serif;
     margin-top: 0;
 }
 

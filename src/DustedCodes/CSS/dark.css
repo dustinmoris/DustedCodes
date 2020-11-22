@@ -10,7 +10,7 @@
     }
 
     body {
-        color: #ddd;
+        color: #d0d0d0;
     }
 
     body > header h1 > span  {
@@ -89,7 +89,7 @@
     }
 
     p {
-        color: #c1c1c1;
+        color: #b1b1b1;
     }
 
     a {
