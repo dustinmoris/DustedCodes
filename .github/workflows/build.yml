@@ -17,7 +17,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.201
+          dotnet-version: 5.0.100
       - name: Restore
         run: dotnet restore src/DustedCodes/DustedCodes.fsproj
       - name: Build

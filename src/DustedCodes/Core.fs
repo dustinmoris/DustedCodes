@@ -387,7 +387,7 @@ module Feed =
 
 [<RequireQualifiedAccess>]
 module RssFeed =
-    open Giraffe.GiraffeViewEngine
+    open Giraffe.ViewEngine
 
     let create (channel : Feed.Channel) =
         let title       = tag "title"

@@ -1,7 +1,5 @@
 namespace DustedCodes
 
-open Google.Cloud.Datastore.V1
-
 [<RequireQualifiedAccess>]
 module HttpHandlers =
     open System
@@ -13,7 +11,7 @@ module HttpHandlers =
     open Microsoft.Net.Http.Headers
     open FSharp.Control.Tasks.V2.ContextInsensitive
     open Giraffe
-    open Giraffe.GiraffeViewEngine
+    open Giraffe.ViewEngine
     open Logfella
 
     // ---------------------------------
@@ -26,7 +24,7 @@ module HttpHandlers =
     let private svgHandler (svg : XmlNode) : HttpHandler =
         allowCaching (TimeSpan.FromDays 30.0)
         >=> setHttpHeader "Content-Type" "image/svg+xml"
-        >=> setBodyFromString (svg |> renderXmlNode)
+        >=> setBodyFromString (svg |> RenderView.AsString.xmlNode)
 
     let logo =
         svgHandler Icons.logo
@@ -136,7 +134,7 @@ module HttpHandlers =
                 let cache = ctx.GetService<IMemoryCache>()
 
                 match cache.TryGetValue cacheKey with
-                | true, view -> return! htmlView (view :?> GiraffeViewEngine.XmlNode) next ctx
+                | true, view -> return! htmlView (view :?> XmlNode) next ctx
                 | false, _   ->
                     let! mostViewedPages =
                         GoogleAnalytics.getMostViewedPagesAsync
@@ -190,7 +188,7 @@ module HttpHandlers =
             Env.blogLanguage
             "Giraffe (https://github.com/giraffe-fsharp/Giraffe)"
         |> RssFeed.create
-        |> ViewBuilder.buildXmlNode rssFeed
+        |> RenderView.IntoStringBuilder.xmlNode rssFeed
 
         allowCaching (TimeSpan.FromDays 1.0)
         >=> setHttpHeader "Content-Type" "application/rss+xml"
