@@ -3,43 +3,27 @@
 -------------------------- */
 
 :root {
-    --bg-color: #fff;
-    --bg-color-dark: #fff;
-    --fg-color: #444;
-
-    --link-fg-color: #f1f1f1;
-    --link-hover-fg-color: #f1f1f1;
-    --link-bg-color: #5d2de3;
-    --link-hover-bg-color: #5614ff;
-
-    --nav-link-fg-color: #333;
-    --logo-fill-color: #000;
-
-    --thin-border-color: #efefef;
-    --thiner-border-color: #fafafa;
-
-    --inline-code-bg-color: #f5f5f5;
-    --inline-code-fg-color: rgb(204, 34, 85);
-    --block-code-bg-color: #393434;
-    --block-code-fg-color: #efefef;
-    --quote-bg-color: #f2f2f2;
-    --quote-fg-color: #444;
-    --quote-border-color: #ccc;
-    --key-border-color: #888;
-    --header-default-fg-color: #222;
-    --header-accent-fg-color: #333;
-    --paragraph-fg-color: #555;
-    --table-odd-bg-color: #f6f6f6;
-    --table-even-bg-color: #fff;
+    --col-dark: #2f2f2f;
+    --col-faint: rgba(200, 200, 200, 0.1);
+    --col-faded: rgba(255, 255, 255, 0.4);
+    --col-normal: rgba(255, 255, 255, 0.6);
+    --col-light: rgba(255, 255, 255, 0.8);
+    --col-strong: #fff;
+    --col-accent: #ffdd00;
+    --col-accent-dark: #ffdd00cc;
+    --col-code: #ea9797;
+    --col-bmc: #ffdd00;
 
     --success-fg-color: #fff;
     --success-bg-color: #88c082;
     --error-fg-color: #fff;
     --error-bg-color: #b96363;
 
-    --label-fg-color: #777;
-    --input-fg-color: #333;
-    --placeholder-fg-color: #777;
+    --font-logo: 'Nunito', sans-serif;
+    --font-code: 'Roboto Mono', monospace;
+    --font-text: 'Nunito Sans', sans-serif;
+    --font-special: 'Nunito', sans-serif;
+    --font-accent: 'Martel', serif;
 }
 
 /* --------------------------
@@ -51,7 +35,7 @@ pre,
 code,
 kbd,
 samp {
-    font-family: monospace, monospace;
+    font-family: var(--font-code);
     font-size: 1em;
 }
 
@@ -65,34 +49,29 @@ body {
     align-content: flex-start;
     margin: 0;
     padding: 0;
-    font-family: 'Nunito Sans', sans-serif;
     -ms-word-wrap: break-word;
     word-wrap: break-word;
     font-size: 1.2em;
-    background-color: var(--bg-color);
-    color: var(--fg-color);
+    font-family: var(--font-text);
+    background-color: var(--col-dark);
+    color: var(--col-normal);
 }
 
-h2, h3, h4, h5, h6 {
-    font-family: 'Martel', serif;
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-text);
     font-weight: 700;
-    color: var(--header-default-fg-color);
+    color: var(--col-light);
 }
 
 h1 {
     margin: 1em 0;
-    font-family: 'Nunito Sans', sans-serif;
     font-size: 3.4em;
-    font-weight: 700;
-    line-height: 1.5em;
     text-align: center;
-    color: var(--header-accent-fg-color);
 }
 
 h2 {
     font-size: 2.6em;
     font-weight: 800;
-    color: var(--header-accent-fg-color);
 }
 
 h3 {
@@ -111,20 +90,18 @@ h5 {
 
 h6 {
     font-size: .8em;
-    font-family: 'Nunito', sans-serif;
     font-weight: 600;
     letter-spacing: 1px;
     margin-bottom: .5em;
-    color: var(--label-fg-color);
 }
 
 p {
     line-height: 2em;
-    color: var(--paragraph-fg-color);
+    color: var(--col-normal);
 }
 
 a {
-    color: var(--link-bg-color);
+    color: var(--col-accent-dark);
     text-decoration: none;
 }
 
@@ -137,14 +114,14 @@ code {
     padding: .1em .4em;
     -ms-border-radius: 4px;
     border-radius: 4px;
-    font-family: 'Roboto Mono', monospace;
+    font-family: var(--font-code);
     font-size: .8em;
     line-height: 1.8em;
     text-align: left;
     white-space: pre-wrap;
     word-wrap: break-word;
-    background-color: var(--inline-code-bg-color);
-    color: var(--inline-code-fg-color);
+    background-color: var(--col-faint);
+    color: var(--col-code);
 }
 
 pre {
@@ -156,8 +133,8 @@ pre > code {
     display: block;
     padding: .5em 0 .5em 1em;
     font-size: .75em;
-    background-color: var(--block-code-bg-color);
-    color: var(--block-code-fg-color);
+    background-color: var(--col-faint);
+    color: var(--col-normal);
 }
 
 h6 + pre {
@@ -176,7 +153,8 @@ img {
 }
 
 kbd {
-    border: 1px solid var(--key-border-color);
+    border: 1px solid var(--col-faded);
+    font-family: var(--font-code);
     padding: .2em .5em;
     -ms-border-radius: 3px;
     border-radius: 3px;
@@ -197,18 +175,18 @@ th:first-child {
     text-align: left;
 }
 
-tr:nth-child(odd)  { background-color: var(--table-odd-bg-color); }
-tr:nth-child(even) { background-color: var(--table-even-bg-color); }
+tr:nth-child(odd)  { background-color: var(--col-dark); }
+tr:nth-child(even) { background-color: var(--col-faint); }
 
 blockquote {
-    color: var(--quote-fg-color);
-    background: var(--quote-bg-color);
-    border-left: 5px solid var(--quote-border-color);
+    color: var(--col-normal);
+    background: var(--col-faint);
+    border-left: 5px solid var(--col-light);
     margin: 1.5em 0;
     padding: .6em 1em;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+    border-radius: 3px 0 0 3px;
+    -moz-border-radius: 3px 0 0 3px;
+    -webkit-border-radius: 3px 0 0 3px;
 }
 
 blockquote > header {
@@ -221,7 +199,6 @@ blockquote > header > h3,
 blockquote > header > h4,
 blockquote > header > h5,
 blockquote > header > h6 {
-    font-family: 'Nunito', sans-serif;
     margin-top: 0;
 }
 
@@ -244,7 +221,7 @@ blockquote > footer {
 }
 
 blockquote > footer > cite {
-    font-family: 'Nunito', sans-serif;
+    font-family: var(--font-text);
     font-size: .85em;
     font-weight: 600;
     font-style: italic;
@@ -256,6 +233,10 @@ blockquote > footer > cite > a:before {
 
 article {
     font-size: 1em;
+}
+
+article > header {
+    margin-bottom: 3em;
 }
 
 article li {
@@ -270,12 +251,11 @@ form {
 label {
     display: block;
     margin: 2em .2em .3em .2em;
-    color: var(--label-fg-color);
-    font-size: .65em;
+    font-size: .7em;
     text-transform: uppercase;
-    letter-spacing: .5px;
     font-weight: 300;
-    font-family: 'Nunito Sans', sans-serif;
+    font-family: var(--font-special);
+    color: var(--col-normal);
 }
 
 button {
@@ -287,22 +267,36 @@ button {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    margin-top: 2em;
     width: 100%;
-    padding: 1em 1em;
-    border-radius: 6px;
-    -moz-border-radius: 6px;
-    border: none;
+    padding: .75em 1em;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
     text-transform: uppercase;
     font-weight: 700;
     font-size: 1.1em;
     cursor: pointer;
-    background: var(--link-bg-color);
-    color: var(--link-fg-color);
+    font-family: var(--font-text);
+    border: 2px solid var(--col-accent-dark);
+    background: var(--col-dark);
+    color: var(--col-accent-dark);
 }
 
 button:hover {
-    background: var(--link-hover-bg-color);
-    color: var(--link-hover-fg-color);
+    border: 2px solid var(--col-strong);
+    background: var(--col-faint);
+    color: var(--col-strong);
+}
+
+button svg {
+    width: 40px;
+    height: 40px;
+    fill: var(--col-accent-dark);
+    margin-right: 20px;
+}
+
+button:hover svg {
+    fill: var(--col-strong);
 }
 
 input, textarea, button {
@@ -318,14 +312,13 @@ textarea {
     -webkit-box-sizing: border-box;
     width: 100%;
     margin: 0;
-    padding: 1em;
-    border: 1px solid #e1e1e1;
+    padding: .75em;
+    border: 2px solid var(--col-faint);
     border-radius: 4px;
     -moz-border-radius: 4px;
     background: transparent;
-    font-family: 'Roboto Mono', sans-serif;
     font-size: 1em;
-    color: var(--input-fg-color);
+    color: var(--col-light);
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
     box-shadow: none;
@@ -340,35 +333,35 @@ input[type=tel]:focus,
 input[type=email]:focus,
 textarea:focus {
     outline: none;
-    border: 2px solid var(--link-bg-color);
+    border: 2px solid var(--col-light);
 }
 
 ::placeholder {
-    color: var(--placeholder-fg-color);
+    color: var(--col-faded);
     font-style: italic;
     font-weight: 400;
     font-size: .8em;
 }
 ::-webkit-input-placeholder {
-    color: var(--placeholder-fg-color);
+    color: var(--col-faded);
     font-style: italic;
     font-weight: 400;
     font-size: .8em;
 }
 ::-moz-placeholder {
-    color: var(--placeholder-fg-color);
+    color: var(--col-faded);
     font-style: italic;
     font-weight: 400;
     font-size: .8em;
 }
 :-ms-input-placeholder {
-    color: var(--placeholder-fg-color);
+    color: var(--col-faded);
     font-style: italic;
     font-weight: 400;
     font-size: .8em;
 }
 :-moz-placeholder {
-    color: var(--placeholder-fg-color);
+    color: var(--col-faded);
     font-style: italic;
     font-weight: 400;
     font-size: .8em;
@@ -385,11 +378,6 @@ iframe.youTubeVideo {
   Master page
 -------------------------- */
 
-body > header,
-body > nav {
-    background-color: var(--bg-color-dark);
-}
-
 body > main,
 #inner-nav ,
 #inner-header,
@@ -404,12 +392,12 @@ body > main,
 }
 
 #inner-header h2:hover {
-    color: var(--link-hover-bg-color);
+    color: var(--col-accent);
 }
 
 body > header,
 body > footer {
-    font-family: 'Nunito', sans-serif;
+    font-family: var(--font-text);
 }
 
 body > header {
@@ -423,8 +411,8 @@ nav {
 
 body > main {
     order: 2;
-    border-top: 1px solid var(--thin-border-color);
-    border-bottom: 1px solid var(--thin-border-color);
+    border-top: 1px solid var(--col-faint);
+    border-bottom: 1px solid var(--col-faint);
 }
 
 body > footer {
@@ -443,7 +431,7 @@ body > header a:link,
 body > header a:visited,
 body > header a:hover,
 body > header a:active {
-    color: var(--nav-link-fg-color);
+    color: var(--col-light);
     font-size: .6em;
     text-align: center;
     text-decoration: none;
@@ -460,43 +448,39 @@ body > header h1 > svg {
     margin: 0 7px 0 10px;
     width: 45px;
     height: 45px;
-    fill: var(--logo-fill-color);
+    fill: var(--col-strong);
 }
 
 body > header h1 > span {
-    color: var(--fg-color);
+    color: var(--col-light);
 }
 
 body > header h1 {
     margin: 0 0 .5em 0;
-    font-family: 'Nunito', sans-serif;
+    font-family: var(--font-logo);
     font-weight: 900;
     font-size: 2em;
 }
 
 body > header h2 {
     margin: 0;
-    font-family: 'Nunito', sans-serif;
+    font-family: var(--font-logo);
     font-size: .9em;
     font-weight: 400;
-    color: #bbb;
+    color: var(--col-normal);
     letter-spacing: .18em;
 }
 
 #inner-header a hgroup:hover {
-    color: var(--link-hover-bg-color);
+    color: var(--col-accent);
 }
 
 #inner-header a hgroup:hover h1 > svg {
-    fill: var(--link-hover-bg-color);
-}
-
-#inner-header a hgroup:hover h1 > span {
-    color: #222;
+    fill: var(--col-accent);
 }
 
 #inner-header a hgroup:hover h2 {
-    color: var(--link-hover-bg-color);
+    color: var(--col-accent);
 }
 
 #nav-links,
@@ -509,6 +493,7 @@ body > header h2 {
 
 #nav-links {
     margin: 2em 0 0 0;
+    font-family: var(--font-special);
 }
 
 #nav-links li,
@@ -521,7 +506,7 @@ body > header h2 {
     display: inline-block;
     margin: .3em 1em;
     padding: .3em .5em;
-    color: #666;
+    color: var(--col-light);
     font-size: .8em;
     font-weight: 600;
     text-align: center;
@@ -531,7 +516,7 @@ body > header h2 {
 
 #nav-links a:hover,
 #nav-links a:active {
-    color: var(--link-hover-bg-color);
+    color: var(--col-accent);
     text-decoration: none;
 }
 
@@ -540,14 +525,14 @@ body > header h2 {
 }
 
 #social-links svg {
-    fill: #ccc;
+    fill: var(--col-faded);
     width: 20px;
     height: 20px;
     padding: .3em;
 }
 
 #social-links svg:hover {
-    fill: var(--link-hover-bg-color);
+    fill: var(--col-accent);
 }
 
 #inner-footer {
@@ -559,8 +544,7 @@ body > header h2 {
 #inner-footer h5 {
     margin: 0;
     padding: 0;
-    color: #777;
-    font-family: 'Nunito', sans-serif;
+    color: var(--col-normal);
     font-size: .75em;
     font-weight: 700;
     word-spacing: 2px;
@@ -572,8 +556,8 @@ body > header h2 {
     margin: .5em 0;
     padding: 0;
     line-height: 1.4em;
-    color: #bbb;
-    font-family: 'Nunito', sans-serif;
+    color: var(--col-faded);
+    font-family: var(--font-text);
     font-weight: 300;
 }
 
@@ -585,6 +569,7 @@ body > header h2 {
 #blogpost-list {
     list-style: none;
     padding-left: 0;
+    margin-bottom: 2em;
 }
 
 #trending-list {
@@ -594,24 +579,30 @@ body > header h2 {
 #trending-list li,
 #blogpost-list li {
     line-height: 1.7em;
-    margin: 2em 0;
     text-align: center;
     padding-top: 2em;
-    border-top: 1px solid #eaeaea;
+    border-top: 1px solid var(--col-faint);
+    margin-top: 2em;
+}
+
+#trending-list li:first-child,
+#blogpost-list li:first-child {
+    border-top: none;
 }
 
 #trending-list li > div > a,
 #blogpost-list li > div > a {
     display: inline-block;
-    font-size: 1.3em;
+    font-size: 1.4em;
     font-weight: 600;
-    color: #666;
+    color: var(--col-light);
     margin-bottom: .7em;
 }
 
 #trending-list li > div > a:hover,
 #blogpost-list li > div > a:hover {
-    color: var(--link-hover-bg-color);
+    color: var(--col-accent-dark);
+    text-decoration: none;
 }
 
 #trending-list .blogpost-metadata,
@@ -647,63 +638,50 @@ body > header h2 {
 -------------------------- */
 
 .bmc-button {
-    display: inline-flex;
+    width: 100%;
+    display: flex;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    border: none;
-    border-radius: 5px;
-    margin: 1em 0;
+    border: 2px solid var(--col-bmc);
+    border-radius: 10px;
+    margin: 2em 0 2em 0;
     padding: .7em .5em;
     text-decoration: none;
-    background: #222;
-    color: #fff;
-}
-
-.bmc-button img {
-    height: 34px;
-    width: 35px;
-    margin-bottom: 1px ;
-    box-shadow: none;
-    border: none;
-    vertical-align: middle;
-}
-
-.bmc-button span {
-    margin: 0 1em 0 .5em;
-    font-family: 'Martel', serif;
+    background: var(--col-dark);
+    color: var(--col-bmc);
+    font-family: var(--font-accent);
+    justify-content: center;
+    align-items: center;
     font-style: italic;
     font-size: 1.4em;
     font-weight: 600;
-    letter-spacing: 0.6px;
 }
 
-.bmc-button:hover,
-.bmc-button:active,
-.bmc-button:focus {
-    text-decoration: none;
-    opacity: 0.85;
-    color: #ffffff;
-}
-
-.msg-button {
-    margin-top: 2em;
-}
-
-.msg-button svg {
-    width: 40px;
-    height: 40px;
-    fill: #fff;
+.bmc-button svg {
+    width: 35px;
+    height: 50px;
     margin-right: 20px;
+    fill: var(--col-bmc);
+}
+
+.bmc-button:hover {
+    border: 2px solid var(--col-strong);
+    background: var(--col-faint);
+    color: var(--col-strong);
+    text-decoration: none;
+}
+
+.bmc-button:hover svg {
+    fill: var(--col-strong);
 }
 
 .article-list > h3 {
     display: block;
     text-align: center;
-    font-family: 'Nunito', sans-serif;
+    font-family: var(--font-text);
     font-weight: 700;
     font-size: 1.6em;
     text-transform: uppercase;
-    color: #d8d8d8;
 }
 
 .article-list > ul {
@@ -725,36 +703,40 @@ body > header h2 {
     padding: 0;
     max-width: 510px;
     text-decoration: none;
-    color: #666;
+    color: var(--col-normal);
+    font-family: var(--font-text);
     font-size: 1em;
     font-weight: 400;
 }
 
 .article-list a:hover,
 .article-list a:active {
-    color: var(--link-hover-bg-color);
+    color: var(--col-accent-dark);
 }
 
 .blogpost-metadata {
-    margin: 0 0 2em 0;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    color: #aaa;
+    justify-content: center;
     font-size: .9em;
-    font-weight: 400;
-    font-family: 'Nunito', sans-serif;
+    font-weight: 300;
+    color: var(--col-normal);
 }
 
 .blogpost-metadata a {
-    color: #aaa;
+    color: var(--col-normal);
+}
+
+.blogpost-metadata a:hover {
+    color: var(--col-accent);
 }
 
 .blogpost-metadata svg {
-    width: 15px;
-    height: 15px;
-    margin-right: 5px;
-    fill: #aaa;
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+    fill: var(--col-faded);
 }
 
 .blogpost-metadata div {
@@ -800,14 +782,14 @@ body > header h2 {
 }
 
 .share-links svg {
-    fill: #aaa;
+    fill: var(--col-faded);
     width: 22px;
     height: 22px;
     padding: .6em;
 }
 
 .share-links svg:hover {
-    fill: var(--link-hover-bg-color);
+    fill: var(--col-accent);
 }
 
 .three-quarters {
@@ -822,17 +804,12 @@ body > header h2 {
     text-align: center;
 }
 
-.msg-subject {
-    font-weight: 700;
-    color: #555;
-}
-
 .footnote {
     margin: 1.5em 0;
     font-style: italic;
     font-weight: 300;
     font-size: .9em;
-    color: #999;
+    color: var(--col-text);
 }
 
 .success-msg {
@@ -877,8 +854,8 @@ body > header h2 {
 
     body > main {
         margin-top: 0;
-        border-top: 1px solid var(--thiner-border-color);
-        border-bottom: 1px solid var(--thiner-border-color);
+        border-top: 1px solid var(--col-faint);
+        border-bottom: 1px solid var(--col-faint);
     }
 
     main > article > header > h1 {
@@ -935,10 +912,5 @@ body > header h2 {
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
-    }
-
-    .bmc-button {
-        width: 100%;
-        display: flex;
     }
 }

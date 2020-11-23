@@ -1,7 +1,5 @@
 namespace DustedCodes
 
-open Google.Cloud.Datastore.V1
-
 [<RequireQualifiedAccess>]
 module HttpHandlers =
     open System

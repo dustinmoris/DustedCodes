@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="DotEnv.fs" />
     <Compile Include="Common.fs" />
     <Compile Include="Env.fs" />
     <Compile Include="Core.fs" />

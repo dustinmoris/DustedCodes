@@ -71,7 +71,6 @@ module Views =
             [
                 "CSS/fonts.css"
                 "CSS/site.css"
-                "CSS/dark.css"
                 "CSS/mobile.css"
             ]
 
@@ -389,10 +388,7 @@ module Views =
                         _target "_blank"
                         _href "https://www.buymeacoffee.com/dustinmoris"
                     ] [
-                        img [
-                            _src "https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
-                            _alt "Buy me a coffee"
-                        ]
+                        Icons.buyMeACoffee
                         span [] [ rawText "Buy me a coffee" ]
                     ]
                 ]
@@ -404,7 +400,7 @@ module Views =
             None
 
     let private sendMessageButton =
-        button [ _type "submit"; _class "msg-button" ] [
+        button [ _type "submit" ] [
             Icons.envelope
             span [] [
                 rawText "Send Message"
@@ -449,7 +445,6 @@ module Views =
                             _type "text"
                             _name "Subject"
                             _placeholder "Required"
-                            _class "msg-subject"
                             _value msg.Subject
                         ]
                     ]
