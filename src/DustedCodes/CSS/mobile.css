@@ -1,13 +1,11 @@
 @media all and (max-width: 640px) {
 
     body {
-        font-size: 1.05em;
+        font-size: 1.1em;
     }
 
     body > main {
         margin-top: 0;
-        border-top: 1px solid var(--thiner-border-color);
-        border-bottom: 1px solid var(--thiner-border-color);
     }
 
     main > article > header > h1 {
