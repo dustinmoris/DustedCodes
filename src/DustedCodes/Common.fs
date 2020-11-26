@@ -44,6 +44,7 @@ module Config =
         with _ -> None
 
     let environmentVar key =
+        DotEnv.init
         Environment.GetEnvironmentVariable key
         |> strOption
 

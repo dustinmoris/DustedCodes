@@ -733,8 +733,8 @@ body > header h2 {
 }
 
 .blogpost-metadata svg {
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
     margin-right: 10px;
     fill: var(--col-faded);
 }

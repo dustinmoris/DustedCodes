@@ -90,8 +90,10 @@ module HttpHandlers =
                 | Error err -> return! respond msg (Error err)
                 | Ok _      ->
                     let! captchaResult =
-                        ctx.Request.Form.["g-recaptcha-response"].ToString()
-                        |> Captcha.validate Env.googleCaptchaSecretKey
+                        ctx.Request.Form.["h-captcha-response"].ToString()
+                        |> Captcha.validate
+                            Env.captchaSiteKey
+                            Env.captchaSecretKey
                     match captchaResult with
                     | Captcha.ServerError err ->
                         Log.Critical(

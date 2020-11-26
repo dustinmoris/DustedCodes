@@ -459,8 +459,10 @@ module Views =
                     rawText "*) Fields marked with an asterisk are required."
                 ]
                 div [] [
-                    input [ _id "captchaSiteKey"; _type "hidden"; _value Env.googleCaptchaSiteKey ]
-                    div [ _id "captcha" ] []
+                    div [
+                        _class "h-captcha"
+                        attr "data-sitekey" Env.captchaSiteKey
+                        attr "data-theme" "dark" ] []
                     sendMessageButton
                 ]
             ]
@@ -496,12 +498,7 @@ module Views =
             (Some (sprintf "%s..." (Hire.content.Substring(0, 288))))
             (Some [
                 script [
-                    _src (sprintf "%s/captcha.js" Env.baseUrl)
-                    _async
-                    _defer
-                ] []
-                script [
-                    _src "https://www.google.com/recaptcha/api.js?onload=captchaOnload&render=explicit"
+                    _src "https://hcaptcha.com/1/api.js"
                     _async
                     _defer
                 ] []
