@@ -8,6 +8,7 @@ module Program =
     open Microsoft.Extensions.Hosting
     open Microsoft.Extensions.DependencyInjection
     open Giraffe
+    open Giraffe.EndpointRouting
     open Logfella
     open Logfella.LogWriters
     open Logfella.Adapters
@@ -47,6 +48,7 @@ module Program =
             .AddMemoryCache()
             .AddResponseCaching()
             .AddResponseCompression()
+            .AddRouting()
             .AddGiraffe()
         |> ignore
 
@@ -74,7 +76,10 @@ module Program =
            .UseStaticFiles()
            .UseResponseCaching()
            .UseResponseCompression()
-           .UseGiraffe WebApp.routes
+           .UseRouting()
+           .UseEndpoints(fun e -> e.MapGiraffeEndpoints(WebApp.endpoints))
+           .Use(WebApp.notFound)
+           |> ignore
 
     [<EntryPoint>]
     let main _ =

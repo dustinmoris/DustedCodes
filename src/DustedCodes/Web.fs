@@ -206,46 +206,51 @@ module WebApp =
     open System
     open Microsoft.Extensions.Logging
     open Giraffe
+    open Giraffe.EndpointRouting
 
-    let routes : HttpHandler =
-        choose [
-            GET_HEAD >=>
-                choose [
-                    // Static assets
-                    route  UrlPaths.``/logo.svg``   >=> HttpHandlers.logo
-                    routef "/bundle.%s.css"         (fun _ -> HttpHandlers.css)
+    let notFound = GiraffeMiddleware.create HttpHandlers.notFound
 
-                    // Health check
-                    route UrlPaths.``/ping``        >=> HttpHandlers.pingPong
-                    route UrlPaths.``/version``     >=> HttpHandlers.version
+    let endpoints : Endpoint list =
+        [
+            GET_HEAD [
+                // Static assets
+                route  UrlPaths.``/logo.svg``   HttpHandlers.logo
+                routef "/bundle.%s.css"         (fun _ -> HttpHandlers.css)
 
-                    // Debug
-                    if Env.enableErrorEndpoint then
-                        route UrlPaths.Debug.``/error`` >=> warbler (fun _ -> json(1/0))
+                // Health check
+                route UrlPaths.``/ping``        HttpHandlers.pingPong
+                route UrlPaths.``/version``     HttpHandlers.version
 
-                    // Content paths
-                    route    UrlPaths.``/``         >=> HttpHandlers.index
-                    routeCi  UrlPaths.``/about``    >=> HttpHandlers.about
-                    routeCi  UrlPaths.``/hire``     >=> HttpHandlers.hire
-                    routeCi  UrlPaths.``/trending`` >=> HttpHandlers.trending
+                // Debug
+                if Env.enableErrorEndpoint then
+                    route UrlPaths.Debug.``/error`` (warbler (fun _ -> json(1/0)))
 
-                    routeCi UrlPaths.``/feed/rss``  >=> HttpHandlers.rssFeed
-                    routeCi UrlPaths.``/feed/atom`` >=> HttpHandlers.atomFeed
+                // Content paths
+                route UrlPaths.``/``          HttpHandlers.index
+                route UrlPaths.``/about``     HttpHandlers.about
+                route UrlPaths.``/hire``      HttpHandlers.hire
+                route UrlPaths.``/trending``  HttpHandlers.trending
 
-                    // Deprecated URLs kept alive in order to not break
-                    // existing links in the world wide web
-                    routeCi  UrlPaths.Deprecated.``/archive`` >=> HttpHandlers.index
+                route UrlPaths.``/feed/rss``  HttpHandlers.rssFeed
+                route UrlPaths.``/feed/atom`` HttpHandlers.atomFeed
 
-                    // Keeping old links still working
-                    // (From observing 404 errors in GCP)
-                    routeCi "/demystifying-aspnet-mvc-5-error-pages"
-                    >=> redirectTo true "/demystifying-aspnet-mvc-5-error-pages-and-error-logging"
+                // Deprecated URLs kept alive in order to not break
+                // existing links in the world wide web
+                route UrlPaths.Deprecated.``/archive`` HttpHandlers.index
 
-                    routeCif UrlPaths.``/tagged/%s`` HttpHandlers.tagged
-                    routeCif UrlPaths.``/%s`` HttpHandlers.blogPost
-                ]
-            POST >=> routeCi UrlPaths.``/hire`` >=> HttpHandlers.contact
-            HttpHandlers.notFound ]
+                // Keeping old links still working
+                // (From observing 404 errors in GCP)
+                route
+                    "/demystifying-aspnet-mvc-5-error-pages"
+                    (redirectTo true "/demystifying-aspnet-mvc-5-error-pages-and-error-logging")
+
+                routef UrlPaths.``/tagged/%s`` HttpHandlers.tagged
+                routef UrlPaths.``/%s`` HttpHandlers.blogPost
+            ]
+            POST [
+                route UrlPaths.``/hire`` HttpHandlers.contact
+            ]
+        ]
 
     let errorHandler (ex : Exception) (logger : ILogger) =
         // Must use the Microsoft.Extensions.Logging.ILogger, because the Sentry
