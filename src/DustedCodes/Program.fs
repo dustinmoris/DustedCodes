@@ -67,9 +67,10 @@ module Program =
                                         .AsLogWriter()))
                     |> ignore)
            .UseGiraffeErrorHandler(WebApp.errorHandler)
-           .UseWhen(
-                (fun _ -> Env.enableRequestLogging),
-                fun x -> x.UseRequestLogging() |> ignore)
+           .UseRequestLogging(
+                fun cfg ->
+                    cfg.IsEnabled    <- Env.enableRequestLogging
+                    cfg.LogOnlyAfter <- false)
            .UseForwardedHeaders()
            .UseHttpsRedirection(Env.domainName)
            .UseTrailingSlashRedirection()
@@ -77,8 +78,8 @@ module Program =
            .UseResponseCaching()
            .UseResponseCompression()
            .UseRouting()
-           .UseEndpoints(fun e -> e.MapGiraffeEndpoints(WebApp.endpoints))
-           .Use(WebApp.notFound)
+           .UseGiraffe(WebApp.endpoints)
+           .UseGiraffe(HttpHandlers.notFound)
            |> ignore
 
     [<EntryPoint>]

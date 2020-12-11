@@ -9,7 +9,7 @@ module HttpHandlers =
     open Microsoft.AspNetCore.Http.Extensions
     open Microsoft.Extensions.Caching.Memory
     open Microsoft.Net.Http.Headers
-    open FSharp.Control.Tasks.V2.ContextInsensitive
+    open FSharp.Control.Tasks
     open Giraffe
     open Giraffe.ViewEngine
     open Logfella
@@ -207,8 +207,6 @@ module WebApp =
     open Microsoft.Extensions.Logging
     open Giraffe
     open Giraffe.EndpointRouting
-
-    let notFound = GiraffeMiddleware.create HttpHandlers.notFound
 
     let endpoints : Endpoint list =
         [

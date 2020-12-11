@@ -101,7 +101,7 @@ module GoogleAnalytics =
     open Google.Apis.AnalyticsReporting.v4
     open Google.Apis.Services
     open Google.Apis.AnalyticsReporting.v4.Data
-    open FSharp.Control.Tasks.V2.ContextInsensitive
+    open FSharp.Control.Tasks
 
     type PageStatistic =
         {
@@ -487,7 +487,7 @@ module Css =
 module Http =
     open System.Collections.Generic
     open System.Net.Http
-    open FSharp.Control.Tasks.V2.ContextInsensitive
+    open FSharp.Control.Tasks
 
     let postAsync (url : string) (data : IDictionary<string, string>) =
         task {
@@ -506,7 +506,7 @@ module Http =
 module Captcha =
     open System
     open System.Net
-    open FSharp.Control.Tasks.V2.ContextInsensitive
+    open FSharp.Control.Tasks
     open Newtonsoft.Json
 
     type CaptchaValidationResult =
@@ -599,7 +599,7 @@ module ContactMessages =
 [<RequireQualifiedAccess>]
 module DataService =
     open System
-    open FSharp.Control.Tasks.V2.ContextInsensitive
+    open FSharp.Control.Tasks
     open Google.Cloud.Datastore.V1
     open Logfella
 
@@ -670,7 +670,7 @@ module EmailService =
     open System.Collections.Generic
     open Google.Protobuf
     open Google.Cloud.PubSub.V1
-    open FSharp.Control.Tasks.V2.ContextInsensitive
+    open FSharp.Control.Tasks
     open Newtonsoft.Json
     open Logfella
 
