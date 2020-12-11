@@ -8,6 +8,7 @@ module Program =
     open Microsoft.Extensions.Hosting
     open Microsoft.Extensions.DependencyInjection
     open Giraffe
+    open Giraffe.EndpointRouting
     open Logfella
     open Logfella.LogWriters
     open Logfella.Adapters
@@ -47,6 +48,7 @@ module Program =
             .AddMemoryCache()
             .AddResponseCaching()
             .AddResponseCompression()
+            .AddRouting()
             .AddGiraffe()
         |> ignore
 
@@ -65,16 +67,20 @@ module Program =
                                         .AsLogWriter()))
                     |> ignore)
            .UseGiraffeErrorHandler(WebApp.errorHandler)
-           .UseWhen(
-                (fun _ -> Env.enableRequestLogging),
-                fun x -> x.UseRequestLogging() |> ignore)
+           .UseRequestLogging(
+                fun cfg ->
+                    cfg.IsEnabled    <- Env.enableRequestLogging
+                    cfg.LogOnlyAfter <- false)
            .UseForwardedHeaders()
            .UseHttpsRedirection(Env.domainName)
            .UseTrailingSlashRedirection()
            .UseStaticFiles()
            .UseResponseCaching()
            .UseResponseCompression()
-           .UseGiraffe WebApp.routes
+           .UseRouting()
+           .UseGiraffe(WebApp.endpoints)
+           .UseGiraffe(HttpHandlers.notFound)
+           |> ignore
 
     [<EntryPoint>]
     let main _ =

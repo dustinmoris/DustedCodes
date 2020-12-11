@@ -9,7 +9,7 @@ module HttpHandlers =
     open Microsoft.AspNetCore.Http.Extensions
     open Microsoft.Extensions.Caching.Memory
     open Microsoft.Net.Http.Headers
-    open FSharp.Control.Tasks.V2.ContextInsensitive
+    open FSharp.Control.Tasks
     open Giraffe
     open Giraffe.ViewEngine
     open Logfella
@@ -206,46 +206,49 @@ module WebApp =
     open System
     open Microsoft.Extensions.Logging
     open Giraffe
+    open Giraffe.EndpointRouting
 
-    let routes : HttpHandler =
-        choose [
-            GET_HEAD >=>
-                choose [
-                    // Static assets
-                    route  UrlPaths.``/logo.svg``   >=> HttpHandlers.logo
-                    routef "/bundle.%s.css"         (fun _ -> HttpHandlers.css)
+    let endpoints : Endpoint list =
+        [
+            GET_HEAD [
+                // Static assets
+                route  UrlPaths.``/logo.svg``   HttpHandlers.logo
+                routef "/bundle.%s.css"         (fun _ -> HttpHandlers.css)
 
-                    // Health check
-                    route UrlPaths.``/ping``        >=> HttpHandlers.pingPong
-                    route UrlPaths.``/version``     >=> HttpHandlers.version
+                // Health check
+                route UrlPaths.``/ping``        HttpHandlers.pingPong
+                route UrlPaths.``/version``     HttpHandlers.version
 
-                    // Debug
-                    if Env.enableErrorEndpoint then
-                        route UrlPaths.Debug.``/error`` >=> warbler (fun _ -> json(1/0))
+                // Debug
+                if Env.enableErrorEndpoint then
+                    route UrlPaths.Debug.``/error`` (warbler (fun _ -> json(1/0)))
 
-                    // Content paths
-                    route    UrlPaths.``/``         >=> HttpHandlers.index
-                    routeCi  UrlPaths.``/about``    >=> HttpHandlers.about
-                    routeCi  UrlPaths.``/hire``     >=> HttpHandlers.hire
-                    routeCi  UrlPaths.``/trending`` >=> HttpHandlers.trending
+                // Content paths
+                route UrlPaths.``/``          HttpHandlers.index
+                route UrlPaths.``/about``     HttpHandlers.about
+                route UrlPaths.``/hire``      HttpHandlers.hire
+                route UrlPaths.``/trending``  HttpHandlers.trending
 
-                    routeCi UrlPaths.``/feed/rss``  >=> HttpHandlers.rssFeed
-                    routeCi UrlPaths.``/feed/atom`` >=> HttpHandlers.atomFeed
+                route UrlPaths.``/feed/rss``  HttpHandlers.rssFeed
+                route UrlPaths.``/feed/atom`` HttpHandlers.atomFeed
 
-                    // Deprecated URLs kept alive in order to not break
-                    // existing links in the world wide web
-                    routeCi  UrlPaths.Deprecated.``/archive`` >=> HttpHandlers.index
+                // Deprecated URLs kept alive in order to not break
+                // existing links in the world wide web
+                route UrlPaths.Deprecated.``/archive`` HttpHandlers.index
 
-                    // Keeping old links still working
-                    // (From observing 404 errors in GCP)
-                    routeCi "/demystifying-aspnet-mvc-5-error-pages"
-                    >=> redirectTo true "/demystifying-aspnet-mvc-5-error-pages-and-error-logging"
+                // Keeping old links still working
+                // (From observing 404 errors in GCP)
+                route
+                    "/demystifying-aspnet-mvc-5-error-pages"
+                    (redirectTo true "/demystifying-aspnet-mvc-5-error-pages-and-error-logging")
 
-                    routeCif UrlPaths.``/tagged/%s`` HttpHandlers.tagged
-                    routeCif UrlPaths.``/%s`` HttpHandlers.blogPost
-                ]
-            POST >=> routeCi UrlPaths.``/hire`` >=> HttpHandlers.contact
-            HttpHandlers.notFound ]
+                routef UrlPaths.``/tagged/%s`` HttpHandlers.tagged
+                routef UrlPaths.``/%s`` HttpHandlers.blogPost
+            ]
+            POST [
+                route UrlPaths.``/hire`` HttpHandlers.contact
+            ]
+        ]
 
     let errorHandler (ex : Exception) (logger : ILogger) =
         // Must use the Microsoft.Extensions.Logging.ILogger, because the Sentry
