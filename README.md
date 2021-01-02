@@ -2,6 +2,8 @@
 
 My personal website - an Open Source Giraffe (ASP.NET Core) Blog.
 
+![Build and Deploy](https://github.com/dustinmoris/DustedCodes/workflows/Build%20and%20Deploy/badge.svg?branch=develop)
+
 [![Build History](https://buildstats.info/github/chart/dustinmoris/dustedcodes?branch=develop)](https://github.com/dustinmoris/DustedCodes/actions?query=branch%3Adevelop)
 
 # About

@@ -101,7 +101,7 @@ p {
 }
 
 a {
-    color: var(--col-accent-dark);
+    color: var(--col-accent);
     text-decoration: none;
 }
 
@@ -601,7 +601,7 @@ body > header h2 {
 
 #trending-list li > div > a:hover,
 #blogpost-list li > div > a:hover {
-    color: var(--col-accent-dark);
+    color: var(--col-accent);
     text-decoration: none;
 }
 
@@ -711,7 +711,7 @@ body > header h2 {
 
 .article-list a:hover,
 .article-list a:active {
-    color: var(--col-accent-dark);
+    color: var(--col-accent);
 }
 
 .blogpost-metadata {
