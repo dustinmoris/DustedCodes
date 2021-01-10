@@ -21,13 +21,10 @@ module HttpHandlers =
     let private allowCaching (duration : TimeSpan) : HttpHandler =
         publicResponseCaching (int duration.TotalSeconds) (Some "Accept-Encoding")
 
-    let private svgHandler (svg : XmlNode) : HttpHandler =
+    let svg (element : XmlNode) : HttpHandler =
         allowCaching (TimeSpan.FromDays 30.0)
         >=> setHttpHeader "Content-Type" "image/svg+xml"
-        >=> setBodyFromString (svg |> RenderView.AsString.xmlNode)
-
-    let logo =
-        svgHandler Icons.logo
+        >=> setBodyFromString (element |> RenderView.AsString.xmlNode)
 
     let css : HttpHandler =
         let eTag = EntityTagHeaderValue.FromString false Views.minifiedCss.Hash
@@ -212,7 +209,8 @@ module WebApp =
         [
             GET_HEAD [
                 // Static assets
-                route  UrlPaths.``/logo.svg``   HttpHandlers.logo
+                route  UrlPaths.``/logo.svg``   (HttpHandlers.svg Icons.logo)
+                routef "/images/link-%s.svg"    (Icons.link >> HttpHandlers.svg)
                 routef "/bundle.%s.css"         (fun _ -> HttpHandlers.css)
 
                 // Health check

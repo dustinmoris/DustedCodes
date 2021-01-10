@@ -12,7 +12,7 @@ The default project template in a Classic ASP.NET MVC web application offers run
 
 The same an be achieved in a Classic ASP.NET application where it is perfectly feasible to use Node.js from a post-build event as well. Node is great when you care about cross platform compatibility, but it might be a slight overkill when the application only builds on a Windows machine and Node is not used anywhere else in the project. If an entire team works on Windows then you might as well use a technology which is already available to everyone. [PowerShell](https://en.wikipedia.org/wiki/Windows_PowerShell) would be one of those.
 
-<aside><p>*Tip: As an alternative to Node.js you can utilize [CAKE](http://cakebuild.net/) or [FAKE](http://fsharp.github.io/FAKE/) for cross platform compatible build events or entire build scripts. Both are open source and you get to use C# or F# through the entire project.*</p></aside>
+<div class="tip"><p><strong>Tip:</strong> As an alternative to Node.js you can utilize <a href="http://cakebuild.net/" target="_blank">CAKE</a> or <a href="http://fsharp.github.io/FAKE/" target="_blank">FAKE</a> for cross platform compatible build events or entire build scripts. Both are open source and you get to use C# or F# through the entire project.</p></div>
 
 For my own website I am using PowerShell for the exact reason that I only work from a Windows machine and the website builds on a Windows server via [AppVeyor](https://www.appveyor.com/).
 

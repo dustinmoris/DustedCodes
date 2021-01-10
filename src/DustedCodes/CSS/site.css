@@ -9,10 +9,10 @@
     --col-normal: rgba(255, 255, 255, 0.6);
     --col-light: rgba(255, 255, 255, 0.8);
     --col-strong: #fff;
-    --col-accent: #ffdd00;
-    --col-accent-dark: #ffdd00cc;
+    --col-accent: #ffd900;
+    --col-accent-dark: #ffd900cc;
     --col-code: #ea9797;
-    --col-bmc: #ffdd00;
+    --col-bmc: #ffd900;
 
     --success-fg-color: #fff;
     --success-bg-color: #88c082;
@@ -135,6 +135,21 @@ pre > code {
     font-size: .75em;
     background-color: var(--col-faint);
     color: var(--col-normal);
+}
+
+a > code::before {
+    display: inline-block;
+    position: relative;
+    margin-right: 5px;
+    width: 18px;
+    height: 18px;
+    top: .25em;
+    content: ' ';
+    background: url(/images/link-888888.svg) no-repeat;
+}
+
+a > code:hover {
+    color: var(--col-accent);
 }
 
 h6 + pre {
@@ -636,6 +651,27 @@ body > header h2 {
 /* --------------------------
   Classes
 -------------------------- */
+
+.tip {
+    background: var(--col-faint);
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    padding: .5em 1em;
+    font-style: italic;
+    font-size: .95em;
+}
+
+.tip > p:first-child {
+    margin-top: 0;
+}
+
+.tip > p:last-child {
+    margin-bottom: 0;
+}
+
+.tip strong {
+    color: var(--col-strong);
+}
 
 .bmc-button {
     width: 100%;
