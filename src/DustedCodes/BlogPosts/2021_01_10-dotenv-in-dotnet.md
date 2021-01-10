@@ -15,7 +15,7 @@
 - Directory files
 - In-memory .NET object
 
-Additionally .NET developers can choose between strongly typed configuration classes, `IOptions<T>` wrappers, `IOptionsSnapshot<T>` wrappers or the `IOptionsMonitor<T>` interface to access their settings. Theoretically there is also the [`IOptionsChangeTokenSource<T>`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.options.ioptionschangetokensource-1?view=dotnet-plat-ext-5.0), [`IOptionsFactory<T>`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.options.ioptionsfactory-1?view=dotnet-plat-ext-5.0), [`IOptionsMonitorCache<T>`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.options.ioptionsmonitorcache-1?view=dotnet-plat-ext-5.0) and the [`OptionsManager<T>`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.options.optionsmanager-1?view=dotnet-plat-ext-5.0) class, but most users will not need to ever use them.
+Additionally .NET developers can choose between strongly typed configuration classes, `IOptions<T>` wrappers, `IOptionsSnapshot<T>` wrappers or the `IOptionsMonitor<T>` interface to access their settings. Theoretically there are also the [`IOptionsChangeTokenSource<T>`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.options.ioptionschangetokensource-1?view=dotnet-plat-ext-5.0), [`IOptionsFactory<T>`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.options.ioptionsfactory-1?view=dotnet-plat-ext-5.0), [`IOptionsMonitorCache<T>`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.options.ioptionsmonitorcache-1?view=dotnet-plat-ext-5.0) interfaces and the [`OptionsManager<T>`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.options.optionsmanager-1?view=dotnet-plat-ext-5.0) class, but most users will never need to use them.
 
 Most modern cloud based applications don't even require half of those features. If anything the [ASP.NET Core options pattern](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-5.0) can feel a little bit bloated which can overcomplicate an application and make it more difficult to understand for people outside one's team. The much simpler and often entirely sufficient alternative are environment variables!
 
@@ -27,7 +27,7 @@ In the cloud most settings are configured via environment variables. The ease of
 
 ## The .NET way
 
-Before explaining &quot;Dotenv&quot; files let's take a quick look at how configuration is typically done in .NET 5/Core.
+Before explaining &quot;Dotenv&quot; files let's take a quick look at how configuration is typically done in .NET 5 (Core).
 
 The framework strongly prescribes developers to create an `appsettings.json` file in the root of their project and configure their application settings in JSON:
 
@@ -56,9 +56,9 @@ var config =
         .Build();
 ```
 
-The `AddEnvironmentVariables` instruction comes after `AddJsonFile`, which means that any environment variables which have been set would override a previously configured setting in `appsettings.json`. This is a common pattern and almost seen in every .NET application.
+The `AddEnvironmentVariables` instruction comes after `AddJsonFile`, which means that any environment variables which have been set would override a previously configured setting in `appsettings.json`. This is a common pattern and standard code seen in almost every .NET application.
 
-One thing which is not obvious from the above example is the unidiomatic way of how environment variables have to be declared in order to make this happen. Unfortunately the .NET configuration architecture has been primarily designed with JSON files and not environment variables in mind, which means that .NET developers have to configure nested settings with a double underscore (`__`) in their settings:
+Although one thing which is not obvious from the example above is the unidiomatic way of declaring environment variables in order to make this happen. The .NET configuration architecture has been primarily designed with JSON files in mind, which means that .NET developers have to configure nested settings with a double underscore (`__`) in environment variables:
 
 ```
 LOGGING__LEVEL=Debug
@@ -68,7 +68,7 @@ SERVER__PORT=8080
 SERVER__FORCEHTTPS=true
 ```
 
-This is such an odd way of configuring environment variables that seeing things such as `SERVER__FORCEHTTPS` are almost a certain giveaway that the underlying architecture is in .NET.
+This is such an odd way of configuring environment variables that seeing names such as `SERVER__FORCEHTTPS` are almost a certain giveaway that the underlying architecture is in .NET.
 
 ## The ALT.NET way (using .env)
 
@@ -84,11 +84,11 @@ SERVER_PORT=8080
 SERVER_FORCE_HTTPS=true
 ```
 
-Well that's how developers would do it in many other programming languages where the use of `.env` files is more prevalent. A `.env` file is essentially just a flat file specifying environment variables like the ones above. When an engineer launches their application during development then the `.env` file gets parsed and all variables within it will get set on a process level before anything else tries to read them. As the values are set on a process level they will only persist during the current execution and reset on the next launch.
+Well that's how developers would do it in many other programming languages where the use of `.env` files is more prevalent. A `.env` file is essentially just a flat file specifying environment variables like the ones above. When an engineer launches their application during development then the `.env` file gets parsed and all variables within it will get set on a process level before anything else tries to read them. As the values are set on a process level they will only persist during the currently executing process and vanish on shutdown.
 
-This has several benefits over the `appsettings.json` file approach. First is its incredible simplicity. Secondly it is very predictable. There is no need to configure multiple configuration providers. An application only retrieves its settings from environment variables and nowhere else from. There is also no complexity around what happens when certain settings are stored in one location (e.g. `appsettings.json`) and other settings in another (e.g. environment variables). Will they merge or replace each other? If an application relies on one source only then this is not something to worry about.
+This has several benefits over the `appsettings.json` file approach. First is the incredible simplicity. Secondly is predictability. There is no need to configure multiple configuration providers. An application only retrieves its settings from one source and nowhere else. There is also no complexity around what happens when certain settings are stored in one location (e.g. `appsettings.json`) and other settings in another (e.g. environment variables). Will they merge or replace each other? If an application relies on only environment variables then this is not something to worry about.
 
-Another benefit is how engineers think of configuration. The `appsettings.json` approach invites developers to create overly complex configuration hierarchies. They are easy to read and change during development, but difficult to manage in production.
+Another benefit is how engineers think of configuration. The `appsettings.json` approach invites developers to create overly complex configuration hierarchies. They are easy to read and change during development, but more cumbersome to manage in production.
 
 For example take this snippet as an illustration:
 
@@ -107,7 +107,7 @@ For example take this snippet as an illustration:
 
 In JSON format this looks totally fine, but in reality it probably isn't. Apart from being a data persistence technology, Redis and SQL Server have very little in common. In fact they are probably used for complete different application functionalities. Thus it makes very little sense to group them under one universal `Databases` configuration node together.
 
-Remember during deployment those would get configured as following:
+Remember in production these will need to get configured as following:
 
 ```
 DATABASES__SQLSERVER__CONNECTIONSTRING=foo-bar
@@ -123,13 +123,13 @@ SQL_SERVER_CS=foo-bar
 REDIS_ENDPOINT=localhost:6379
 ```
 
-Fortunately using `.env` in .NET can be more straightforward than thought.
+Fortunately using `.env` in .NET is a straightforward alternative to `appsettings.json`.
 
 ### Loading .env files in C#
 
 The code for loading and parsing a `.env` file is so simple that it hardly warrants the use of an external dependency via NuGet.
 
-Personally I just create a `DotEnv.cs` file in my projects and copy the following code into it:
+Personally I like to create a `DotEnv.cs` file in my C# project and copy the following code into it:
 
 ```
 namespace YourApplication
@@ -160,7 +160,7 @@ namespace YourApplication
 }
 ```
 
-Then I add `DotEnv.Load("..")` at the beginning of the `Main` function inside the `Program.cs` file:
+Then I add `DotEnv.Load("..")` at the beginning of the `Main` function inside my `Program.cs` file:
 
 ```
 public static class Program
@@ -249,7 +249,7 @@ module Config =
 
 Those static values will get initialised as soon as the assembly loads into the domain, which is well in advance of any code being called in `Program.fs`. Therefore I have to place the `DotEnv.init` command inside the `get` helper function, making sure that settings from the `.env` file get initialised before the first `Environment.GetEnvironmentVariable` invocation. Given that `DotNet.load()` is `lazy` it will only execute once and not reload the `.env` file on subsequent calls.
 
-In order to make this work one also must put the `DotEnv.fs` file as the first compile item in the `.fsproj`:
+Additionally I must also put the `DotEnv.fs` file as the first compilation item in the `.fsproj` file:
 
 ```
 <ItemGroup>
@@ -260,20 +260,16 @@ In order to make this work one also must put the `DotEnv.fs` file as the first c
 </ItemGroup>
 ```
 
-All in all this completely replaces .NET's huge configuration pattern with an extremely simple solution. It's &quot;cloud native&quot; as Microsoft likes it to call and extremely easy to understand.
+All in all this completely replaces .NET's huge configuration pattern with an extremely simple solution. It's &quot;cloud native&quot; as Microsoft likes to call it and extremely easy to understand.
 
-Just like in C# don't forget to add the `.env` file to your `.gitignore`!
-
-Best of all, when Microsoft introduces breaking changes to the `ConfigurationBuilder` in the future (and they certainly will as they break things frequently) then you will remain completely unaffected.
-
-Easy code, less shitload.
+Just like in C# don't forget to add the `.env` file to your `.gitignore` rules!
 
 ## Side notes
 
 ### What if an environment variable changes?
 
-A lot of complexity in .NET's configuration classes come from the &quot;need&quot; to react to changes. A web server is a long running process and if someone wants to change a value in `appsettings.json` then any functionality which relies on that setting also has to learn about the update. However most current application hosting solutions such as serverless functions or Kubernetes clusters automatically reload an application on configuration changes anyway, so while it may be an interesting problem to think about, it's certainly more of a theoretical than practical issue. The simple `.env` solution works just fine.
+A lot of complexity in .NET's configuration classes come from the &quot;need&quot; to react to changes. A web server is a long running process and if someone wants to change a value in `appsettings.json` then any functionality which relies on that setting also has to learn about the update. However most current application hosting solutions such as serverless functions or Kubernetes clusters automatically reload an application on configuration changes, so while it might be an interesting problem to think about, it's certainly more of a theoretical than practical issue. The simple `.env` solution works just fine.
 
 ### Existing OSS projects for .NET?
 
-If you wondered if there are any existing .NET OSS projects to support `.env` files then you will be pleased to learn that there are [dotenv.net](https://github.com/bolorundurowb/dotenv.net), [dotnet-env](https://github.com/tonerdo/dotnet-env) and [net-dotenv](https://github.com/codeyu/net-dotenv). I have not used any of them myself but they all seem to be actively maintained.
+If you wondered if there are any existing .NET OSS projects to support `.env` files then you will be pleased to hear that there are some such as [dotenv.net](https://github.com/bolorundurowb/dotenv.net), [dotnet-env](https://github.com/tonerdo/dotnet-env) and [net-dotenv](https://github.com/codeyu/net-dotenv). I have not used any of them but they all seem to be actively maintained.
