@@ -270,6 +270,23 @@ Just like in C# don't forget to add the `.env` file to your `.gitignore` rules!
 
 A lot of complexity in .NET's configuration classes come from the &quot;need&quot; to react to changes. A web server is a long running process and if someone wants to change a value in `appsettings.json` then any functionality which relies on that setting also has to learn about the update. However most current application hosting solutions such as serverless functions or Kubernetes clusters automatically reload an application on configuration changes, so while it might be an interesting problem to think about, it's certainly more of a theoretical than practical issue. The simple `.env` solution works just fine.
 
+### Why not load environment variables via X?
+
+Could I not just load environment variables via:
+
+- bash/PowerShell?
+- launchSettings.json?
+- this tool?
+- that tool?
+- etc.?
+
+Yes, there are many ways to load environment variables into the process before launching an application. However, in this blog post I wanted to show a way which satisfies two requirements (which most of these tools don't):
+
+1. It works for everyone, regardless of OS or IDE
+2. It works during <kbd>F5</kbd> debugging from an IDE as well
+
+Ultimately it doesn't matter how you load environment variables, but if it can be done from within .NET so that it just works for everyone on every platform, and also works during debugging without any extra hacks then why not go with such a solution?
+
 ### Existing OSS projects for .NET?
 
 If you wondered if there are any existing .NET OSS projects to support `.env` files then you will be pleased to hear that there are some such as [dotenv.net](https://github.com/bolorundurowb/dotenv.net), [dotnet-env](https://github.com/tonerdo/dotnet-env) and [net-dotenv](https://github.com/codeyu/net-dotenv). I have not used any of them but they all seem to be actively maintained.
