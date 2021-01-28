@@ -17,7 +17,7 @@ module DotEnv =
         lazy (
             Console.WriteLine "Trying to load .env file..."
             let dir = Directory.GetCurrentDirectory()
-            let filePath = Path.Combine(dir, ".env")
+            let filePath = Path.Combine(dir, ".env.ini")
             filePath
             |> File.Exists
             |> function

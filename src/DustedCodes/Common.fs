@@ -88,26 +88,6 @@ module Config =
             |> Option.defaultValue defaultValue
 
 // ---------------------------------
-// Dev Config
-// ---------------------------------
-
-[<RequireQualifiedAccess>]
-module DevConfig =
-    open System.IO
-    open System.Text.Json
-    open System.Collections.Generic
-
-    let load jsonFile =
-        jsonFile
-        |> File.Exists
-        |> function
-            | false -> Dictionary<string, string>()
-            | true  ->
-                jsonFile
-                |> File.ReadAllText
-                |> JsonSerializer.Deserialize<Dictionary<string, string>>
-
-// ---------------------------------
 // Network
 // ---------------------------------
 
