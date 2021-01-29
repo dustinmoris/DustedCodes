@@ -17,6 +17,7 @@ module Env =
         let BLOG_AUTHOR = "BLOG_AUTHOR"
         let LOG_LEVEL = "LOG_LEVEL"
         let SENTRY_DSN = "SENTRY_DSN"
+        let FORCE_HTTPS = "FORCE_HTTPS"
         let DOMAIN_NAME = "DOMAIN_NAME"
         let DISQUS_SHORTNAME = "DISQUS_SHORTNAME"
         let STORAGE_BASE_URL = "STORAGE_BASE_URL"
@@ -96,6 +97,12 @@ module Env =
             Keys.SENTRY_DSN
             ""
         |> Str.toOption
+
+    let forceHttps =
+        Config.typedEnvironmentVarOrDefault
+            None
+            Keys.FORCE_HTTPS
+            false
 
     let domainName =
         Config.environmentVarOrDefault

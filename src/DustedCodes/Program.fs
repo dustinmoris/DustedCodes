@@ -72,7 +72,7 @@ module Program =
                     cfg.IsEnabled    <- Env.enableRequestLogging
                     cfg.LogOnlyAfter <- false)
            .UseForwardedHeaders()
-           .UseHttpsRedirection(Env.domainName)
+           .UseHttpsRedirection(Env.forceHttps, Env.domainName)
            .UseTrailingSlashRedirection()
            .UseStaticFiles()
            .UseResponseCaching()
