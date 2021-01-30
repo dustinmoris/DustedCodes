@@ -30,9 +30,6 @@ jobs:
     env:
       GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
       GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
-      GITHUB_SHA: ${{ github.sha }}
-      GKE_ZONE: europe-west2
-      GKE_CLUSTER: dusted-kubes-eu
       IMAGE: dustedcodes
       REGISTRY_HOSTNAME: eu.gcr.io
     steps:
@@ -41,24 +38,28 @@ jobs:
         uses: actions/checkout@v2
 
       # Setup gcloud CLI
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
         with:
-          version: '270.0.0'
+          project_id: ${{ secrets.GKE_PROJECT }}
           service_account_email: ${{ secrets.GKE_EMAIL }}
           service_account_key: ${{ secrets.GKE_KEY }}
+          export_default_credentials: true
 
       # Set up docker to authenticate via gcloud command-line tool.
-      - run: |
-          gcloud auth configure-docker
+      - name: Authenticate Docker with GCP
+        run: gcloud auth configure-docker
+
       # Build the Docker image
-      - name: Build
+      - name: Build Docker image
         run: |
           PATTERN="refs/tags/v"
           SUB=""
           TAG="${GITHUB_REF/$PATTERN/$SUB}"
-          docker build -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$IMAGE":"$TAG" -f src/DustedCodes/Dockerfile .
+          docker build  --build-arg version=$TAG -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$IMAGE":"$TAG" -f src/DustedCodes/Dockerfile .
+
       # Push the Docker image to Google Container Registry
-      - name: Publish
+      - name: Publish Docker image
         run: |
           PATTERN="refs/tags/v"
           SUB=""
