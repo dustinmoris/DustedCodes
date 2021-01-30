@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <Version>2.50.0</Version>
     <AssemblyName>DustedCodes</AssemblyName>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EnableDefaultContentItems>false</EnableDefaultContentItems>
@@ -34,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="BlogPosts\*.md;Content\*.md;CSS\**\*;Public\**\*;Dockerfile">
+    <Content Include="BlogPosts\*.md;Content\*.md;CSS\**\*;Public\**\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </Content>

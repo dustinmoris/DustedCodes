@@ -5,6 +5,7 @@ module Program =
     open System.Collections.Generic
     open Microsoft.AspNetCore.Builder
     open Microsoft.AspNetCore.Hosting
+    open Microsoft.AspNetCore.Http
     open Microsoft.Extensions.Hosting
     open Microsoft.Extensions.DependencyInjection
     open Giraffe
@@ -14,30 +15,43 @@ module Program =
     open Logfella.Adapters
     open Logfella.AspNetCore
 
-    let private googleCloudLogWriter =
-        GoogleCloudLogWriter
-            .Create(Env.logSeverity)
-            .AddServiceContext(
-                Env.appName,
-                Env.appVersion)
-            .UseGoogleCloudTimestamp()
-            .AddLabels(
-                dict [
-                    "appName", Env.appName
-                    "appVersion", Env.appVersion
-                ])
-
     let private muteFilter =
         Func<Severity, string, IDictionary<string, obj>, exn, bool>(
             fun severity msg data ex ->
                 msg.StartsWith "The response could not be cached for this request")
 
-    let private defaultLogWriter =
-        Mute.When(muteFilter)
-            .Otherwise(
-                match Env.isProduction with
-                | false -> ConsoleLogWriter(Env.logSeverity).AsLogWriter()
-                | true  -> googleCloudLogWriter.AsLogWriter())
+    let private createLogWriter (ctx : HttpContext option) =
+        match Env.isProduction with
+        | false -> ConsoleLogWriter(Env.logSeverity).AsLogWriter()
+        | true  ->
+            let basic =
+                GoogleCloudLogWriter
+                    .Create(Env.logSeverity)
+                    .AddServiceContext(
+                        Env.appName,
+                        Env.appVersion)
+                    .UseGoogleCloudTimestamp()
+                    .AddLabels(
+                        dict [
+                            "appName", Env.appName
+                            "appVersion", Env.appVersion
+                        ])
+            let final =
+                match ctx with
+                | None     -> basic
+                | Some ctx ->
+                    basic
+                        .AddHttpContext(ctx)
+                        .AddCorrelationId(Guid.NewGuid().ToString("N"))
+            Mute.When(muteFilter)
+                .Otherwise(final)
+
+    let private createReqLogWriter =
+        Func<HttpContext, ILogWriter>(Some >> createLogWriter)
+
+    let private toggleRequestLogging =
+        Action<RequestLoggingOptions>(
+            fun x -> x.IsEnabled <- Env.enableRequestLogging)
 
     let configureServices (services : IServiceCollection) =
         services
@@ -54,23 +68,9 @@ module Program =
 
     let configureApp (app : IApplicationBuilder) =
         app.UseGiraffeErrorHandler(WebApp.errorHandler)
-           .UseWhen(
-                (fun _ -> Env.isProduction),
-                fun x ->
-                    x.UseRequestScopedLogWriter(
-                        fun ctx ->
-                            Mute.When(muteFilter)
-                                .Otherwise(
-                                    googleCloudLogWriter
-                                        .AddHttpContext(ctx)
-                                        .AddCorrelationId(Guid.NewGuid().ToString("N"))
-                                        .AsLogWriter()))
-                    |> ignore)
+           .UseRequestScopedLogWriter(createReqLogWriter)
            .UseGiraffeErrorHandler(WebApp.errorHandler)
-           .UseRequestLogging(
-                fun cfg ->
-                    cfg.IsEnabled    <- Env.enableRequestLogging
-                    cfg.LogOnlyAfter <- false)
+           .UseRequestLogging(toggleRequestLogging)
            .UseForwardedHeaders()
            .UseHttpsRedirection(Env.forceHttps, Env.domainName)
            .UseTrailingSlashRedirection()
@@ -85,7 +85,7 @@ module Program =
     [<EntryPoint>]
     let main _ =
         try
-            Log.SetDefaultLogWriter(defaultLogWriter)
+            Log.SetDefaultLogWriter(createLogWriter None)
             Logging.outputEnvironmentSummary Env.summary
 
             let lastBlogPost =
