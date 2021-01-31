@@ -78,8 +78,8 @@ module Program =
 
     let configureApp (app : IApplicationBuilder) =
         app.UseGiraffeErrorHandler(WebApp.errorHandler)
-           .When(Env.enableTracing, Middlewares.logResponseTime)
            .UseRequestScopedLogWriter(createReqLogWriter)
+           .When(Env.enableTracing, Middlewares.logResponseTime)
            .UseGiraffeErrorHandler(WebApp.errorHandler)
            .UseRequestLogging(toggleRequestLogging)
            .UseForwardedHeaders()
