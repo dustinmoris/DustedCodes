@@ -8,6 +8,7 @@ module Program =
     open Microsoft.AspNetCore.Http
     open Microsoft.Extensions.Hosting
     open Microsoft.Extensions.DependencyInjection
+    open Microsoft.Extensions.Caching.Distributed
     open Giraffe
     open Giraffe.EndpointRouting
     open Logfella
@@ -54,12 +55,21 @@ module Program =
             fun x -> x.IsEnabled <- Env.enableRequestLogging)
 
     let configureServices (services : IServiceCollection) =
+        match Env.redisEnabled with
+        | true ->
+            services.AddStackExchangeRedisCache(
+                fun o ->
+                    o.InstanceName  <- Env.redisInstance
+                    o.Configuration <- Env.redisConfiguration)
+        | false ->
+            services.AddSingleton<IDistributedCache, MemoryDistributedCache>()
+        |> ignore
+
         services
             .AddProxies(
                 Env.proxyCount,
                 Env.knownProxyNetworks,
                 Env.knownProxies)
-            .AddMemoryCache()
             .AddResponseCaching()
             .AddResponseCompression()
             .AddRouting()
@@ -68,6 +78,7 @@ module Program =
 
     let configureApp (app : IApplicationBuilder) =
         app.UseGiraffeErrorHandler(WebApp.errorHandler)
+           .When(true, Middlewares.logResponseTime)
            .UseRequestScopedLogWriter(createReqLogWriter)
            .UseGiraffeErrorHandler(WebApp.errorHandler)
            .UseRequestLogging(toggleRequestLogging)

@@ -3,11 +3,13 @@ namespace DustedCodes
 [<RequireQualifiedAccess>]
 module HttpHandlers =
     open System
-    open System.Text
     open System.Linq
+    open System.Text
+    open System.Threading.Tasks
+    open System.Diagnostics
     open Microsoft.AspNetCore.Http
     open Microsoft.AspNetCore.Http.Extensions
-    open Microsoft.Extensions.Caching.Memory
+    open Microsoft.Extensions.Caching.Distributed
     open Microsoft.Net.Http.Headers
     open FSharp.Control.Tasks
     open Giraffe
@@ -17,6 +19,11 @@ module HttpHandlers =
     // ---------------------------------
     // Http Handlers
     // ---------------------------------
+
+    let private htmlBytes (htmlView : byte array) : HttpHandler =
+        fun (_ : HttpFunc) (ctx : HttpContext) ->
+            ctx.SetContentType "text/html; charset=utf-8"
+            ctx.WriteBytesAsync htmlView
 
     let private allowCaching (duration : TimeSpan) : HttpHandler =
         publicResponseCaching (int duration.TotalSeconds) (Some "Accept-Encoding")
@@ -99,9 +106,13 @@ module HttpHandlers =
                         return! respond msg internalErr
                     | Captcha.UserError err -> return! respond msg (Error err)
                     | Captcha.Success ->
-                        let! dataResult  = DataService.saveContactMessage msg
-                        let! emailResult = EmailService.sendContactMessage msg
-                        match dataResult, emailResult with
+                        let timer = Stopwatch.StartNew()
+                        let dataTask  = DataService.saveContactMessage msg
+                        let emailTask = EmailService.sendContactMessage msg
+                        do! Task.WhenAll(dataTask, emailTask)
+                        timer.Stop()
+                        Log.Debug(sprintf "Sending message completed in %fms" timer.Elapsed.TotalMilliseconds)
+                        match dataTask.Result, emailTask.Result with
                         | Ok _, _ | _, Ok _ ->
                             return! respond ContactMessages.Entity.Empty (Ok "Thank you, your message has been successfully sent!")
                         | _ -> return! respond msg internalErr
@@ -130,11 +141,12 @@ module HttpHandlers =
         >=> fun (next : HttpFunc) (ctx : HttpContext) ->
             task {
                 let cacheKey = "trendingBlogPosts"
-                let cache = ctx.GetService<IMemoryCache>()
+                let cache = ctx.GetService<IDistributedCache>()
 
-                match cache.TryGetValue cacheKey with
-                | true, view -> return! htmlView (view :?> XmlNode) next ctx
-                | false, _   ->
+                let! cacheItem = cache.GetAsync(cacheKey, ctx.RequestAborted)
+                match Option.ofObj cacheItem with
+                | Some view -> return! htmlBytes view next ctx
+                | None ->
                     let! mostViewedPages =
                         GoogleAnalytics.getMostViewedPagesAsync
                             Env.googleAnalyticsKey
@@ -147,13 +159,11 @@ module HttpHandlers =
                         |> List.take 10
                         |> List.map (fun p -> BlogPosts.all.First(fun b -> pageMatchesBlogPost p b))
                         |> Views.trending
+                        |> RenderView.AsBytes.htmlDocument
 
-                    // Cache the view for one day
-                    let cacheOptions = MemoryCacheEntryOptions()
-                    cacheOptions.SetAbsoluteExpiration(DateTimeOffset.Now.AddDays(1.0)) |> ignore
-                    cache.Set(cacheKey, view, cacheOptions) |> ignore
+                    do! cache.SetAsync(cacheKey, view, ctx.RequestAborted)
 
-                    return! htmlView view next ctx
+                    return! htmlBytes view next ctx
             }
 
     let tagged (tag : string) =

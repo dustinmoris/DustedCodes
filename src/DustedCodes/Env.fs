@@ -19,6 +19,7 @@ module Env =
         let SENTRY_DSN = "SENTRY_DSN"
         let FORCE_HTTPS = "FORCE_HTTPS"
         let DOMAIN_NAME = "DOMAIN_NAME"
+        let BASE_URL = "BASE_URL"
         let DISQUS_SHORTNAME = "DISQUS_SHORTNAME"
         let STORAGE_BASE_URL = "STORAGE_BASE_URL"
         let MAIL_DOMAIN = "MAIL_DOMAIN"
@@ -36,6 +37,9 @@ module Env =
         let PROXY_COUNT = "PROXY_COUNT"
         let KNOWN_PROXIES = "KNOWN_PROXIES"
         let KNOWN_PROXY_NETWORKS = "KNOWN_PROXY_NETWORKS"
+        let REDIS_ENABLED = "REDIS_ENABLED"
+        let REDIS_CONFIGURATION = "REDIS_CONFIGURATION"
+        let REDIS_INSTANCE="REDIS_INSTANCE"
 
     let userHomeDir = Environment.GetEnvironmentVariable "HOME"
     let defaultAppName = "DustedCodes"
@@ -110,9 +114,11 @@ module Env =
             "dusted.codes"
 
     let baseUrl =
-        match isProduction with
-        | true  -> sprintf "https://%s" domainName
-        | false -> "http://localhost:5000"
+        Config.environmentVarOrDefault
+            Keys.BASE_URL
+            (match isProduction with
+            | true  -> sprintf "https://%s" domainName
+            | false -> sprintf "http://%s" domainName)
 
     let disqusShortname =
         Config.environmentVarOrDefault
@@ -203,6 +209,21 @@ module Env =
         |> Array.filter Option.isSome
         |> Array.map Option.get
 
+    let redisEnabled =
+        Config.InvariantCulture.typedEnvironmentVarOrDefault
+            Keys.REDIS_ENABLED
+            false
+
+    let redisConfiguration =
+        Config.environmentVarOrDefault
+            Keys.REDIS_CONFIGURATION
+            "localhost"
+
+    let redisInstance =
+        Config.environmentVarOrDefault
+            Keys.REDIS_INSTANCE
+            "dustedcodes"
+
     let summary =
         dict [
             "App", dict [
@@ -252,6 +273,11 @@ module Env =
                 "Proxy count", proxyCount.ToString()
                 "Known proxies", knownProxies.ToPrettyString()
                 "Known proxy networks", knownProxyNetworks.ToPrettyString()
+            ]
+            "Redis", dict [
+                "Enabled", redisEnabled.ToString()
+                "Configuration", redisConfiguration
+                "Instance", redisInstance
             ]
             "Debugging", dict [
                 "Request logging enabled", enableRequestLogging.ToString()
