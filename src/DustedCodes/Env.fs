@@ -32,6 +32,7 @@ module Env =
         let GOOGLE_ANALYTICS_VIEWID = "GOOGLE_ANALYTICS_VIEWID"
         let CAPTCHA_SITEKEY = "CAPTCHA_SITEKEY"
         let CAPTCHA_SECRETKEY = "CAPTCHA_SECRETKEY"
+        let ENABLE_TRACING = "ENABLE_TRACING"
         let ENABLE_REQUEST_LOGGING = "ENABLE_REQUEST_LOGGING"
         let ENABLE_ERROR_ENDPOINT = "ENABLE_ERROR_ENDPOINT"
         let PROXY_COUNT = "PROXY_COUNT"
@@ -180,18 +181,23 @@ module Env =
             Keys.CAPTCHA_SECRETKEY
             ""
 
+    let enableTracing =
+        Config.InvariantCulture.typedEnvironmentVarOrDefault
+            Keys.ENABLE_TRACING
+            false
+
     let enableRequestLogging =
-        Config.InvariantCulture.typedEnvironmentVarOrDefault<bool>
+        Config.InvariantCulture.typedEnvironmentVarOrDefault
             Keys.ENABLE_REQUEST_LOGGING
             false
 
     let enableErrorEndpoint =
-        Config.InvariantCulture.typedEnvironmentVarOrDefault<bool>
+        Config.InvariantCulture.typedEnvironmentVarOrDefault
             Keys.ENABLE_ERROR_ENDPOINT
             false
 
     let proxyCount =
-        Config.InvariantCulture.typedEnvironmentVarOrDefault<int>
+        Config.InvariantCulture.typedEnvironmentVarOrDefault
             Keys.PROXY_COUNT
             0
 
@@ -280,6 +286,7 @@ module Env =
                 "Instance", redisInstance
             ]
             "Debugging", dict [
+                "Tracing enabled", enableTracing.ToString()
                 "Request logging enabled", enableRequestLogging.ToString()
                 "Error endpoint enabled", enableErrorEndpoint.ToString()
             ]
