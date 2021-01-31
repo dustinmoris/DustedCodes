@@ -250,7 +250,7 @@ module Logging =
                     summary.[category].Keys
                     |> Seq.toList
                     |> List.map(fun k -> k.Length)
-                    |> List.sortByDescending (fun l -> l)
+                    |> List.sortByDescending (id)
                     |> List.head
                     |> max len
             ) 0
