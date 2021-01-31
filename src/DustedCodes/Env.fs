@@ -19,6 +19,7 @@ module Env =
         let SENTRY_DSN = "SENTRY_DSN"
         let FORCE_HTTPS = "FORCE_HTTPS"
         let DOMAIN_NAME = "DOMAIN_NAME"
+        let BASE_URL = "BASE_URL"
         let DISQUS_SHORTNAME = "DISQUS_SHORTNAME"
         let STORAGE_BASE_URL = "STORAGE_BASE_URL"
         let MAIL_DOMAIN = "MAIL_DOMAIN"
@@ -31,11 +32,15 @@ module Env =
         let GOOGLE_ANALYTICS_VIEWID = "GOOGLE_ANALYTICS_VIEWID"
         let CAPTCHA_SITEKEY = "CAPTCHA_SITEKEY"
         let CAPTCHA_SECRETKEY = "CAPTCHA_SECRETKEY"
+        let ENABLE_TRACING = "ENABLE_TRACING"
         let ENABLE_REQUEST_LOGGING = "ENABLE_REQUEST_LOGGING"
         let ENABLE_ERROR_ENDPOINT = "ENABLE_ERROR_ENDPOINT"
         let PROXY_COUNT = "PROXY_COUNT"
         let KNOWN_PROXIES = "KNOWN_PROXIES"
         let KNOWN_PROXY_NETWORKS = "KNOWN_PROXY_NETWORKS"
+        let REDIS_ENABLED = "REDIS_ENABLED"
+        let REDIS_CONFIGURATION = "REDIS_CONFIGURATION"
+        let REDIS_INSTANCE="REDIS_INSTANCE"
 
     let userHomeDir = Environment.GetEnvironmentVariable "HOME"
     let defaultAppName = "DustedCodes"
@@ -110,9 +115,11 @@ module Env =
             "dusted.codes"
 
     let baseUrl =
-        match isProduction with
-        | true  -> sprintf "https://%s" domainName
-        | false -> "http://localhost:5000"
+        Config.environmentVarOrDefault
+            Keys.BASE_URL
+            (match isProduction with
+            | true  -> sprintf "https://%s" domainName
+            | false -> sprintf "http://%s" domainName)
 
     let disqusShortname =
         Config.environmentVarOrDefault
@@ -174,18 +181,23 @@ module Env =
             Keys.CAPTCHA_SECRETKEY
             ""
 
+    let enableTracing =
+        Config.InvariantCulture.typedEnvironmentVarOrDefault
+            Keys.ENABLE_TRACING
+            false
+
     let enableRequestLogging =
-        Config.InvariantCulture.typedEnvironmentVarOrDefault<bool>
+        Config.InvariantCulture.typedEnvironmentVarOrDefault
             Keys.ENABLE_REQUEST_LOGGING
             false
 
     let enableErrorEndpoint =
-        Config.InvariantCulture.typedEnvironmentVarOrDefault<bool>
+        Config.InvariantCulture.typedEnvironmentVarOrDefault
             Keys.ENABLE_ERROR_ENDPOINT
             false
 
     let proxyCount =
-        Config.InvariantCulture.typedEnvironmentVarOrDefault<int>
+        Config.InvariantCulture.typedEnvironmentVarOrDefault
             Keys.PROXY_COUNT
             0
 
@@ -202,6 +214,21 @@ module Env =
         |> Array.map Network.tryParseNetworkAddress
         |> Array.filter Option.isSome
         |> Array.map Option.get
+
+    let redisEnabled =
+        Config.InvariantCulture.typedEnvironmentVarOrDefault
+            Keys.REDIS_ENABLED
+            false
+
+    let redisConfiguration =
+        Config.environmentVarOrDefault
+            Keys.REDIS_CONFIGURATION
+            "localhost"
+
+    let redisInstance =
+        Config.environmentVarOrDefault
+            Keys.REDIS_INSTANCE
+            "dustedcodes"
 
     let summary =
         dict [
@@ -253,7 +280,13 @@ module Env =
                 "Known proxies", knownProxies.ToPrettyString()
                 "Known proxy networks", knownProxyNetworks.ToPrettyString()
             ]
+            "Redis", dict [
+                "Enabled", redisEnabled.ToString()
+                "Configuration", redisConfiguration
+                "Instance", redisInstance
+            ]
             "Debugging", dict [
+                "Tracing enabled", enableTracing.ToString()
                 "Request logging enabled", enableRequestLogging.ToString()
                 "Error endpoint enabled", enableErrorEndpoint.ToString()
             ]

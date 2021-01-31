@@ -56,7 +56,7 @@ jobs:
           PATTERN="refs/tags/v"
           SUB=""
           TAG="${GITHUB_REF/$PATTERN/$SUB}"
-          docker build  --build-arg version=$TAG -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$IMAGE":"$TAG" -f src/DustedCodes/Dockerfile .
+          docker build --build-arg version=$TAG -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$IMAGE":"$TAG" -f src/DustedCodes/Dockerfile .
 
       # Push the Docker image to Google Container Registry
       - name: Publish Docker image

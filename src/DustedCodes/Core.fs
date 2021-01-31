@@ -59,6 +59,7 @@ module MarkDog =
     let private bone =
         MarkdownPipelineBuilder()
             .UseAutoIdentifiers(AutoIdentifierOptions.GitHub)
+            .UsePipeTables()
             .Build()
 
     let toHtml (value : string) =
@@ -506,8 +507,10 @@ module Http =
 module Captcha =
     open System
     open System.Net
+    open System.Diagnostics
     open FSharp.Control.Tasks
     open Newtonsoft.Json
+    open Logfella
 
     type CaptchaValidationResult =
         | ServerError of string
@@ -547,7 +550,11 @@ module Captcha =
             let data = dict [ "siteKey",  siteKey
                               "secret",   secretKey
                               "response", captchaResponse ]
+
+            let timer = Stopwatch.StartNew()
             let! statusCode, body = Http.postAsync url data
+            timer.Stop()
+            Log.Debug(sprintf "Captcha validation completed in %fms" timer.Elapsed.TotalMilliseconds)
             return
                 if not (statusCode.Equals HttpStatusCode.OK)
                 then ServerError body

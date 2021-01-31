@@ -195,6 +195,11 @@ module NetworkExtensions =
                         | None   -> defaultPort
 
     type IApplicationBuilder with
+        member this.When(predicate : bool, middleware) =
+            match predicate with
+            | true  -> this.Use(middleware)
+            | false -> this
+
         member this.UseTrailingSlashRedirection() =
             this.Use(
                 fun ctx next ->
@@ -214,7 +219,8 @@ module NetworkExtensions =
 
         member this.UseHttpsRedirection (isEnabled : bool, domainName : string) =
             match isEnabled with
-            | true ->
+            | false -> this
+            | true  ->
                 this.Use(
                     fun ctx next ->
                         let host = ctx.Request.Host.Host
@@ -229,7 +235,32 @@ module NetworkExtensions =
                             ctx.Request.IsHttps <- true
                         next.Invoke())
                     .UseHttpsRedirection()
-            | false -> this
+
+// ---------------------------------
+// Middlewares
+// ---------------------------------
+
+[<RequireQualifiedAccess>]
+module Middlewares =
+    open System
+    open System.Diagnostics
+    open System.Threading.Tasks
+    open Microsoft.AspNetCore.Http
+    open FSharp.Control.Tasks
+    open Logfella
+
+    let logResponseTime =
+        Func<RequestDelegate, RequestDelegate>(
+            fun (next : RequestDelegate) ->
+                RequestDelegate(
+                    fun (ctx : HttpContext) ->
+                        task {
+                            let timer = Stopwatch.StartNew()
+                            do! next.Invoke ctx
+                            timer.Stop()
+                            Log.Debug(sprintf "Total time taken: %fms" timer.Elapsed.TotalMilliseconds)
+                        } :> Task))
+
 
 // ---------------------------------
 // Logging
@@ -250,7 +281,7 @@ module Logging =
                     summary.[category].Keys
                     |> Seq.toList
                     |> List.map(fun k -> k.Length)
-                    |> List.sortByDescending (fun l -> l)
+                    |> List.sortByDescending (id)
                     |> List.head
                     |> max len
             ) 0
@@ -328,3 +359,33 @@ module Hash =
         |> SHA1.Create().ComputeHash
         |> Array.map (fun b -> b.ToString "x2")
         |> String.concat ""
+
+// ---------------------------------
+// Memory cache for distributed cache
+// ---------------------------------
+
+[<AutoOpen>]
+module CachingExtensions =
+    open System.Threading.Tasks
+    open System.Collections.Concurrent
+    open Microsoft.Extensions.Caching.Distributed
+
+    let private memcache = ConcurrentDictionary<string, byte[]>()
+
+    type MemoryDistributedCache() =
+        interface IDistributedCache with
+            member __.Set (_, _, _) = failwith "Not implemented"
+            member __.Get _ = failwith "Not implemented"
+            member __.Refresh _ = failwith "Not implemented"
+            member __.RefreshAsync (_, _) = failwith "Not implemented"
+            member __.Remove _ = failwith "Not implemented"
+            member __.RemoveAsync (_, _) = failwith "Not implemented"
+
+            member __.SetAsync (key, value, option, token) =
+                memcache.TryAdd(key, value) |> ignore
+                Task.CompletedTask
+
+            member __.GetAsync(key, token) =
+                let mutable b : byte[] = null
+                memcache.TryGetValue(key, &b) |> ignore
+                Task.FromResult b
