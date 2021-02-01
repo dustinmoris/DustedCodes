@@ -1,0 +1,111 @@
+/* --------------------------
+  Light/Dark Theme
+-------------------------- */
+
+:root {
+    --font-logo: 'Nunito', sans-serif;
+    --font-code: 'Roboto Mono', monospace;
+    --font-text: 'Nunito Sans', sans-serif;
+    --font-special: 'Nunito', sans-serif;
+    --font-accent: 'Martel', serif;
+
+    --success-fg-color: #fff;
+    --success-bg-color: #88c082;
+    --error-fg-color: #fff;
+    --error-bg-color: #b96363;
+}
+
+/* Default colors */
+body {
+    --col-dark: #f8f8f8;
+    --col-faint: rgba(80, 80, 80, 0.1);
+    --col-faded: rgba(68, 68, 68, 0.4);
+    --col-normal: rgba(51, 51, 51, 0.6);
+    --col-light: rgba(68, 68, 68, 0.8);
+    --col-strong: #000;
+    --col-accent: #cd8e00;
+    --col-accent-dark: #cd8e00cc;
+    --col-code: #d48181;
+    --col-bmc: #cd8e00;
+}
+
+/* Dark theme colors */
+body.dark-theme {
+    --col-dark: #2f2f2f;
+    --col-faint: rgba(200, 200, 200, 0.1);
+    --col-faded: rgba(255, 255, 255, 0.4);
+    --col-normal: rgba(255, 255, 255, 0.6);
+    --col-light: rgba(255, 255, 255, 0.8);
+    --col-strong: #fff;
+    --col-accent: #ffd900;
+    --col-accent-dark: #ffd900cc;
+    --col-code: #ea9797;
+    --col-bmc: #ffd900;
+}
+
+/* Styles for users who prefer dark mode at the OS level */
+@media (prefers-color-scheme: dark) {
+    /* defaults to dark theme */
+    body {
+        --col-inverted: rgba(100, 100, 100, 0.7);
+        --col-inverted-light: rgba(180, 180, 180, 0.3);
+
+        --col-dark: #2f2f2f;
+        --col-faint: rgba(200, 200, 200, 0.1);
+        --col-faded: rgba(255, 255, 255, 0.4);
+        --col-normal: rgba(255, 255, 255, 0.6);
+        --col-light: rgba(255, 255, 255, 0.8);
+        --col-strong: #fff;
+        --col-accent: #ffd900;
+        --col-accent-dark: #ffd900cc;
+        --col-code: #ea9797;
+        --col-bmc: #ffd900;
+    }
+
+    /* Override dark mode with light mode styles if the user decides to swap */
+    body.light-theme {
+        --col-dark: #f8f8f8;
+        --col-faint: rgba(80, 80, 80, 0.1);
+        --col-faded: rgba(68, 68, 68, 0.4);
+        --col-normal: rgba(51, 51, 51, 0.6);
+        --col-light: rgba(68, 68, 68, 0.8);
+        --col-strong: #000;
+        --col-accent: #bc5543;
+        --col-accent-dark: #a54b3c;
+        --col-code: #d48181;
+        --col-bmc: #cd8e00;
+    }
+}
+
+/* --------------------------
+  Toggle
+-------------------------- */
+
+#theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    width: 60px;
+    height: 60px;
+    border: 0px solid var(--col-faint);
+    background: transparent;
+    border-radius: 90%;
+    -moz-border-radius: 90%;
+}
+
+#theme-toggle:hover {
+    background: var(--col-faint);
+}
+
+#theme-toggle svg {
+    width: 34px;
+    margin: 0;
+    padding: 0;
+}

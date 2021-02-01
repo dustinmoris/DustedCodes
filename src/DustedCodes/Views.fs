@@ -26,6 +26,19 @@ module Views =
     let private meta (key : string) (value : string) = meta [ _name key; _content value ]
     let private css (url : string) = link [ _rel "stylesheet"; _type "text/css"; _href url ]
 
+    let private themeToggleScript =
+        script [ _type "text/javascript" ] [
+            rawText "const themeToggle = document.querySelector(\".btn-theme-toggle\");
+const prefersDarkScheme = window.matchMedia(\"(prefers-color-scheme: dark)\");
+themeToggle.addEventListener(\"click\", function() {
+    if (prefersDarkScheme.matches) {
+        document.body.classList.toggle(\"light-theme\");
+    } else {
+        document.body.classList.toggle(\"dark-theme\");
+    }
+});"
+        ]
+
     let private googleAnalytics =
         script [] [
             rawText "!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=\"//www.google-analytics.com/analytics.js\",s.parentNode.insertBefore(o,s)}(window,document,\"script\",0,\"ga\"),ga(\"create\",\"UA-60196288-1\",\"auto\"),ga(\"send\",\"pageview\");"
@@ -70,6 +83,7 @@ module Views =
             "bundle"
             [
                 "CSS/fonts.css"
+                "CSS/themes.css"
                 "CSS/site.css"
                 "CSS/mobile.css"
             ]
@@ -156,6 +170,9 @@ module Views =
                 if headerContent.IsSome then yield! headerContent.Value
             ]
             body [] [
+                button [ _id "theme-toggle"; _class "btn-theme-toggle" ] [
+                    Icons.lightBulb
+                ]
                 header [] [
                     div [ _id "inner-header" ] [
                         a [ _href Url.``/`` ] [
@@ -203,6 +220,8 @@ module Views =
                         ]
                     ]
                 ]
+
+                themeToggleScript
             ]
         ]
 
@@ -214,7 +233,7 @@ module Views =
                     encodedText (blogPost.PublishDate.ToString("d MMM yyyy")) ] ]
             if blogPost.Tags.IsSome then
                 yield div [] [
-                    Icons.tag
+                    Icons.label
                     span [ _class "tags" ] [
                         yield!
                             blogPost.Tags.Value
