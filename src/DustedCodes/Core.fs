@@ -98,11 +98,13 @@ module Hire =
 [<RequireQualifiedAccess>]
 module GoogleAnalytics =
     open System
+    open System.Diagnostics
     open Google.Apis.Auth.OAuth2
     open Google.Apis.AnalyticsReporting.v4
     open Google.Apis.Services
     open Google.Apis.AnalyticsReporting.v4.Data
     open FSharp.Control.Tasks
+    open Logfella
 
     type PageStatistic =
         {
@@ -110,18 +112,21 @@ module GoogleAnalytics =
             ViewCount : int64
         }
 
-    let getMostViewedPagesAsync (jsonKey : string) (viewId : string) (maxCount : int) =
-        task {
-            let credential =
-                GoogleCredential
-                    .FromJson(jsonKey)
-                    .CreateScoped(AnalyticsReportingService.Scope.AnalyticsReadonly)
+    let private credential =
+        GoogleCredential
+            .FromJson(Env.googleAnalyticsKey)
+            .CreateScoped(AnalyticsReportingService.Scope.AnalyticsReadonly)
 
+    let getMostViewedPagesAsync (viewId : string) (maxCount : int) =
+        task {
+            let timer = Stopwatch.StartNew()
             use service =
                 new AnalyticsReportingService(
                     BaseClientService.Initializer(
                         ApplicationName       = "Dusted Codes Website",
                         HttpClientInitializer = credential))
+
+            Log.Debug(sprintf "Created AnalyticsReportingService in %fms" timer.Elapsed.TotalMilliseconds)
 
             let reportRequest =
                 ReportRequest(
@@ -141,6 +146,10 @@ module GoogleAnalytics =
                         ReportRequests = [| reportRequest |]))
 
             let! response = request.ExecuteAsync()
+
+            timer.Stop()
+            Log.Debug(sprintf "Retrieved Google Analytics report in %fms" timer.Elapsed.TotalMilliseconds)
+
             let report    = response.Reports.[0]
             let maxRows   = min report.Data.Rows.Count maxCount
 
@@ -554,7 +563,7 @@ module Captcha =
             let timer = Stopwatch.StartNew()
             let! statusCode, body = Http.postAsync url data
             timer.Stop()
-            Log.Debug(sprintf "Captcha validation completed in %fms" timer.Elapsed.TotalMilliseconds)
+            Log.Debug(sprintf "Validated captcha in %fms" timer.Elapsed.TotalMilliseconds)
             return
                 if not (statusCode.Equals HttpStatusCode.OK)
                 then ServerError body
@@ -610,6 +619,9 @@ module DataService =
     open Google.Cloud.Datastore.V1
     open Logfella
 
+    let private datastore  = DatastoreDb.Create Env.gcpProjectId
+    let private keyFactory = datastore.CreateKeyFactory Env.gcpContactMessageKind
+
     let private toStringValue (str : string) = Value(StringValue = str)
 
     let private toTextValue (str : string) =
@@ -637,7 +649,7 @@ module DataService =
         entity.["Environment"] <- Env.name         |> toStringValue
         entity
 
-    let private save (datastore : DatastoreDb)  (entity : Entity) =
+    let private save (entity : Entity) =
         task {
             try
                 let! keys = datastore.InsertAsync [ entity ]
@@ -654,19 +666,17 @@ module DataService =
         }
 
     let saveContactMessage (msg : ContactMessages.Entity) =
-        Log.Debug "Initialising Google Cloud DatastoreDb..."
-        let datastore  = DatastoreDb.Create Env.gcpProjectId
-        Log.Debug "Creating key factory for entity kind..."
-        let keyFactory = datastore.CreateKeyFactory Env.gcpContactMessageKind
-        Log.Debug "Generating new entity key..."
-        let key        = keyFactory.CreateIncompleteKey()
-        Log.Debug "Creating and saving entity..."
-        let keys =
-            msg
-            |> entityFromContactMessage key
-            |> save datastore
-        Log.Debug "Contact message has been successfully saved."
-        keys
+        task {
+            Log.Debug "Generating new entity key..."
+            let key = keyFactory.CreateIncompleteKey()
+            Log.Debug "Creating and saving entity..."
+            let! keys =
+                msg
+                |> entityFromContactMessage key
+                |> save
+            Log.Debug "Contact message has been successfully saved."
+            return keys
+        }
 
 // ---------------------------------
 // Email Service
@@ -674,12 +684,17 @@ module DataService =
 
 module EmailService =
     open System
+    open System.Threading
     open System.Collections.Generic
     open Google.Protobuf
     open Google.Cloud.PubSub.V1
     open FSharp.Control.Tasks
     open Newtonsoft.Json
     open Logfella
+
+    let private topicName = TopicName(Env.gcpProjectId, Env.gcpContactMessageTopic)
+
+    let private publisher = PublisherServiceApiClient.Create()
 
     [<CLIMutable>]
     type Message =
@@ -697,16 +712,16 @@ module EmailService =
     let private sendMessage (msg : Message) =
         task {
             try
-                let topicName  = TopicName(Env.gcpProjectId, Env.gcpContactMessageTopic)
-                let! publisher = PublisherClient.CreateAsync topicName
                 let data =
                     msg
                     |> JsonConvert.SerializeObject
                     |> ByteString.CopyFromUtf8
                 let pubSubMsg = PubsubMessage(Data = data)
                 pubSubMsg.Attributes.Add("encoding", "json-utf8")
-                let! messageId = publisher.PublishAsync(pubSubMsg)
-                do! publisher.ShutdownAsync(TimeSpan.FromSeconds 15.0)
+
+                let! response = publisher.PublishAsync(topicName, [ pubSubMsg ])
+                let messageId = response.MessageIds.[0]
+
                 Log.Notice(
                      "A new contact message has been successfully sent.",
                      ("messageId", messageId :> obj))

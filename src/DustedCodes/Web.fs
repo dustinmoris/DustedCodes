@@ -111,7 +111,7 @@ module HttpHandlers =
                         let emailTask = EmailService.sendContactMessage msg
                         do! Task.WhenAll(dataTask, emailTask)
                         timer.Stop()
-                        Log.Debug(sprintf "Sending message completed in %fms" timer.Elapsed.TotalMilliseconds)
+                        Log.Debug(sprintf "Sent message in %fms" timer.Elapsed.TotalMilliseconds)
                         match dataTask.Result, emailTask.Result with
                         | Ok _, _ | _, Ok _ ->
                             return! respond ContactMessages.Entity.Empty (Ok "Thank you, your message has been successfully sent!")
