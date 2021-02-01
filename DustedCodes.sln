@@ -15,6 +15,7 @@ ProjectSection(SolutionItems) = preProject
 	.gitattributes = .gitattributes
 	.gitignore = .gitignore
 	download-fonts.ps1 = download-fonts.ps1
+	docker-compose.yml = docker-compose.yml
 EndProjectSection
 EndProject
 Global

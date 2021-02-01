@@ -103,7 +103,7 @@ module GoogleAnalytics =
     open Google.Apis.AnalyticsReporting.v4
     open Google.Apis.Services
     open Google.Apis.AnalyticsReporting.v4.Data
-    open FSharp.Control.Tasks
+    open FSharp.Control.Tasks.NonAffine
     open Logfella
 
     type PageStatistic =
@@ -126,7 +126,7 @@ module GoogleAnalytics =
                         ApplicationName       = "Dusted Codes Website",
                         HttpClientInitializer = credential))
 
-            Log.Debug(sprintf "Created AnalyticsReportingService in %fms" timer.Elapsed.TotalMilliseconds)
+            Log.Debug(sprintf "Created AnalyticsReportingService in %s" (timer.Elapsed.ToMs()))
 
             let reportRequest =
                 ReportRequest(
@@ -148,7 +148,7 @@ module GoogleAnalytics =
             let! response = request.ExecuteAsync()
 
             timer.Stop()
-            Log.Debug(sprintf "Retrieved Google Analytics report in %fms" timer.Elapsed.TotalMilliseconds)
+            Log.Debug(sprintf "Retrieved Google Analytics report in %s" (timer.Elapsed.ToMs()))
 
             let report    = response.Reports.[0]
             let maxRows   = min report.Data.Rows.Count maxCount
@@ -497,7 +497,7 @@ module Css =
 module Http =
     open System.Collections.Generic
     open System.Net.Http
-    open FSharp.Control.Tasks
+    open FSharp.Control.Tasks.NonAffine
 
     let postAsync (url : string) (data : IDictionary<string, string>) =
         task {
@@ -517,7 +517,7 @@ module Captcha =
     open System
     open System.Net
     open System.Diagnostics
-    open FSharp.Control.Tasks
+    open FSharp.Control.Tasks.NonAffine
     open Newtonsoft.Json
     open Logfella
 
@@ -563,7 +563,7 @@ module Captcha =
             let timer = Stopwatch.StartNew()
             let! statusCode, body = Http.postAsync url data
             timer.Stop()
-            Log.Debug(sprintf "Validated captcha in %fms" timer.Elapsed.TotalMilliseconds)
+            Log.Debug(sprintf "Validated captcha in %s" (timer.Elapsed.ToMs()))
             return
                 if not (statusCode.Equals HttpStatusCode.OK)
                 then ServerError body
@@ -615,7 +615,7 @@ module ContactMessages =
 [<RequireQualifiedAccess>]
 module DataService =
     open System
-    open FSharp.Control.Tasks
+    open FSharp.Control.Tasks.NonAffine
     open Google.Cloud.Datastore.V1
     open Logfella
 
@@ -684,17 +684,18 @@ module DataService =
 
 module EmailService =
     open System
-    open System.Threading
     open System.Collections.Generic
     open Google.Protobuf
     open Google.Cloud.PubSub.V1
-    open FSharp.Control.Tasks
+    open FSharp.Control.Tasks.NonAffine
     open Newtonsoft.Json
     open Logfella
 
     let private topicName = TopicName(Env.gcpProjectId, Env.gcpContactMessageTopic)
 
-    let private publisher = PublisherServiceApiClient.Create()
+    let private publisher = PublisherClient.CreateAsync(topicName).Result
+
+    let shutDown(deadline : TimeSpan) = publisher.ShutdownAsync(deadline)
 
     [<CLIMutable>]
     type Message =
@@ -719,8 +720,7 @@ module EmailService =
                 let pubSubMsg = PubsubMessage(Data = data)
                 pubSubMsg.Attributes.Add("encoding", "json-utf8")
 
-                let! response = publisher.PublishAsync(topicName, [ pubSubMsg ])
-                let messageId = response.MessageIds.[0]
+                let! messageId = publisher.PublishAsync(pubSubMsg)
 
                 Log.Notice(
                      "A new contact message has been successfully sent.",

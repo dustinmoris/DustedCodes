@@ -34,6 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include=".env.ini" />
+    <None Include="Dockerfile" />
+    
     <Content Include="BlogPosts\*.md;Content\*.md;CSS\**\*;Public\**\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>

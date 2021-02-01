@@ -1,6 +1,20 @@
 namespace DustedCodes
 
 // ---------------------------------
+// TimeSpanExtensions
+// ---------------------------------
+
+[<AutoOpen>]
+module TimeSpanExtensions =
+    open System
+
+    type TimeSpan with
+        member this.ToMs() =
+            sprintf "%ims (%ss)"
+                (this.TotalMilliseconds |> Math.Round |> int)
+                (Math.Round(this.TotalSeconds, 2).ToString("0.00"))
+
+// ---------------------------------
 // Str
 // ---------------------------------
 
@@ -258,7 +272,7 @@ module Middlewares =
                             let timer = Stopwatch.StartNew()
                             do! next.Invoke ctx
                             timer.Stop()
-                            Log.Debug(sprintf "Total time taken: %fms" timer.Elapsed.TotalMilliseconds)
+                            Log.Debug(sprintf "Total time taken: %s" (timer.Elapsed.ToMs()))
                         } :> Task))
 
 

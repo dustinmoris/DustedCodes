@@ -96,36 +96,39 @@ module Program =
     [<EntryPoint>]
     let main _ =
         try
-            Log.SetDefaultLogWriter(createLogWriter None)
-            Logging.outputEnvironmentSummary Env.summary
+            try
+                Log.SetDefaultLogWriter(createLogWriter None)
+                Logging.outputEnvironmentSummary Env.summary
 
-            let lastBlogPost =
-                BlogPosts.all
-                |> List.sortByDescending (fun t -> t.PublishDate)
-                |> List.head
+                let lastBlogPost =
+                    BlogPosts.all
+                    |> List.sortByDescending (fun t -> t.PublishDate)
+                    |> List.head
 
-            Log.Info (sprintf "Parsed %i blog posts." BlogPosts.all.Length)
-            Log.Info (sprintf "Last blog post is: %s." lastBlogPost.Title)
+                Log.Info (sprintf "Parsed %i blog posts." BlogPosts.all.Length)
+                Log.Info (sprintf "Last blog post is: %s." lastBlogPost.Title)
 
-            Host.CreateDefaultBuilder()
-                .UseLogfella()
-                .ConfigureWebHost(
-                    fun webHostBuilder ->
-                        webHostBuilder
-                            .ConfigureSentry(
-                                Env.sentryDsn,
-                                Env.name,
-                                Env.appVersion)
-                            .UseKestrel(
-                                fun k -> k.AddServerHeader <- false)
-                            .UseContentRoot(Env.appRoot)
-                            .UseWebRoot(Env.assetsDir)
-                            .Configure(configureApp)
-                            .ConfigureServices(configureServices)
-                            |> ignore)
-                .Build()
-                .Run()
-            0
-        with ex ->
-            Log.Emergency("Host terminated unexpectedly.", ex)
-            1
+                Host.CreateDefaultBuilder()
+                    .UseLogfella()
+                    .ConfigureWebHost(
+                        fun webHostBuilder ->
+                            webHostBuilder
+                                .ConfigureSentry(
+                                    Env.sentryDsn,
+                                    Env.name,
+                                    Env.appVersion)
+                                .UseKestrel(
+                                    fun k -> k.AddServerHeader <- false)
+                                .UseContentRoot(Env.appRoot)
+                                .UseWebRoot(Env.assetsDir)
+                                .Configure(configureApp)
+                                .ConfigureServices(configureServices)
+                                |> ignore)
+                    .Build()
+                    .Run()
+                0
+            with ex ->
+                Log.Emergency("Host terminated unexpectedly.", ex)
+                1
+        finally
+            EmailService.shutDown(TimeSpan.FromSeconds(10.0)).Wait()

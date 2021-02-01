@@ -1,32 +1,4 @@
 /* --------------------------
-  Site wide colours
--------------------------- */
-
-:root {
-    --col-dark: #2f2f2f;
-    --col-faint: rgba(200, 200, 200, 0.1);
-    --col-faded: rgba(255, 255, 255, 0.4);
-    --col-normal: rgba(255, 255, 255, 0.6);
-    --col-light: rgba(255, 255, 255, 0.8);
-    --col-strong: #fff;
-    --col-accent: #ffd900;
-    --col-accent-dark: #ffd900cc;
-    --col-code: #ea9797;
-    --col-bmc: #ffd900;
-
-    --success-fg-color: #fff;
-    --success-bg-color: #88c082;
-    --error-fg-color: #fff;
-    --error-bg-color: #b96363;
-
-    --font-logo: 'Nunito', sans-serif;
-    --font-code: 'Roboto Mono', monospace;
-    --font-text: 'Nunito Sans', sans-serif;
-    --font-special: 'Nunito', sans-serif;
-    --font-accent: 'Martel', serif;
-}
-
-/* --------------------------
   Default elements
 -------------------------- */
 

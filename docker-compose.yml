@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:latest
+    hostname: redis
+    ports:
+      - 6379:6379
+  dustedcodes:
+    image: eu.gcr.io/dusted-codes/dustedcodes:2.53.0
+    volumes:
+      - /Users/dustinmoris/temp/gcp-key.json:/var/dusted/gcp-key.json
+    ports:
+      - 8080:8080
+    env_file:
+      - ./src/DustedCodes/.env.ini
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - DOMAIN_NAME=local.dusted.codes:8080
+      - BASE_URL=http://local.dusted.codes:8080
+      - GOOGLE_APPLICATION_CREDENTIALS=/var/dusted/gcp-key.json
+      - REDIS_ENABLED=true
+      - REDIS_CONFIGURATION=redis:6379
+      - REDIS_INSTANCE=dustedcodes

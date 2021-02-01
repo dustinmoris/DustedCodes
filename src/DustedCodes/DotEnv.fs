@@ -6,7 +6,7 @@ module DotEnv =
 
     let private parseLine(line : string) =
         Console.WriteLine (sprintf "Parsing: %s" line)
-        match line.Split('=', StringSplitOptions.RemoveEmptyEntries) with
+        match line.Split('=', 2, StringSplitOptions.RemoveEmptyEntries) with
         | args when args.Length = 2 ->
             Environment.SetEnvironmentVariable(
                 args.[0],
