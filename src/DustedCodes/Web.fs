@@ -149,7 +149,6 @@ module HttpHandlers =
                 | None ->
                     let! mostViewedPages =
                         GoogleAnalytics.getMostViewedPagesAsync
-                            Env.googleAnalyticsKey
                             Env.googleAnalyticsViewId
                             (int Byte.MaxValue)
                     let view =
