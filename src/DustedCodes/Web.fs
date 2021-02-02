@@ -111,7 +111,9 @@ module HttpHandlers =
                         let emailTask = EmailService.sendContactMessage msg
                         do! Task.WhenAll(dataTask, emailTask)
                         timer.Stop()
-                        Log.Debug(sprintf "Sent message in %s" (timer.Elapsed.ToMs()))
+                        Log.Debug(
+                            sprintf "Sent message in %s" (timer.Elapsed.ToMs()),
+                            ("timeTaken", timer.Elapsed.TotalMilliseconds :> obj))
                         match dataTask.Result, emailTask.Result with
                         | Ok _, _ | _, Ok _ ->
                             return! respond ContactMessages.Entity.Empty (Ok "Thank you, your message has been successfully sent!")
@@ -140,7 +142,7 @@ module HttpHandlers =
         allowCaching (TimeSpan.FromDays 5.0)
         >=> fun (next : HttpFunc) (ctx : HttpContext) ->
             task {
-                let cacheKey = "trendingBlogPosts"
+                let cacheKey = Env.cacheKeyTrending
                 let cache = ctx.GetService<IDistributedCache>()
 
                 let! cacheItem = cache.GetAsync(cacheKey, ctx.RequestAborted)
@@ -160,7 +162,9 @@ module HttpHandlers =
                         |> Views.trending
                         |> RenderView.AsBytes.htmlDocument
 
-                    do! cache.SetAsync(cacheKey, view, ctx.RequestAborted)
+                    let options = DistributedCacheEntryOptions()
+                    options.AbsoluteExpiration <- DateTimeOffset.UtcNow.AddDays(7.0)
+                    do! cache.SetAsync(cacheKey, view, options, ctx.RequestAborted)
 
                     return! htmlBytes view next ctx
             }

@@ -41,6 +41,7 @@ module Env =
         let REDIS_ENABLED = "REDIS_ENABLED"
         let REDIS_CONFIGURATION = "REDIS_CONFIGURATION"
         let REDIS_INSTANCE="REDIS_INSTANCE"
+        let CACHE_KEY_TRENDING="CACHE_KEY_TRENDING"
 
     let userHomeDir = Environment.GetEnvironmentVariable "HOME"
     let defaultAppName = "DustedCodes"
@@ -230,6 +231,11 @@ module Env =
             Keys.REDIS_INSTANCE
             "dustedcodes"
 
+    let cacheKeyTrending =
+        Config.environmentVarOrDefault
+            Keys.CACHE_KEY_TRENDING
+            "trendingBlogPostsJan2021"
+
     let summary =
         dict [
             "App", dict [
@@ -284,6 +290,7 @@ module Env =
                 "Enabled", redisEnabled.ToString()
                 "Configuration", redisConfiguration
                 "Instance", redisInstance
+                "Cache Key Trending", cacheKeyTrending
             ]
             "Debugging", dict [
                 "Tracing enabled", enableTracing.ToString()

@@ -272,7 +272,9 @@ module Middlewares =
                             let timer = Stopwatch.StartNew()
                             do! next.Invoke ctx
                             timer.Stop()
-                            Log.Debug(sprintf "Total time taken: %s" (timer.Elapsed.ToMs()))
+                            Log.Debug(
+                                sprintf "Total time taken: %s" (timer.Elapsed.ToMs()),
+                                ("timeTaken", timer.Elapsed.TotalMilliseconds :> obj))
                         } :> Task))
 
 

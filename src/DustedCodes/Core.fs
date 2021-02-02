@@ -126,7 +126,9 @@ module GoogleAnalytics =
                         ApplicationName       = "Dusted Codes Website",
                         HttpClientInitializer = credential))
 
-            Log.Debug(sprintf "Created AnalyticsReportingService in %s" (timer.Elapsed.ToMs()))
+            Log.Debug(
+                sprintf "Created AnalyticsReportingService in %s" (timer.Elapsed.ToMs()),
+                ("timeTaken", timer.Elapsed.TotalMilliseconds :> obj))
 
             let reportRequest =
                 ReportRequest(
@@ -148,7 +150,9 @@ module GoogleAnalytics =
             let! response = request.ExecuteAsync()
 
             timer.Stop()
-            Log.Debug(sprintf "Retrieved Google Analytics report in %s" (timer.Elapsed.ToMs()))
+            Log.Debug(
+                sprintf "Retrieved Google Analytics report in %s" (timer.Elapsed.ToMs()),
+                ("timeTaken", timer.Elapsed.TotalMilliseconds :> obj))
 
             let report    = response.Reports.[0]
             let maxRows   = min report.Data.Rows.Count maxCount
@@ -563,7 +567,9 @@ module Captcha =
             let timer = Stopwatch.StartNew()
             let! statusCode, body = Http.postAsync url data
             timer.Stop()
-            Log.Debug(sprintf "Validated captcha in %s" (timer.Elapsed.ToMs()))
+            Log.Debug(
+                sprintf "Validated captcha in %s" (timer.Elapsed.ToMs()),
+                ("timeTaken", timer.Elapsed.TotalMilliseconds :> obj))
             return
                 if not (statusCode.Equals HttpStatusCode.OK)
                 then ServerError body
