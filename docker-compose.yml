@@ -7,7 +7,7 @@ services:
     ports:
       - 6379:6379
   dustedcodes:
-    image: eu.gcr.io/dusted-codes/dustedcodes:2.53.0
+    image: eu.gcr.io/dusted-codes/dustedcodes:2.54.0
     volumes:
       - /Users/dustinmoris/temp/gcp-key.json:/var/dusted/gcp-key.json
     ports:
