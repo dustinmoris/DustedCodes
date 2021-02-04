@@ -18,18 +18,27 @@
     <PackageReference Include="Google.Cloud.Datastore.V1" Version="3.1.*" />
     <PackageReference Include="Google.Cloud.PubSub.V1" Version="2.3.*" />
     <PackageReference Include="Sentry.AspNetCore" Version="2.1.*" />
-    <PackageReference Include="Logfella" Version="7.1.*" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="5.0.*" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Log.fs" />
     <Compile Include="DotEnv.fs" />
-    <Compile Include="Common.fs" />
     <Compile Include="Env.fs" />
-    <Compile Include="Core.fs" />
+    <Compile Include="Helpers.fs" />
+    <Compile Include="Extensions.fs" />
+    <Compile Include="Config.fs" />
+    <Compile Include="Urls.fs" />
+    <Compile Include="BlogPosts.fs" />
+    <Compile Include="Analytics.fs" />
+    <Compile Include="Captcha.fs" />
+    <Compile Include="Messages.fs" />
     <Compile Include="Icons.fs" />
+    <Compile Include="RSS.fs" />
+    <Compile Include="Minification.fs" />
     <Compile Include="Views.fs" />
     <Compile Include="Web.fs" />
+    <Compile Include="Middlewares.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

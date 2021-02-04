@@ -146,8 +146,6 @@ module Icons =
 
     let lightBulb =
         tag "svg" [
-//            if fill.IsSome then
-//                attr "fill" (normalizeColor fill.Value)
             attr "version" "1.0"
             attr "xmlns" "http://www.w3.org/2000/svg"
             attr "viewBox" "0 0 512 512"

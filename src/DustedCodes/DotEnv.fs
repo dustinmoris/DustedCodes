@@ -1,11 +1,12 @@
 namespace DustedCodes
 
+[<RequireQualifiedAccess>]
 module DotEnv =
     open System
     open System.IO
 
     let private parseLine(line : string) =
-        Console.WriteLine (sprintf "Parsing: %s" line)
+        Log.debugF "Parsing: %s" line
         match line.Split('=', 2, StringSplitOptions.RemoveEmptyEntries) with
         | args when args.Length = 2 ->
             Environment.SetEnvironmentVariable(
@@ -13,19 +14,15 @@ module DotEnv =
                 args.[1])
         | _ -> ()
 
-    let private load() =
-        lazy (
-            Console.WriteLine "Trying to load .env file..."
-            let dir = Directory.GetCurrentDirectory()
-            let filePath = Path.Combine(dir, ".env.ini")
-            filePath
-            |> File.Exists
-            |> function
-                | false -> Console.WriteLine "No .env file found."
-                | true  ->
-                    filePath
-                    |> File.ReadAllLines
-                    |> Seq.iter parseLine
-        )
-
-    let init = load().Value
+    let load() =
+        Log.info "Trying to load .env file..."
+        let dir = Directory.GetCurrentDirectory()
+        let filePath = Path.Combine(dir, ".env.ini")
+        filePath
+        |> File.Exists
+        |> function
+            | false -> Log.warning "No .env file found."
+            | true  ->
+                filePath
+                |> File.ReadAllLines
+                |> Seq.iter parseLine
