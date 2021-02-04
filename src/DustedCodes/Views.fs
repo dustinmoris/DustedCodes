@@ -44,7 +44,7 @@ themeToggle.addEventListener(\"click\", function() {
             rawText "!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=\"//www.google-analytics.com/analytics.js\",s.parentNode.insertBefore(o,s)}(window,document,\"script\",0,\"ga\"),ga(\"create\",\"UA-60196288-1\",\"auto\"),ga(\"send\",\"pageview\");"
         ]
 
-    let private disqusScript (id : string) (title : string) (url : string) =
+    let private disqusScript (shortname : string) (id : string) (title : string) (url : string) =
         script [ _type "text/javascript"] [
             rawText (sprintf "var disqus_shortname = '%s';
             var disqus_identifier = '%s';
@@ -57,20 +57,20 @@ themeToggle.addEventListener(\"click\", function() {
                 dsq.type = 'text/javascript';
                 dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
                 (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();" Env.disqusShortname id (WebUtility.UrlEncode title) url)
+            })();" shortname id (WebUtility.UrlEncode title) url)
         ]
 
-    let private disqusCountScript =
+    let private disqusCountScript (shortname : string) =
         script [
             _id "dsq-count-scr"
-            _src (sprintf "//%s.disqus.com/count.js" Env.disqusShortname)
+            _src (sprintf "//%s.disqus.com/count.js" shortname)
             _async ] []
 
-    let private disqus (id : string) (title : string) (url : string) =
+    let private disqus (shortname : string) (id : string) (title : string) (url : string) =
         aside [ _id "comments" ] [
             div [ _id "disqus_thread" ] []
-            disqusScript id title url
-            disqusCountScript
+            disqusScript shortname id title url
+            disqusCountScript shortname
             noscript [] [ rawText "Please enable JavaScript to view comments." ]
         ]
 
@@ -109,15 +109,21 @@ themeToggle.addEventListener(\"click\", function() {
 
     "
 
-    let private masterView (subject   : string option)
-                   (permalink : string option)
-                   (sample    : string option)
-                   (headerContent : XmlNode list option)
-                   (bodyContent   : XmlNode list) =
+    let private masterView
+        (settings       : Config.Settings)
+        (subject        : string option)
+        (permalink      : string option)
+        (sample         : string option)
+        (headerContent  : XmlNode list option)
+        (bodyContent    : XmlNode list) =
+
+        let baseUrl   = settings.Web.BaseUrl
+        let createUrl = Url.create baseUrl
+
         let pageTitle =
             match subject with
-            | Some s -> sprintf "%s - %s" s Env.blogTitle
-            | None   -> sprintf "%s - %s" Env.blogTitle Env.blogSubtitle
+            | Some s -> sprintf "%s - %s" s settings.Blog.Title
+            | None   -> sprintf "%s - %s" settings.Blog.Title settings.Blog.Subtitle
         html [] [
             comment asciiArt
             head [] [
@@ -130,18 +136,23 @@ themeToggle.addEventListener(\"click\", function() {
                 title [] [ encodedText pageTitle ]
 
                 // Favicon
-                link [ _rel "apple-touch-icon"; _sizes "180x180"; _href (Url.create "/apple-touch-icon.png?v=2") ]
-                link [ _rel "icon"; _type "image/png"; _sizes "32x32"; _href (Url.create "/favicon-32x32.png?v=2") ]
-                link [ _rel "icon"; _type "image/png"; _sizes "16x16"; _href (Url.create "/favicon-16x16.png?v=2") ]
-                link [ _rel "manifest"; _href (Url.create "/manifest.json?v=2") ]
-                link [ _rel "mask-icon"; _href (Url.create "/safari-pinned-tab.svg?v=2"); attr "color" "#333333" ]
-                link [ _rel "shortcut icon"; _href (Url.create "/favicon.ico?v=2") ]
-                meta "apple-mobile-web-app-title" Env.blogTitle
-                meta "application-name" Env.blogTitle
+                link [ _rel "apple-touch-icon"; _sizes "180x180"; _href (createUrl "/apple-touch-icon.png?v=2") ]
+                link [ _rel "icon"; _type "image/png"; _sizes "32x32"; _href (createUrl "/favicon-32x32.png?v=2") ]
+                link [ _rel "icon"; _type "image/png"; _sizes "16x16"; _href (createUrl "/favicon-16x16.png?v=2") ]
+                link [ _rel "manifest"; _href (createUrl "/manifest.json?v=2") ]
+                link [ _rel "mask-icon"; _href (createUrl "/safari-pinned-tab.svg?v=2"); attr "color" "#333333" ]
+                link [ _rel "shortcut icon"; _href (createUrl "/favicon.ico?v=2") ]
+                meta "apple-mobile-web-app-title" settings.Blog.Title
+                meta "application-name" settings.Blog.Title
                 meta "theme-color" "#ffffff"
 
                 // RSS feed
-                link [ _rel "alternate"; _type "application/rss+xml"; _title "RSS Feed"; _href Url.``/feed/rss`` ]
+                link [
+                    _rel "alternate"
+                    _type "application/rss+xml"
+                    _title "RSS Feed"
+                    _href (Url.``/feed/rss`` baseUrl)
+                ]
 
                 if permalink.IsSome then
                     // Twitter card tags
@@ -153,18 +164,18 @@ themeToggle.addEventListener(\"click\", function() {
                     openGraph "title"        pageTitle
                     openGraph "url"          permalink.Value
                     openGraph "type"         "website"
-                    openGraph "image"        (Url.storage "images/website/open-graph-2.jpg")
-                    openGraph "image:alt"    Env.blogTitle
+                    openGraph "image"        (Url.storage "images/website/open-graph-2.jpg" baseUrl)
+                    openGraph "image:alt"    settings.Blog.Title
                     openGraph "image:width"  "1094"
                     openGraph "image:height" "729"
                     if sample.IsSome then
                         openGraph "description" sample.Value
 
                 // Minified & bundled CSS
-                css (Url.create minifiedCss.Path)
+                css (createUrl minifiedCss.Path)
 
                 // Google Analytics
-                if Env.isProduction then googleAnalytics
+                if settings.General.IsProd then googleAnalytics
 
                 // Additional (optional) header content
                 if headerContent.IsSome then yield! headerContent.Value
@@ -175,14 +186,14 @@ themeToggle.addEventListener(\"click\", function() {
                 ]
                 header [] [
                     div [ _id "inner-header" ] [
-                        a [ _href Url.``/`` ] [
+                        a [ _href (Url.``/`` baseUrl) ] [
                             hgroup [] [
                                 h1 [] [
                                     span [] [ encodedText "Dusted" ]
                                     Icons.logo
                                     span [] [ encodedText "Codes" ]
                                 ]
-                                h2 [] [ encodedText Env.blogSubtitle ]
+                                h2 [] [ encodedText settings.Blog.Subtitle ]
                             ]
                          ]
                     ]
@@ -191,7 +202,6 @@ themeToggle.addEventListener(\"click\", function() {
                 nav [] [
                     div [ _id "inner-nav" ] [
                         ul [ _id "social-links" ] [
-                            // li [] [ iconLink "https://www.facebook.com/dustinmoris.gorski" "Connect on Facebook" Icons.facebook ]
                             li [] [ iconLink "https://twitter.com/dustinmoris" "Follow on Twitter" Icons.twitter ]
                             li [] [ iconLink "https://www.linkedin.com/in/dustinmoris/" "Connect on LinkedIn" Icons.linkedIn ]
                             li [] [ iconLink "https://www.instagram.com/dustedtravels/" "Follow on Instagram" Icons.instagram ]
@@ -201,22 +211,22 @@ themeToggle.addEventListener(\"click\", function() {
                             li [] [ iconLink "https://stackoverflow.com/users/1693158/dustinmoris" "View StackOverflow profile" Icons.stackOverflow ]
                             li [] [ iconLink "https://www.buymeacoffee.com/dustinmoris" "Buy me a coffee" Icons.buyMeACoffee ]
                             li [] [ iconLink "https://www.paypal.me/dustinmoris" "Pay me via PayPal" Icons.payPal ]
-                            li [] [ iconLink Url.``/feed/rss`` "Subscribe to feed" Icons.rssFeed ]
+                            li [] [ iconLink (Url.``/feed/rss`` baseUrl) "Subscribe to feed" Icons.rssFeed ]
                         ]
                         ul [ _id "nav-links" ] [
-                            li [] [ normalLink Url.``/`` "Home" ]
-                            li [] [ normalLink Url.``/trending`` "Trending" ]
-                            li [] [ normalLink Url.``/about`` "About"]
-                            li [] [ normalLink Url.``/hire`` "Hire" ]
-                            li [] [ normalLink Url.``/hire#contact`` "Contact" ]
+                            li [] [ normalLink (Url.``/`` baseUrl) "Home" ]
+                            li [] [ normalLink (Url.``/trending`` baseUrl) "Trending" ]
+                            li [] [ normalLink (Url.``/about`` baseUrl) "About"]
+                            li [] [ normalLink (Url.``/hire`` baseUrl) "Hire" ]
+                            li [] [ normalLink (Url.``/hire#contact`` baseUrl) "Contact" ]
                         ]
                     ]
                 ]
                 footer [] [
                     div [ _id "inner-footer" ] [
-                        h5 [] [ rawText (sprintf "Copyright &copy; %i, %s" DateTime.Now.Year Env.blogAuthor) ]
+                        h5 [] [ rawText (sprintf "Copyright &copy; %i, %s" DateTime.Now.Year settings.Blog.Author) ]
                         p [] [
-                            rawText (sprintf "All content on this website, such as text, graphics, logos and images is the property of %s." Env.blogAuthor)
+                            rawText (sprintf "All content on this website, such as text, graphics, logos and images is the property of %s." settings.Blog.Author)
                         ]
                     ]
                 ]
@@ -225,7 +235,7 @@ themeToggle.addEventListener(\"click\", function() {
             ]
         ]
 
-    let private blogPostMetadata (blogPost : BlogPosts.Article) =
+    let private blogPostMetadata baseUrl (blogPost : BlogPosts.Article) =
         div [ _class "blogpost-metadata" ] [
             yield div [] [
                 Icons.calendar
@@ -237,66 +247,72 @@ themeToggle.addEventListener(\"click\", function() {
                     span [ _class "tags" ] [
                         yield!
                             blogPost.Tags.Value
-                            |> List.map (fun t -> normalLink (Url.``/tagged/%s`` t) t)
+                            |> List.map (fun t -> normalLink (Url.``/tagged/%s`` baseUrl t) t)
                     ] ]
             yield div [] [
                 Icons.comments
                 a [ _class "disqus-comment-count"
-                    _href (sprintf "%s#disqus_thread" blogPost.Permalink)
+                    _href (sprintf "%s#disqus_thread" (blogPost.Permalink baseUrl))
                     attr "data-disqus-identifier" blogPost.Id ] [
                         rawText "Comments"
                     ] ]
         ]
 
-    let private trendingBlogPostListItem (blogPost : BlogPosts.Article) =
+    let private trendingBlogPostListItem baseUrl (blogPost : BlogPosts.Article) =
         li [] [
-            div [] [ normalLink blogPost.Permalink blogPost.Title ]
-            div [] [ blogPostMetadata blogPost ] ]
+            div [] [ normalLink (blogPost.Permalink baseUrl) blogPost.Title ]
+            div [] [ blogPostMetadata baseUrl blogPost ] ]
 
-    let private blogPostGroup (year : int, blogPosts : BlogPosts.Article list) =
+    let private blogPostGroup baseUrl (year : int, blogPosts : BlogPosts.Article list) =
         div [ _class "article-list" ] [
             h3 [] [ rawText (year.ToString()) ]
             ul [] [
                 yield!
                     blogPosts
                     |> List.map (
-                        fun p -> li [] [ normalLink p.Permalink p.Title ])
+                        fun p -> li [] [ normalLink (p.Permalink baseUrl) p.Title ])
             ]
         ]
 
-    let index (blogPosts : BlogPosts.Article list) =
+    let index (settings : Config.Settings) (blogPosts : BlogPosts.Article list) =
         [
             yield!
                 blogPosts
                 |> List.groupBy(fun post -> post.PublishDate.Year)
-                |> List.map blogPostGroup
-        ] |> masterView None (Some Url.``/``) (Some Env.blogSubtitle) None
+                |> List.map (blogPostGroup settings.Web.BaseUrl)
+        ] |> masterView
+                 settings
+                 None
+                 (Some (Url.``/`` settings.Web.BaseUrl))
+                 (Some settings.Blog.Title)
+                 None
 
-    let trending (blogPosts : BlogPosts.Article list) =
+    let trending (settings : Config.Settings) (blogPosts : BlogPosts.Article list) =
         let pageTitle = "Trending"
         let h1Title   = "Top 10 blog posts"
         [
             article [] [
                 header [] [
                     h1 [] [ rawText h1Title ]
-                    img [ _src (Url.storage "images/website/trending.jpg") ]
+                    img [ _src (Url.storage settings.ThirdParties.StorageBaseUrl "images/website/trending.jpg") ]
                 ]
                 main [] [
                     ol [ _id "trending-list" ] [
                         yield!
                             blogPosts
-                            |> List.map trendingBlogPostListItem
+                            |> List.map (trendingBlogPostListItem settings.Web.BaseUrl)
                     ]
                 ]
             ]
-            disqusCountScript
+            disqusCountScript settings.ThirdParties.DisqusShortname
         ] |> masterView
+            settings
             (Some pageTitle)
-            (Some Url.``/trending``)
+            (Some (Url.``/trending`` settings.Web.BaseUrl))
             (Some "Most popular blog posts on Dusted Codes.")
             None
 
-    let tagged (tag : string) (blogPosts : BlogPosts.Article list) =
+    let tagged (settings : Config.Settings) (tag : string) (blogPosts : BlogPosts.Article list) =
         let title = sprintf "Tagged with '%s'" tag
         [
             article [] [
@@ -307,100 +323,139 @@ themeToggle.addEventListener(\"click\", function() {
                     ul [ _id "blogpost-list" ] [
                         yield!
                             blogPosts
-                            |> List.map trendingBlogPostListItem
+                            |> List.map (trendingBlogPostListItem settings.Web.BaseUrl)
                     ]
                 ]
             ]
-            disqusCountScript
+            disqusCountScript settings.ThirdParties.DisqusShortname
         ] |> masterView
+            settings
             (Some title)
-            (Some (Url.``/tagged/%s`` tag))
+            (Some (Url.``/tagged/%s`` settings.Web.BaseUrl tag))
             (Some (sprintf "See all blog posts tagged with '%s'." tag))
             None
 
-    let private shareBlogPostLinks (p : BlogPosts.Article) = [
+    let private shareBlogPostLinks baseUrl (p : BlogPosts.Article) =
+        let permalink = p.UrlEncodedPermalink baseUrl
+        [
         li [] [
             iconLink
-                (sprintf "mailto:?subject=%s&body=I saw this on Dusted Codes and thought you should see it: %s - %s" p.Title p.Title p.UrlEncodedPermalink)
-                "Share by Email" Icons.envelope
+                (sprintf
+                     "mailto:?subject=%s&body=I saw this on Dusted Codes and thought you should see it: %s - %s"
+                     p.Title p.Title
+                     permalink)
+                "Share by Email"
+                Icons.envelope
         ]
         li [] [
             iconLink
-                (sprintf "https://twitter.com/intent/tweet?url=%s&text=%s&via=dustinmoris" p.UrlEncodedPermalink p.UrlEncodedTitle)
-                "Share on Twitter" Icons.twitter
+                (sprintf "https://twitter.com/intent/tweet?url=%s&text=%s&via=dustinmoris" permalink p.UrlEncodedTitle)
+                "Share on Twitter"
+                Icons.twitter
         ]
         li [] [
             iconLink
-                (sprintf "https://www.facebook.com/sharer/sharer.php?u=%s" p.UrlEncodedPermalink)
-                "Share on Facebook" Icons.facebook
+                (sprintf "https://www.facebook.com/sharer/sharer.php?u=%s" permalink)
+                "Share on Facebook"
+                Icons.facebook
         ]
         li [] [
             iconLink
-                (sprintf "https://www.linkedin.com/shareArticle?mini=true&url=%s&title=%s&source=Dusted+Codes" p.UrlEncodedPermalink p.UrlEncodedTitle)
-                "Share on LinkedIn" Icons.linkedIn
+                (sprintf
+                     "https://www.linkedin.com/shareArticle?mini=true&url=%s&title=%s&source=Dusted+Codes"
+                     permalink
+                     p.UrlEncodedTitle)
+                "Share on LinkedIn"
+                Icons.linkedIn
         ]
         li [] [
             iconLink
-                (sprintf "https://plus.google.com/share?url=%s" p.UrlEncodedPermalink)
+                (sprintf "https://plus.google.com/share?url=%s" permalink)
                 "Share on Google Plus" Icons.googlePlus
         ]
         li [] [
             iconLink
-                (sprintf "https://www.yammer.com/messages/new?login=true&status=%s" p.UrlEncodedPermalink)
-                "Share on Yammer" Icons.yammer
+                (sprintf "https://www.yammer.com/messages/new?login=true&status=%s" permalink)
+                "Share on Yammer"
+                Icons.yammer
         ]
         li [] [
             iconLink
-                (sprintf "https://tumblr.com/widgets/share/tool?canonicalUrl=%s" p.UrlEncodedPermalink)
-                "Share on Tumblr" Icons.tumblr
+                (sprintf "https://tumblr.com/widgets/share/tool?canonicalUrl=%s" permalink)
+                "Share on Tumblr"
+                Icons.tumblr
         ]
         li [] [
             iconLink
-                (sprintf "https://www.reddit.com/submit?url=%s&title=%s" p.UrlEncodedPermalink p.UrlEncodedTitle)
-                "Share on Reddit" Icons.reddit
+                (sprintf "https://www.reddit.com/submit?url=%s&title=%s" permalink p.UrlEncodedTitle)
+                "Share on Reddit"
+                Icons.reddit
         ]
         li [] [
             iconLink
-                (sprintf "https://news.ycombinator.com/submitlink?u=%s&t=%s" p.UrlEncodedPermalink p.UrlEncodedTitle)
-                "Share on Hacker News" Icons.hackerNews
+                (sprintf
+                     "https://news.ycombinator.com/submitlink?u=%s&t=%s"
+                     permalink
+                     p.UrlEncodedTitle)
+                "Share on Hacker News"
+                Icons.hackerNews
         ]
         li [] [
             iconLink
-                (sprintf "whatsapp://send?text=I saw this on Dusted Codes and thought you should see it: %s - %s" p.UrlEncodedTitle p.UrlEncodedPermalink)
-                "Share on WhatsApp" Icons.whatsApp
+                (sprintf
+                     "whatsapp://send?text=I saw this on Dusted Codes and thought you should see it: %s - %s"
+                     p.UrlEncodedTitle
+                     permalink)
+                "Share on WhatsApp"
+                Icons.whatsApp
         ]
         li [] [
             iconLink
-                (sprintf "https://t.me/share/url?url=%s" p.UrlEncodedPermalink)
-                "Share on Telegram" Icons.telegram
+                (sprintf "https://t.me/share/url?url=%s" permalink)
+                "Share on Telegram"
+                Icons.telegram
         ]
     ]
 
-    let blogPost (blogPost : BlogPosts.Article) =
+    let blogPost (settings : Config.Settings) (blogPost : BlogPosts.Article) =
+        let permalink = blogPost.Permalink settings.Web.BaseUrl
         [
             article [] [
                 yield header [] [
                     h1 [] [ encodedText blogPost.Title ]
-                    blogPostMetadata blogPost
+                    blogPostMetadata settings.Web.BaseUrl blogPost
                 ]
                 yield main [] [
                     blogPost.HtmlContent |> rawText
                 ]
                 yield footer [] [
                     ul [ _class "share-links" ] [
-                        yield! shareBlogPostLinks blogPost
+                        yield! shareBlogPostLinks settings.Web.BaseUrl blogPost
                     ]
                 ]
-                yield disqus blogPost.Id blogPost.Title blogPost.Permalink
+                yield disqus
+                          settings.ThirdParties.DisqusShortname
+                          blogPost.Id
+                          blogPost.Title
+                          permalink
             ]
-        ] |> masterView (Some blogPost.Title) (Some blogPost.Permalink) (Some blogPost.Excerpt) None
+        ] |> masterView
+                 settings
+                 (Some blogPost.Title)
+                 (Some permalink)
+                 (Some blogPost.Excerpt)
+                 None
 
-    let about =
+    let about (settings : Config.Settings) content =
         [
             article [ _id "about" ] [
                 h1 [] [ rawText "About" ]
-                img [ _id "avatar"; _src (Url.storage "images/avatar/dustin-moris-gorski.jpg") ; _alt "Dustin Moris Gorski" ]
-                rawText About.content
+                img [
+                    _id "avatar"
+                    _src (Url.storage settings.ThirdParties.StorageBaseUrl "images/avatar/dustin-moris-gorski.jpg")
+                    _alt "Dustin Moris Gorski"
+                ]
+                rawText content
                 p [] [
                     a [
                         _class "bmc-button"
@@ -413,8 +468,9 @@ themeToggle.addEventListener(\"click\", function() {
                 ]
             ]
         ] |> masterView
+            settings
             (Some "About")
-            (Some Url.``/about``)
+            (Some (Url.``/about`` settings.Web.BaseUrl))
             (Some "Hi, welcome to my personal website, software engineering blog and...")
             None
 
@@ -426,8 +482,8 @@ themeToggle.addEventListener(\"click\", function() {
             ]
         ]
 
-    let private contactForm (msg : ContactMessages.Entity) =
-        let actionUrl = sprintf "%s#contact" Url.``/hire``
+    let private contactForm (settings : Config.Settings) (msg : Messages.ContactMsg) =
+        let actionUrl = sprintf "%s#contact" (Url.``/hire`` settings.Web.BaseUrl)
         form [ _method "POST"; _action actionUrl; _autocomplete "on" ]
             [
                 div [ ] [
@@ -480,7 +536,7 @@ themeToggle.addEventListener(\"click\", function() {
                 div [] [
                     div [
                         _class "h-captcha"
-                        attr "data-sitekey" Env.captchaSiteKey
+                        attr "data-sitekey" settings.ThirdParties.CaptchaSiteKey
                         attr "data-theme" "dark" ] []
                     sendMessageButton
                 ]
@@ -490,13 +546,18 @@ themeToggle.addEventListener(\"click\", function() {
     let private errorMsg msg   = p [ _class "error-msg"   ] [ Icons.alert; span [] [ encodedText msg ] ]
 
     let hire
-        (msg         : ContactMessages.Entity)
-        (msgResult   : Result<string, string> option) =
+        (settings    : Config.Settings)
+        (msg         : Messages.ContactMsg)
+        (msgResult   : Result<string, string> option)
+        (content     : string) =
         [
             article [ _id "hire" ] [
                 h1 [] [ rawText "Hire Me" ]
-                img [ _src (Url.storage "images/website/hire-me.jpg"); _alt "Hire Me" ]
-                rawText Hire.content
+                img [
+                    _src (Url.storage settings.ThirdParties.StorageBaseUrl "images/website/hire-me.jpg")
+                    _alt "Hire Me"
+                ]
+                rawText content
             ]
             aside [ _id "contact" ] [
                 yield! [
@@ -507,14 +568,15 @@ themeToggle.addEventListener(\"click\", function() {
                     match msgResult with
                     | Some result ->
                         match result with
-                        | Ok okMsg     -> [ successMsg okMsg; contactForm msg ]
-                        | Error errMsg -> [ errorMsg errMsg;  contactForm msg ]
-                    | None             -> [ contactForm msg ]
+                        | Ok okMsg     -> [ successMsg okMsg; contactForm settings msg ]
+                        | Error errMsg -> [ errorMsg errMsg;  contactForm settings msg ]
+                    | None             -> [ contactForm settings msg ]
             ]
         ] |> masterView
+            settings
             (Some "Hire Me")
-            (Some Url.``/hire``)
-            (Some (sprintf "%s..." (Hire.content.Substring(0, 288))))
+            (Some (Url.``/hire`` settings.Web.BaseUrl))
+            (Some (sprintf "%s..." (content.Substring(0, 288))))
             (Some [
                 script [
                     _src "https://hcaptcha.com/1/api.js"
@@ -523,23 +585,34 @@ themeToggle.addEventListener(\"click\", function() {
                 ] []
         ])
 
-    let notFound =
+    let notFound (settings : Config.Settings) =
         [
             div [ _class "error-view" ] [
                 h1 [] [ rawText "Page not found!" ]
                 p [] [ encodedText "Sorry, the page you have requested may have been moved or deleted." ]
-                p [] [ rawText "Return to the "; normalLink Url.``/`` "home page"; rawText "." ]
+                p [] [
+                    rawText "Return to the "
+                    normalLink (Url.``/`` settings.Web.BaseUrl) "home page"
+                    rawText "."
+                ]
             ]
-        ] |> masterView (Some "Page not found") None None None
+        ] |> masterView
+                 settings
+                 (Some "Page not found")
+                 None None None
 
-    let internalError (errorMessage : string option) =
+    let internalError (settings : Config.Settings) (errorMessage : string option) =
         [
             div [ _class "error-view" ] [
                 yield h1 [] [ rawText "Whoops, an error occurred!" ]
                 yield p [] [ encodedText "Sorry, there was an internal error while processing your request." ]
-                yield p [] [ rawText "Please try in a little while again or return to the "; normalLink Url.``/`` "home page"; rawText "." ]
+                yield p [] [
+                    rawText "Please try in a little while again or return to the "
+                    normalLink (Url.``/`` settings.Web.BaseUrl) "home page"
+                    rawText "."
+                ]
                 match errorMessage with
                 | Some msg -> yield p [] [ encodedText msg ]
                 | None     -> ()
             ]
-        ] |> masterView (Some "Internal error") None None None
+        ] |> masterView settings (Some "Internal error") None None None

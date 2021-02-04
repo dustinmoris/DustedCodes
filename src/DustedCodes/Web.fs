@@ -4,17 +4,15 @@ namespace DustedCodes
 module HttpHandlers =
     open System
     open System.Linq
+    open System.IO
     open System.Text
-    open System.Threading.Tasks
     open System.Diagnostics
     open Microsoft.AspNetCore.Http
-    open Microsoft.AspNetCore.Http.Extensions
     open Microsoft.Extensions.Caching.Distributed
     open Microsoft.Net.Http.Headers
     open FSharp.Control.Tasks
     open Giraffe
     open Giraffe.ViewEngine
-    open Logfella
 
     // ---------------------------------
     // Http Handlers
@@ -42,41 +40,69 @@ module HttpHandlers =
 
     let notFound =
         fun (next : HttpFunc) (ctx : HttpContext) ->
-            let encodedUrl = ctx.Request.GetEncodedUrl()
-            Log.Notice(
-                sprintf "Could not serve '%s %s', because it does not exist."
-                    ctx.Request.Method
-                    encodedUrl,
-                dict [
-                    "httpError", "404" :> obj
-                    "httpVerb", ctx.Request.Method :> obj
-                    "encodedUrl", encodedUrl :> obj
-                ])
-            (setStatusCode 404
-            >=> htmlView Views.notFound) next ctx
+            let settings    = ctx.GetService<Config.Settings>()
+            let traceId     = ctx.GetTraceId()
+
+            sprintf "Page not found: %s -- [ %s ]"
+                (ctx.GetRequestUrl())
+                traceId
+            |> Log.info
+
+            (setStatusCode 404 >=> htmlView (Views.notFound settings)) next ctx
 
     let index =
-        allowCaching (TimeSpan.FromHours 1.0)
-        >=> (
-            BlogPosts.all
-            |> List.sortByDescending (fun p -> p.PublishDate)
-            |> Views.index
-            |> htmlView)
+        fun (next : HttpFunc) (ctx : HttpContext) ->
+            let settings = ctx.GetService<Config.Settings>()
+            (allowCaching (TimeSpan.FromHours 1.0)
+            >=> (
+                BlogPosts.all
+                |> List.sortByDescending (fun p -> p.PublishDate)
+                |> Views.index settings
+                |> htmlView)) next ctx
 
     let pingPong : HttpHandler =
         noResponseCaching >=> text "pong"
 
-    let version : HttpHandler =
-        noResponseCaching
-        >=> json {| version = Env.appVersion |}
+    let version (next : HttpFunc) (ctx : HttpContext) =
+        let settings = ctx.GetService<Config.Settings>()
+        (noResponseCaching
+        >=> json {| version = settings.General.AppVersion |}) next ctx
 
-    let about =
-        allowCaching (TimeSpan.FromDays 1.0)
-        >=> (Views.about |> htmlView)
+    let markdown fileName (view : string -> XmlNode) =
+        fun (next : HttpFunc) (ctx : HttpContext) ->
+            task {
+                let! content =
+                    Path.Combine(Config.contentRoot, fileName)
+                    |> File.ReadAllTextAsync
+                let handler =
+                    content
+                    |> MarkDog.toHtml
+                    |> view
+                    |> htmlView
+                return!
+                    (allowCaching (TimeSpan.FromDays 1.0)
+                    >=> handler)
+                    next ctx
+            }
 
-    let hire =
-        Views.hire ContactMessages.Entity.Empty None
-        |> htmlView
+    let about : HttpHandler =
+        fun (next : HttpFunc) (ctx : HttpContext) ->
+            let settings = ctx.GetService<Config.Settings>()
+            markdown
+                "About.md"
+                (Views.about settings)
+                next ctx
+
+    let hire : HttpHandler =
+        fun (next : HttpFunc) (ctx : HttpContext) ->
+            let settings = ctx.GetService<Config.Settings>()
+            markdown
+                "Hire.md"
+                (Views.hire
+                    settings
+                    Messages.ContactMsg.Empty
+                    None)
+                next ctx
 
     let contact (next : HttpFunc) =
         let internalErr =
@@ -86,50 +112,53 @@ module HttpHandlers =
             |> Error
         fun (ctx : HttpContext) ->
             task {
-                let respond msg res =
-                    htmlView (Views.hire msg (Some res)) next ctx
+                let settings = ctx.GetService<Config.Settings>()
+                let traceId  = ctx.GetTraceId()
 
-                let! msg = ctx.BindFormAsync<ContactMessages.Entity>()
+                let respond msg res =
+                    markdown
+                        "Hire.md"
+                        (Views.hire settings msg (Some res))
+                        next ctx
+
+                let! msg = ctx.BindFormAsync<Messages.ContactMsg>()
                 match msg.IsValid with
                 | Error err -> return! respond msg (Error err)
                 | Ok _      ->
                     let! captchaResult =
                         ctx.Request.Form.["h-captcha-response"].ToString()
                         |> Captcha.validate
-                            Env.captchaSiteKey
-                            Env.captchaSecretKey
+                            settings.ThirdParties.CaptchaSiteKey
+                            settings.ThirdParties.CaptchaSecretKey
                     match captchaResult with
                     | Captcha.ServerError err ->
-                        Log.Critical(
-                            sprintf "Captcha validation failed with: %s" err,
-                            ("captchaError", err :> obj))
+                        Log.critical
+                            (sprintf "Captcha validation failed with: %s -- [ %s ]" err traceId)
                         return! respond msg internalErr
                     | Captcha.UserError err -> return! respond msg (Error err)
                     | Captcha.Success ->
+                        let saveMsg = ctx.GetService<Messages.SaveFunc>()
                         let timer = Stopwatch.StartNew()
-                        let dataTask  = DataService.saveContactMessage msg
-                        let emailTask = EmailService.sendContactMessage msg
-                        do! Task.WhenAll(dataTask, emailTask)
+                        let! result = saveMsg traceId msg
                         timer.Stop()
-                        Log.Debug(
-                            sprintf "Sent message in %s" (timer.Elapsed.ToMs()),
-                            ("timeTaken", timer.Elapsed.TotalMilliseconds :> obj))
-                        match dataTask.Result, emailTask.Result with
-                        | Ok _, _ | _, Ok _ ->
-                            return! respond ContactMessages.Entity.Empty (Ok "Thank you, your message has been successfully sent!")
-                        | _ -> return! respond msg internalErr
+                        Log.debug (sprintf "Sent message in %s -- [ %s ]" (timer.Elapsed.ToMs()) traceId)
+                        match result with
+                        | Ok _    -> return! respond Messages.ContactMsg.Empty result
+                        | Error _ -> return! respond msg internalErr
             }
 
     let blogPost (id : string) =
-        BlogPosts.all
-        |> List.tryFind (fun x -> Str.equalsCi x.Id id)
-        |> function
-            | None -> notFound
-            | Some blogPost ->
-                let eTag = EntityTagHeaderValue.FromString false blogPost.HashCode
-                validatePreconditions (Some eTag) None
-                >=> allowCaching (TimeSpan.FromDays 7.0)
-                >=> (blogPost |> Views.blogPost |> htmlView)
+        fun (next : HttpFunc) (ctx : HttpContext) ->
+            let settings = ctx.GetService<Config.Settings>()
+            (BlogPosts.all
+            |> List.tryFind (fun x -> x.Id.EqualsCi id)
+            |> function
+                | None -> notFound
+                | Some blogPost ->
+                    let eTag = EntityTagHeaderValue.FromString false blogPost.HashCode
+                    validatePreconditions (Some eTag) None
+                    >=> allowCaching (TimeSpan.FromDays 7.0)
+                    >=> (blogPost |> Views.blogPost settings  |> htmlView)) next ctx
 
     let trending : HttpHandler =
         let pageMatchesBlogPost =
@@ -142,16 +171,18 @@ module HttpHandlers =
         allowCaching (TimeSpan.FromDays 5.0)
         >=> fun (next : HttpFunc) (ctx : HttpContext) ->
             task {
-                let cacheKey = Env.cacheKeyTrending
+                let settings = ctx.GetService<Config.Settings>()
+                let cacheKey = settings.Redis.CacheKeyTrending
                 let cache = ctx.GetService<IDistributedCache>()
 
                 let! cacheItem = cache.GetAsync(cacheKey, ctx.RequestAborted)
                 match Option.ofObj cacheItem with
                 | Some view -> return! htmlBytes view next ctx
                 | None ->
+                    let getReport = ctx.GetService<GoogleAnalytics.GetReportFunc>()
                     let! mostViewedPages =
-                        GoogleAnalytics.getMostViewedPagesAsync
-                            Env.googleAnalyticsViewId
+                        getReport
+                            settings.ThirdParties.AnalyticsViewId
                             (int Byte.MaxValue)
                     let view =
                         mostViewedPages
@@ -159,7 +190,7 @@ module HttpHandlers =
                         |> List.sortByDescending (fun p -> p.ViewCount)
                         |> List.take 10
                         |> List.map (fun p -> BlogPosts.all.First(fun b -> pageMatchesBlogPost p b))
-                        |> Views.trending
+                        |> Views.trending settings
                         |> RenderView.AsBytes.htmlDocument
 
                     let options = DistributedCacheEntryOptions()
@@ -170,45 +201,49 @@ module HttpHandlers =
             }
 
     let tagged (tag : string) =
-        allowCaching (TimeSpan.FromDays 5.0)
-        >=>(
+        fun (next : HttpFunc) (ctx : HttpContext) ->
+            let settings = ctx.GetService<Config.Settings>()
+            (allowCaching (TimeSpan.FromDays 5.0)
+            >=>(
+                BlogPosts.all
+                |> List.filter (fun p -> p.Tags.IsSome && p.Tags.Value.Contains tag)
+                |> List.sortByDescending (fun p -> p.PublishDate)
+                |> Views.tagged settings tag
+                |> htmlView)) next ctx
+
+    let rssFeed =
+        fun (next : HttpFunc) (ctx : HttpContext) ->
+            let settings = ctx.GetService<Config.Settings>()
+            let rssFeed = StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
             BlogPosts.all
-            |> List.filter (fun p -> p.Tags.IsSome && p.Tags.Value.Contains tag)
             |> List.sortByDescending (fun p -> p.PublishDate)
-            |> Views.tagged tag
-            |> htmlView)
+            |> List.take 10
+            |> List.map (
+                fun b ->
+                    Feed.Item.Create
+                        (b.Permalink settings.Web.BaseUrl)
+                        b.Title
+                        b.HtmlContent
+                        b.PublishDate
+                        settings.Blog.Author
+                        (Url.``/feed/rss`` settings.Web.BaseUrl)
+                        b.Tags)
+            |> Feed.Channel.Create
+                (Url.``/feed/rss`` settings.Web.BaseUrl)
+                settings.Blog.Title
+                settings.Blog.Subtitle
+                settings.Blog.Lang
+                "Giraffe (https://github.com/giraffe-fsharp/Giraffe)"
+            |> RssFeed.create
+            |> RenderView.IntoStringBuilder.xmlNode rssFeed
 
-    let rssFeed : HttpHandler =
-        let rssFeed = StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
-        BlogPosts.all
-        |> List.sortByDescending (fun p -> p.PublishDate)
-        |> List.take 10
-        |> List.map (
-            fun b ->
-                Feed.Item.Create
-                    b.Permalink
-                    b.Title
-                    b.HtmlContent
-                    b.PublishDate
-                    Env.blogAuthor
-                    Url.``/feed/rss``
-                    b.Tags)
-        |> Feed.Channel.Create
-            Url.``/feed/rss``
-            Env.blogTitle
-            Env.blogSubtitle
-            Env.blogLanguage
-            "Giraffe (https://github.com/giraffe-fsharp/Giraffe)"
-        |> RssFeed.create
-        |> RenderView.IntoStringBuilder.xmlNode rssFeed
-
-        allowCaching (TimeSpan.FromDays 1.0)
-        >=> setHttpHeader "Content-Type" "application/rss+xml"
-        >=> (rssFeed.ToString() |> setBodyFromString)
+            (allowCaching (TimeSpan.FromDays 1.0)
+            >=> setHttpHeader "Content-Type" "application/rss+xml"
+            >=> (rssFeed.ToString() |> setBodyFromString)) next ctx
 
     let atomFeed : HttpHandler =
         fun (next : HttpFunc) (ctx : HttpContext) ->
-            Log.Warning "Someone tried to subscribe to the Atom feed."
+            Log.warning "Someone tried to subscribe to the Atom feed."
             ServerErrors.notImplemented (text "Atom feed is not supported at the moment. If you were using Atom to subscribe to this blog before, please file an issue on https://github.com/dustinmoris/DustedCodes to create awareness.") next ctx
 
 [<RequireQualifiedAccess>]
@@ -218,7 +253,7 @@ module WebApp =
     open Giraffe
     open Giraffe.EndpointRouting
 
-    let endpoints : Endpoint list =
+    let endpoints (settings : Config.Settings) : Endpoint list =
         [
             GET_HEAD [
                 // Static assets
@@ -231,12 +266,12 @@ module WebApp =
                 route UrlPaths.``/version``     HttpHandlers.version
 
                 // Debug
-                if Env.enableErrorEndpoint then
+                if settings.Web.ErrorEndpoint then
                     route UrlPaths.Debug.``/error`` (warbler (fun _ -> json(1/0)))
 
                 // Content paths
                 route UrlPaths.``/``          HttpHandlers.index
-                route UrlPaths.``/about``     HttpHandlers.about
+                route UrlPaths.``/about``     (HttpHandlers.markdown "About.md" (Views.about settings))
                 route UrlPaths.``/hire``      HttpHandlers.hire
                 route UrlPaths.``/trending``  HttpHandlers.trending
 
@@ -261,14 +296,15 @@ module WebApp =
             ]
         ]
 
-    let errorHandler (ex : Exception) (logger : ILogger) =
-        // Must use the Microsoft.Extensions.Logging.ILogger, because the Sentry
-        // integration hooks into the Microsoft logging framework:
-        logger.LogError(ex, "An unhandled exception has occurred while executing the request.")
-        clearResponse
-        >=> setStatusCode 500
-        >=> (match Env.isProduction with
-            | false -> Some ex.Message
-            | true  -> None
-            |> Views.internalError
-            |> htmlView)
+    let errorHandler (settings : Config.Settings) =
+        fun (ex : Exception) (logger : ILogger) ->
+            // Must use the Microsoft.Extensions.Logging.ILogger, because the Sentry
+            // integration hooks into the Microsoft logging framework:
+            logger.LogError(ex, "An unhandled exception has occurred while executing the request.")
+            clearResponse
+            >=> setStatusCode 500
+            >=> (match settings.General.IsProd with
+                | false -> Some ex.Message
+                | true  -> None
+                |> Views.internalError settings
+                |> htmlView)

@@ -1,134 +1,114 @@
 namespace DustedCodes
 
+open System
+
 module Program =
-    open System
-    open System.Collections.Generic
     open Microsoft.AspNetCore.Builder
     open Microsoft.AspNetCore.Hosting
-    open Microsoft.AspNetCore.Http
     open Microsoft.Extensions.Hosting
     open Microsoft.Extensions.DependencyInjection
     open Microsoft.Extensions.Caching.Distributed
     open Giraffe
     open Giraffe.EndpointRouting
-    open Logfella
-    open Logfella.LogWriters
-    open Logfella.Adapters
-    open Logfella.AspNetCore
+    open Google.Cloud.Datastore.V1
+    open Google.Cloud.PubSub.V1
 
-    let private muteFilter =
-        Func<Severity, string, IDictionary<string, obj>, exn, bool>(
-            fun severity msg data ex ->
-                msg.StartsWith "The response could not be cached for this request")
+    let mutable private pubSubClient : PublisherClient = null
 
-    let private createLogWriter (ctx : HttpContext option) =
-        match Env.isProduction with
-        | false -> ConsoleLogWriter(Env.logSeverity).AsLogWriter()
-        | true  ->
-            let basic =
-                GoogleCloudLogWriter
-                    .Create(Env.logSeverity)
-                    .AddServiceContext(
-                        Env.appName,
-                        Env.appVersion)
-                    .UseGoogleCloudTimestamp()
-                    .AddLabels(
-                        dict [
-                            "appName", Env.appName
-                            "appVersion", Env.appVersion
-                        ])
-            let final =
-                match ctx with
-                | None     -> basic
-                | Some ctx ->
-                    basic
-                        .AddHttpContext(ctx)
-                        .AddCorrelationId(Guid.NewGuid().ToString("N"))
-            Mute.When(muteFilter)
-                .Otherwise(final)
+    let configureServices (settings : Config.Settings) =
+        fun (services : IServiceCollection) ->
 
-    let private createReqLogWriter =
-        Func<HttpContext, ILogWriter>(Some >> createLogWriter)
+            let topicName =
+                TopicName(
+                    settings.Mail.GcpProjectId,
+                    settings.Mail.GcpPubSubTopic)
+            pubSubClient <- PublisherClient.CreateAsync(topicName).Result
+            let dsClient = DatastoreDb.Create settings.Mail.GcpProjectId
 
-    let private toggleRequestLogging =
-        Action<RequestLoggingOptions>(
-            fun x -> x.IsEnabled <- Env.enableRequestLogging)
+            let saveEntityFunc =
+                Datastore.saveEntity
+                        settings.General.AppName
+                        settings.General.EnvName
+                        settings.Mail.GcpDatastoreKind
+                        dsClient
+            let publishMsgFunc =
+                PubSub.sendMessage
+                    settings.General.EnvName
+                    settings.Web.Domain
+                    settings.Mail.Sender
+                    settings.Mail.Recipient
+                    pubSubClient
 
-    let configureServices (services : IServiceCollection) =
-        match Env.redisEnabled with
-        | true ->
-            services.AddStackExchangeRedisCache(
-                fun o ->
-                    o.InstanceName  <- Env.redisInstance
-                    o.Configuration <- Env.redisConfiguration)
-        | false ->
-            services.AddSingleton<IDistributedCache, MemoryDistributedCache>()
-        |> ignore
+            let getReportFunc =
+                GoogleAnalytics.getMostViewedPagesAsync settings.ThirdParties.AnalyticsKey
 
-        services
-            .AddProxies(
-                Env.proxyCount,
-                Env.knownProxyNetworks,
-                Env.knownProxies)
-            .AddResponseCaching()
-            .AddResponseCompression()
-            .AddRouting()
-            .AddGiraffe()
-        |> ignore
+            services
+                .AddSingleton(settings)
+                .AddSingleton<GoogleAnalytics.GetReportFunc>(getReportFunc)
+                .AddSingleton<Messages.SaveFunc>(Messages.save saveEntityFunc publishMsgFunc)
+                .When(
+                    settings.Redis.Enabled,
+                    fun svc -> svc.AddRedisCache(settings.Redis.Configuration, settings.Redis.Instance))
+                .When(
+                    not settings.Redis.Enabled,
+                    fun svc -> svc.AddSingleton<IDistributedCache, MemoryDistributedCache>())
+                .AddResponseCompression()
+                .AddRouting()
+                .AddGiraffe()
+            |> ignore
 
-    let configureApp (app : IApplicationBuilder) =
-        app.UseGiraffeErrorHandler(WebApp.errorHandler)
-           .UseRequestScopedLogWriter(createReqLogWriter)
-           .When(Env.enableTracing, Middlewares.logResponseTime)
-           .UseGiraffeErrorHandler(WebApp.errorHandler)
-           .UseRequestLogging(toggleRequestLogging)
-           .UseForwardedHeaders()
-           .UseHttpsRedirection(Env.forceHttps, Env.domainName)
-           .UseTrailingSlashRedirection()
-           .UseStaticFiles()
-           .UseResponseCaching()
-           .UseResponseCompression()
-           .UseRouting()
-           .UseGiraffe(WebApp.endpoints)
-           .UseGiraffe(HttpHandlers.notFound)
-           |> ignore
+    let configureApp (settings : Config.Settings) =
+        fun (app : IApplicationBuilder) ->
+            app.UseGiraffeErrorHandler(WebApp.errorHandler settings)
+               .UseRequestLogging(settings.Web.RequestLogging)
+               .UseTrailingSlashRedirection(443) // ToDo: move to config
+               .UseStaticFiles()
+               .UseResponseCompression()
+               .UseRouting()
+               .UseGiraffe(WebApp.endpoints settings)
+               .UseGiraffe(HttpHandlers.notFound)
 
     [<EntryPoint>]
-    let main _ =
+    let main args =
         try
             try
-                Log.SetDefaultLogWriter(createLogWriter None)
-                Logging.outputEnvironmentSummary Env.summary
+                DotEnv.load()
+                let settings = Config.loadSettings()
+                Log.debug (settings.ToString())
 
+                let blogPosts = BlogPosts.load Config.blogPostsPath
                 let lastBlogPost =
-                    BlogPosts.all
+                    blogPosts
                     |> List.sortByDescending (fun t -> t.PublishDate)
                     |> List.head
 
-                Log.Info (sprintf "Parsed %i blog posts." BlogPosts.all.Length)
-                Log.Info (sprintf "Last blog post is: %s." lastBlogPost.Title)
+                Log.infoF "Parsed %i blog posts." blogPosts.Length
+                Log.infoF "Last blog post is: %s." lastBlogPost.Title
 
-                Host.CreateDefaultBuilder()
-                    .UseLogfella()
+                BlogPosts.all <- blogPosts
+
+                Host.CreateDefaultBuilder(args)
                     .ConfigureWebHost(
                         fun webHostBuilder ->
                             webHostBuilder
                                 .ConfigureSentry(
-                                    Env.sentryDsn,
-                                    Env.name,
-                                    Env.appVersion)
+                                    settings.ThirdParties.SentryDsn,
+                                    settings.General.AppName,
+                                    settings.General.AppVersion)
                                 .UseKestrel(
                                     fun k -> k.AddServerHeader <- false)
-                                .UseContentRoot(Env.appRoot)
-                                .UseWebRoot(Env.assetsDir)
-                                .Configure(configureApp)
-                                .ConfigureServices(configureServices)
+                                .UseContentRoot(Config.appRoot)
+                                .UseWebRoot(Config.assetsPath)
+                                .Configure(configureApp settings)
+                                .ConfigureServices(configureServices settings)
                                 |> ignore)
                     .Build()
                     .Run()
                 0
             with ex ->
-                Log.Emergency("Host terminated unexpectedly.", ex)
+                Log.emergency
+                    (sprintf "Host terminated unexpectedly: %s\n\nStacktrace: %s" ex.Message ex.StackTrace)
                 1
         finally
-            EmailService.shutDown(TimeSpan.FromSeconds(10.0)).Wait()
+            if isNotNull pubSubClient
+            then pubSubClient.ShutdownAsync(TimeSpan.FromSeconds 10.0).Wait()
