@@ -61,7 +61,7 @@ module Program =
         fun (app : IApplicationBuilder) ->
             app.UseGiraffeErrorHandler(WebApp.errorHandler settings)
                .UseRequestLogging(settings.Web.RequestLogging)
-               .UseTrailingSlashRedirection(443) // ToDo: move to config
+               .UseTrailingSlashRedirection(settings.Web.HttpsPort)
                .UseStaticFiles()
                .UseResponseCompression()
                .UseRouting()

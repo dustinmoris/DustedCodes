@@ -38,6 +38,7 @@ module Config =
             Domain          : string
             BaseUrl         : string
             ForceHttps      : bool
+            HttpsPort       : int
             RequestLogging  : bool
             ErrorEndpoint   : bool
         }
@@ -46,6 +47,7 @@ module Config =
                 Domain         = Env.varOrDefault "DOMAIN_NAME" "localhost:5000"
                 BaseUrl        = Env.varOrDefault "BASE_URL" "http://localhost:5000"
                 ForceHttps     = Env.InvariantCulture.typedVarOrDefault "FORCE_HTTPS" false
+                HttpsPort      = Env.InvariantCulture.typedVarOrDefault "HTTPS_PORT" 443
                 RequestLogging = Env.InvariantCulture.typedVarOrDefault "ENABLE_REQUEST_LOGGING" true
                 ErrorEndpoint  = Env.InvariantCulture.typedVarOrDefault "ENABLE_ERROR_ENDPOINT" false
             }
@@ -149,6 +151,7 @@ module Config =
                         "Domain", this.Web.Domain
                         "Base URL", this.Web.BaseUrl
                         "Force HTTPS", this.Web.ForceHttps.ToString()
+                        "HTTPS Port", this.Web.HttpsPort.ToString()
                         "Request Logging", this.Web.RequestLogging.ToString()
                         "Error Endpoint", this.Web.ErrorEndpoint.ToString()
                     ]
