@@ -17,16 +17,15 @@ module GoogleAnalytics =
             ViewCount : int64
         }
 
-    type GetReportFunc = string -> int -> Task<PageStatistic list>
+    type GetReportFunc = Log.Func -> string -> int -> Task<PageStatistic list>
 
     let getMostViewedPagesAsync (analyticsKey : string) =
-
         let credential =
             GoogleCredential
                 .FromJson(analyticsKey)
                 .CreateScoped(AnalyticsReportingService.Scope.AnalyticsReadonly)
 
-        fun (viewId : string) (maxCount : int) ->
+        fun (log : Log.Func) (viewId : string) (maxCount : int) ->
             task {
                 let timer = Stopwatch.StartNew()
                 use service =
@@ -35,7 +34,7 @@ module GoogleAnalytics =
                             ApplicationName       = "Dusted Codes Website",
                             HttpClientInitializer = credential))
 
-                Log.debugF "Created AnalyticsReportingService in %s" (timer.Elapsed.ToMs())
+                log Level.Debug (sprintf "Created AnalyticsReportingService in %s" (timer.Elapsed.ToMs()))
 
                 let reportRequest =
                     ReportRequest(
@@ -57,7 +56,7 @@ module GoogleAnalytics =
                 let! response = request.ExecuteAsync()
 
                 timer.Stop()
-                Log.debugF "Retrieved Google Analytics report in %s" (timer.Elapsed.ToMs())
+                log Level.Debug (sprintf "Retrieved Google Analytics report in %s" (timer.Elapsed.ToMs()))
 
                 let report    = response.Reports.[0]
                 let maxRows   = min report.Data.Rows.Count maxCount

@@ -34,7 +34,7 @@ module Program =
             let publishMsgFunc =
                 PubSub.sendMessage
                     settings.General.EnvName
-                    settings.Web.Domain
+                    settings.Mail.Domain
                     settings.Mail.Sender
                     settings.Mail.Recipient
                     pubSubClient
@@ -71,10 +71,16 @@ module Program =
     [<EntryPoint>]
     let main args =
         try
+            let log =
+                Log.write
+                    Log.consoleFormat
+                    []
+                    Level.Debug
+                    ""
             try
-                DotEnv.load()
+                DotEnv.load log
                 let settings = Config.loadSettings()
-                Log.debug (settings.ToString())
+                log Level.Debug (settings.ToString())
 
                 let blogPosts = BlogPosts.load Config.blogPostsPath
                 let lastBlogPost =
@@ -82,8 +88,8 @@ module Program =
                     |> List.sortByDescending (fun t -> t.PublishDate)
                     |> List.head
 
-                Log.infoF "Parsed %i blog posts." blogPosts.Length
-                Log.infoF "Last blog post is: %s." lastBlogPost.Title
+                log Level.Info (sprintf "Parsed %i blog posts." blogPosts.Length)
+                log Level.Info (sprintf "Last blog post is: %s." lastBlogPost.Title)
 
                 BlogPosts.all <- blogPosts
 
@@ -106,7 +112,7 @@ module Program =
                     .Run()
                 0
             with ex ->
-                Log.emergency
+                log Level.Emergency
                     (sprintf "Host terminated unexpectedly: %s\n\nStacktrace: %s" ex.Message ex.StackTrace)
                 1
         finally

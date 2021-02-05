@@ -61,15 +61,16 @@ module Extensions =
             |> String.concat ", "
 
     type HttpContext with
-        member this.SetTraceId(traceId : string) =
-            this.Items.Add("traceId", traceId)
+        member this.SetLogFunc(logFunc: Log.Func) =
+            this.Items.Add("logFunc", logFunc)
 
-        member this.GetTraceId() =
-            let item =
-                this.Items.["traceId"]
+        member this.GetLogFunc() =
+            let logFunc =
+                this.Items.["logFunc"]
                 |> Option.ofObj
-            defaultArg item ("" :> obj)
-            |> string
+            match logFunc with
+            | Some f -> f :?> Log.Func
+            | None   -> Log.write Log.consoleFormat [] (Level.Debug) ""
 
 
     type IServiceCollection with
