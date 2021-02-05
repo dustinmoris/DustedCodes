@@ -14,11 +14,11 @@
     <PackageReference Include="Markdig" Version="0.23.*" />
     <PackageReference Include="NUglify" Version="1.13.*" />
     <PackageReference Include="Microsoft.SyndicationFeed.ReaderWriter" Version="1.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="5.0.*" />
     <PackageReference Include="Google.Apis.AnalyticsReporting.v4" Version="1.49.*" />
     <PackageReference Include="Google.Cloud.Datastore.V1" Version="3.1.*" />
     <PackageReference Include="Google.Cloud.PubSub.V1" Version="2.3.*" />
-    <PackageReference Include="Sentry.AspNetCore" Version="2.1.*" />
-    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="5.0.*" />
+    <PackageReference Include="Sentry.AspNetCore" Version="3.0.*" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,7 +45,7 @@
   <ItemGroup>
     <None Include=".env.ini" />
     <None Include="Dockerfile" />
-    
+
     <Content Include="BlogPosts\*.md;Content\*.md;CSS\**\*;Public\**\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>

@@ -176,11 +176,6 @@ module Messages =
             entity.["Date"]        <- DateTime.UtcNow   |> Datastore.toTimestampValue
             entity
 
-    let private isOk result =
-        match result with
-        | Ok _ -> true
-        | _    -> false
-
     type SaveFunc = Log.Func -> ContactMsg -> Task<Result<string, string>>
 
     let rec waitForFirstSuccess (tasks : Task<Result<string, string>> list) =
@@ -206,14 +201,13 @@ module Messages =
                 let pubSubMsg = msg.ToPubSubMessage()
                 let pubSubTask = publishMsg log pubSubMsg
 
-                let! results = Task.WhenAll(dsTask, pubSubTask)
-
-                let success =
-                    results
-                    |> Seq.exists(isOk)
+                let! result =
+                    waitForFirstSuccess([
+                        dsTask
+                        pubSubTask ])
 
                 return
-                    match success with
-                    | true  -> Ok "Thank you, your message has been successfully sent!"
-                    | false -> Error "Message could not be saved. Please try again later."
+                    match result with
+                    | Ok _    -> Ok "Thank you, your message has been successfully sent!"
+                    | Error _ -> Error "Message could not be saved. Please try again later."
             }

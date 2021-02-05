@@ -11,6 +11,7 @@ module Extensions =
     open Microsoft.AspNetCore.Hosting
     open Microsoft.AspNetCore.HttpOverrides
     open Microsoft.Extensions.DependencyInjection
+    open Sentry.AspNetCore
 
     type TimeSpan with
         member this.ToMs() =
@@ -91,7 +92,7 @@ module Extensions =
             | None -> this
             | Some dsn ->
                 this.UseSentry(
-                    fun sentry ->
+                    fun (sentry : SentryAspNetCoreOptions) ->
                         sentry.Debug            <- false
                         sentry.Environment      <- envName
                         sentry.Release          <- appVersion

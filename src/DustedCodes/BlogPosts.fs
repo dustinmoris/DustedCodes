@@ -177,4 +177,10 @@ module BlogPosts =
 
     let load path  = getAllBlogPostsFromDisk path
 
+    let tryFindSinglePost (blogPostsRoot : string) (id : string) =
+        blogPostsRoot
+        |> Directory.GetFiles
+        |> Seq.find(fun f -> f.EndsWith(sprintf "%s.md" id))
+        |> parseBlogPost
+
     let mutable all : Article list = []

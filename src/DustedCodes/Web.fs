@@ -143,18 +143,29 @@ module HttpHandlers =
                         | Error _ -> return! respond msg internalErr
             }
 
+    let private getBlogPostFromCache (id : string) =
+        BlogPosts.all
+        |> List.tryFind (fun x -> x.Id.EqualsCi id)
+
+    let private getBlogPostFromDisk (blogPostRoot : string) (id : string) =
+        match BlogPosts.tryFindSinglePost blogPostRoot id with
+        | Ok article -> Some article
+        | Error _    -> None
+
     let blogPost (id : string) =
         fun (next : HttpFunc) (ctx : HttpContext) ->
             let settings = ctx.GetService<Config.Settings>()
-            (BlogPosts.all
-            |> List.tryFind (fun x -> x.Id.EqualsCi id)
-            |> function
-                | None -> notFound
-                | Some blogPost ->
-                    let eTag = EntityTagHeaderValue.FromString false blogPost.HashCode
-                    validatePreconditions (Some eTag) None
-                    >=> allowCaching (TimeSpan.FromDays 7.0)
-                    >=> (blogPost |> Views.blogPost settings  |> htmlView)) next ctx
+            let article =
+                match settings.General.IsProd with
+                | true  -> getBlogPostFromCache id
+                | false -> getBlogPostFromDisk Config.blogPostsPath id
+            (match article with
+            | None    -> notFound
+            | Some bp ->
+                let eTag = EntityTagHeaderValue.FromString false bp.HashCode
+                validatePreconditions (Some eTag) None
+                >=> allowCaching (TimeSpan.FromDays 7.0)
+                >=> (bp |> Views.blogPost settings  |> htmlView)) next ctx
 
     let trending : HttpHandler =
         let pageMatchesBlogPost =
@@ -164,7 +175,7 @@ module HttpHandlers =
         let pageIsBlogPost (pageStat : GoogleAnalytics.PageStatistic) =
             BlogPosts.all |> List.exists (pageMatchesBlogPost pageStat)
 
-        allowCaching (TimeSpan.FromDays 5.0)
+        allowCaching (TimeSpan.FromDays 7.0)
         >=> fun (next : HttpFunc) (ctx : HttpContext) ->
             task {
                 let settings = ctx.GetService<Config.Settings>()
@@ -177,11 +188,14 @@ module HttpHandlers =
                 | Some view -> return! htmlBytes view next ctx
                 | None ->
                     let getReport = ctx.GetService<GoogleAnalytics.GetReportFunc>()
+                    let timer = Stopwatch.StartNew()
                     let! mostViewedPages =
                         getReport
                             log
                             settings.ThirdParties.AnalyticsViewId
                             (int Byte.MaxValue)
+                    timer.Stop()
+                    log Level.Debug (sprintf "Pulled Google Analytics report in %s." (timer.Elapsed.ToMs()))
                     let view =
                         mostViewedPages
                         |> List.filter pageIsBlogPost
