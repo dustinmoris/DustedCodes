@@ -7,7 +7,7 @@ module Datastore =
     open Google.Cloud.Datastore.V1
     open FSharp.Control.Tasks.NonAffine
 
-    type SaveEntityFunc = string -> Entity -> Task<Result<string, string>>
+    type SaveEntityFunc = Log.Func -> Entity -> Task<Result<string, string>>
 
     let toStringValue (str : string) =
         Value(StringValue = str)
@@ -27,7 +27,7 @@ module Datastore =
         (entityKind : string)
         (db         : DatastoreDb) =
         let keyFactory = db.CreateKeyFactory entityKind
-        fun (traceId : string) (entity : Entity) ->
+        fun (log : Log.Func) (entity : Entity) ->
             task {
                 try
                     let key = keyFactory.CreateIncompleteKey()
@@ -37,14 +37,13 @@ module Datastore =
 
                     let! keys = db.InsertAsync [ entity ]
                     let insertedKey = keys.[0].ToString()
-                    Log.notice
-                        (sprintf "A new entity (%s) has been successfully saved. -- [ %s ]" insertedKey traceId)
+                    log Level.Notice
+                        (sprintf "A new entity (%s) has been successfully saved." insertedKey)
                     return Ok insertedKey
                 with ex ->
-                    Log.alert
-                        (sprintf "Failed to save entity in datastore: %s -- [ %s ]\n\n%s"
+                    log Level.Alert
+                        (sprintf "Failed to save entity in datastore: %s\n\n%s"
                              ex.Message
-                             traceId
                              ex.StackTrace)
                     return Error ex.Message
             }
@@ -70,7 +69,7 @@ module PubSub =
             TemplateData : IDictionary<string, string>
         }
 
-    type SendMessageFunc = string -> Message -> Task<Result<string, string>>
+    type SendMessageFunc = Log.Func -> Message -> Task<Result<string, string>>
 
     let sendMessage
         (envName    : string)
@@ -78,7 +77,7 @@ module PubSub =
         (sender     : string)
         (recipient  : string)
         (client     : PublisherClient) =
-        fun (traceId : string) (msg : Message) ->
+        fun (log : Log.Func) (msg : Message) ->
             task {
                 try
                     let data = msg.TemplateData
@@ -102,15 +101,14 @@ module PubSub =
                     pubSubMsg.Attributes.Add("encoding", "json-utf8")
 
                     let! messageId = client.PublishAsync(pubSubMsg)
-                    Log.notice
-                        (sprintf "A new message (%s) has been successfully sent. -- [ %s ]" messageId traceId)
+                    log Level.Notice
+                        (sprintf "A new message (%s) has been successfully sent." messageId)
 
                     return Ok messageId
                 with ex ->
-                    Log.alert(
-                        sprintf "Failed to publish pubsub message: %s -- [ %s ]\n\n%s"
+                    log Level.Alert
+                        (sprintf "Failed to publish pubsub message: %s\n\n%s"
                             ex.Message
-                            traceId
                             ex.StackTrace)
                     return Error ex.Message
             }
@@ -183,7 +181,7 @@ module Messages =
         | Ok _ -> true
         | _    -> false
 
-    type SaveFunc = string -> ContactMsg -> Task<Result<string, string>>
+    type SaveFunc = Log.Func -> ContactMsg -> Task<Result<string, string>>
 
     let rec waitForFirstSuccess (tasks : Task<Result<string, string>> list) =
         task {
@@ -200,13 +198,13 @@ module Messages =
     let save
         (saveEntity : Datastore.SaveEntityFunc)
         (publishMsg : PubSub.SendMessageFunc) =
-        fun (traceId : string) (msg : ContactMsg) ->
+        fun (log : Log.Func) (msg : ContactMsg) ->
             task {
                 let dsEntity = msg.ToDatastoreEntity()
-                let dsTask = saveEntity traceId dsEntity
+                let dsTask = saveEntity log dsEntity
 
                 let pubSubMsg = msg.ToPubSubMessage()
-                let pubSubTask = publishMsg traceId pubSubMsg
+                let pubSubTask = publishMsg log pubSubMsg
 
                 let! results = Task.WhenAll(dsTask, pubSubTask)
 

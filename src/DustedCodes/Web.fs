@@ -40,14 +40,9 @@ module HttpHandlers =
 
     let notFound =
         fun (next : HttpFunc) (ctx : HttpContext) ->
-            let settings    = ctx.GetService<Config.Settings>()
-            let traceId     = ctx.GetTraceId()
-
-            sprintf "Page not found: %s -- [ %s ]"
-                (ctx.GetRequestUrl())
-                traceId
-            |> Log.info
-
+            let settings = ctx.GetService<Config.Settings>()
+            let log      = ctx.GetLogFunc()
+            log Level.Info (sprintf "Page not found: %s" (ctx.GetRequestUrl()))
             (setStatusCode 404 >=> htmlView (Views.notFound settings)) next ctx
 
     let index =
@@ -113,7 +108,7 @@ module HttpHandlers =
         fun (ctx : HttpContext) ->
             task {
                 let settings = ctx.GetService<Config.Settings>()
-                let traceId  = ctx.GetTraceId()
+                let log      = ctx.GetLogFunc()
 
                 let respond msg res =
                     markdown
@@ -128,20 +123,21 @@ module HttpHandlers =
                     let! captchaResult =
                         ctx.Request.Form.["h-captcha-response"].ToString()
                         |> Captcha.validate
+                            log
                             settings.ThirdParties.CaptchaSiteKey
                             settings.ThirdParties.CaptchaSecretKey
                     match captchaResult with
                     | Captcha.ServerError err ->
-                        Log.critical
-                            (sprintf "Captcha validation failed with: %s -- [ %s ]" err traceId)
+                        log Level.Critical
+                            (sprintf "Captcha validation failed with: %s" err)
                         return! respond msg internalErr
                     | Captcha.UserError err -> return! respond msg (Error err)
                     | Captcha.Success ->
                         let saveMsg = ctx.GetService<Messages.SaveFunc>()
                         let timer = Stopwatch.StartNew()
-                        let! result = saveMsg traceId msg
+                        let! result = saveMsg log msg
                         timer.Stop()
-                        Log.debug (sprintf "Sent message in %s -- [ %s ]" (timer.Elapsed.ToMs()) traceId)
+                        log Level.Debug (sprintf "Sent message in %s" (timer.Elapsed.ToMs()))
                         match result with
                         | Ok _    -> return! respond Messages.ContactMsg.Empty result
                         | Error _ -> return! respond msg internalErr
@@ -173,7 +169,8 @@ module HttpHandlers =
             task {
                 let settings = ctx.GetService<Config.Settings>()
                 let cacheKey = settings.Redis.CacheKeyTrending
-                let cache = ctx.GetService<IDistributedCache>()
+                let cache    = ctx.GetService<IDistributedCache>()
+                let log      = ctx.GetService<Log.Func>()
 
                 let! cacheItem = cache.GetAsync(cacheKey, ctx.RequestAborted)
                 match Option.ofObj cacheItem with
@@ -182,6 +179,7 @@ module HttpHandlers =
                     let getReport = ctx.GetService<GoogleAnalytics.GetReportFunc>()
                     let! mostViewedPages =
                         getReport
+                            log
                             settings.ThirdParties.AnalyticsViewId
                             (int Byte.MaxValue)
                     let view =
@@ -243,7 +241,8 @@ module HttpHandlers =
 
     let atomFeed : HttpHandler =
         fun (next : HttpFunc) (ctx : HttpContext) ->
-            Log.warning "Someone tried to subscribe to the Atom feed."
+            let log = ctx.GetLogFunc()
+            log Level.Warning "Someone tried to subscribe to the Atom feed."
             ServerErrors.notImplemented (text "Atom feed is not supported at the moment. If you were using Atom to subscribe to this blog before, please file an issue on https://github.com/dustinmoris/DustedCodes to create awareness.") next ctx
 
 [<RequireQualifiedAccess>]

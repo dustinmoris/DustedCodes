@@ -40,7 +40,7 @@ module Captcha =
             UserError "Verification failed. Please try again."
         | _                         -> ServerError (sprintf "Unknown error code: %s" errorCode)
 
-    let validate (siteKey : string) (secretKey : string) (captchaResponse : string) =
+    let validate (log : Log.Func) (siteKey : string) (secretKey : string) (captchaResponse : string) =
         task {
             let url = "https://hcaptcha.com/siteverify"
             let data = dict [ "siteKey",  siteKey
@@ -50,7 +50,7 @@ module Captcha =
             let timer = Stopwatch.StartNew()
             let! statusCode, body = Http.postAsync url data
             timer.Stop()
-            Log.debugF "Validated captcha in %s" (timer.Elapsed.ToMs())
+            log Level.Debug (sprintf "Validated captcha in %s" (timer.Elapsed.ToMs()))
 
             return
                 if not (statusCode.Equals HttpStatusCode.OK)

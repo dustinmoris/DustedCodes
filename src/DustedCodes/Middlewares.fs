@@ -19,26 +19,43 @@ module Middlewares =
                 this.Use(
                     fun ctx next ->
                         unitTask {
-                            let timer = Stopwatch.StartNew()
+                            let timer    = Stopwatch.StartNew()
+                            let traceId  = Guid.NewGuid().ToString()
+                            let settings = ctx.GetService<Config.Settings>()
 
-                            let traceId = Guid.NewGuid().ToString()
-                            sprintf "%s %s %s -- [ %s ]"
-                                ctx.Request.Protocol
-                                ctx.Request.Method
-                                (ctx.GetRequestUrl())
-                                traceId
-                            |> Log.debug
+                            let logFormatter =
+                                match settings.General.IsProd with
+                                | true  -> Log.stackdriverFormat settings.General.AppName settings.General.AppVersion
+                                | false -> Log.consoleFormat
 
-                            ctx.SetTraceId traceId
+                            let logFunc =
+                                Log.write
+                                    logFormatter
+                                    [
+                                        "Protocol", ctx.Request.Protocol
+                                        "Method", ctx.Request.Method
+                                        "URL", ctx.GetRequestUrl()
+                                        "ClientIP", ctx.Connection.RemoteIpAddress.MapToIPv4().ToString()
+                                    ]
+                                    (Log.parseLevel settings.General.LogLevel)
+                                    traceId
+
+                            ctx.SetLogFunc logFunc
+
+                            logFunc
+                                Level.Debug
+                                (sprintf "%s %s %s"
+                                    ctx.Request.Protocol
+                                    ctx.Request.Method
+                                    (ctx.GetRequestUrl()))
 
                             do! next.Invoke()
 
                             timer.Stop()
 
-                            sprintf "Request finished in: %s -- [ %s ]"
-                                (timer.Elapsed.ToMs())
-                                traceId
-                            |> Log.debug
+                            logFunc
+                                Level.Debug
+                                (sprintf "Request finished in: %s" (timer.Elapsed.ToMs()))
                         })
 
         member this.UseTrailingSlashRedirection(httpsPort) =
