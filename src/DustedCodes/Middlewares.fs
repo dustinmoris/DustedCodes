@@ -149,7 +149,7 @@ module Middlewares =
                                 h.Split(',', StringSplitOptions.RemoveEmptyEntries)
                                 |> Array.map (fun s -> s.Trim())
                                 |> Array.rev
-                                |> Array.take (proxyCount + 1)
+                                |> Array.take proxyCount
                                 |> Array.rev
                                 |> Array.head
 
@@ -166,23 +166,31 @@ module Middlewares =
                         next.Invoke())
 
         member this.UseHttpsRedirection
-            (enabled  : bool,
-            httpsHost : string,
-            httpsPort : int,
-            permanent : bool) =
+            (enabled    : bool,
+            httpsHost   : string,
+            httpsPort   : int,
+            behindProxy : bool,
+            permanent   : bool) =
             match enabled with
             | false -> this
             | true  ->
                 this.Use(
                     fun ctx next ->
-                        let expectedHost =
-                            httpsHost.Split(':', 2, StringSplitOptions.RemoveEmptyEntries).[0]
+                        let isHttps =
+                            match ctx.Request.IsHttps, behindProxy with
+                            | true, _      -> true
+                            | false, false -> false
+                            | false, true  ->
+                                (defaultArg
+                                     (ctx.TryGetRequestHeader "X-Forwarded-Proto")
+                                     "http").EqualsCi "https"
+
                         // Only HTTPS redirect for the chosen domain:
                         let host = ctx.Request.Host.Host
                         let mustUseHttps =
-                            host = expectedHost
-                            || host.EndsWith ("." + expectedHost)
-                        match mustUseHttps && not ctx.Request.IsHttps with
+                            host = httpsHost
+                            || host.EndsWith ("." + httpsHost)
+                        match mustUseHttps && not isHttps with
                         | false -> next.Invoke()
                         | true  ->
                             let hostStr =
