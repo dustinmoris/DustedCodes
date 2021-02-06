@@ -37,25 +37,47 @@ module Config =
         {
             Domain            : string
             BaseUrl           : string
-            ForceHttps        : bool
-            HttpsPort         : int
-            ProxyCount        : int
-            FwdIPHeaderName   : string
-            TraceIdHeaderName : string
             RequestLogging    : bool
             ErrorEndpoint     : bool
         }
         static member Load() =
             {
-                Domain              = Env.varOrDefault "DOMAIN_NAME" "localhost:5000"
-                BaseUrl             = Env.varOrDefault "BASE_URL" "http://localhost:5000"
-                ForceHttps          = Env.InvariantCulture.typedVarOrDefault "FORCE_HTTPS" false
-                HttpsPort           = Env.InvariantCulture.typedVarOrDefault "HTTPS_PORT" 443
+                Domain          = Env.varOrDefault "DOMAIN_NAME" "localhost:5000"
+                BaseUrl         = Env.varOrDefault "BASE_URL" "http://localhost:5000"
+                RequestLogging  = Env.InvariantCulture.typedVarOrDefault "ENABLE_REQUEST_LOGGING" true
+                ErrorEndpoint   = Env.InvariantCulture.typedVarOrDefault "ENABLE_ERROR_ENDPOINT" false
+            }
+
+    [<RequireQualifiedAccess>]
+    type Https =
+        {
+            HttpsHost         : string
+            HttpsPort         : int
+            ForceHttps        : bool
+            BehindProxy       : bool
+            PermanentRedirect : bool
+        }
+        static member Load() =
+            {
+                HttpsHost         = Env.varOrDefault "HTTPS_HOST" "localhost"
+                HttpsPort         = Env.InvariantCulture.typedVarOrDefault "HTTPS_PORT" 443
+                ForceHttps        = Env.InvariantCulture.typedVarOrDefault "FORCE_HTTPS" false
+                BehindProxy       = Env.InvariantCulture.typedVarOrDefault "BEHIND_PROXY" false
+                PermanentRedirect = Env.InvariantCulture.typedVarOrDefault "PERMANENT_REDIRECT" true
+            }
+
+    [<RequireQualifiedAccess>]
+    type Proxy =
+        {
+            ProxyCount        : int
+            FwdIPHeaderName   : string
+            TraceIdHeaderName : string
+        }
+        static member Load() =
+            {
                 ProxyCount          = Env.InvariantCulture.typedVarOrDefault "PROXY_COUNT" 2
                 FwdIPHeaderName     = Env.varOrDefault "FORWARDED_IP_HEADER_NAME" "X-Forwarded-For"
                 TraceIdHeaderName   = Env.varOrDefault "TRACE_ID_HEADER_NAME" "X-Trace-Id"
-                RequestLogging      = Env.InvariantCulture.typedVarOrDefault "ENABLE_REQUEST_LOGGING" true
-                ErrorEndpoint       = Env.InvariantCulture.typedVarOrDefault "ENABLE_ERROR_ENDPOINT" false
             }
 
     [<RequireQualifiedAccess>]
@@ -139,6 +161,8 @@ module Config =
         {
             General      : General
             Web          : Web
+            Https        : Https
+            Proxy        : Proxy
             Blog         : Blog
             ThirdParties : ThirdParties
             Mail         : Mail
@@ -156,13 +180,20 @@ module Config =
                     "Web", dict [
                         "Domain", this.Web.Domain
                         "Base URL", this.Web.BaseUrl
-                        "Force HTTPS", this.Web.ForceHttps.ToString()
-                        "HTTPS Port", this.Web.HttpsPort.ToString()
-                        "Proxy Count", this.Web.ProxyCount.ToString()
-                        "Forwarded IP header name", this.Web.FwdIPHeaderName
-                        "Trace ID header name", this.Web.TraceIdHeaderName
                         "Request Logging", this.Web.RequestLogging.ToString()
                         "Error Endpoint", this.Web.ErrorEndpoint.ToString()
+                    ]
+                    "HTTPS", dict [
+                        "HTTPS Host", this.Https.HttpsHost
+                        "HTTPS Port", this.Https.HttpsPort.ToString()
+                        "Force HTTPS", this.Https.ForceHttps.ToString()
+                        "Behind Proxy", this.Https.BehindProxy.ToString()
+                        "Permanent Redirect", this.Https.PermanentRedirect.ToString()
+                    ]
+                    "Proxy", dict [
+                        "Proxy Count", this.Proxy.ProxyCount.ToString()
+                        "Forwarded IP header name", this.Proxy.FwdIPHeaderName
+                        "Trace ID header name", this.Proxy.TraceIdHeaderName
                     ]
                     "Blog", dict [
                         "Blog Title", this.Blog.Title
@@ -233,6 +264,8 @@ module Config =
         {
             General      = General.Load()
             Web          = Web.Load()
+            Https        = Https.Load()
+            Proxy        = Proxy.Load()
             Blog         = Blog.Load()
             ThirdParties = ThirdParties.Load()
             Mail         = Mail.Load()
