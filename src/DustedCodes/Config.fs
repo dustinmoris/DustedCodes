@@ -39,17 +39,21 @@ module Config =
             BaseUrl         : string
             ForceHttps      : bool
             HttpsPort       : int
+            FwdIPHeaderName : string
+            ProxyCount      : int
             RequestLogging  : bool
             ErrorEndpoint   : bool
         }
         static member Load() =
             {
-                Domain         = Env.varOrDefault "DOMAIN_NAME" "localhost:5000"
-                BaseUrl        = Env.varOrDefault "BASE_URL" "http://localhost:5000"
-                ForceHttps     = Env.InvariantCulture.typedVarOrDefault "FORCE_HTTPS" false
-                HttpsPort      = Env.InvariantCulture.typedVarOrDefault "HTTPS_PORT" 443
-                RequestLogging = Env.InvariantCulture.typedVarOrDefault "ENABLE_REQUEST_LOGGING" true
-                ErrorEndpoint  = Env.InvariantCulture.typedVarOrDefault "ENABLE_ERROR_ENDPOINT" false
+                Domain          = Env.varOrDefault "DOMAIN_NAME" "localhost:5000"
+                BaseUrl         = Env.varOrDefault "BASE_URL" "http://localhost:5000"
+                ForceHttps      = Env.InvariantCulture.typedVarOrDefault "FORCE_HTTPS" false
+                HttpsPort       = Env.InvariantCulture.typedVarOrDefault "HTTPS_PORT" 443
+                FwdIPHeaderName = Env.varOrDefault "FORWARDED_IP_HEADER_NAME" "X-Forwarded-For"
+                ProxyCount      = Env.InvariantCulture.typedVarOrDefault "PROXY_COUNT" 2
+                RequestLogging  = Env.InvariantCulture.typedVarOrDefault "ENABLE_REQUEST_LOGGING" true
+                ErrorEndpoint   = Env.InvariantCulture.typedVarOrDefault "ENABLE_ERROR_ENDPOINT" false
             }
 
     [<RequireQualifiedAccess>]
