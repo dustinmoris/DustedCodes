@@ -71,7 +71,7 @@ module Extensions =
                 |> Option.ofObj
             match logFunc with
             | Some f -> f :?> Log.Func
-            | None   -> Log.write Log.consoleFormat [] (Level.Debug) ""
+            | None   -> Log.write Log.consoleFormat [] (Level.Debug) None "" ""
 
 
     type IServiceCollection with

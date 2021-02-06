@@ -12,6 +12,21 @@ module Middlewares =
     open Giraffe
     open FSharp.Control.Tasks
 
+    let private rng = Random(DateTime.Now.Millisecond)
+    let private newTraceId() = Guid.NewGuid().ToString("N")
+    let private newSpanId()  =
+        Convert.ToInt64(rng.NextDouble() * Convert.ToDouble(DateTime.UtcNow.Ticks))
+        |> string
+
+    let private getGoogleTrace(ctx : HttpContext) =
+        match ctx.TryGetRequestHeader "X-Cloud-Trace-Context" with
+        | None       -> newTraceId(), newSpanId()
+        | Some trace ->
+            let t = trace.Split('/', 2)
+            if t.Length = 2
+            then t.[0], t.[1]
+            else newTraceId(), newSpanId()
+
     type IApplicationBuilder with
 
         member this.UseErrorHandler() =
@@ -36,67 +51,63 @@ module Middlewares =
                             ()
                     })
 
-        member this.UseRequestLogging(enabled, traceIdHeader) =
-            match enabled with
-            | false -> this
-            | true  ->
-                this.Use(
-                    fun ctx next ->
-                        unitTask {
-                            let timer    = Stopwatch.StartNew()
+        member this.UseRequestLogging (getTraceFunc : HttpContext -> string * string) =
+            fun (enabled : bool) ->
+                match enabled with
+                | false -> this
+                | true  ->
+                    this.Use(
+                        fun ctx next ->
+                            unitTask {
+                                let timer = Stopwatch.StartNew()
+                                let traceId, spanId = getTraceFunc ctx
+                                let settings = ctx.GetService<Config.Settings>()
 
-                            let traceId =
-                                ctx.TryGetRequestHeader traceIdHeader
-                                |> Option.defaultValue (Guid.NewGuid().ToString())
+                                let logFormatter =
+                                    match settings.General.IsProd with
+                                    | false -> Log.consoleFormat
+                                    | true  -> Log.stackdriverFormat
+                                                   settings.General.AppName
+                                                   settings.General.AppVersion
 
-                            let settings = ctx.GetService<Config.Settings>()
+                                let logFunc =
+                                    Log.write
+                                        logFormatter
+                                        []
+                                        (Log.parseLevel settings.General.LogLevel)
+                                        (Some ctx)
+                                        traceId
+                                        spanId
 
-                            let logFormatter =
-                                match settings.General.IsProd with
-                                | true  -> Log.stackdriverFormat settings.General.AppName settings.General.AppVersion
-                                | false -> Log.consoleFormat
+                                ctx.SetLogFunc logFunc
 
-                            let logFunc =
-                                Log.write
-                                    logFormatter
-                                    [
-                                        "RequestProtocol", ctx.Request.Protocol
-                                        "RequestMethod", ctx.Request.Method
-                                        "RequestURL", ctx.GetRequestUrl()
-                                        "RequestPath", ctx.Request.Path.ToString()
-                                        "ClientIP", ctx.Connection.RemoteIpAddress.MapToIPv4().ToString()
-                                        "UserAgent", defaultArg (ctx.TryGetRequestHeader "User-Agent") ""
-                                    ]
-                                    (Log.parseLevel settings.General.LogLevel)
-                                    traceId
+                                let headers =
+                                    ctx.Request.Headers.Keys
+                                    |> Seq.fold(
+                                        fun state key ->
+                                            sprintf "%s\n    %s: %s"
+                                                state
+                                                key
+                                                (ctx.Request.Headers.[key].ToString())) ""
 
-                            ctx.SetLogFunc logFunc
+                                logFunc
+                                    Level.Debug
+                                    (sprintf "%s %s %s %s"
+                                        ctx.Request.Protocol
+                                        ctx.Request.Method
+                                        (ctx.GetRequestUrl())
+                                        headers)
 
-                            let headers =
-                                ctx.Request.Headers.Keys
-                                |> Seq.fold(
-                                    fun state key ->
-                                        sprintf "%s\n    %s: %s"
-                                            state
-                                            key
-                                            (ctx.Request.Headers.[key].ToString())) ""
+                                do! next.Invoke()
 
-                            logFunc
-                                Level.Debug
-                                (sprintf "%s %s %s %s"
-                                    ctx.Request.Protocol
-                                    ctx.Request.Method
-                                    (ctx.GetRequestUrl())
-                                    headers)
+                                timer.Stop()
 
-                            do! next.Invoke()
+                                logFunc
+                                    Level.Debug
+                                    (sprintf "Request finished in: %s" (timer.Elapsed.ToMs()))
+                            })
 
-                            timer.Stop()
-
-                            logFunc
-                                Level.Debug
-                                (sprintf "Request finished in: %s" (timer.Elapsed.ToMs()))
-                        })
+        member this.UseGoogleTracing = this.UseRequestLogging getGoogleTrace
 
         member this.UseTrailingSlashRedirection(httpsPort) =
             this.Use(
