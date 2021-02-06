@@ -9,7 +9,6 @@ module Middlewares =
     open Microsoft.AspNetCore.Builder
     open Microsoft.AspNetCore.Http
     open Microsoft.AspNetCore.Http.Extensions
-    open Microsoft.Extensions.Primitives
     open Giraffe
     open FSharp.Control.Tasks
 
@@ -37,7 +36,7 @@ module Middlewares =
                             ()
                     })
 
-        member this.UseRequestLogging(enabled) =
+        member this.UseRequestLogging(enabled, traceIdHeader) =
             match enabled with
             | false -> this
             | true  ->
@@ -45,7 +44,11 @@ module Middlewares =
                     fun ctx next ->
                         unitTask {
                             let timer    = Stopwatch.StartNew()
-                            let traceId  = Guid.NewGuid().ToString()
+
+                            let traceId =
+                                ctx.TryGetRequestHeader traceIdHeader
+                                |> Option.defaultValue (Guid.NewGuid().ToString())
+
                             let settings = ctx.GetService<Config.Settings>()
 
                             let logFormatter =
@@ -57,22 +60,34 @@ module Middlewares =
                                 Log.write
                                     logFormatter
                                     [
-                                        "Protocol", ctx.Request.Protocol
-                                        "Method", ctx.Request.Method
-                                        "URL", ctx.GetRequestUrl()
+                                        "RequestProtocol", ctx.Request.Protocol
+                                        "RequestMethod", ctx.Request.Method
+                                        "RequestURL", ctx.GetRequestUrl()
+                                        "RequestPath", ctx.Request.Path.ToString()
                                         "ClientIP", ctx.Connection.RemoteIpAddress.MapToIPv4().ToString()
+                                        "UserAgent", defaultArg (ctx.TryGetRequestHeader "User-Agent") ""
                                     ]
                                     (Log.parseLevel settings.General.LogLevel)
                                     traceId
 
                             ctx.SetLogFunc logFunc
 
+                            let headers =
+                                ctx.Request.Headers.Keys
+                                |> Seq.fold(
+                                    fun state key ->
+                                        sprintf "%s\n    %s: %s"
+                                            state
+                                            key
+                                            (ctx.Request.Headers.[key].ToString())) ""
+
                             logFunc
                                 Level.Debug
-                                (sprintf "%s %s %s"
+                                (sprintf "%s %s %s %s"
                                     ctx.Request.Protocol
                                     ctx.Request.Method
-                                    (ctx.GetRequestUrl()))
+                                    (ctx.GetRequestUrl())
+                                    headers)
 
                             do! next.Invoke()
 
@@ -130,33 +145,43 @@ module Middlewares =
                     fun ctx next ->
                         match ctx.TryGetRequestHeader headerName with
                         | Some h ->
-                            let remoteIpAddress =
+                            let clientIP =
                                 h.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                                |> Array.map (fun s -> s.Trim())
                                 |> Array.rev
                                 |> Array.take (proxyCount + 1)
                                 |> Array.rev
                                 |> Array.head
-                                |> IPAddress.Parse
-                            ctx.Connection.RemoteIpAddress <- remoteIpAddress
-                            let log = ctx.GetLogFunc()
-                            log Level.Debug
-                                (sprintf "Set client's IP address %s from %s header."
-                                     (remoteIpAddress.ToString())
-                                     headerName)
+
+                            match IPAddress.TryParse clientIP with
+                            | false, _     -> ()
+                            | true, ipAddr ->
+                                ctx.Connection.RemoteIpAddress <- ipAddr
+                                let log = ctx.GetLogFunc()
+                                log Level.Debug
+                                    (sprintf "Set the Client IP Address to %s from the %s header."
+                                         (ipAddr.ToString())
+                                         headerName)
                         | None   -> ()
                         next.Invoke())
 
-        member this.UseHttpsRedirection (enabled, domainName, httpsPort, permanent) =
+        member this.UseHttpsRedirection
+            (enabled  : bool,
+            httpsHost : string,
+            httpsPort : int,
+            permanent : bool) =
             match enabled with
             | false -> this
             | true  ->
                 this.Use(
                     fun ctx next ->
+                        let expectedHost =
+                            httpsHost.Split(':', 2, StringSplitOptions.RemoveEmptyEntries).[0]
                         // Only HTTPS redirect for the chosen domain:
                         let host = ctx.Request.Host.Host
                         let mustUseHttps =
-                            host = domainName
-                            || host.EndsWith ("." + domainName)
+                            host = expectedHost
+                            || host.EndsWith ("." + expectedHost)
                         match mustUseHttps && not ctx.Request.IsHttps with
                         | false -> next.Invoke()
                         | true  ->

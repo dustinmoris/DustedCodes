@@ -35,25 +35,27 @@ module Config =
     [<RequireQualifiedAccess>]
     type Web =
         {
-            Domain          : string
-            BaseUrl         : string
-            ForceHttps      : bool
-            HttpsPort       : int
-            FwdIPHeaderName : string
-            ProxyCount      : int
-            RequestLogging  : bool
-            ErrorEndpoint   : bool
+            Domain            : string
+            BaseUrl           : string
+            ForceHttps        : bool
+            HttpsPort         : int
+            ProxyCount        : int
+            FwdIPHeaderName   : string
+            TraceIdHeaderName : string
+            RequestLogging    : bool
+            ErrorEndpoint     : bool
         }
         static member Load() =
             {
-                Domain          = Env.varOrDefault "DOMAIN_NAME" "localhost:5000"
-                BaseUrl         = Env.varOrDefault "BASE_URL" "http://localhost:5000"
-                ForceHttps      = Env.InvariantCulture.typedVarOrDefault "FORCE_HTTPS" false
-                HttpsPort       = Env.InvariantCulture.typedVarOrDefault "HTTPS_PORT" 443
-                FwdIPHeaderName = Env.varOrDefault "FORWARDED_IP_HEADER_NAME" "X-Forwarded-For"
-                ProxyCount      = Env.InvariantCulture.typedVarOrDefault "PROXY_COUNT" 2
-                RequestLogging  = Env.InvariantCulture.typedVarOrDefault "ENABLE_REQUEST_LOGGING" true
-                ErrorEndpoint   = Env.InvariantCulture.typedVarOrDefault "ENABLE_ERROR_ENDPOINT" false
+                Domain              = Env.varOrDefault "DOMAIN_NAME" "localhost:5000"
+                BaseUrl             = Env.varOrDefault "BASE_URL" "http://localhost:5000"
+                ForceHttps          = Env.InvariantCulture.typedVarOrDefault "FORCE_HTTPS" false
+                HttpsPort           = Env.InvariantCulture.typedVarOrDefault "HTTPS_PORT" 443
+                ProxyCount          = Env.InvariantCulture.typedVarOrDefault "PROXY_COUNT" 2
+                FwdIPHeaderName     = Env.varOrDefault "FORWARDED_IP_HEADER_NAME" "X-Forwarded-For"
+                TraceIdHeaderName   = Env.varOrDefault "TRACE_ID_HEADER_NAME" "X-Trace-Id"
+                RequestLogging      = Env.InvariantCulture.typedVarOrDefault "ENABLE_REQUEST_LOGGING" true
+                ErrorEndpoint       = Env.InvariantCulture.typedVarOrDefault "ENABLE_ERROR_ENDPOINT" false
             }
 
     [<RequireQualifiedAccess>]
@@ -156,6 +158,9 @@ module Config =
                         "Base URL", this.Web.BaseUrl
                         "Force HTTPS", this.Web.ForceHttps.ToString()
                         "HTTPS Port", this.Web.HttpsPort.ToString()
+                        "Proxy Count", this.Web.ProxyCount.ToString()
+                        "Forwarded IP header name", this.Web.FwdIPHeaderName
+                        "Trace ID header name", this.Web.TraceIdHeaderName
                         "Request Logging", this.Web.RequestLogging.ToString()
                         "Error Endpoint", this.Web.ErrorEndpoint.ToString()
                     ]
