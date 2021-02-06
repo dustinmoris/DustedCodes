@@ -181,7 +181,7 @@ module HttpHandlers =
                 let settings = ctx.GetService<Config.Settings>()
                 let cacheKey = settings.Redis.CacheKeyTrending
                 let cache    = ctx.GetService<IDistributedCache>()
-                let log      = ctx.GetService<Log.Func>()
+                let log      = ctx.GetLogFunc()
 
                 let! cacheItem = cache.GetAsync(cacheKey, ctx.RequestAborted)
                 match Option.ofObj cacheItem with
@@ -308,16 +308,3 @@ module WebApp =
                 route UrlPaths.``/hire`` HttpHandlers.contact
             ]
         ]
-
-    let errorHandler (settings : Config.Settings) =
-        fun (ex : Exception) (logger : ILogger) ->
-            // Must use the Microsoft.Extensions.Logging.ILogger, because the Sentry
-            // integration hooks into the Microsoft logging framework:
-            logger.LogError(ex, "An unhandled exception has occurred while executing the request.")
-            clearResponse
-            >=> setStatusCode 500
-            >=> (match settings.General.IsProd with
-                | false -> Some ex.Message
-                | true  -> None
-                |> Views.internalError settings
-                |> htmlView)

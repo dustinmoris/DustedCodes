@@ -12,6 +12,28 @@ module Middlewares =
 
     type IApplicationBuilder with
 
+        member this.UseErrorHandler() =
+            this.Use(
+                fun ctx next ->
+                    unitTask {
+                        try do! next.Invoke()
+                        with ex ->
+                            let log = ctx.GetLogFunc()
+                            log Level.Critical
+                                (sprintf "Unhandled exception: %s\n\n%s" ex.Message ex.StackTrace)
+
+                            let settings = ctx.GetService<Config.Settings>()
+                            ctx.Response.Clear()
+                            ctx.SetStatusCode 500
+                            let! _ =
+                                match settings.General.IsProd with
+                                | true  -> None
+                                | false -> Some ex.Message
+                                |> Views.internalError settings
+                                |> ctx.WriteHtmlViewAsync
+                            ()
+                    })
+
         member this.UseRequestLogging(enabled) =
             match enabled with
             | false -> this
