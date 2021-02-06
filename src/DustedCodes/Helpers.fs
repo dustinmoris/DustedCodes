@@ -1,6 +1,18 @@
 namespace DustedCodes
 
 /// -------------------------------------
+/// Nullable
+/// -------------------------------------
+
+module Nullable =
+    open System
+
+    let toOption (nullable : Nullable<'T>) =
+        match nullable.HasValue with
+        | true  -> Some nullable.Value
+        | false -> None
+
+/// -------------------------------------
 /// Network
 /// -------------------------------------
 

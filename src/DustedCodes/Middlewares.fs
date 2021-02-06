@@ -3,10 +3,13 @@ namespace DustedCodes
 [<AutoOpen>]
 module Middlewares =
     open System
+    open System.Net
     open System.Diagnostics
     open System.Threading.Tasks
     open Microsoft.AspNetCore.Builder
     open Microsoft.AspNetCore.Http
+    open Microsoft.AspNetCore.Http.Extensions
+    open Microsoft.Extensions.Primitives
     open Giraffe
     open FSharp.Control.Tasks
 
@@ -83,35 +86,93 @@ module Middlewares =
         member this.UseTrailingSlashRedirection(httpsPort) =
             this.Use(
                 fun ctx next ->
+                    let req = ctx.Request
                     let hasTrailingSlash =
-                        ctx.Request.Path.HasValue
-                        && ctx.Request.Path.Value.EndsWith "/"
-                        && ctx.Request.Path.Value.Length > 1
-                    match hasTrailingSlash with
-                    | true  ->
-                        ctx.Request.Path <- PathString(ctx.Request.Path.Value.TrimEnd '/')
-                        if ctx.Request.Scheme.EqualsCi "https" then
-                            ctx.Request.Host <- HostString(ctx.Request.Host.Host, httpsPort)
-                        let url = Microsoft.AspNetCore.Http.Extensions.UriHelper.GetEncodedUrl ctx.Request
-                        ctx.Response.Redirect(url, true)
-                        Task.CompletedTask
-                    | false -> next.Invoke())
+                        req.Path.HasValue
+                        && req.Path.Value.EndsWith "/"
+                        && req.Path.Value.Length > 1
 
-        member this.UseHttpsRedirection (enabled, domainName) =
+                    match hasTrailingSlash with
+                    | false -> next.Invoke()
+                    | true  ->
+                        let path = PathString(req.Path.Value.TrimEnd '/')
+                        let host = req.Host.Host
+                        let hostStr =
+                            match req.IsHttps, httpsPort with
+                            | true, 443  -> HostString(host)
+                            | true, port -> HostString(host, port)
+                            | false, _   ->
+                                match Nullable.toOption req.Host.Port with
+                                | Some 80 -> HostString(host)
+                                | Some p  -> HostString(host, p)
+                                | None    -> HostString(host)
+                        let req = ctx.Request
+                        let url =
+                            UriHelper.Encode(
+                                Uri(
+                                    UriHelper.BuildAbsolute(
+                                        req.Scheme,
+                                        hostStr,
+                                        req.PathBase,
+                                        path,
+                                        req.QueryString),
+                                    UriKind.Absolute))
+                        let log = ctx.GetLogFunc()
+                        log Level.Debug (sprintf "Redirecting trailing slash URL to %s" url)
+                        ctx.Response.Redirect(url, true)
+                        Task.CompletedTask)
+
+        member this.UseRealIPAddress(headerName : string, proxyCount : int) =
+            match proxyCount > 0 with
+            | false -> this
+            | true  ->
+                this.Use(
+                    fun ctx next ->
+                        match ctx.TryGetRequestHeader headerName with
+                        | Some h ->
+                            let remoteIpAddress =
+                                h.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                                |> Array.rev
+                                |> Array.take (proxyCount + 1)
+                                |> Array.rev
+                                |> Array.head
+                                |> IPAddress.Parse
+                            ctx.Connection.RemoteIpAddress <- remoteIpAddress
+                            let log = ctx.GetLogFunc()
+                            log Level.Debug
+                                (sprintf "Set client's IP address %s from %s header."
+                                     (remoteIpAddress.ToString())
+                                     headerName)
+                        | None   -> ()
+                        next.Invoke())
+
+        member this.UseHttpsRedirection (enabled, domainName, httpsPort, permanent) =
             match enabled with
             | false -> this
             | true  ->
                 this.Use(
                     fun ctx next ->
-                        let host = ctx.Request.Host.Host
                         // Only HTTPS redirect for the chosen domain:
+                        let host = ctx.Request.Host.Host
                         let mustUseHttps =
                             host = domainName
                             || host.EndsWith ("." + domainName)
-                        // Otherwise prevent the HTTP redirection middleware
-                        // to redirect by force setting the scheme to https:
-                        if not mustUseHttps then
-                            ctx.Request.Scheme  <- "https"
-                            ctx.Request.IsHttps <- true
-                        next.Invoke())
-                    .UseHttpsRedirection()
+                        match mustUseHttps && not ctx.Request.IsHttps with
+                        | false -> next.Invoke()
+                        | true  ->
+                            let hostStr =
+                                match httpsPort with
+                                | 443  -> HostString(host)
+                                | port -> HostString(host, port)
+                            let req = ctx.Request
+                            let url =
+                                UriHelper.BuildAbsolute(
+                                    "https",
+                                    hostStr,
+                                    req.PathBase,
+                                    req.Path,
+                                    req.QueryString)
+                            let log = ctx.GetLogFunc()
+                            log Level.Debug (sprintf "Redirecting to HTTPS: %s" url)
+                            ctx.Response.Redirect(url, permanent)
+                            Task.CompletedTask)

@@ -61,7 +61,9 @@ module Program =
         fun (app : IApplicationBuilder) ->
             app.UseErrorHandler()
                .UseRequestLogging(settings.Web.RequestLogging)
+               .UseRealIPAddress(settings.Web.FwdIPHeaderName, settings.Web.ProxyCount)
                .UseTrailingSlashRedirection(settings.Web.HttpsPort)
+               .UseHttpsRedirection(settings.Web.ForceHttps, settings.Web.Domain, settings.Web.HttpsPort, true)
                .UseStaticFiles()
                .UseResponseCompression()
                .UseRouting()
