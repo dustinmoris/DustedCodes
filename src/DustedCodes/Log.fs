@@ -87,16 +87,18 @@ module Log =
             (shortLevel e.Level)
             e.Message
 
+    let private encodeJson = System.Web.HttpUtility.JavaScriptStringEncode
+
     let stackdriverFormat (serviceName : string) (serviceVersion : string) =
         fun (e : Event) ->
             ("appName", serviceName) :: ("appVersion", serviceVersion) :: e.Labels
             |> List.fold(
                 fun state (key, value) ->
-                    sprintf "%s ,\"%s\": \"%s\"" state key value)
+                    sprintf "%s ,\"%s\": \"%s\"" state key (encodeJson value))
                 (sprintf "\"traceId\": \"%s\"" e.TraceId)
             |> sprintf
                 "{ \"severity\": \"%s\", \"message\": \"%s\", \"serviceContext.service\": \"%s\", \"serviceContext.version\": \"%s\", \"logging.googleapis.com/labels\": { %s } }"
                 (longLevel e.Level)
-                e.Message
+                (encodeJson e.Message)
                 serviceName
                 serviceVersion
