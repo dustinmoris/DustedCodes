@@ -59,7 +59,7 @@ module Program =
 
     let configureApp (settings : Config.Settings) =
         fun (app : IApplicationBuilder) ->
-            app.UseGiraffeErrorHandler(WebApp.errorHandler settings)
+            app.UseErrorHandler()
                .UseRequestLogging(settings.Web.RequestLogging)
                .UseTrailingSlashRedirection(settings.Web.HttpsPort)
                .UseStaticFiles()
