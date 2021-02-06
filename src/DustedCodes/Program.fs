@@ -60,7 +60,7 @@ module Program =
     let configureApp (settings : Config.Settings) =
         fun (app : IApplicationBuilder) ->
             app.UseErrorHandler()
-               .UseRequestLogging(settings.Web.RequestLogging)
+               .UseRequestLogging(settings.Web.RequestLogging, settings.Web.TraceIdHeaderName)
                .UseRealIPAddress(settings.Web.FwdIPHeaderName, settings.Web.ProxyCount)
                .UseTrailingSlashRedirection(settings.Web.HttpsPort)
                .UseHttpsRedirection(settings.Web.ForceHttps, settings.Web.Domain, settings.Web.HttpsPort, true)
