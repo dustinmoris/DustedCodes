@@ -60,7 +60,7 @@ module Program =
     let configureApp (settings : Config.Settings) =
         fun (app : IApplicationBuilder) ->
             app.UseErrorHandler()
-               .UseRequestLogging(settings.Web.RequestLogging, settings.Proxy.TraceIdHeaderName)
+               .UseGoogleTracing(settings.Web.RequestLogging)
                .UseRealIPAddress(settings.Proxy.FwdIPHeaderName, settings.Proxy.ProxyCount)
                .UseTrailingSlashRedirection(settings.Https.HttpsPort)
                .UseHttpsRedirection(
@@ -83,6 +83,8 @@ module Program =
                     Log.consoleFormat
                     []
                     Level.Debug
+                    None
+                    ""
                     ""
             try
                 DotEnv.load log

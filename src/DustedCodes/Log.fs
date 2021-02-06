@@ -13,14 +13,19 @@ type Level =
 [<RequireQualifiedAccess>]
 module Log =
     open System
+    open System.Web
+    open Microsoft.AspNetCore.Http
+    open Giraffe
 
     type Event =
         {
             Timestamp   : DateTimeOffset
             TraceId     : string
+            SpanId      : string
             Level       : Level
             Message     : string
             Labels      : (string * string) list
+            HttpCtx     : HttpContext option
         }
 
     type FormatFunc = Event -> string
@@ -30,15 +35,19 @@ module Log =
         (format     : FormatFunc)
         (labels     : (string * string) list)
         (minLevel   : Level)
-        (traceId    : string) : Func =
+        (httpCtx    : HttpContext option)
+        (traceId    : string)
+        (spanId     : string) : Func =
         fun (level : Level) (message : string) ->
             if level >= minLevel then
                 {
                     Timestamp = DateTimeOffset.UtcNow
                     TraceId   = traceId
+                    SpanId    = spanId
                     Level     = level
                     Message   = message
                     Labels    = labels
+                    HttpCtx   = httpCtx
                 }
                 |> format
                 |> printfn "%s"
@@ -87,18 +96,49 @@ module Log =
             (shortLevel e.Level)
             e.Message
 
-    let private encodeJson = System.Web.HttpUtility.JavaScriptStringEncode
+    let private encodeJson = HttpUtility.JavaScriptStringEncode
 
     let stackdriverFormat (serviceName : string) (serviceVersion : string) =
         fun (e : Event) ->
-            ("appName", serviceName) :: ("appVersion", serviceVersion) :: e.Labels
-            |> List.fold(
-                fun state (key, value) ->
-                    sprintf "%s ,\"%s\": \"%s\"" state key (encodeJson value))
-                (sprintf "\"traceId\": \"%s\"" e.TraceId)
-            |> sprintf
-                "{ \"severity\": \"%s\", \"message\": \"%s\", \"serviceContext.service\": \"%s\", \"serviceContext.version\": \"%s\", \"logging.googleapis.com/labels\": { %s } }"
+            let svcName     = encodeJson serviceName
+            let svcVersion  = encodeJson serviceVersion
+            let defaultLabels =
+                sprintf "\"appName\": \"%s\", \"appVersion\": \"%s\""
+                    svcName
+                    svcVersion
+            let labels =
+                e.Labels
+                |> List.fold(
+                    fun state (key, value) ->
+                        sprintf "%s ,\"%s\": \"%s\"" state key (encodeJson value))
+                    defaultLabels
+            let httpReq =
+                match e.HttpCtx with
+                | None -> ""
+                | Some h ->
+                    let reqSize =
+                        match h.Request.ContentLength.HasValue with
+                        | true  -> h.Request.ContentLength.Value
+                        | false -> 0L
+                    let userAgent =
+                        defaultArg (h.TryGetRequestHeader "User-Agent") ""
+                    let referer =
+                        defaultArg (h.TryGetRequestHeader "Referer") ""
+                    sprintf ", \"httpRequest\": { \"protocol\": \"%s\", \"requestMethod\": \"%s\", \"requestUrl\": \"%s\", \"requestSize\": \"%d\", \"userAgent\": \"%s\", \"remoteIp\": \"%s\", \"referer\": \"%s\" }"
+                        h.Request.Protocol
+                        h.Request.Method
+                        (h.GetRequestUrl())
+                        reqSize
+                        userAgent
+                        (h.Connection.RemoteIpAddress.ToString())
+                        referer
+            sprintf
+                "{ \"severity\": \"%s\", \"message\": \"%s\", \"serviceContext.service\": \"%s\", \"serviceContext.version\": \"%s\", \"logging.googleapis.com/labels\": { %s }, \"logging.googleapis.com/trace\": \"%s\", \"logging.googleapis.com/spanId\": \"%s\", \"logging.googleapis.com/trace_sampled\": \"true\"%s }"
                 (longLevel e.Level)
                 (encodeJson e.Message)
-                serviceName
-                serviceVersion
+                svcName
+                svcVersion
+                labels
+                e.TraceId
+                e.SpanId
+                httpReq
