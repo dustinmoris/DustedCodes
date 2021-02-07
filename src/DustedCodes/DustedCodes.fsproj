@@ -38,7 +38,8 @@
     <Compile Include="RSS.fs" />
     <Compile Include="Minification.fs" />
     <Compile Include="Views.fs" />
-    <Compile Include="Web.fs" />
+    <Compile Include="HttpHandlers.fs" />
+    <Compile Include="Router.fs" />
     <Compile Include="Middlewares.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>

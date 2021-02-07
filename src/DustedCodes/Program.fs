@@ -21,10 +21,10 @@ module Program =
 
             let topicName =
                 TopicName(
-                    settings.Mail.GcpProjectId,
+                    settings.GCP.ProjectId,
                     settings.Mail.GcpPubSubTopic)
             pubSubClient <- PublisherClient.CreateAsync(topicName).Result
-            let dsClient = DatastoreDb.Create settings.Mail.GcpProjectId
+            let dsClient = DatastoreDb.Create settings.GCP.ProjectId
 
             let saveEntityFunc =
                 Datastore.saveEntity
@@ -46,7 +46,7 @@ module Program =
             services
                 .AddHttpClient(Http.clientName)
                 .AddOutgoingGoogleTraceHandler().Services
-                .AddGoogleTrace(fun x -> x.ProjectId <- settings.Mail.GcpProjectId)
+                .AddGoogleTrace(fun x -> x.ProjectId <- settings.GCP.ProjectId)
                 .AddSingleton(settings)
                 .AddSingleton<GoogleAnalytics.GetReportFunc>(getReportFunc)
                 .AddSingleton<Messages.SaveFunc>(Messages.save saveEntityFunc publishMsgFunc)
@@ -77,7 +77,7 @@ module Program =
                .UseStaticFiles()
                .UseResponseCompression()
                .UseRouting()
-               .UseGiraffe(WebApp.endpoints settings)
+               .UseGiraffe(Router.endpoints settings)
                .UseGiraffe(HttpHandlers.notFound)
 
     [<EntryPoint>]
