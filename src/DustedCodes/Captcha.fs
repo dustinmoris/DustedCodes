@@ -4,6 +4,7 @@ namespace DustedCodes
 module Captcha =
     open System
     open System.Net
+    open System.Net.Http
     open System.Diagnostics
     open FSharp.Control.Tasks.NonAffine
     open Newtonsoft.Json
@@ -40,7 +41,12 @@ module Captcha =
             UserError "Verification failed. Please try again."
         | _                         -> ServerError (sprintf "Unknown error code: %s" errorCode)
 
-    let validate (log : Log.Func) (siteKey : string) (secretKey : string) (captchaResponse : string) =
+    let validate
+        (log                : Log.Func)
+        (client             : HttpClient)
+        (siteKey            : string)
+        (secretKey          : string)
+        (captchaResponse    : string) =
         task {
             let url = "https://hcaptcha.com/siteverify"
             let data = dict [ "siteKey",  siteKey
@@ -48,7 +54,7 @@ module Captcha =
                               "response", captchaResponse ]
 
             let timer = Stopwatch.StartNew()
-            let! statusCode, body = Http.postAsync url data
+            let! statusCode, body = Http.postAsync client url data
             timer.Stop()
             log Level.Debug (sprintf "Validated captcha in %s" (timer.Elapsed.ToMs()))
 

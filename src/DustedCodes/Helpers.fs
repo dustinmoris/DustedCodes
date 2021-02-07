@@ -57,9 +57,10 @@ module Http =
     open System.Net.Http
     open FSharp.Control.Tasks.NonAffine
 
-    let postAsync (url : string) (data : IDictionary<string, string>) =
+    let clientName = "DefaultOutgoing"
+
+    let postAsync (client : HttpClient) (url : string) (data : IDictionary<string, string>) =
         task {
-            use client    = new HttpClient()
             let content   = new FormUrlEncodedContent(data)
             let! result   = client.PostAsync(url, content)
             let! response = result.Content.ReadAsStringAsync()

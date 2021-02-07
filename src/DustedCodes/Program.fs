@@ -1,8 +1,7 @@
 namespace DustedCodes
 
-open System
-
 module Program =
+    open System
     open Microsoft.AspNetCore.Builder
     open Microsoft.AspNetCore.Hosting
     open Microsoft.Extensions.Hosting
@@ -12,6 +11,8 @@ module Program =
     open Giraffe.EndpointRouting
     open Google.Cloud.Datastore.V1
     open Google.Cloud.PubSub.V1
+    open Google.Cloud.Diagnostics.AspNetCore
+    open Google.Cloud.Diagnostics.Common
 
     let mutable private pubSubClient : PublisherClient = null
 
@@ -43,6 +44,9 @@ module Program =
                 GoogleAnalytics.getMostViewedPagesAsync settings.ThirdParties.AnalyticsKey
 
             services
+                .AddHttpClient(Http.clientName)
+                .AddOutgoingGoogleTraceHandler().Services
+                .AddGoogleTrace(fun x -> x.ProjectId <- settings.Mail.GcpProjectId)
                 .AddSingleton(settings)
                 .AddSingleton<GoogleAnalytics.GetReportFunc>(getReportFunc)
                 .AddSingleton<Messages.SaveFunc>(Messages.save saveEntityFunc publishMsgFunc)
@@ -60,7 +64,8 @@ module Program =
     let configureApp (settings : Config.Settings) =
         fun (app : IApplicationBuilder) ->
             app.UseErrorHandler()
-               .UseGoogleTracing(settings.Web.RequestLogging)
+               .UseGoogleTrace()
+               .UseGoogleRequestLogging(settings.Web.RequestLogging)
                .UseRealIPAddress(settings.Proxy.FwdIPHeaderName, settings.Proxy.ProxyCount)
                .UseTrailingSlashRedirection(settings.Https.HttpsPort)
                .UseHttpsRedirection(

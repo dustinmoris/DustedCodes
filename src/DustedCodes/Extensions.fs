@@ -4,6 +4,7 @@ namespace DustedCodes
 module Extensions =
     open System
     open System.Net
+    open System.Net.Http
     open System.Text
     open System.Collections.Generic
     open System.Security.Cryptography
@@ -12,6 +13,7 @@ module Extensions =
     open Microsoft.AspNetCore.HttpOverrides
     open Microsoft.Extensions.DependencyInjection
     open Sentry.AspNetCore
+    open Giraffe
 
     type TimeSpan with
         member this.ToMs() =
@@ -62,6 +64,25 @@ module Extensions =
             |> String.concat ", "
 
     type HttpContext with
+        member this.SetTrace(traceId : string, spanId : string) =
+            this.Items.Add("traceId", traceId)
+            this.Items.Add("spanId", spanId)
+
+        member this.GetTraceId() =
+            this.Items.["traceId"]
+            |> Option.ofObj
+            |> Option.defaultValue ("" :> obj)
+            |> string
+
+        member this.GetSpanId() =
+            this.Items.["spanId"]
+            |> Option.ofObj
+            |> Option.defaultValue ("" :> obj)
+            |> string
+
+        member this.GetTrace() =
+            sprintf "%s/%s" (this.GetTraceId()) (this.GetSpanId())
+
         member this.SetLogFunc(logFunc: Log.Func) =
             this.Items.Add("logFunc", logFunc)
 
@@ -73,6 +94,17 @@ module Extensions =
             | Some f -> f :?> Log.Func
             | None   -> Log.write Log.consoleFormat [] (Level.Debug) None "" ""
 
+        member this.GetHttpClient
+            (userAgent  : string)
+            (trace      : (string * string) option) =
+            let factory = this.GetService<IHttpClientFactory>()
+            let client  = factory.CreateClient(Http.clientName)
+            client.DefaultRequestHeaders.Add("User-Agent", userAgent)
+            match trace with
+            | None              -> ()
+            | Some (key, value) ->
+                client.DefaultRequestHeaders.Add(key, value)
+            client
 
     type IServiceCollection with
         member this.When(predicate, svcFunc) =

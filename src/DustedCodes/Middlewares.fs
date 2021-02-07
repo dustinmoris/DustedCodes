@@ -73,12 +73,15 @@ module Middlewares =
                                 let logFunc =
                                     Log.write
                                         logFormatter
-                                        []
+                                        [
+                                            "RequestPath", ctx.Request.Path.ToString()
+                                        ]
                                         (Log.parseLevel settings.General.LogLevel)
                                         (Some ctx)
                                         traceId
                                         spanId
 
+                                ctx.SetTrace(traceId, spanId)
                                 ctx.SetLogFunc logFunc
 
                                 let headers =
@@ -107,7 +110,7 @@ module Middlewares =
                                     (sprintf "Request finished in: %s" (timer.Elapsed.ToMs()))
                             })
 
-        member this.UseGoogleTracing = this.UseRequestLogging getGoogleTrace
+        member this.UseGoogleRequestLogging = this.UseRequestLogging getGoogleTrace
 
         member this.UseTrailingSlashRedirection(httpsPort) =
             this.Use(
