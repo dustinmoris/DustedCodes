@@ -71,13 +71,11 @@ module Config =
         {
             ProxyCount        : int
             FwdIPHeaderName   : string
-            TraceIdHeaderName : string
         }
         static member Load() =
             {
                 ProxyCount          = Env.InvariantCulture.typedVarOrDefault "PROXY_COUNT" 2
                 FwdIPHeaderName     = Env.varOrDefault "FORWARDED_IP_HEADER_NAME" "X-Forwarded-For"
-                TraceIdHeaderName   = Env.varOrDefault "TRACE_ID_HEADER_NAME" "X-Trace-Id"
             }
 
     [<RequireQualifiedAccess>]
@@ -119,9 +117,18 @@ module Config =
             }
 
     [<RequireQualifiedAccess>]
+    type GCP =
+        {
+            ProjectId     : string
+        }
+        static member Load() =
+            {
+                ProjectId   = Env.varOrDefault "GCP_PROJECT_ID" ""
+            }
+
+    [<RequireQualifiedAccess>]
     type Mail =
         {
-            GcpProjectId     : string
             GcpDatastoreKind : string
             GcpPubSubTopic   : string
             Domain           : string
@@ -130,7 +137,6 @@ module Config =
         }
         static member Load() =
             {
-                GcpProjectId     = Env.varOrDefault "GCP_PROJECT_ID" ""
                 GcpDatastoreKind = Env.varOrDefault "GCP_DS_CONTACT_MESSAGE_KIND" ""
                 GcpPubSubTopic   = Env.varOrDefault "GCP_PS_EMAILS_TOPIC" ""
                 Domain           = Env.varOrDefault "MAIL_DOMAIN" ""
@@ -165,6 +171,7 @@ module Config =
             Proxy        : Proxy
             Blog         : Blog
             ThirdParties : ThirdParties
+            GCP          : GCP
             Mail         : Mail
             Redis        : Redis
         }
@@ -193,7 +200,6 @@ module Config =
                     "Proxy", dict [
                         "Proxy Count", this.Proxy.ProxyCount.ToString()
                         "Forwarded IP header name", this.Proxy.FwdIPHeaderName
-                        "Trace ID header name", this.Proxy.TraceIdHeaderName
                     ]
                     "Blog", dict [
                         "Blog Title", this.Blog.Title
@@ -210,8 +216,10 @@ module Config =
                         "Captcha site key", this.ThirdParties.CaptchaSiteKey
                         "Captcha secret key", this.ThirdParties.CaptchaSecretKey.ToSecret()
                     ]
+                    "GCP", dict [
+                        "Project ID", this.GCP.ProjectId
+                    ]
                     "Mail", dict [
-                        "GCP Project ID", this.Mail.GcpProjectId
                         "GCP Datastore Kind", this.Mail.GcpDatastoreKind
                         "GCP PubSub Topic", this.Mail.GcpPubSubTopic
                         "Mail Domain", this.Mail.Domain
@@ -268,6 +276,7 @@ module Config =
             Proxy        = Proxy.Load()
             Blog         = Blog.Load()
             ThirdParties = ThirdParties.Load()
+            GCP          = GCP.Load()
             Mail         = Mail.Load()
             Redis        = Redis.Load()
         } : Settings

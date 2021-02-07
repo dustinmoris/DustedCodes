@@ -101,10 +101,7 @@ module HttpHandlers =
 
     let contact (next : HttpFunc) =
         let internalErr =
-            "Unfortunately the message failed to send due to an unexpected error. "
-            + "The website owner has been notified about the issue. "
-            + "Please try a little bit later again."
-            |> Error
+            Error "An unexpected error occurred and the message could not be sent. Please try a little bit later again."
         fun (ctx : HttpContext) ->
             task {
                 let settings = ctx.GetService<Config.Settings>()
@@ -263,53 +260,3 @@ module HttpHandlers =
             let log = ctx.GetLogFunc()
             log Level.Warning "Someone tried to subscribe to the Atom feed."
             ServerErrors.notImplemented (text "Atom feed is not supported at the moment. If you were using Atom to subscribe to this blog before, please file an issue on https://github.com/dustinmoris/DustedCodes to create awareness.") next ctx
-
-[<RequireQualifiedAccess>]
-module WebApp =
-    open System
-    open Microsoft.Extensions.Logging
-    open Giraffe
-    open Giraffe.EndpointRouting
-
-    let endpoints (settings : Config.Settings) : Endpoint list =
-        [
-            GET_HEAD [
-                // Static assets
-                route  UrlPaths.``/logo.svg``   (HttpHandlers.svg Icons.logo)
-                routef "/images/link-%s.svg"    (Icons.link >> HttpHandlers.svg)
-                routef "/bundle.%s.css"         (fun _ -> HttpHandlers.css)
-
-                // Health check
-                route UrlPaths.``/ping``        HttpHandlers.pingPong
-                route UrlPaths.``/version``     HttpHandlers.version
-
-                // Debug
-                if settings.Web.ErrorEndpoint then
-                    route UrlPaths.Debug.``/error`` (warbler (fun _ -> json(1/0)))
-
-                // Content paths
-                route UrlPaths.``/``          HttpHandlers.index
-                route UrlPaths.``/about``     (HttpHandlers.markdown "About.md" (Views.about settings))
-                route UrlPaths.``/hire``      HttpHandlers.hire
-                route UrlPaths.``/trending``  HttpHandlers.trending
-
-                route UrlPaths.``/feed/rss``  HttpHandlers.rssFeed
-                route UrlPaths.``/feed/atom`` HttpHandlers.atomFeed
-
-                // Deprecated URLs kept alive in order to not break
-                // existing links in the world wide web
-                route UrlPaths.Deprecated.``/archive`` HttpHandlers.index
-
-                // Keeping old links still working
-                // (From observing 404 errors in GCP)
-                route
-                    "/demystifying-aspnet-mvc-5-error-pages"
-                    (redirectTo true "/demystifying-aspnet-mvc-5-error-pages-and-error-logging")
-
-                routef UrlPaths.``/tagged/%s`` HttpHandlers.tagged
-                routef UrlPaths.``/%s`` HttpHandlers.blogPost
-            ]
-            POST [
-                route UrlPaths.``/hire`` HttpHandlers.contact
-            ]
-        ]
