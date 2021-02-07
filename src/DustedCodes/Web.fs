@@ -120,10 +120,15 @@ module HttpHandlers =
                 match msg.IsValid with
                 | Error err -> return! respond msg (Error err)
                 | Ok _      ->
+                    let httpClient =
+                        ctx.GetHttpClient
+                            "dusted.codes/captcha-validator"
+                            None
                     let! captchaResult =
                         ctx.Request.Form.["h-captcha-response"].ToString()
                         |> Captcha.validate
                             log
+                            httpClient
                             settings.ThirdParties.CaptchaSiteKey
                             settings.ThirdParties.CaptchaSecretKey
                     match captchaResult with
