@@ -4,8 +4,7 @@ namespace DustedCodes
 module Captcha =
     open System
     open System.Net
-    open System.Net.Http
-    open System.Diagnostics
+    open System.Threading.Tasks
     open FSharp.Control.Tasks.NonAffine
     open Newtonsoft.Json
 
@@ -41,29 +40,24 @@ module Captcha =
             UserError "Verification failed. Please try again."
         | _                         -> ServerError (sprintf "Unknown error code: %s" errorCode)
 
+    type ValidateFunc = string -> string -> string -> Task<CaptchaValidationResult>
+
     let validate
-        (log                : Log.Func)
-        (client             : HttpClient)
+        (postCaptcha        : Http.PostFormFunc)
         (siteKey            : string)
         (secretKey          : string)
         (captchaResponse    : string) =
         task {
-            let url = "https://hcaptcha.com/siteverify"
             let data = dict [ "siteKey",  siteKey
                               "secret",   secretKey
                               "response", captchaResponse ]
-
-            let timer = Stopwatch.StartNew()
-            let! statusCode, body = Http.postAsync client url data
-            timer.Stop()
-            log Level.Debug (sprintf "Validated captcha in %s" (timer.Elapsed.ToMs()))
-
+            let! result = postCaptcha data
             return
-                if not (statusCode.Equals HttpStatusCode.OK)
-                then ServerError body
-                else
-                    let result = JsonConvert.DeserializeObject<CaptchaResult> body
-                    match result.IsValid with
+                match result with
+                | Error err -> ServerError err
+                | Ok json   ->
+                    let captchaResult = JsonConvert.DeserializeObject<CaptchaResult> json
+                    match captchaResult.IsValid with
                     | true  -> Success
-                    | false -> parseError (result.ErrorCodes.[0])
+                    | false -> parseError (captchaResult.ErrorCodes.[0])
         }

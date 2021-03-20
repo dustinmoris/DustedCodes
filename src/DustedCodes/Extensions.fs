@@ -94,18 +94,6 @@ module Extensions =
             | Some f -> f :?> Log.Func
             | None   -> Log.write Log.consoleFormat [] (Level.Debug) None "" ""
 
-        member this.GetHttpClient
-            (userAgent  : string)
-            (trace      : (string * string) option) =
-            let factory = this.GetService<IHttpClientFactory>()
-            let client  = factory.CreateClient(Http.clientName)
-            client.DefaultRequestHeaders.Add("User-Agent", userAgent)
-            match trace with
-            | None              -> ()
-            | Some (key, value) ->
-                client.DefaultRequestHeaders.Add(key, value)
-            client
-
     type IServiceCollection with
         member this.When(predicate, svcFunc) =
             match predicate with

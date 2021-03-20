@@ -338,3 +338,6 @@ ASALocalRun/
 # DotEnv
 .env
 .env.ini
+
+# VS Code
+.devcontainer
