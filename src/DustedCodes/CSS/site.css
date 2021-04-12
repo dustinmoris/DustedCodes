@@ -148,6 +148,37 @@ kbd {
     font-size: .85em;
 }
 
+del {
+    text-decoration: none;
+    position: relative;
+}
+
+del:before {
+    content: ' ';
+    font-size: inherit;
+    display: block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 50%;
+    bottom: 50%;
+    border-top: .075em solid var(--error-bg-color);
+    transform: rotate(10deg);
+}
+
+del:after {
+    content: ' ';
+    font-size: inherit;
+    display: block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 50%;
+    bottom: 50%;
+    border-top: .075em solid var(--error-bg-color);
+    transform: rotate(-10deg);
+}
+
 table {
     display: block;
 }
