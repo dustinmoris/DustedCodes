@@ -1,8 +1,10 @@
 <!--
-    Tags: docker microservices
+    Tags: docker containers microservices
 -->
 
 # You don’t need Docker
+
+<div class="tip"><strong>Note:</strong> In this blog post I use the terms Docker and containers interchangeably. I know that Docker is only one of many container technologies and not always the best suited one (e.g. Kubernetes), but for the purpose of this blog post I don't differentiate between them.</div>
 
 *<span style="font-size: 1.5em;">&bdquo;</span>You don’t need Docker. I started my business on a small server under my desk. It took me more than 10 years before I reached the scale where I needed something like Docker. You’ll be fine for a very long time before you’ll have to worry about it!<span style="font-size: 1.5em;">&ldquo;</span>*
 
@@ -18,13 +20,13 @@ It is true, many successful websites and web applications started without Docker
 
 However, would anyone really want to start a new internet business without these tools today? I don't think so, at least not if they aim for success!
 
-It's easy to forget but when companies like MySpace or Facebook started the world was a very different place. We had no social media (that’s kind of obvious from this example), no iPads and iPhones, no smartwatches, no home speakers, we had no fibre optic cables leading to our homes and we didn’t have mobile broadband either. The aspiration of internet domination wasn’t a thing yet. Even when Facebook already reached huge success they were still only one of many other social networks on the web. We had many individual (often national) versions of something similar to Facebook for a very long time before the world wide web became a little bit less wide again.
+It's easy to forget but when companies like MySpace or Facebook started the world was a very different place. We had no social media (that’s kind of obvious from this example), no iPads and iPhones, no smartwatches, no home speakers, we had no fibre optic cables leading to our homes and we didn’t have mobile broadband either. The aspiration of internet domination wasn’t a thing yet. Even when Facebook already reached huge success they were still only one of many other social networks on the web. We had many individual (often national) versions of something similar to Facebook for a very long time before the world wide web became a little bit less wide again. Internet usage was very different too. [Psy didn't even break YouTube yet](https://www.telegraph.co.uk/technology/news/11272577/How-South-Korean-pop-star-Psy-broke-YouTube.html).
 
 The world, our relationship with the internet and people's expectations were completely different than what they are today.
 
 ### Instant scale was not a threat
 
-Do you remember [online bulletin boards (BBS)](https://en.wikipedia.org/wiki/Bulletin_board_system)? Before Reddit we had many independent self-hosted internet forums. There was a time where there was no WordPress or Medium. The internet started off as a truly decentralised web with many independent websites, blogs, communities and even multiple search engines before Google took over. Internet users didn't congregate in the same places.
+Do you remember [online bulletin boards (BBS)](https://en.wikipedia.org/wiki/Bulletin_board_system)? Before Reddit we had many independent self-hosted internet forums. There was a time where there was no WordPress or Medium. The internet started off as a truly decentralised web with many independent websites, blogs, communities and even multiple search engines before Google took over. Internet users didn't all congregate in the same places then.
 
 **Websites had time to grow**. The danger for an indy blog seeing traffic spikes from 3 users per week to tens of thousands of users in a single day was just not a credible threat. Today it doesn't matter how fringe or unknown a website is, any page could suddenly end up on Hacker News and learn what it means to get the infamous [Hacker News hug of death](https://www.indiehackers.com/post/the-hacker-news-hug-50-000-unique-visitors-in-18-hours-65977e0636). Maybe a few years ago it was possible to delay the thought of scale to a later stage, but today this is not possible if one wants to reap the benefits of sudden success.
 
@@ -48,12 +50,12 @@ We've become so used to the high quality and availability of services that no gl
 
 ### The network effect
 
-Although everyone likes some quick gains, nobody likes to see their business outgrow their own ability of keeping up with demand. **Scale plays a huge part in that realm.** We are so interconnected that unless someone launches a product in a private invite-only group they won't be able to predict (or control) how fast they will grow. The internet has its own mind and nobody knows who will be famous tomorrow and what will go viral today. An innocent tweet, a [short post on Reddit](https://remoteclan.com/s/27ihu5/my_product_scale_went_viral_150_000_views) or a routine launch on Product Hunt can [shift a new startup from 0 to 10,000 users](https://medium.com/@vinayh/0-10-000-users-how-openvid-launched-on-product-hunt-575ff9ecf7a1) in the span of 3 months. That level of virality is insane. Imagine having 10,000 willing customers on your doorstep but they can't get in because someone told you that you won't have to think about scale for a while. Don't become victim of your own success.
+Although everyone likes some quick gains, nobody likes to see their business outgrow their own ability of keeping up with demand. **Scale plays a huge part in that realm.** We are so interconnected that unless someone launches a product in a private invite-only group they won't be able to predict (or control) how fast they will grow. The internet has its own mind and nobody knows who will be famous tomorrow and what will go viral the day after. An innocent tweet, a [short post on Reddit](https://remoteclan.com/s/27ihu5/my_product_scale_went_viral_150_000_views) or a routine launch on Product Hunt can [shift a new startup from 0 to 10,000 users](https://medium.com/@vinayh/0-10-000-users-how-openvid-launched-on-product-hunt-575ff9ecf7a1) in the span of 3 months. That level of virality is insane. Imagine having 10,000 willing customers on your doorstep and they can't sign in because someone told you that you won't have to think about scale for a good while. Don't become a victim of your own success.
 
 ## Do you <del>need</del> want Docker?
 
-Nobody really needs Docker (or containers per se) and I'm not going to claim that containers are the perfect silver bullet solution to all the issues from above, but it remains an incredibly powerful tool which can address many of today's challenges in a very time and cost effective way. Sure there is an upfront investment to be made in learning container technology and putting it into practice, but by no means is it any harder or more time intensive than learning a new CSS framework or the latest flavour of JS. If anything skills like Docker are much more generic and more broadly transferable between tech stacks, programming languages and jobs.
+Nobody really needs Docker (or containers per se) and I'm not going to claim that containers are the perfect silver bullet to all the issues listed above, but it remains an incredibly powerful tool which can address many of today's challenges in a very time and cost effective way. Sure there is an upfront investment to be made in learning container technology and putting it into practice, but by no means is it any harder or more time intensive than learning a new CSS framework or the latest flavour of JS. If anything, skills like Docker are much broader applicable and more transferable between programming languages, tech stacks and jobs.
 
-Containers make builds predictable, it makes deployments reliable and it makes horizontal scaling a breeze. Containers are a great way of providing stable and backwards compatible APIs whilst keeping code complexity low. Containers can reduce infrastructure cost by running multiple applications on the same box. They can accelerate a team's productivity by running different feature branches at the same time and scale testing environments independent of hardware. At last containers make blue green deployments easy and help to keep downtime low.
+Containers make builds predictable, they make deployments reliable and they make horizontal scaling a breeze. Containers are a great way of providing stable and backwards compatible APIs whilst keeping code complexity low. Containers can reduce infrastructure cost by running multiple applications on the same box. They can accelerate a team's productivity by running different feature branches at the same time and launch testing environments independent of hardware. Containers make blue green deployments mainstream and help to keep downtime low.
 
-Therefore, my question is, do you want Docker?
+The question is, why would you not want Docker?
