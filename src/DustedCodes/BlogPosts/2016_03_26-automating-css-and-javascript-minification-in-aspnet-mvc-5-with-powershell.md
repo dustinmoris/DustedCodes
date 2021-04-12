@@ -133,7 +133,7 @@ Go to the &quot;Build Events&quot; dialog and paste the following code into the 
     %windir%\System32\WindowsPowerShell\v1.0\powershell.exe -NoLogo -NonInteractive -Command "$(SolutionDir)MinifyJavaScript.ps1" $(SolutionDir)
 )</code></pre>
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-03-26/26018307816_a33cee7d15_o.png" alt="aspnet-mvc-5-post-build-event-command-line, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-03-26/26018307816_a33cee7d15_o.png" alt="aspnet-mvc-5-post-build-event-command-line, Image by Dustin Moris Gorski">
 
 This code block makes sure that we only execute the PowerShell scripts when the project doesn't build in Debug mode. This is desired because during development we might make frequent changes to the original CSS file and not want to minify the content until we are ready to build in Release mode.
 

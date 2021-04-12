@@ -41,7 +41,7 @@ Let me introduce you to the **6 Sins of .NET**:
 
 If a person sets out to learn C# (like the author from the question above), what do they learn? Is it C# or .NET? The answer is both. C# doesn't exist without .NET and you cannot program .NET without C# (or F# or VB.NET for that matter). This is not a problem in itself, but certainly where some of the issues begin. A new beginner doesn't just learn C# but also has to learn the inner workings of .NET. Things get even more confusing when C# isn't the initial .NET language to learn. Supposedly the loose relationship between .NET languages shouldn't really matter because they compile into IL and become cross compatible. [Except when they don't](https://github.com/dotnet/vblang/issues/300):
 
-[![C# unmanaged constraint language leak](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/csharp-unmanaged-constraint-leak.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/csharp-unmanaged-constraint-leak.png)
+[![C# unmanaged constraint language leak](https://cdn.dusted.codes/images/blog-posts/2020-07-05/csharp-unmanaged-constraint-leak.png)](https://cdn.dusted.codes/images/blog-posts/2020-07-05/csharp-unmanaged-constraint-leak.png)
 
 The [BCL (Base Class Libraries)](https://docs.microsoft.com/en-us/dotnet/standard/framework-libraries#base-class-libraries) provide the foundation for all three languages, yet they are only written in C#. That's not really an issue unless entire features were written with only one language in mind and are extremely cumbersome to use from another. For example, F# still doesn't have [native support for `Task` and `Task<T>`](https://github.com/fsharp/fslang-suggestions/issues/581), converting between `System.Collection.*` classes and F# types is a painful undertaking and F# functions and .NET `Action<T>` objects don't map very well.
 
@@ -51,7 +51,7 @@ Interop issues between those three languages are a big burden on new developers,
 
 Take this [StackOverflow question](https://stackoverflow.com/questions/2570814/when-to-use-abstract-classes) for an example. Nothing which has been described in the accepted (and most upvoted) answer below isn't also true for interfaces with default method implementations today:
 
-[![Abstract class question on StackOverflow](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/abstract-class-question-stack-overflow.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/abstract-class-question-stack-overflow.png)
+[![Abstract class question on StackOverflow](https://cdn.dusted.codes/images/blog-posts/2020-07-05/abstract-class-question-stack-overflow.png)](https://cdn.dusted.codes/images/blog-posts/2020-07-05/abstract-class-question-stack-overflow.png)
 
 Another great example is the growing variety of C# data types. When is it appropriate to create a [data class](https://docs.microsoft.com/en-us/aspnet/web-api/overview/data/using-web-api-with-entity-framework/part-5), an [immutable data class](https://www.c-sharpcorner.com/article/all-about-c-sharp-immutable-classes2/), a [mutable struct](http://mustoverride.com/tuples_structs/), an [immutable struct](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/struct#readonly-struct), a [tuple class](https://docs.microsoft.com/en-us/dotnet/api/system.tuple?view=netcore-3.1), the new concept of [named tuples](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples) or the upcoming [record type](https://www.stevefenton.co.uk/2020/05/csharp-9-record-types/)?
 
@@ -59,31 +59,31 @@ Seasoned .NET developers are very opinionated about when to use each of these ty
 
 The irony is that many of the newly added language and framework features are supposed to make .NET easier to learn:
 
-[![Make .NET easier](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/tweet-dotnet-easier.png)](https://twitter.com/shanselman/status/1281856685657616384)
+[![Make .NET easier](https://cdn.dusted.codes/images/blog-posts/2020-07-05/tweet-dotnet-easier.png)](https://twitter.com/shanselman/status/1281856685657616384)
 
 *(BTW, I have been a huge proponent of dropping the `.csproj` and `.sln` files for a very long time but previously Microsoft employees defended them as if someone offended their family, so it's nice to finally see some support for that idea too! :))*
 
 Don't get me wrong, I agree with Scott that \*this particular feature\* will make writing a first hello world app a lot easier than before, however, our friend Joseph Woodward makes a good point that nothing comes for free:
 
-[![With great power comes great responsibility](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/tweet-dotnet-reboot-3.png)](https://twitter.com/joe_mighty/status/1281899362281566208)
+[![With great power comes great responsibility](https://cdn.dusted.codes/images/blog-posts/2020-07-05/tweet-dotnet-reboot-3.png)](https://twitter.com/joe_mighty/status/1281899362281566208)
 
 And he's not alone with this idea:
 
-[![.NET is hard](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/tweet-dotnet-hard-2.png)](https://twitter.com/buhakmeh/status/1281985930279223298)
+[![.NET is hard](https://cdn.dusted.codes/images/blog-posts/2020-07-05/tweet-dotnet-hard-2.png)](https://twitter.com/buhakmeh/status/1281985930279223298)
 
-[![.NET is hard](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/tweet-dotnet-hard-3.png)](https://twitter.com/FransBouma/status/1282059062247555082)
+[![.NET is hard](https://cdn.dusted.codes/images/blog-posts/2020-07-05/tweet-dotnet-hard-3.png)](https://twitter.com/FransBouma/status/1282059062247555082)
 
 It's not just about learning how to write C#. A huge part of learning .NET is reading other people's code, which is also getting inherently more difficult as a result:
 
-[![.NET is hard](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/tweet-dotnet-hard-4.png)](https://twitter.com/1amjau/status/1281908190167347200)
+[![.NET is hard](https://cdn.dusted.codes/images/blog-posts/2020-07-05/tweet-dotnet-hard-4.png)](https://twitter.com/1amjau/status/1281908190167347200)
 
 Whilst I do like and support the idea of adding more features to C#, I cannot ignore the fact that it also takes its toll.
 
 Some people raised a good point that it might be time to consider making some old features obsolete:
 
-[![.NET is hard](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/tweet-dotnet-reboot-2.png)](https://twitter.com/RustyF/status/1281860368369963008)
+[![.NET is hard](https://cdn.dusted.codes/images/blog-posts/2020-07-05/tweet-dotnet-reboot-2.png)](https://twitter.com/RustyF/status/1281860368369963008)
 
-[![.NET is hard](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/tweet-dotnet-reboot-1.png)](https://twitter.com/RehanSaeedUK/status/1281943982189228032)
+[![.NET is hard](https://cdn.dusted.codes/images/blog-posts/2020-07-05/tweet-dotnet-reboot-1.png)](https://twitter.com/RehanSaeedUK/status/1281943982189228032)
 
 Whatever one's personal opinion is, &quot;feature bloat&quot; is certainly becoming a growing concern in the C# community and Microsoft would be stupid not to listen or at least take some notes.
 
@@ -95,13 +95,13 @@ As mentioned above, all three .NET languages evolve independently from .NET. C# 
 
 Now I understand that all these things are very different and I'm comparing apples with oranges, but how is a new developer supposed to know all of that? All these components are independent and yet correlated enough to overwhelm a new developer with screens like this:
 
-[![.NET Core Versions](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/dotnet-core-versions.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/dotnet-core-versions.png)
+[![.NET Core Versions](https://cdn.dusted.codes/images/blog-posts/2020-07-05/dotnet-core-versions.png)](https://cdn.dusted.codes/images/blog-posts/2020-07-05/dotnet-core-versions.png)
 
 Even .NET developers with 5+ years of experience find the above information hard to digest. I know this for a fact because I ask this question in interviews a lot and it's rare to get a correct explanation. The problem is not that this information is too verbose, or wrong, or unnecessary to know, but rather the unfortunate case that it's just how big .NET has become. In fact it's even bigger but I believe that the .NET team has already tried their best to condense this screen into the simplest form possible. I understand the difficulty - if you've got a very mature and feature rich platform then there's a lot to explain - but nevertheless it's not a particularly sexy look.
 
 In contrast to .NET this is the cognitive load which is thrown at a beginner in Go:
 
-[![Go Versions](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/go-versions.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/go-versions.png)
+[![Go Versions](https://cdn.dusted.codes/images/blog-posts/2020-07-05/go-versions.png)](https://cdn.dusted.codes/images/blog-posts/2020-07-05/go-versions.png)
 
 It's much simpler in every way. Admittedly it's not an entirely fair comparison because Go gets compiled directly into machine code and therefore there isn't a real distinction between SDK and runtime, but my point is still the same. There is certainly plenty of room for improvement and I don't think what we see there today is the best we can do.
 
@@ -111,7 +111,7 @@ Maybe there's some value in officially aligning language, ASP.NET Core and .NET 
 
 Now this one will probably hit some nerves, but one of the \*big\* problems with .NET is that Microsoft is obsessed with the idea of [.NET Everywhere](https://www.hanselman.com/blog/NETEverywhereApparentlyAlsoMeansWindows311AndDOS.aspx). Every [new development](https://visualstudiomagazine.com/articles/2020/06/30/uno-visual-studio.aspx) aims at [unifying everything](https://devblogs.microsoft.com/dotnet/introducing-net-multi-platform-app-ui/) into [one big platform](https://dotnet.microsoft.com/learn/dotnet/what-is-dotnet), catering for [every](https://dotnet.microsoft.com/apps/xamarin/mobile-apps) [single](https://dotnet.microsoft.com/apps/iot) [possible](https://dotnet.microsoft.com/apps/gaming) [use](https://dotnet.microsoft.com/apps/cloud) [case](https://dotnet.microsoft.com/apps/desktop) [imaginable](https://dotnet.microsoft.com/apps/machinelearning-ai):
 
-[![.NET Everywhere](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/dotnet-5-everywhere.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/dotnet-5-everywhere.png)
+[![.NET Everywhere](https://cdn.dusted.codes/images/blog-posts/2020-07-05/dotnet-5-everywhere.png)](https://cdn.dusted.codes/images/blog-posts/2020-07-05/dotnet-5-everywhere.png)
 
 *(Thanks to the courtesy of [Ben Adams](https://twitter.com/ben_a_adams) I've updated the graphic to represent the [full picture of .NET](https://twitter.com/ben_a_adams/status/1286144227819257856). Ben created this image for the purpose of his own blog which you can read on [www.ageofascent.com/blog](https://www.ageofascent.com/blog/).)*
 
@@ -119,7 +119,7 @@ In many ways it makes a lot of sense, but the angle taken is causing more harm t
 
 Unifying the entire stack into a single .NET platform doesn't come without a price. For years things have been constantly moved around, new things have been created and others have been dropped. Only recently I had to re-factor my ASP.NET Core startup code yet again:
 
-[![.NET Core 3.1 - Refactoring web host to generic host](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/dotnet-generic-web-host-builder.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/dotnet-generic-web-host-builder.png)
+[![.NET Core 3.1 - Refactoring web host to generic host](https://cdn.dusted.codes/images/blog-posts/2020-07-05/dotnet-generic-web-host-builder.png)](https://cdn.dusted.codes/images/blog-posts/2020-07-05/dotnet-generic-web-host-builder.png)
 
 Every attempt at unifying things for unification's sake makes simple code more verbose. Without a doubt the previous code was a lot easier to understand. I applaud the concept of a [generic host](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-3.1), but one has to wonder how often does a developer actually want to combine two servers into one? In my opinion there must be a real benefit in order to justify complexity such as having a builder inside another builder! How often does a developer want to \*create\* a web server and not \*run\* it as well? I'm sure these edge cases do exist, but why can't they be hidden from the other 99.9% of use cases which normally take place?
 
@@ -139,13 +139,13 @@ Microsoft's &quot;Swiss Army Knife&quot; approach creates an unnecessary burden 
 
 For example, here's the output of all the default .NET templates which get shipped as part of the .NET CLI (minus the Giraffe one):
 
-[![.NET Project Templates](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/dotnet-new-command.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/dotnet-new-command.png)
+[![.NET Project Templates](https://cdn.dusted.codes/images/blog-posts/2020-07-05/dotnet-new-command.png)](https://cdn.dusted.codes/images/blog-posts/2020-07-05/dotnet-new-command.png)
 
 They barely fit on a single screen. Again, it's great that Microsoft has Blazor as an answer to WASM, or that they have WPF as an option for Windows, but why are these things shipped together as one big ugly thing? Why can't there just be a template for a console app or class library and then some text which explains how to download more? This is a classic example where &quot;.NET Everywhere&quot; is getting into most users' way!
 
 Speaking of fitting things into a single screen...
 
-[![Visual Studio Chaos](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/visual-studio-chaos.png)](https://twitter.com/dylanbeattie/status/832326857798348800)
+[![Visual Studio Chaos](https://cdn.dusted.codes/images/blog-posts/2020-07-05/visual-studio-chaos.png)](https://twitter.com/dylanbeattie/status/832326857798348800)
 
 Whilst the above tweet was comical in nature, it's not far from the truth.
 
@@ -165,13 +165,13 @@ Another problem which I have observed is Microsoft's fear of being ignored. Micr
 
 Microsoft does not miss a single opportunity to advertise a whole range of products when someone just looks at one. Doing .NET development? Oh look, here is Visual Studio which can help you with that! Oh and by the way you can deploy directly to IIS! In case you wonder, IIS comes with Windows Server which also runs in Azure! Aha, speaking of Azure, did you know that you can also click this button which will automatically create a subscription and deploy to the cloud? In case you don't like right-click-publish we also have Azure DevOps, which is a fully featured CI/CD pipeline! Of course there's no pressure, but if you \*do sign up now\* then we'll give you free credits for a month! Anyway, it's just a &quot;friendly reminder&quot; so you know that in theory we offer the full package in case you need it! C'mon look at me, look at me, look at me now!
 
-[![Look at me - Attention seeker](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/look-at-me.gif)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/look-at-me.gif)
+[![Look at me - Attention seeker](https://cdn.dusted.codes/images/blog-posts/2020-07-05/look-at-me.gif)](https://cdn.dusted.codes/images/blog-posts/2020-07-05/look-at-me.gif)
 
 Again, I totally understand why Microsoft does what they do (and I'm sure there's a lot of good intention there), but it comes across the complete wrong and opposite way.
 
 No wonder that the perception of .NET hasn't changed much in the outside world:
 
-[![.NET coming across the wrong way](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/dotnet-microsoft-bloatware.png)](https://twitter.com/blazorguy/status/1279092538490736640)
+[![.NET coming across the wrong way](https://cdn.dusted.codes/images/blog-posts/2020-07-05/dotnet-microsoft-bloatware.png)](https://twitter.com/blazorguy/status/1279092538490736640)
 
 What Microsoft really tries to say is:
 
@@ -185,7 +185,7 @@ On one hand Microsoft wants to create this new brand of an open source, cross pl
 
 The other thing is that [questions and answers like these](https://www.reddit.com/r/csharp/comments/htlgsr/vs_or_vs_code_problem/) need to stop:
 
-[![Visual Studio vs. Visual Studio Code](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/visual-studio-vs-visual-studio-code-question.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/visual-studio-vs-visual-studio-code-question.png)
+[![Visual Studio vs. Visual Studio Code](https://cdn.dusted.codes/images/blog-posts/2020-07-05/visual-studio-vs-visual-studio-code-question.png)](https://cdn.dusted.codes/images/blog-posts/2020-07-05/visual-studio-vs-visual-studio-code-question.png)
 
 This question and particularly the answer are really bad, because they demonstrate that whilst C# and .NET are not necessarily tied to Visual Studio and Windows anymore, they still remain the most viable option to date. This sentiment is not good but unfortunately true. I know from my own experience that the [Visual Studio Code plugin for C#](https://code.visualstudio.com/Docs/languages/csharp) is nowhere near as good as it should be. The same applies to F#. Why is that? It's not that Visual Studio Code is less capable than Visual Studio, but rather a decision by Microsoft to give it a lower priority and a lack of investment. I don't need to use [JetBrains GoLand](https://www.jetbrains.com/go/) in order to be productive in Go, but I have to use [Rider](https://www.jetbrains.com/rider/) for .NET.
 
@@ -193,7 +193,7 @@ Microsoft needs to decouple .NET from everything else and make it a great standa
 
 C#, F# and .NET will always be perceived as a very Microsoft and Windows centric development environment when even the [official .NET documentation](https://docs.microsoft.com/en-us/dotnet/) page confirms a critic's worst fears:
 
-[![.NET Documentation](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/official-dotnet-docs.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/official-dotnet-docs.png)
+[![.NET Documentation](https://cdn.dusted.codes/images/blog-posts/2020-07-05/official-dotnet-docs.png)](https://cdn.dusted.codes/images/blog-posts/2020-07-05/official-dotnet-docs.png)
 
 ### Architecture Break Down
 
@@ -227,7 +227,7 @@ At least Microsoft is consistent with its naming. There's something comical in t
 
 C#, F# and the whole of .NET is a great development platform to code, but it has also become overly complex which is holding new developers back. I've been working with it for many years and mostly enjoyed myself, however I won't lie and say that things haven't gotten a little bit out of hand lately. There is something to tell that after having .NET for 20 years the programming community still hasn't seen anything new or noteworthy since the creation of [stackoverflow.com](https://stackoverflow.com):
 
-[![Famous .NET website question on Quora](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/famous-dotnet-websites.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-07-05/famous-dotnet-websites.png)
+[![Famous .NET website question on Quora](https://cdn.dusted.codes/images/blog-posts/2020-07-05/famous-dotnet-websites.png)](https://cdn.dusted.codes/images/blog-posts/2020-07-05/famous-dotnet-websites.png)
 
 Meanwhile we've seen very prominent products being built with other languages spanning across multiple domains such as developer technologies ([Docker](https://www.docker.com), [Kubernetes](https://kubernetes.io), [Prometheus](https://github.com/prometheus)) to smaller static website generators ([Hugo](https://gohugo.io)) or some of the most successful FinTech startups ([Monzo](https://monzo.com)) in the world.
 

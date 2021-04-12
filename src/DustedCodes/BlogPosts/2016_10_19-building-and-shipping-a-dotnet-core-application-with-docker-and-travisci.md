@@ -24,7 +24,7 @@ cd NetCoreDemo</code></pre>
 
 Inside that folder I can run `dotnet new --type console` to create a new hello world console application:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-10-19/30273420421_c02db77a5e_o.png" alt="dotnet-new-console-app, Image by Dustin Moris Gorski" class="two-third-width">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-10-19/30273420421_c02db77a5e_o.png" alt="dotnet-new-console-app, Image by Dustin Moris Gorski" class="two-third-width">
 
 For a full reference of the `dotnet new` command check out the [official documentation](https://docs.microsoft.com/en-us/dotnet/articles/core/tools/dotnet-new).
 
@@ -32,7 +32,7 @@ If you don't have the .NET Core CLI available you need to install the [.NET Core
 
 After the command has completed I can run `dotnet restore` to restore all dependencies followed by a `dotnet run` which will build and subsequently start the hello world application:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-10-19/30273420621_c451bc8473_o.png" alt="dotnet-restore-and-run, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-10-19/30273420621_c451bc8473_o.png" alt="dotnet-restore-and-run, Image by Dustin Moris Gorski">
 
 This is literally all I had to do to get a simple C# console app running and therefore will stop at this point and move on to the next part where I will set up a build and deployment pipeline in TravisCI.
 
@@ -90,7 +90,7 @@ Here I am essentially calling a second script called `deploy.sh` and passing in 
 
 The `TRAVIS_TAG` variable is a [default environment variable](https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables) which gets set by TravisCI for every build which has been triggered by a tag push and will contain the string value of the tag. `DOCKER_USERNAME` and `DOCKER_PASSWORD` are two custom [environment variables which I have set through the UI](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings) to follow TravisCI's recommendation to keep sensitive data secret:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-10-19/30401215765_13d4f6937d_o.png" alt="travisci-settings-page, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-10-19/30401215765_13d4f6937d_o.png" alt="travisci-settings-page, Image by Dustin Moris Gorski">
 
 Another option would have been to [encrypt environment variables](https://docs.travis-ci.com/user/environment-variables/#Encrypting-environment-variables) in the `.travis.yml` file to keep those values secret. Both options are valid as far as I know and it is up to you which one you prefer.
 
@@ -98,7 +98,7 @@ Another option would have been to [encrypt environment variables](https://docs.t
 
 If you have to store access credentials to 3rd party platforms like a private registry or the official Docker Hub inside TravisCI then it is highly recommended to register a dedicated user for TravisCI and add that user as an additional collaborator to your Docker Hub repository, so that you can easily limit or revoke access when required:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-10-19/30347448781_1f15e0ded6_o.png" alt="docker-hub-collaborators, Image by Dustin Moris Gorski" class="two-third-width">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-10-19/30347448781_1f15e0ded6_o.png" alt="docker-hub-collaborators, Image by Dustin Moris Gorski" class="two-third-width">
 
 After defining the `script` and `deploy` step I am basically done with the `.travis.yml` file.
 

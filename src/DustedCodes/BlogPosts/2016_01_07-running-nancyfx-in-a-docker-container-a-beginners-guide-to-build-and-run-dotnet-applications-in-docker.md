@@ -39,23 +39,23 @@ This leaves the Docker Terminal as the last application and the only thing which
 
 After a successful installation let's run a first Docker command to see if things generally work. When you open the terminal for the first time it will initialize the VM in VirtualBox. This may take a few seconds but eventually you should end up at a screen like this:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/24239896875_d1d6a0bc60_o.png" alt="docker-quickstart-terminal, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/24239896875_d1d6a0bc60_o.png" alt="docker-quickstart-terminal, Image by Dustin Moris Gorski">
 
 You don't have to open Kitematic or VirtualBox to get it running. As I said before, you can happily ignore those two applications, however, if you are curious you can look into VirtualBox and see the VM running as expected:
 
-<p><img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/23872055229_7bb95b3ccb_o.png" alt="oracle-virtualbox-docker-default-vm-details, Image by Dustin Moris Gorski" class="half-width"><img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/23613070973_747be21283_o.png" alt="oracle-virtualbox-docker-default-vm, Image by Dustin Moris Gorski" class="half-width"></p>
+<p><img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/23872055229_7bb95b3ccb_o.png" alt="oracle-virtualbox-docker-default-vm-details, Image by Dustin Moris Gorski" class="half-width"><img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/23613070973_747be21283_o.png" alt="oracle-virtualbox-docker-default-vm, Image by Dustin Moris Gorski" class="half-width"></p>
 
 It's a Linux box loaded from the boot2docker.iso.
 
 Back to the terminal I can now type `docker version` to get some basic version information about the Docker client and server application:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/24131827402_5d6d39cd40_o.png" alt="docker-version, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/24131827402_5d6d39cd40_o.png" alt="docker-version, Image by Dustin Moris Gorski">
 
 With that I am good to go with Docker now.
 
 Maybe one thing which is worth mentioning at this point is the initial message in the Docker Terminal:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/24131827722_fb7851eb06_o.png" alt="docker-host-ip-address, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/24131827722_fb7851eb06_o.png" alt="docker-host-ip-address, Image by Dustin Moris Gorski">
 
 The IP address which is shown in the terminal is the endpoint from where you can reach your application later in this tutorial.
 
@@ -222,7 +222,7 @@ public class IndexModule : NancyModule
 
 If I compile and run the application then I should be able to see the hello world message when visiting [http://localhost:8888](http://localhost:8888) and see the OS version at [http://localhost:8888/os](http://localhost:8888/os):
 
-<p><img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/23613071903_f5f5255aab_o.png" alt="nancy-hello-world-in-browser, Image by Dustin Moris Gorski" class="half-width"><img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/23872053639_939d22a1fa_o.png" alt="nancy-os-version-in-browser, Image by Dustin Moris Gorski" class="half-width"></p>
+<p><img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/23613071903_f5f5255aab_o.png" alt="nancy-hello-world-in-browser, Image by Dustin Moris Gorski" class="half-width"><img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/23872053639_939d22a1fa_o.png" alt="nancy-os-version-in-browser, Image by Dustin Moris Gorski" class="half-width"></p>
 
 ## Running NancyFx in a Docker container
 
@@ -234,15 +234,15 @@ First I need to build a Docker image which will contain the entire application a
 
 It is good practice to add the Dockerfile into your project folder, because it may change when your project changes:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/24157345171_75b2f0c778_o.png" alt="dockerfile-in-project-tree, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/24157345171_75b2f0c778_o.png" alt="dockerfile-in-project-tree, Image by Dustin Moris Gorski">
 
 I also want to include the Dockerfile in the build output, therefore I have to change the &quot;Build Action&quot; setting to &quot;Content&quot; and &quot;Copy to Output Directory&quot; to &quot;Copy always&quot;:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/24157345131_839d132ffa_o.png" alt="dockerfile-properties, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/24157345131_839d132ffa_o.png" alt="dockerfile-properties, Image by Dustin Moris Gorski">
 
 Visual Studio 2015 creates text files with [UTF-8-BOM encoding](http://stackoverflow.com/questions/2223882/whats-different-between-utf-8-and-utf-8-without-bom) by default. This adds an additional (invisible) BOM character at the very beginning of the text file and will cause an error when trying to build an image from the Dockerfile. The easiest way to change this is by opening the file in [Notepad++](https://notepad-plus-plus.org/) and changing the encoding to UTF-8 (without BOM):
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/23611655044_7e9916a8cf_o.png" alt="dockerfile-encoding, Image by Dustin Moris Gorski" class="two-third-width">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/23611655044_7e9916a8cf_o.png" alt="dockerfile-encoding, Image by Dustin Moris Gorski" class="two-third-width">
 
 *You can also [permanently change Visual Studio to save files without BOM](http://stackoverflow.com/questions/5406172/utf-8-without-bom#answer-5411486).*
 
@@ -260,7 +260,7 @@ Fortunately there is already an [official Mono repository](https://hub.docker.co
 
 If you look at the [official Mono repository](https://hub.docker.com/_/mono/) you can see that the latest Mono image has multiple tags:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/24213790396_54b8ec37c9_o.png" alt="mono-latest-image-tag, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/24213790396_54b8ec37c9_o.png" alt="mono-latest-image-tag, Image by Dustin Moris Gorski">
 
 It depends on your use case which tag makes the most sense for your application. Currently they all have been built from the same Dockerfile, but only tag `4.2.1.102` is explicit enough to always guarantee the exact same build. Personally I would chose this one for a production application:
 
@@ -309,7 +309,7 @@ Don't forget the dot at the end. This is the path to the directory which contain
 
 The build process will go through each instruction and create a new layer after executing it. The first time you build an image you are likely not going to have the `mono:4.2.1.102` image on disk and Docker will pull it from the public registry (Docker Hub):
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/23611655124_274479aec6_o.png" alt="docker-build-command, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/23611655124_274479aec6_o.png" alt="docker-build-command, Image by Dustin Moris Gorski">
 
 As you can see the FROM instruction requires Docker to download 6 different images. This is because the `mono:4.2.1.102` image and all of its ancestors (`debian:wheezy`) have 6 instructions in total, which result in 6 layered images.
 
@@ -317,11 +317,11 @@ A better way of visualizing this is by inspecting our own image.
 
 Once the build is complete we can list all available images with the `docker images` command:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/23613072363_d2a56c9f20_o.png" alt="docker-images-command, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/23613072363_d2a56c9f20_o.png" alt="docker-images-command, Image by Dustin Moris Gorski">
 
 With `docker history {image-id}` I can see the entire history of the image, each layer it is made of and the command which is responsible for the layer:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/24213790946_7e34d73f98_o.png" alt="docker-history, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/24213790946_7e34d73f98_o.png" alt="docker-history, Image by Dustin Moris Gorski">
 
 This is quite clever! Anyway, I am getting carried away here, the point is we just created our first Docker image!
 
@@ -338,15 +338,15 @@ The `-d` option tells Docker to run the container in detached mode and the `-p 8
 
 Afterwards you can run `docker ps` to list all currently running containers:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/24213790636_33b4fa1826_o.png" alt="docker-ps, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/24213790636_33b4fa1826_o.png" alt="docker-ps, Image by Dustin Moris Gorski">
 
 Great, now pasting `{docker-ip}:8888` (the IP address from the beginning) into a browser should return the Nancy hello world message:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/23613071903_f5f5255aab_o.png" alt="nancy-hello-world-in-browser-from-docker-container, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/23613071903_f5f5255aab_o.png" alt="nancy-hello-world-in-browser-from-docker-container, Image by Dustin Moris Gorski">
 
 And going to `{docker-ip}:8888/os` should return &quot;Unix 4.1.13.2&quot;:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/23611653874_8f7b112421_o.png" alt="nancy-os-version-in-browser-from-docker-container, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/23611653874_8f7b112421_o.png" alt="nancy-os-version-in-browser-from-docker-container, Image by Dustin Moris Gorski">
 
 This is pretty awesome. With almost no effort we managed to run a Nancy .NET application on Mono in a Docker container!
 
@@ -360,7 +360,7 @@ You can map the Docker IP address to a friendly DNS by editing your Windows host
 
 Now you can type `docker.local:8888` into your browser and get the same result:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/24131827632_efc4fa767a_o.png" alt="docker-local-host-resolution, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/24131827632_efc4fa767a_o.png" alt="docker-local-host-resolution, Image by Dustin Moris Gorski">
 
 ## Configure environment specific settings with Docker
 
@@ -405,11 +405,11 @@ This has many advantages:
 
 After launching the container with the secret setting I can run `docker inspect {container-id}` to load a whole bunch of information on the container. One piece of information is the environment variables which have been loaded for that container:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/24139693382_60ff29cf5f_o.png" alt="docker-inspect-env-vars, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/24139693382_60ff29cf5f_o.png" alt="docker-inspect-env-vars, Image by Dustin Moris Gorski">
 
 Going to [docker.local:8888/secret](http://docker.local:8888/secret) will expose the secret environment variable now:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-01-07/23620903853_fffa6cfb9f_o.png" alt="docker-secret-in-browser, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-01-07/23620903853_fffa6cfb9f_o.png" alt="docker-secret-in-browser, Image by Dustin Moris Gorski">
 
 ## Recap
 

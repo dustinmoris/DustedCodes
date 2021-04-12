@@ -47,15 +47,15 @@ Once signed in you should see a list of available AWS Services. We are going to 
 
 Click on the EC2 link from the menu:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-01/26128609484_430ef48b25_o.png" alt="ec2-menu-item, Image by Dustin Moris Gorski" class="half-width">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-05-01/26128609484_430ef48b25_o.png" alt="ec2-menu-item, Image by Dustin Moris Gorski" class="half-width">
 
 In the top right corner make sure you have selected a US region, because after all we want our proxy to stream US content:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-01/26128609294_e3970caf88_o.png" alt="aws-select-us-region-from-dropdown, Image by Dustin Moris Gorski" class="two-third-width">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-05-01/26128609294_e3970caf88_o.png" alt="aws-select-us-region-from-dropdown, Image by Dustin Moris Gorski" class="two-third-width">
 
 Next click on the **Launch Instance** button:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-01/26131065313_5a8f419d5c_o.png" alt="aws-launch-instance-button, Image by Dustin Moris Gorski" class="two-third-width">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-05-01/26131065313_5a8f419d5c_o.png" alt="aws-launch-instance-button, Image by Dustin Moris Gorski" class="two-third-width">
 
 This opens up a 7-step wizard which will walk you through the configuration of a new EC2 instance. Don't worry, there is not much that needs to be done to get the proxy server up and running.
 
@@ -63,19 +63,19 @@ The first step lets you choose which image (AMI) to use for your new instance. A
 
 For the purpose of the proxy server we don't need anything fancy and therefore can go with the **Ubuntu Server**, which is a free tier eligible Linux distribution:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-01/26128609544_170b6329bf_o.png" alt="aws-ubuntu-free-tier-ami, Image by Dustin Moris Gorski" class="two-third-width">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-05-01/26128609544_170b6329bf_o.png" alt="aws-ubuntu-free-tier-ami, Image by Dustin Moris Gorski" class="two-third-width">
 
 On the next screen you can pick the size of the new instance. If you don't know what this means, think of it like the horse power of your new server.
 
 Again, because we don't need anything fancy we can happily go with the **t2.micro** instance which is free tier eligible:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-01/26131065973_a186d89b6b_o.png" alt="aws-t2-micro-free-tier-instance, Image by Dustin Moris Gorski" class="two-third-width">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-05-01/26131065973_a186d89b6b_o.png" alt="aws-t2-micro-free-tier-instance, Image by Dustin Moris Gorski" class="two-third-width">
 
 Don't click on the *Review and Launch* button yet! Confirm and continue by clicking on the **Next: Configure Instance Details** button.
 
 On the third step there's a bunch of information available, but luckily the default values are exactly what we need and you don't have to change any of them, except one thing. Scroll down to the bottom and expand the **Advanced Details** section by clicking on the little arrow next to it:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-01/26141065614_171cd62fa3_o.png" alt="aws-ec2-instance-advanced-details, Image by Dustin Moris Gorski" class="half-width">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-05-01/26141065614_171cd62fa3_o.png" alt="aws-ec2-instance-advanced-details, Image by Dustin Moris Gorski" class="half-width">
 
 You will be presented with a text field which can be used to specify additional commands which will run when launching the new EC2 instance. We will add a few commands which will automatically install and configure the [Tinyproxy](https://tinyproxy.github.io/) software. Tinyproxy is a [free and open source proxy server](https://github.com/tinyproxy/tinyproxy) for POSIX operating systems.
 
@@ -94,7 +94,7 @@ This is an important step, because by default Tinyproxy does not allow any conne
 
 The end result should look something like this, except with your own IP address:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-01/26721850636_210948911a_o.png" alt="aws-ec2-instance-advanced-details-commands, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-05-01/26721850636_210948911a_o.png" alt="aws-ec2-instance-advanced-details-commands, Image by Dustin Moris Gorski">
 
 Continue by clicking on the **Next: Add Storage** button.
 
@@ -106,7 +106,7 @@ By default the wizard will create a new security group for you and add one rule 
 
 In the drop down select **Custom TCP Rule** and enter port **8888** into the **Port Range** field. Why port 8888? Because this is the default port which Tinyproxy listens to. Under **Source** pick the **Custom IP** option and enter your IP address in the field next to it and append &quot;/32&quot; to the end:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-01/26748041215_4e9e0e1e54_o.png" alt="aws-create-security-group, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-05-01/26748041215_4e9e0e1e54_o.png" alt="aws-create-security-group, Image by Dustin Moris Gorski">
 
 As you can see in the screen shot I also changed the security group name to something more meaningful. Feel free to pick your own name.
 
@@ -116,11 +116,11 @@ Almost done now! The final step is to create a private key pair. The private key
 
 After that you should be able to click the **Launch Instances** button and let Amazon web services do the rest for you:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-01/26475526790_e1c81d8106_o.png" alt="aws-launch-status, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-05-01/26475526790_e1c81d8106_o.png" alt="aws-launch-status, Image by Dustin Moris Gorski">
 
 When you click on the instance id you get redirected back to the EC2 console where you can see your instance being initialized. It may take a few minutes until everthing is ready and once completed you should see the status to be &quot;running&quot; and all status checks to be OK:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-01/26722908526_537699155d_o.png" alt="aws-ec2-instance-status-and-public-ip, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-05-01/26722908526_537699155d_o.png" alt="aws-ec2-instance-status-and-public-ip, Image by Dustin Moris Gorski">
 
 The public IP address that you see with your instance is your new private proxy IP address! Take a note of it, because you will need it in the last step.
 
@@ -143,7 +143,7 @@ Follow these instructions even if you don't use Internet Explorer for browsing t
 5. Enter the IP address of your proxy server and port 8888 into the text fields
 6. Click OK and confirm everything
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-01/26662679492_251ba6a28d_o.png" alt="windows-proxy-settings, Image by Dustin Moris Gorski" class="two-third-width">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-05-01/26662679492_251ba6a28d_o.png" alt="windows-proxy-settings, Image by Dustin Moris Gorski" class="two-third-width">
 
 <h3 id="change-proxy-server-settings-in-android">Change proxy server settings in Android</h3>
 
@@ -156,7 +156,7 @@ Follow these instructions even if you don't use Internet Explorer for browsing t
 7. Type in the IP address of your proxy server into the Proxy hostname field and port 8888 into Proxy port
 8. Save those settings
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-01/26731108956_c9c6772763_o.png" alt="android-proxy-settings, Image by Dustin Moris Gorski" class="half-width">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-05-01/26731108956_c9c6772763_o.png" alt="android-proxy-settings, Image by Dustin Moris Gorski" class="half-width">
 
 <h3 id="change-proxy-server-settings-in-ios">Change proxy server settings in iOS</h3>
 
@@ -167,13 +167,13 @@ Follow these instructions even if you don't use Internet Explorer for browsing t
 5. Type in the IP address of your proxy server into the Server field
 6. Type 8888 into the Port field
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-01/26483815010_8deb9ea5e2_o.png" alt="ios-proxy-settings, Image by Dustin Moris Gorski" class="two-third-width">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-05-01/26483815010_8deb9ea5e2_o.png" alt="ios-proxy-settings, Image by Dustin Moris Gorski" class="two-third-width">
 
 ## Test your connection
 
 Now that everything is set up and running you should be able to stream US content from Netflix, Hulu and many more! A quick test to confirm that your proxy server is successfully running would be to [google your own IP address](https://www.iplocation.net/find-ip-address) and see that your IP appears different, from a US location now:
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-05-01/26664445162_4f4b7a3519_o.png" alt="proxy-server-active, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-05-01/26664445162_4f4b7a3519_o.png" alt="proxy-server-active, Image by Dustin Moris Gorski">
 
 And what shall you do after your first 12 months of free tier eligibility? Well, I'd suggest you sign up a new account under a different email address. It takes only a couple of minutes which you have to invest every 12 months in order to run a free private proxy server. If that is too much effort then you might as well choose to let your server run and pay for its usage. The t2.micro instance costs only [$0.013 per hour](https://aws.amazon.com/ec2/pricing/) which would come down to $9.75 per month if you'd let it run continuously. However, in this case I'd suggest to switch it on and off as you need and reduce your cost to almost nothing.
 

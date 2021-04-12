@@ -53,18 +53,54 @@ module Network =
 
 [<RequireQualifiedAccess>]
 module Http =
-    open System.Collections.Generic
+    open System.Text
     open System.Net.Http
+    open System.Threading
+    open System.Threading.Tasks
+    open System.Collections.Generic
     open FSharp.Control.Tasks.NonAffine
+    open Newtonsoft.Json
 
-    let clientName = "DefaultOutgoing"
+    type PostResult   = Task<Result<string, string>>
+    type PostFormFunc = IDictionary<string, string> -> CancellationToken -> PostResult
+    type PostJsonFunc = obj -> CancellationToken -> PostResult
 
-    let postAsync (client : HttpClient) (url : string) (data : IDictionary<string, string>) =
+    let private postReq
+        (client : HttpClient)
+        (req    : HttpRequestMessage)
+        (ct     : CancellationToken) : PostResult =
         task {
-            let content   = new FormUrlEncodedContent(data)
-            let! result   = client.PostAsync(url, content)
-            let! response = result.Content.ReadAsStringAsync()
-            return (result.StatusCode, response)
+            try
+                let! resp = client.SendAsync(req, ct)
+                let! body = resp.Content.ReadAsStringAsync()
+                return
+                    match resp.IsSuccessStatusCode with
+                    | true  -> Ok body
+                    | false -> Error body
+            with ex ->
+                JsonConvert.SerializeObject(ex, Formatting.Indented) |> System.Console.WriteLine
+                return Error ex.Message
+        }
+
+    let postForm
+        (client : HttpClient)
+        (form   : IDictionary<string, string>)
+        (ct     : CancellationToken) =
+        task {
+            use data = new FormUrlEncodedContent(form)
+            use req  = new HttpRequestMessage(Method = HttpMethod.Post, Content = data)
+            return! postReq client req ct
+        }
+
+    let postJson
+        (client : HttpClient)
+        (data   : obj)
+        (ct     : CancellationToken) =
+        task {
+            let json = JsonConvert.SerializeObject data
+            use data = new StringContent(json, Encoding.UTF8, "application/json")
+            use req  = new HttpRequestMessage(Method = HttpMethod.Post, Content = data)
+            return! postReq client req ct
         }
 
 // ---------------------------------

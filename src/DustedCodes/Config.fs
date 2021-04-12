@@ -129,19 +129,19 @@ module Config =
     [<RequireQualifiedAccess>]
     type Mail =
         {
-            GcpDatastoreKind : string
-            GcpPubSubTopic   : string
+            MailDropEndpoint : string
+            MailDropApiKey   : string
             Domain           : string
             Sender           : string
             Recipient        : string
         }
         static member Load() =
             {
-                GcpDatastoreKind = Env.varOrDefault "GCP_DS_CONTACT_MESSAGE_KIND" ""
-                GcpPubSubTopic   = Env.varOrDefault "GCP_PS_EMAILS_TOPIC" ""
+                MailDropEndpoint = Env.varOrDefault "MAIL_DROP_ENDPOINT" ""
+                MailDropApiKey   = Env.varOrDefault "MAIL_DROP_API_KEY" ""
                 Domain           = Env.varOrDefault "MAIL_DOMAIN" ""
                 Sender           = Env.varOrDefault "MAIL_SENDER" ""
-                Recipient        = Env.varOrDefault "CONTACT_MESSAGES_RECIPIENT" ""
+                Recipient        = Env.varOrDefault "MAIL_RECIPIENT" ""
             }
 
     [<RequireQualifiedAccess>]
@@ -220,8 +220,8 @@ module Config =
                         "Project ID", this.GCP.ProjectId
                     ]
                     "Mail", dict [
-                        "GCP Datastore Kind", this.Mail.GcpDatastoreKind
-                        "GCP PubSub Topic", this.Mail.GcpPubSubTopic
+                        "MailDrop Endpoint", this.Mail.MailDropEndpoint
+                        "MailDrop API Key", (this.Mail.MailDropApiKey.ToSecret())
                         "Mail Domain", this.Mail.Domain
                         "Mail Sender", this.Mail.Sender
                         "Mail Recipient", this.Mail.Recipient
