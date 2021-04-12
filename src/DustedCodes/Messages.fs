@@ -4,6 +4,7 @@ namespace DustedCodes
 module Messages =
     open System
     open System.Collections.Generic
+    open System.Threading
     open System.Threading.Tasks
     open FSharp.Control.Tasks.NonAffine
 
@@ -71,7 +72,7 @@ module Messages =
                     ]
             } : Request
 
-    type SaveFunc = Log.Func -> ContactMsg -> Task<Result<string, string>>
+    type SaveFunc = Log.Func -> ContactMsg -> CancellationToken -> Task<Result<string, string>>
 
     let save
         (postJson   : Http.PostJsonFunc)
@@ -79,10 +80,10 @@ module Messages =
         (domain     : string)
         (sender     : string)
         (recipient  : string) =
-        fun (log : Log.Func) (msg : ContactMsg) ->
+        fun (log : Log.Func) (msg : ContactMsg) (ct : CancellationToken) ->
             task {
                 let data = msg.ToRequest envName domain sender recipient
-                let! result = postJson data
+                let! result = postJson data ct
                 return
                     match result with
                     | Ok _    -> Ok "Thank you, your message has been successfully sent!"

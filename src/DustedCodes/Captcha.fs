@@ -4,6 +4,7 @@ namespace DustedCodes
 module Captcha =
     open System
     open System.Net
+    open System.Threading
     open System.Threading.Tasks
     open FSharp.Control.Tasks.NonAffine
     open Newtonsoft.Json
@@ -40,18 +41,19 @@ module Captcha =
             UserError "Verification failed. Please try again."
         | _                         -> ServerError (sprintf "Unknown error code: %s" errorCode)
 
-    type ValidateFunc = string -> string -> string -> Task<CaptchaValidationResult>
+    type ValidateFunc = string -> string -> string -> CancellationToken -> Task<CaptchaValidationResult>
 
     let validate
         (postCaptcha        : Http.PostFormFunc)
         (siteKey            : string)
         (secretKey          : string)
-        (captchaResponse    : string) =
+        (captchaResponse    : string)
+        (ct                 : CancellationToken) =
         task {
             let data = dict [ "siteKey",  siteKey
                               "secret",   secretKey
                               "response", captchaResponse ]
-            let! result = postCaptcha data
+            let! result = postCaptcha data ct
             return
                 match result with
                 | Error err -> ServerError err

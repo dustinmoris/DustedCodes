@@ -55,19 +55,23 @@ module Network =
 module Http =
     open System.Text
     open System.Net.Http
+    open System.Threading
     open System.Threading.Tasks
     open System.Collections.Generic
     open FSharp.Control.Tasks.NonAffine
     open Newtonsoft.Json
 
     type PostResult   = Task<Result<string, string>>
-    type PostFormFunc = IDictionary<string, string> -> PostResult
-    type PostJsonFunc = obj -> PostResult
+    type PostFormFunc = IDictionary<string, string> -> CancellationToken -> PostResult
+    type PostJsonFunc = obj -> CancellationToken -> PostResult
 
-    let private postReq (client : HttpClient) (req : HttpRequestMessage) : PostResult =
+    let private postReq
+        (client : HttpClient)
+        (req    : HttpRequestMessage)
+        (ct     : CancellationToken) : PostResult =
         task {
             try
-                let! resp = client.SendAsync req
+                let! resp = client.SendAsync(req, ct)
                 let! body = resp.Content.ReadAsStringAsync()
                 return
                     match resp.IsSuccessStatusCode with
@@ -78,19 +82,25 @@ module Http =
                 return Error ex.Message
         }
 
-    let postForm (client : HttpClient) (form : IDictionary<string, string>) =
+    let postForm
+        (client : HttpClient)
+        (form   : IDictionary<string, string>)
+        (ct     : CancellationToken) =
         task {
             use data = new FormUrlEncodedContent(form)
             use req  = new HttpRequestMessage(Method = HttpMethod.Post, Content = data)
-            return! postReq client req
+            return! postReq client req ct
         }
 
-    let postJson (client : HttpClient) (data : obj) =
+    let postJson
+        (client : HttpClient)
+        (data   : obj)
+        (ct     : CancellationToken) =
         task {
             let json = JsonConvert.SerializeObject data
             use data = new StringContent(json, Encoding.UTF8, "application/json")
             use req  = new HttpRequestMessage(Method = HttpMethod.Post, Content = data)
-            return! postReq client req
+            return! postReq client req ct
         }
 
 // ---------------------------------

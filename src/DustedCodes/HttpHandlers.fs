@@ -117,12 +117,14 @@ module HttpHandlers =
                 match msg.IsValid with
                 | Error err -> return! respond msg (Error err)
                 | Ok _      ->
+                    let captchaResponse = ctx.Request.Form.["h-captcha-response"].ToString()
                     let validateCaptcha = ctx.GetService<Captcha.ValidateFunc>()
                     let! captchaResult =
-                        ctx.Request.Form.["h-captcha-response"].ToString()
-                        |> validateCaptcha
+                        validateCaptcha
                             settings.ThirdParties.CaptchaSiteKey
                             settings.ThirdParties.CaptchaSecretKey
+                            captchaResponse
+                            ctx.RequestAborted
                     match captchaResult with
                     | Captcha.ServerError err ->
                         log Level.Critical
@@ -132,7 +134,7 @@ module HttpHandlers =
                     | Captcha.Success ->
                         let saveMsg = ctx.GetService<Messages.SaveFunc>()
                         let timer = Stopwatch.StartNew()
-                        let! result = saveMsg log msg
+                        let! result = saveMsg log msg ctx.RequestAborted
                         timer.Stop()
                         log Level.Debug (sprintf "Sent message in %s" (timer.Elapsed.ToMs()))
                         match result with
