@@ -31,7 +31,7 @@ sudo docker run -p 8080:8888 dustinmoris/docker-demo-nancy:0.2.0
 
 At the end of the script I added a `docker run` command to auto start the container which runs my application under test. Replace this with your own container when launching the instance.
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-09-27/29654177530_6e5a15a96d_o.png" alt="aws-launch-ec2-advanced-details, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-09-27/29654177530_6e5a15a96d_o.png" alt="aws-launch-ec2-advanced-details, Image by Dustin Moris Gorski">
 
 Simply click through the rest of the wizard and a few minutes later you should be having a running Ubuntu VM with Docker and your application container running inside it.
 
@@ -86,11 +86,11 @@ Once completed you can use the new key file with the PuTTY SSH client to remote 
 7. Type in a memorable name into the &quot;Saved Sessions&quot; field and click &quot;Save&quot;
 8. Finally click on the &quot;Open&quot; button and connect to the VM
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-09-27/29322755824_be4874c21b_o.png" alt="putty-save-session, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-09-27/29322755824_be4874c21b_o.png" alt="putty-save-session, Image by Dustin Moris Gorski">
 
 At this point you should be presented with a terminal window and being connected to the JMeter EC2 instance.
 
-<img src="https://storage.googleapis.com/dusted-codes/images/blog-posts/2016-09-27/29949798345_8da765d601_o.png" alt="putty-ssh-terminal, Image by Dustin Moris Gorski">
+<img src="https://cdn.dusted.codes/images/blog-posts/2016-09-27/29949798345_8da765d601_o.png" alt="putty-ssh-terminal, Image by Dustin Moris Gorski">
 
 ### Upload a JMeter test file to the VM
 

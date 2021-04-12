@@ -4,7 +4,7 @@
 
 # GitHub Actions for .NET Core NuGet packages
 
-Last weekend I migrated the [Giraffe web framework](https://github.com/giraffe-fsharp/Giraffe) from [AppVeyor](https://www.appveyor.com) to [GitHub Actions](https://github.com/features/actions). It proved to be incredibly easy to do so despite me having some very specific requirements on how I wanted the final solution to work and that it should be flexible enough to apply to all my other projects too. Even though it was mostly a very straight forward job, there were a few things which I learned along the way which I thought would be worth sharing! 
+Last weekend I migrated the [Giraffe web framework](https://github.com/giraffe-fsharp/Giraffe) from [AppVeyor](https://www.appveyor.com) to [GitHub Actions](https://github.com/features/actions). It proved to be incredibly easy to do so despite me having some very specific requirements on how I wanted the final solution to work and that it should be flexible enough to apply to all my other projects too. Even though it was mostly a very straight forward job, there were a few things which I learned along the way which I thought would be worth sharing!
 
 Here's a quick summary of what I did, why I did it and most importantly how you can apply the same GitHub workflow to your own .NET Core NuGet project as well!
 
@@ -35,9 +35,9 @@ On this premise I decided that each commit, regardless if it happened on a `feat
 
 In GitHub, under **Settings** and then **Branches**, one can set up [branch protection rules](https://help.github.com/en/github/administering-a-repository/configuring-protected-branches) for a repository:
 
-[![GitHub Branch Protection Rules](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/github-branch-protection-rules.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/github-branch-protection-rules.png)
+[![GitHub Branch Protection Rules](https://cdn.dusted.codes/images/blog-posts/2020-06-28/github-branch-protection-rules.png)](https://cdn.dusted.codes/images/blog-posts/2020-06-28/github-branch-protection-rules.png)
 
-*Note that the available CI options get automatically updated whenever a CI pipeline is executed and therefore might not show up before the first workflow run has completed.* 
+*Note that the available CI options get automatically updated whenever a CI pipeline is executed and therefore might not show up before the first workflow run has completed.*
 
 We can configure a GitHub Action to trigger builds for commits and pull requests on all branches by providing the `push` and `pull_request` option and leaving the branch definitions blank:
 
@@ -45,7 +45,7 @@ We can configure a GitHub Action to trigger builds for commits and pull requests
 on:
   push:
   pull_request:
-```   
+```
 
 ### Test on Linux, macOS and Windows
 
@@ -60,15 +60,15 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-``` 
+```
 
 In this example I've named the &quot;build&quot; job `build`, which is an arbitrary value and can be changed to anything a user wants.
 
 ### Create build artifacts
 
-A build artifact is downloadable output which can be created and collected on each CI run. It can be anything from a single file to an entire folder full of binaries. In the case of a .NET Core NuGet library it is a very useful feature to create a super early version of a NuGet package as soon as a build has finished: 
+A build artifact is downloadable output which can be created and collected on each CI run. It can be anything from a single file to an entire folder full of binaries. In the case of a .NET Core NuGet library it is a very useful feature to create a super early version of a NuGet package as soon as a build has finished:
 
-[![GitHub Action Build Artifacts](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/github-build-artifacts.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/github-build-artifacts.png)
+[![GitHub Action Build Artifacts](https://cdn.dusted.codes/images/blog-posts/2020-06-28/github-build-artifacts.png)](https://cdn.dusted.codes/images/blog-posts/2020-06-28/github-build-artifacts.png)
 
 In combination with pull request triggers this is a super handy way of giving OSS contributors and OSS maintainers an easy way of downloading and testing a NuGet package as part of a PR.
 
@@ -95,7 +95,7 @@ jobs:
         with:
           name: nupkg
           path: ./src/${{ env.PROJECT_NAME }}/bin/Release/*.nupkg
-```  
+```
 
 In the example above I'm using the pre-defined `GITHUB_RUN_ID` environment variable to specify the NuGet package version and a custom defined environment variable called `PROJECT_NAME` to specify which .NET Core project to pack and publish as an artifact. This has the benefit that the same GitHub workflow definition can be used across multiple projects with very minimal initial setup.
 
@@ -103,7 +103,7 @@ One might have also noticed that I used a wildcard definition for the project fi
 
 Lastly I had to use the version 2 (`@v2`) of the `upload-artifact` action in order to use wildcard definitions in the artifact's `path` specification. If you run into a &quot;missing file&quot; error when trying to upload an artifact then make sure that you're using the latest version of this action. Before version 2 wildcards were not supported yet.
 
-On another note, the `if: matrix.os == 'ubuntu-latest'` condition as part of the `Pack` and `Upload Artifact` steps has no special purpose except limiting the artifact upload to a single run from the previously defined build matrix. A single artifact upload is sufficient (the NuGet package doesn't change based on the environment where it has been packed) and therefore I simply chose `ubuntu-latest` because Ubuntu happens to be the fastest executing environment and therefore helps to keep the overall build time as low as possible. Windows workers seem to take generally longer to start than macOS or Ubuntu. 
+On another note, the `if: matrix.os == 'ubuntu-latest'` condition as part of the `Pack` and `Upload Artifact` steps has no special purpose except limiting the artifact upload to a single run from the previously defined build matrix. A single artifact upload is sufficient (the NuGet package doesn't change based on the environment where it has been packed) and therefore I simply chose `ubuntu-latest` because Ubuntu happens to be the fastest executing environment and therefore helps to keep the overall build time as low as possible. Windows workers seem to take generally longer to start than macOS or Ubuntu.
 
 ### Push nightly releases to GitHub packages
 
@@ -181,11 +181,11 @@ Now one might wonder why I used a `curl` command to interact with GitHub's HTTP 
 
 If everything went to plan then the NuGet packages will get uploaded to the user's or organisation's own GitHub packages feed:
 
-[![GitHub Packages Feed](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/github-packages-feed.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/github-packages-feed.png)
+[![GitHub Packages Feed](https://cdn.dusted.codes/images/blog-posts/2020-06-28/github-packages-feed.png)](https://cdn.dusted.codes/images/blog-posts/2020-06-28/github-packages-feed.png)
 
 The packages are tagged with the `GITHUB_RUN_ID` (unless it was a GitHub release):
 
-[![GitHub package versions](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/github-package-versions.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/github-package-versions.png)
+[![GitHub package versions](https://cdn.dusted.codes/images/blog-posts/2020-06-28/github-package-versions.png)](https://cdn.dusted.codes/images/blog-posts/2020-06-28/github-package-versions.png)
 
 This is by design. It makes it very easy to associate a certain package version to a specific nightly run. It also makes it very obvious that a package version is a nightly build and not an official release and it's easy to know when a newer version is available since the `GITHUB_RUN_ID` is an incremental counter.
 
@@ -193,7 +193,7 @@ This is by design. It makes it very easy to associate a certain package version 
 
 GitHub has a wonderful [concept of releases](https://help.github.com/en/github/administering-a-repository/about-releases), which is an extra layer on top of git tags and which provide a nice UI to create, manage and view a release:
 
-[![GitHub Release](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/github-view-release.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/github-view-release.png)
+[![GitHub Release](https://cdn.dusted.codes/images/blog-posts/2020-06-28/github-view-release.png)](https://cdn.dusted.codes/images/blog-posts/2020-06-28/github-view-release.png)
 
 Personally I like to use GitHub releases as a formal and conscious step to create, document and publish a NuGet package. For that reason I've added the `release` option as an additional CI trigger:
 
@@ -277,7 +277,7 @@ arrTag[1]: tags
 arrTag[2]: v1.2.3
 ```
 
-The next couple lines grab the version tag from the third array element (second index) and later strip the leading `v` character from the value: 
+The next couple lines grab the version tag from the third array element (second index) and later strip the leading `v` character from the value:
 
 ```
 VERSION="${arrTag[2]}"
@@ -292,7 +292,7 @@ In the end the `VERSION` variable holds the correct release version of the immin
 dotnet pack -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -o nupkg src/$PROJECT_NAME/$PROJECT_NAME.*proj
 ```
 
-This is a very effective way of correctly versioning NuGet releases and keeping them automatically synced with GitHub releases (or manual git tags). It also enforces that a release can only happen when a proper git tag has been created.  
+This is a very effective way of correctly versioning NuGet releases and keeping them automatically synced with GitHub releases (or manual git tags). It also enforces that a release can only happen when a proper git tag has been created.
 
 ### Speed
 
@@ -341,7 +341,7 @@ Running `bash` scripts is significantly faster than running PowerShell (`pwsh`),
 
 Overall these micro improvements mean that an incoming pull request takes approximately two minutes to successfully build against the entire build matrix and produce a NuGet artifact as well:
 
-[![GitHub Action Build time for Giraffe](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/github-action-run-time.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/github-action-run-time.png)
+[![GitHub Action Build time for Giraffe](https://cdn.dusted.codes/images/blog-posts/2020-06-28/github-action-run-time.png)](https://cdn.dusted.codes/images/blog-posts/2020-06-28/github-action-run-time.png)
 
 ## Environment Variables
 
@@ -385,7 +385,7 @@ The `GITHUB_FEED` variable is a convenience pointer to the user's or organisatio
 
 Finally the `NUGET_FEED` variable points towards the official NuGet gallery and the `NUGET_KEY` variable receives a private secret which must be set up manually either at the project or organisation level of the GitHub repository:
 
-[![GitHub Secrets](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/github-secrets.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/github-secrets.png)
+[![GitHub Secrets](https://cdn.dusted.codes/images/blog-posts/2020-06-28/github-secrets.png)](https://cdn.dusted.codes/images/blog-posts/2020-06-28/github-secrets.png)
 
 I configured the `NUGET_KEY` as an organisation wide secret, which means I don't have to set up any additional secrets for each repository any more.
 
@@ -395,7 +395,7 @@ If this rings your security bells then you are not entirely wrong. If you wonder
 
 The value for the `NUGET_KEY` secret has to be generated on [www.nuget.org](https://www.nuget.org):
 
-[![NuGet API Key](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/nuget-key.png)](https://storage.googleapis.com/dusted-codes/images/blog-posts/2020-06-28/nuget-key.png)
+[![NuGet API Key](https://cdn.dusted.codes/images/blog-posts/2020-06-28/nuget-key.png)](https://cdn.dusted.codes/images/blog-posts/2020-06-28/nuget-key.png)
 
 ## The End Result
 
