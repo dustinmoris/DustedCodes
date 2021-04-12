@@ -162,6 +162,7 @@ module BlogPosts =
     let private getAllBlogPostsFromDisk (blogPostsPath : string) =
         blogPostsPath
         |> Directory.GetFiles
+        |> Array.filter (fun f -> f.EndsWith ".md")
         |> Array.map parseBlogPost
         |> Array.fold (fun (blogPosts, errors) result ->
             match result with
