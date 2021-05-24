@@ -53,11 +53,11 @@ C# is a C-like object oriented language which first borrowed a lot of its early 
 
 <div class="tip"><p><strong>Fun fact:</strong> Initially C# was developed under the name &quot;Cool&quot; which stood for <strong>C</strong>-like <strong>O</strong>bject <strong>O</strong>riented <strong>L</strong>anguage but then was renamed to C# for trademark reasons.</p></div>
 
-A few years after .NET's initial release Microsoft Research developed a completely new language called F#. Unlike C# and VB.NET "F-Sharp" was designed as a functional first multi paradigm language which took a lot of inspiration from Ocaml, Erlang, Python, Haskell and Scala at the time. For many years F# has been the leading source of inspiration for new features in C# and was the first .NET language to introduce features such as Linq, Async and pretty much all of the new features starting from C# 7 and onwards. It was also the first language to go open source before all of .NET became public.
+A few years after .NET's initial release Microsoft Research and [Don Syme](https://twitter.com/dsyme) developed a completely new language called F#. Unlike C# and VB.NET "F-Sharp" was designed as a functional first multi paradigm language which took a lot of inspiration from Ocaml, Erlang, Python, Haskell and Scala at the time. For many years F# has been the leading source of inspiration for new features in C# and was the first .NET language to introduce features such as Linq, Async and pretty much all of the new features starting from C# 7 and onwards. It was also the first language to go open source before all of .NET became public.
 
-All three programming languages are [statically typed languages](https://en.wikipedia.org/wiki/Type_system#Static_and_dynamic_type_checking_in_practice) which means that the compiler will provide type safety checks during development and compilation. Those type safety checks can prevent many hard to catch runtime errors which could occur otherwise.
+All three programming languages are [statically typed languages](https://en.wikipedia.org/wiki/Type_system#Static_and_dynamic_type_checking_in_practice) which means that the compiler will provide type safety checks during development and compilation. Those type safety checks can prevent many hard to catch runtime errors which could otherwise occur.
 
-The opposite to a statically typed language is a dynamic one. Famous examples of dynamic languages are Python or JavaScript. For example, in C# one cannot accidentally assign a string value to a float variable but in JavaScript this would be perfectly fine.
+The opposite to a statically typed language is a dynamic one. Famous examples of dynamic languages are Python or JavaScript. For example, in C# one cannot accidentally assign a string value to a float variable but in JavaScript this would be totally fine.
 
 <div class="tip"><p><strong>Note:</strong> C# has the <code>dynamic</code> keyword which allows a developer to introduce dynamic behaviour into the language, but it remains an extremely rarely used feature which has been mostly reserved to excpeptional cases where interop with other systems is required.</p></div>
 
@@ -75,7 +75,7 @@ At this point this might sound a little bit confusing but it will become much cl
 
 ### SDK and Runtime (CLR)
 
-Software programmers write applications with the help of very high level languages which have human readable constructs such as `if`, `else`, `return`, `while`, `foreach`, `public`, `private` and so on. Of course this is not how a binary machine works and therefore every application code which was written in a high level programming language must get translated into native machine code at some stage in its life. We can broadly characterise a programming language into "**compiled**" and "**interpreted**" languages and "**managed**" and "**unmanaged**" code.
+Software programmers write applications with the help of very high level languages which have human readable constructs such as `if`, `else`, `return`, `while`, `foreach`, `public`, `private` and so on. Of course this is not how a binary machine works and therefore every application code which was written in a high level programming language must get translated into native machine code at some point in time. We can broadly characterise a programming language into "**compiled**" and "**interpreted**" languages and "**managed**" and "**unmanaged**" code.
 
 #### Compiled vs. Interpreted
 
@@ -87,7 +87,7 @@ In contrast a compiled language does all of the compilation work (or parts of it
 
 The important take away is to understand why .NET has `.dll` files and that .NET requires a runtime to do the final compilation from IL code to machine code with the help of the JIT. This runtime is called the "CLR" (common language runtime) in .NET.
 
-<div class="tip"><p><strong>Fun fact:</strong> The source code compiler for C# and VB.NET is called "Roslyn", whereas <a href="https://github.com/dotnet/fsharp/blob/main/docs/compiler-guide.md" target="_blank">F# has its own compiler</a> called the <code>Fsharp.Compiler.Service</code> and a console application called <code>fsc</code> (fsharp compiler) which can be used to invoke the <code>FSharp.Compiler.Service</code> from the command line.</p></div>
+<div class="tip"><p><strong>Fun fact:</strong> The source code compiler for C# and VB.NET is called <a href="https://github.com/dotnet/roslyn" target="_blank">Roslyn</a>, whereas <a href="https://github.com/dotnet/fsharp/blob/main/docs/compiler-guide.md" target="_blank">F# has its own compiler</a> called the <code>Fsharp.Compiler.Service</code> and a console application called <code>fsc</code> (fsharp compiler) which can be used to invoke the <code>FSharp.Compiler.Service</code> from the command line.</p></div>
 
 #### Managed vs. Unmanaged
 
@@ -114,7 +114,7 @@ Another point which becomes very clear from the download page above is the loose
 
 A careful observer might have also noticed the disparity between the .NET version, the .NET SDK and the .NET runtime. The official .NET version normally refers to the .NET runtime version, because that is essentially the final execution runtime which needs to be installed on a machine. The SDK can have a different version because the development tool chain can improve faster than the runtime itself and support new features and better development workflows whilst still targeting the same version of .NET.
 
-<div class="tip"><p><strong>Side note:</strong> Not every programming language requires an SDK and runtime. For example languages such as <a href="https://www.rust-lang.org" target="_blank">Rust</a> or <a href="https://golang.org" target="_blank">Go</a>, which directly compile into native machine code, don't require a runtime. These languages only have a <a href="https://golang.org/dl/" target="_blank">single download option</a> available which normally represents the SDK for building software. Coming from one of these languges can make .NET feel unusual, but in essence .NET is not any different from for example Java, which also has the JDK (Java Development Kit) for building software and the JRE (Java Runtime Environment) for running it.</p></div>
+<div class="tip"><p><strong>Side note:</strong> Not every programming language requires an SDK and runtime. For example languages such as <a href="https://www.rust-lang.org" target="_blank">Rust</a> or <a href="https://golang.org" target="_blank">Go</a>, which directly compile into native machine code, don't require a runtime. These languages only have a <a href="https://golang.org/dl/" target="_blank">single download option</a> available which normally represents the SDK for building software. Coming from one of these languges can make .NET feel unusual, but in essence .NET is not any different than for example Java, which also has the JDK (Java Development Kit) for building software and the JRE (Java Runtime Environment) for running it.</p></div>
 
 #### Summary of .NET components
 
@@ -164,7 +164,7 @@ Even though .NET Framework, .NET Core and Mono are officially labelled as "frame
 
 The original .NET Framework is what most people think of when they have negative connotations towards .NET. It was tightly coupled to Windows, the CLR could only run on Windows or Windows Server with IIS, it required Visual Studio to develop on it and it had absolutely no cross platform support. It was also relatively slow in execution and slow to evolve.
 
-Overall it worked well on Windows but started to increasingly lack capabilities to meet modern software development demands. 
+Overall it worked well on Windows but started to increasingly lack capabilities and meet modern software development demands. 
 
 ## What is Mono?
 
@@ -230,7 +230,7 @@ ASP.NET Core is the future of web in .NET and often forms the baseline library f
 
 In addition there are also .NET web frameworks which don't require ASP.NET Core at all. Famous examples of standalone web frameworks are [WebSharper](https://websharper.com) or [Suave](https://suave.io).
 
-Last but not least ASP.NET Core can also be used completely on its own in a more bare metal approach. It is a very popular choice and something which the ASP.NET Core team is currently focused on and will probably evangelise in the future more.
+Last but not least ASP.NET Core can also be used completely on its own in a more bare metal approach. It is a very popular choice and something which the ASP.NET Core team is currently focused on and will probably evangelise more in the future.
 
 ## Where do I start?
 
@@ -244,7 +244,7 @@ The easiest way to get started is by creating a simple console application:
 dotnet new console
 ```
 
-If someone wants to jump straight into web development I'd recommend to begin with an empty ASP.NET Core application:
+If someone wants to jump straight into web development then I'd recommend to begin with an empty ASP.NET Core application:
 
 ```
 dotnet new web
@@ -252,7 +252,7 @@ dotnet new web
 
 This is a good starting point to slowly explore ASP.NET Core as a whole and learn about the architecture of the framework and how to compose bigger applications.
 
-A great resource to learn ASP.NET Core and find out about different project styles is [practical-aspnetcore](https://github.com/dodyg/practical-aspnetcore).
+A great resource to learn ASP.NET Core and find out about different project types is [practical-aspnetcore](https://github.com/dodyg/practical-aspnetcore). Another fantastic resource is [The Little ASP.NET Core Book](https://recaffeinate.co/book/), a short free e-book to help people learn about ASP.NET Core! 
 
 ## Who is dotnet-bot?
 
@@ -270,7 +270,7 @@ Just think of all the certifications alone!
 
 ![Laughing at my own joke ;)](https://cdn.dusted.codes/images/blog-posts/2021-05-06/joke.gif)
 
-Jokes aside, there is no real reason. Someone at Microsoft probably really likes .NET as a name and because they are boss everything will remain and continue to be .NET until they eventually retire :)
+Jokes aside, there is no real reason why everything is called something .NET. Someone at Microsoft probably really likes the name .NET and because they are boss everything will remain and continue to be .NET until they eventually retire :)
 
 ## Useful links
 
