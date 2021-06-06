@@ -164,7 +164,7 @@ Even though .NET Framework, .NET Core and Mono are officially labelled as "frame
 
 The original .NET Framework is what most people think of when they have negative connotations towards .NET. It was tightly coupled to Windows, the CLR could only run on Windows or Windows Server with IIS, it required Visual Studio to develop on it and it had absolutely no cross platform support. It was also relatively slow in execution and slow to evolve.
 
-Overall it worked well on Windows but started to increasingly lack capabilities and meet modern software development demands. 
+Overall it worked well on Windows but started to increasingly lack capabilities and meet modern software development demands.
 
 ## What is Mono?
 
@@ -204,11 +204,11 @@ Without doubt, any new .NET developer should start with .NET 5 or higher when le
 
 [.NET Standard is basically a short lived invention from the past](https://devblogs.microsoft.com/dotnet/the-future-of-net-standard/), but because it still lingers around many corners of the internet it is worth quickly touching on as well.
 
-Before .NET 5 became the unification of .NET Framework and .NET Core Microsoft created a specification called the ".NET Standard" which was meant to help developers to build Framework and Core compatible applications. .NET Standard was not a framework itself, but just a blueprint (specification) of available APIs. 
+Before .NET 5 became the unification of .NET Framework and .NET Core Microsoft created a specification called the ".NET Standard" which was meant to help developers to build Framework and Core compatible applications. .NET Standard was not a framework itself, but just a blueprint (specification) of available APIs.
 
 It worked as following, the higher the version of .NET Framework was, the higher it would implement a version of .NET Standard. The same was true for .NET Core. This meant that a .NET developer could target a specific version of .NET Standard and then be confident that it would be compatible with certain versions of .NET Framework and .NET Core.
 
-It was a worthwhile idea but unfortunately has always caused some confusion with .NET developers and finally got phased out with the unification of .NET 5. 
+It was a worthwhile idea but unfortunately has always caused some confusion with .NET developers and finally got phased out with the unification of .NET 5.
 
 ## Why is there no .NET Core 4?
 
@@ -252,7 +252,7 @@ dotnet new web
 
 This is a good starting point to slowly explore ASP.NET Core as a whole and learn about the architecture of the framework and how to compose bigger applications.
 
-A great resource to learn ASP.NET Core and find out about different project types is [practical-aspnetcore](https://github.com/dodyg/practical-aspnetcore). Another fantastic resource is [The Little ASP.NET Core Book](https://recaffeinate.co/book/), a short free e-book to help people learn about ASP.NET Core! 
+A great resource to learn ASP.NET Core and find out about different project types is [practical-aspnetcore](https://github.com/dodyg/practical-aspnetcore). Another fantastic resource is [The Little ASP.NET Core Book](https://recaffeinate.co/book/), a short free e-book to help people learn about ASP.NET Core! For functional developers the [SAFE Stack](https://safe-stack.github.io) is a great place to get started too!
 
 ## Who is dotnet-bot?
 
@@ -277,12 +277,16 @@ Jokes aside, there is no real reason why everything is called something .NET. So
 Finally a list of some useful links:
 
 - [.NET Homepage](https://dot.net)
+- [.NET Blog](https://devblogs.microsoft.com/dotnet/)
+- [.NET Conversations](https://devblogs.microsoft.com/dotnet/category/conversations/)
 - [C# Documentation](https://docs.microsoft.com/en-us/dotnet/csharp/)
 - [F# Documentation](https://docs.microsoft.com/en-us/dotnet/fsharp/)
 - [VB.NET Documentation](https://docs.microsoft.com/en-us/dotnet/visual-basic/)
 - [NuGet.org](https://nuget.org) (npm for .NET)
 - [.NET Foundation](https://dotnetfoundation.org)
+- [Live .NET](https://live.dot.net) (.NET community stand-ups)
 - [Versions of .NET](https://versionsof.net)
 - [Themes of .NET](https://themesof.net) (High level topics which the .NET team is working on)
+- [Sites of .NET](https://sitesof.net) (Find all official .NET pages in one place)
 - [Discover .NET](https://discoverdot.net) (.NET community resources)
 - [BuiltWithDot.Net](https://builtwithdot.net) (Collection of projects which have been built with .NET)
