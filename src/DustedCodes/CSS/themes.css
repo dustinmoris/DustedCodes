@@ -20,7 +20,7 @@ body {
     --col-dark: #f8f8f8;
     --col-faint: rgba(80, 80, 80, 0.1);
     --col-faded: rgba(68, 68, 68, 0.4);
-    --col-normal: rgba(51, 51, 51, 0.6);
+    --col-normal: rgba(51, 51, 51, 0.8);
     --col-light: rgba(68, 68, 68, 0.8);
     --col-strong: #000;
     --col-accent: #cd8e00;
@@ -67,7 +67,7 @@ body.dark-theme {
         --col-dark: #f8f8f8;
         --col-faint: rgba(80, 80, 80, 0.1);
         --col-faded: rgba(68, 68, 68, 0.4);
-        --col-normal: rgba(51, 51, 51, 0.6);
+        --col-normal: rgba(51, 51, 51, 0.8);
         --col-light: rgba(68, 68, 68, 0.8);
         --col-strong: #000;
         --col-accent: #bc5543;

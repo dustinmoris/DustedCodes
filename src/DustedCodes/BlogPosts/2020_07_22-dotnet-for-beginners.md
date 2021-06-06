@@ -238,3 +238,5 @@ The future success of .NET will be based on the developers which it can attract 
 The success of .NET in ten years will be based on the decisions made today.
 
 I hope those decisions will be made wisely!
+
+<div class="tip"><strong>June 2021 Update:</strong><p>If you are actually learning .NET and were looking for beginner content to get started then check out my latest blog post on <a href="https://dusted.codes/dotnet-basics">.NET Basics</a> which teaches all the foundational concepts around .NET and explains the inner workings of the platform.</p></div>
