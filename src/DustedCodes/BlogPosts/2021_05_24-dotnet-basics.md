@@ -10,7 +10,7 @@ So you want to learn .NET but you are [confused about the differences between .N
 
 If you are new to .NET and you want to get a holistic overview of the entire platform and what parts really drive the framework and how they relate to each other then look no further because this blog post will cover them all!
 
-<div class="tip"><p><strong>Disclaimer:</strong> I am a (mostly) self thaught developer and a non native English speaker. I have written this guide with the utmost care and to the best of my knowledge, but there is a good chance that I could have made a mistake or misrepresented some details in the guide below. If you find an issue then please be polite and let me know in the comments underneath or email me directly at hello [at] dusted.codes. I appreciate any type of feedback and will do my best to correct any mistakes as soon as I can. Thank you.</p></div>
+<div class="tip"><p><strong>Disclaimer:</strong> I am a (mostly) self taught developer and a non native English speaker. I have written this guide with the utmost care and to the best of my knowledge, but there is a good chance that I could have made a mistake or misrepresented some details in the guide below. If you find an issue then please be polite and let me know in the comments underneath or email me directly at hello [at] dusted.codes. I appreciate any type of feedback and will do my best to correct any mistakes as soon as I can. Thank you.</p></div>
 
 ## Table of contents
 
@@ -35,7 +35,7 @@ If you are new to .NET and you want to get a holistic overview of the entire pla
 
 .NET is the top level name of a Microsoft technology used for building software. It is a twenty year old platform which has seen a lot of change and innovation over the years and which spans across many different domains. .NET can be used to develop web applications, games, IoT, machine learning, Desktop and mobile applications and much more. The term ".NET" is often used in a very far reaching meaning and used synonymously for a wide range of smaller parts of the platform such as the original .NET Framework, the newer .NET Core, or languages such as C#, F# and VB.NET.
 
-When people talk about ".NET" they could mean anything from ASP.NET to PowerShell. In order to understand .NET one has to look at all the different pieces which make up the platform and look at them individually to fully make of them sense.
+When people talk about ".NET" they could mean anything from ASP.NET to PowerShell. In order to understand .NET one has to look at all the different pieces that make up the platform and look at them individually to get the full picture.
 
 <div class="tip"><p><strong>Tip:</strong> The official website for .NET is <a href="https://dotnet.microsoft.com" target="_blank">dotnet.microsoft.com</a>, but a much more memorable URL to all things .NET is <a href="https://dot.net" target="_blank">dot.net</a>, which will redirect a beginner to the most up to date resources around the Microsoft .NET platform.</p></div>
 
@@ -49,13 +49,13 @@ First of all .NET is not a programming language. It's a development platform. In
 
 VB.NET and C# were the first officially supported languages for .NET. VB.NET is the successor of Visual Basic 6.0 and whilst extremely similar in syntax yet a different language and incompatible with the classic version of Visual Basic.
 
-C# is a C-like object oriented language which first borrowed a lot of its early concepts from Java and was initially seen as an imitation of it. Today things stand very differently and C# is often being praised for its innovation and modern features which Java lacks behind. The name [C# is a word play from taking C++ and adding two more + signs](https://www.donnfelker.com/how-did-c-get-its-name/) to it, so that it forms the hash character, or as .NET developers like to call it, the "sharp" sign.
+C# is a C-like object oriented language which first borrowed a lot of its early concepts from Java and was initially seen as an imitation of it. Today things stand very differently and C# is often being praised for its innovation and modern features which Java trails behind. The name [C# is a word play from taking C++ and adding two more + signs](https://www.donnfelker.com/how-did-c-get-its-name/) to it, so that it forms the hash character, or as .NET developers like to call it, the "sharp" sign.
 
 <div class="tip"><p><strong>Fun fact:</strong> Initially C# was developed under the name &quot;Cool&quot; which stood for <strong>C</strong>-like <strong>O</strong>bject <strong>O</strong>riented <strong>L</strong>anguage but then was renamed to C# for trademark reasons.</p></div>
 
 A few years after .NET's initial release Microsoft Research and [Don Syme](https://twitter.com/dsyme) developed a completely new language called F#. Unlike C# and VB.NET "F-Sharp" was designed as a functional first multi paradigm language which took a lot of inspiration from Ocaml, Erlang, Python, Haskell and Scala at the time. For many years F# has been the leading source of inspiration for new features in C# and was the first .NET language to introduce features such as Linq, Async and pretty much all of the new features starting from C# 7 and onwards. It was also the first language to go open source before all of .NET became public.
 
-All three programming languages are [statically typed languages](https://en.wikipedia.org/wiki/Type_system#Static_and_dynamic_type_checking_in_practice) which means that the compiler will provide type safety checks during development and compilation. Those type safety checks can prevent many hard to catch runtime errors which could otherwise occur.
+All three programming languages are primarily [statically typed languages](https://en.wikipedia.org/wiki/Type_system#Static_and_dynamic_type_checking_in_practice) which means that the compiler will provide type safety checks during development and compilation. Those type safety checks can prevent many hard to catch runtime errors which could otherwise occur.
 
 The opposite to a statically typed language is a dynamic one. Famous examples of dynamic languages are Python or JavaScript. For example, in C# one cannot accidentally assign a string value to a float variable but in JavaScript this would be totally fine.
 
@@ -79,7 +79,7 @@ Software programmers write applications with the help of very high level languag
 
 #### Compiled vs. Interpreted
 
-An interpreted language is a programming language where the code which gets written by a developer is the final code which gets shipped as the application. For example, in PHP a developer doesn't compile `.php` files into something else. PHP files are the final artefact which get shipped to a web server and only when an incoming request hits the server the PHP engine will read all the `.php` files and interpret the code "just in time" to translate it into lower level machine code. If a developer made a mistake then they will not know until the code gets executed. This has the benefit that a developer can quickly modify raw `.php` files and get a quick feedback loop during development but on the other hand it means that many errors will not be found until the server runs the code. Typically an interpreted language also takes a slight performance hit because the runtime has to do the entire compilation at the time of execution.
+An interpreted language is a programming language where the code which gets written by a developer is the final code which gets shipped as the application. For example, in PHP a developer doesn't compile `.php` files into something else. PHP files are the final artefact which get shipped to a web server and only when an incoming request hits the server the PHP engine will read the `.php` files and interpret the code "just in time" to translate it into lower level machine code. If a developer made a mistake then they will not know until the code gets executed. This has the benefit that a developer can quickly modify raw `.php` files and get a quick feedback loop during development but on the other hand it means that many errors will not be found until the server runs the code. Typically an interpreted language also takes a slight performance hit because the runtime has to do the entire compilation at the time of execution.
 
 In contrast a compiled language does all of the compilation work (or parts of it) ahead of time. For example Go requires code to be compiled directly into native machine code before an application can run. This means that a developer will be notified by the compiler about any potential errors well ahead of execution, but equally it means that changes to the code require an additional step during development before they can get tested.
 
@@ -228,7 +228,7 @@ For a long time Microsoft was bleeding existing developers to new emerging techn
 
 ASP.NET Core is the future of web in .NET and often forms the baseline library for many other web frameworks too. One of those is [ASP.NET Core MVC](https://dotnet.microsoft.com/apps/aspnet/mvc), an object oriented model-view-controller framework sitting on top of ASP.NET Core, which allows developers to build rich web applications in an object oriented class driven approach. Other notable ASP.NET Core web frameworks are [Carter](https://github.com/CarterCommunity/Carter), [Giraffe](https://github.com/giraffe-fsharp/Giraffe), [Saturn](https://saturnframework.org), [Freya](https://github.com/xyncro/freya) or [Falco](https://github.com/pimbrouwers/Falco/), which have a slightly more light-weight and functional nature to building web applications in .NET.
 
-In addition there are also .NET web frameworks which don't require ASP.NET Core at all. Famous examples of standalone web frameworks are [WebSharper](https://websharper.com) or [Suave](https://suave.io).
+In addition there are also .NET web frameworks that don't require ASP.NET Core at all. Famous examples of standalone web frameworks are [WebSharper](https://websharper.com) or [Suave](https://suave.io).
 
 Last but not least ASP.NET Core can also be used completely on its own in a more bare metal approach. It is a very popular choice and something which the ASP.NET Core team is currently focused on and will probably evangelise more in the future.
 
