@@ -8,6 +8,19 @@
         margin-top: 0;
     }
 
+    body > header h1 {
+        font-size: 2.2em;
+    }
+
+    body > header h1 > svg {
+        width: 45px;
+        height: 45px;
+    }
+
+    body > header h2 {
+        font-size: .9em;
+    }
+
     main > article > header > h1 {
         font-size: 2.8em;
     }
