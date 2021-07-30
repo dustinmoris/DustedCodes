@@ -290,3 +290,4 @@ Finally a list of some useful links:
 - [Sites of .NET](https://sitesof.net) (Find all official .NET pages in one place)
 - [Discover .NET](https://discoverdot.net) (.NET community resources)
 - [BuiltWithDot.Net](https://builtwithdot.net) (Collection of projects which have been built with .NET)
+- [.NET Ketchup](https://dotnetketchup.com) (Collection of weekly .NET news)

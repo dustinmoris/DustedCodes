@@ -403,7 +403,7 @@ body > main,
     margin: 1em auto;
     padding: 0 20px;
     width: 100%;
-    max-width: 740px;
+    max-width: 840px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -464,8 +464,8 @@ body > header h1 {
 
 body > header h1 > svg {
     margin: 0 7px 0 10px;
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
     fill: var(--col-strong);
 }
 
@@ -477,13 +477,13 @@ body > header h1 {
     margin: 0 0 .5em 0;
     font-family: var(--font-logo);
     font-weight: 900;
-    font-size: 2em;
+    font-size: 2.4em;
 }
 
 body > header h2 {
     margin: 0;
     font-family: var(--font-logo);
-    font-size: .9em;
+    font-size: 1em;
     font-weight: 400;
     color: var(--col-normal);
     letter-spacing: .18em;

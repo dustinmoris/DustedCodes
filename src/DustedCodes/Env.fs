@@ -14,7 +14,9 @@ module Env =
     let private strSplitArray (str : string) =
         str.Split([| ' '; ','; ';' |], StringSplitOptions.RemoveEmptyEntries)
 
-    let private tryConvertFromString<'T when 'T : struct> (cultureInfo : CultureInfo option) (value : string) =
+    let private tryConvertFromString<'T when 'T : struct>
+        (cultureInfo : CultureInfo option)
+        (value       : string) =
         let culture = defaultArg cultureInfo CultureInfo.CurrentCulture
         let converter = TypeDescriptor.GetConverter (typeof<'T>)
         try Some (converter.ConvertFromString(null, culture, value) :?> 'T)
