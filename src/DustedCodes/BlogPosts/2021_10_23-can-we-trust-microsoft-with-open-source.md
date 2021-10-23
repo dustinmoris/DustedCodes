@@ -18,6 +18,8 @@ You don’t believe me? Don’t take my word for it, but please read in-between 
 ￼
 [![Tweet 4](https://cdn.dusted.codes/images/blog-posts/2021-10-23/tweet-4.png)](https://twitter.com/DamianEdwards/status/1451015493872087045)
 
+[![Tweet 5](https://cdn.dusted.codes/images/blog-posts/2021-10-23/tweet-5.png)](https://twitter.com/condrong/status/1451754645563457537)
+
 ## The hot "Hot Reload" issue￼
 
 Here is a short summary of what has happened…
