@@ -54,7 +54,7 @@ Sure, you might think this is not a big deal and completely up to Microsoft wher
 
 Ouch, that is a big accusation and hard to believe, so why don't you reach out to one of your favourite Microsoft employees of your choice who work on .NET or Roslyn or another OSS product under .NET and ask them for a comment? They most likely won’t admit it, because they are not allowed to, but more importantly **they also won’t deny it**.
 
-As Damian Edwards has suggested in his tweet, the cat has been let out of the bag!
+As Damian Edwards has suggested in his tweet before, the cat has been let out of the bag!
 
 ![Microsoft org chart](https://cdn.dusted.codes/images/blog-posts/2021-10-23/microsoft-org-chart.png)
 
@@ -70,7 +70,7 @@ I am not sure. It takes years to build trust and only a few moments to lose it a
 
 Do you trust Microsoft with Open Source or do you actually trust people like Jon Galloway, Scott Hanselman, Scott Hunter, Guido van Rossum, David Fowler, Damian Edwards, Miguel de Icaza and a handful of other OSS champions who have been pushing the OSS message internally from the bottom up? What if these people leave .NET? Will Microsoft continue to play nicely with the community?
 
-Would it worry you if Scott Hunter was moved away from .NET and someone new from a different division at Microsoft would have taken over? Remember your answer when you find out where Scott Hunter works today.
+Would it worry you if Scott Hunter was moved away from .NET and someone new from a different division at Microsoft would have taken over? Remember your answer when you find out in which part of Microsoft Scott Hunter works today.
 
 ## What can we do?
 
