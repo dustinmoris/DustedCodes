@@ -66,6 +66,8 @@ So here is my simple question…
 
 ## Can we trust Microsoft with OSS?
 
+![Microsoft loves Open Source](https://cdn.dusted.codes/images/blog-posts/2021-10-23/microsoft-loves-oss.png)
+
 I am not sure. It takes years to build trust and only a few moments to lose it all. Microsoft is a huge organisation and we as outsiders often get to see only a handful of selected people being tasked to spread a certain message via their huge followings in order to create a public image in favour of Microsoft, but what if those people leave?
 
 Do you trust Microsoft with Open Source or do you actually trust people like Jon Galloway, Scott Hanselman, Scott Hunter, Guido van Rossum, David Fowler, Damian Edwards, Miguel de Icaza and a handful of other OSS champions who have been pushing the OSS message internally from the bottom up? What if these people leave .NET? Will Microsoft continue to play nicely with the community?
