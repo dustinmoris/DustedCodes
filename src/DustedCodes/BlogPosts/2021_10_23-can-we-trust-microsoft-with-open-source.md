@@ -8,7 +8,7 @@ Oh boy, what a week of .NET drama again. Not bored yet? Read on, but for this on
 
 Before I start with my actual blog post let me give you a short disclaimer. This is **not** an issue of some outspoken or sceptical community members making a fuss out of nothing. I know it is easy to see it this way with incomplete information, but trust me on this one, you couldn’t be more wrong if you believed that's the case this time. This is a **bigger issue**, an issue internally playing out at Microsoft right now as we speak. Many people from Microsoft itself, who have been working really hard to build trust with the OSS community and market .NET as a real viable OSS platform are struggling right now. These are your .NET heroes who you probably dearly cherish and these folks are currently unable to publicly speak their minds. They struggle and they want YOU to speak for them. In fact, they want you to speak out right now and make your voice heard!
 
-You don’t believe me? Don’t take my word for it, but how to you explain this to me?
+You don’t believe me? Don’t take my word for it, but how do you explain this to me?
 
 [![Tweet 1](https://cdn.dusted.codes/images/blog-posts/2021-10-23/tweet-1.png)](https://twitter.com/shanselman/status/1451376901579182082)
 ￼
@@ -79,3 +79,24 @@ Would it worry you if Scott Hunter was moved away from .NET and someone new from
 This is a call to action to all .NET community members out there. Anyone with a tiny bit of clout make your voice heard. [Comment and upvote the issues on GitHub](https://github.com/dotnet/sdk/issues/22247). [Tweet your dissatisfaction](https://twitter.com/haacked/status/1451580844578000898?s=20) and make sure to tag high profile folks at Microsoft so they see what you think! Send Microsoft a clear message that this undermines the trust which we’ve lent them over the last few years and that the betrayal of this trust can have long term consequences. This is not a threat by any means but really just the reality of the matter. Many developers in technical leadership roles and with hiring powers in their respective organisations have only stayed on .NET due to the big changes which came with .NET Core. People love .NET for what it is today, a more open, cross platform and community led platform. If Microsoft starts to change their hearts again then people will as well.
 
 Please help to send the right message and make your voice heard!
+
+## !!! UPDATE 24/10/2021 !!!
+
+Thanks to everyone who read this blog post and shared it on social media or spread the message in other ways. Yesterday evening (London, UK time) something amazing happened which can best be described in a single picture:
+
+![.NET Community working together](https://cdn.dusted.codes/images/blog-posts/2021-10-23/dotnet-community.png)
+
+Honestly, this felt quite like some biblical moment. The entire community stepped up and made their voices heard. Everyone was respectful and worked together to get a clear message across:
+
+**We love the new open and cross platform .NET of today and we won't give up even an inch of it without a proper fight :)**
+
+Apparently this message made its way all the way to the top of Microsoft and the result speaks for itself:
+
+![Hot reload is back](https://cdn.dusted.codes/images/blog-posts/2021-10-23/hot-reload-back-tweet.png)
+
+Special thanks to Scott Hanselman and Scott Hunter who **amongst many others** worked tirelessly behind the scenes to make this happen.
+
+Read Scott Hunter's [official blog post](https://devblogs.microsoft.com/dotnet/net-hot-reload-support-via-cli/) for more information and don't be too hung up on the exact wording. It's corporate lawyer speak for admitting the mistake and thanking the community. We should take that as a huge win!
+
+Congratulations to everyone!
+
