@@ -16,7 +16,7 @@ Whether you are still at the beginning of your DevOps journey or you're already 
 
 ## Security
 
-Software security is one of the most important aspects of any user product, and yet one of the most neglected areas by software development teams. It is a topic which is very dear to my heart, as it is the reason why I have become a software developer in the first place. Security is unlike any other problem space in our trade. Whilst most code problems can be solved by a multitude of possible correct implementations, it is the complete opposite for security related questions. Usually there is only one, very specific and narrowly crafted path of thoroughly securing a system and a huge variety of wrong implementations. 
+Software security is one of the most important aspects of any user product, and yet one of the most neglected areas by software development teams. It is a topic which is very dear to my heart, as it is the reason why I have become a software developer in the first place. Security is unlike any other problem space in our trade. Whilst most code problems can be solved by a multitude of possible correct implementations, it is the complete opposite for security related questions. Usually there is only one, very specific and narrowly crafted path of thoroughly securing a system and a huge variety of wrong implementations.
 
 Helping teams to implement secure systems is something I've always enjoyed the most. I offer a variety of services, such as security code reviews, threat modelling your product, teaching defensive coding practices, implementing security related features or securely integrating third party systems with critical parts of your software.
 
@@ -38,4 +38,4 @@ I can provide personalised hands-on training on the following topics:
 
 If your business heavily relies on one of [my open source projects](https://github.com/dustinmoris) or you simply want to support the advancement of any of my open source projects then you can also hire me to work on a specific issue, expedite a feature or help with a custom integration.
 
-For further information or to discuss any of my propositions please feel free to connect with me on [LinkedIn](https://www.linkedin.com/in/dustinmoris/) or message me via the concat form below.
+For further information or to discuss any of my propositions please feel free to connect with me on [LinkedIn](https://www.linkedin.com/in/dustinmoris/) or message me via the contact form below.
