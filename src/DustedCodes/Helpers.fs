@@ -58,7 +58,6 @@ module Http =
     open System.Threading
     open System.Threading.Tasks
     open System.Collections.Generic
-    open FSharp.Control.Tasks.NonAffine
     open Newtonsoft.Json
 
     type PostResult   = Task<Result<string, string>>
