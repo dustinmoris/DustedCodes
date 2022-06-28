@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
 
 ARG version=0.0.0-undefined
 
@@ -9,7 +9,7 @@ COPY src/ ./
 RUN dotnet publish /p:Version=$version DustedCodes/DustedCodes.fsproj -c Release -o published
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine AS runtime
 
 # Install gRPC prerequisites on Alpine Linux:
 # https://github.com/googleapis/google-cloud-dotnet/issues/4780
