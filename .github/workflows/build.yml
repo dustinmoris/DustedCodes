@@ -39,7 +39,7 @@ jobs:
 
       # Setup gcloud CLI
       - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@master
+        uses: google-github-actions/setup-gcloud@v0
         with:
           project_id: ${{ secrets.GKE_PROJECT }}
           service_account_email: ${{ secrets.GKE_EMAIL }}
