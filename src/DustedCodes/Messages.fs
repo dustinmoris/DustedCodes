@@ -6,7 +6,6 @@ module Messages =
     open System.Collections.Generic
     open System.Threading
     open System.Threading.Tasks
-    open FSharp.Control.Tasks.NonAffine
 
     [<CLIMutable>]
     type Request =

@@ -9,7 +9,6 @@ module GoogleAnalytics =
     open Google.Apis.AnalyticsReporting.v4
     open Google.Apis.Services
     open Google.Apis.AnalyticsReporting.v4.Data
-    open FSharp.Control.Tasks.NonAffine
 
     type PageStatistic =
         {

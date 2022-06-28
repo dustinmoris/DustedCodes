@@ -6,7 +6,6 @@ module Captcha =
     open System.Net
     open System.Threading
     open System.Threading.Tasks
-    open FSharp.Control.Tasks.NonAffine
     open Newtonsoft.Json
 
     type CaptchaValidationResult =

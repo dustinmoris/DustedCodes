@@ -10,7 +10,6 @@ module HttpHandlers =
     open Microsoft.AspNetCore.Http
     open Microsoft.Extensions.Caching.Distributed
     open Microsoft.Net.Http.Headers
-    open FSharp.Control.Tasks
     open Giraffe
     open Giraffe.ViewEngine
 
