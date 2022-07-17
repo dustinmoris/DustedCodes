@@ -7,6 +7,15 @@ module Messages =
     open System.Threading
     open System.Threading.Tasks
 
+    let private containsSpam (str : string) =
+        [
+            "XEVIL 5"
+            "captchas solving"
+            "captcha solving"
+        ]
+        |> List.map (fun s -> s.ToLower())
+        |> List.exists (str.ToLower().Contains)
+
     [<CLIMutable>]
     type Request =
         {
@@ -39,11 +48,16 @@ module Messages =
                 Message = ""
             }
 
+        member this.IsSpam =
+            containsSpam this.Subject
+            || containsSpam this.Message
+
         member this.IsValid =
             if      String.IsNullOrEmpty this.Name    then Error "Name cannot be empty."
             else if String.IsNullOrEmpty this.Email   then Error "Email address cannot be empty."
             else if String.IsNullOrEmpty this.Subject then Error "Subject cannot be empty."
             else if String.IsNullOrEmpty this.Message then Error "Message cannot be empty."
+            else if this.IsSpam then Error "Cannot process this message"
             else Ok ()
 
         member this.ToRequest
