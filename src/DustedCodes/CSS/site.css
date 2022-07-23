@@ -23,7 +23,7 @@ body {
     padding: 0;
     -ms-word-wrap: break-word;
     word-wrap: break-word;
-    font-size: 1.2em;
+    font-size: 1.3em;
     font-family: var(--font-text);
     background-color: var(--col-dark);
     color: var(--col-normal);
@@ -250,7 +250,7 @@ blockquote > footer > cite > a:before {
 }
 
 article {
-    font-size: 1em;
+    font-size: 1.1em;
 }
 
 article > header {
@@ -782,7 +782,7 @@ body > header h2 {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    margin: .3em 20px .3em 0;
+    margin: .2em 20px .2em 0;
 }
 
 .blogpost-metadata div:last-child {
