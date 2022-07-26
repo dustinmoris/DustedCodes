@@ -9,9 +9,10 @@ module Messages =
 
     let private containsSpam (str : string) =
         [
-            "XEVIL 5"
+            "XEVIL "
             "captchas solving"
             "captcha solving"
+            "a href="
         ]
         |> List.map (fun s -> s.ToLower())
         |> List.exists (str.ToLower().Contains)

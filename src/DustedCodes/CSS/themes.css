@@ -17,10 +17,10 @@
 
 /* Default colors */
 body {
-    --col-dark: #f8f8f8;
+    --col-dark: #fafafa;
     --col-faint: rgba(80, 80, 80, 0.1);
     --col-faded: rgba(68, 68, 68, 0.4);
-    --col-normal: rgba(51, 51, 51, 0.8);
+    --col-normal: rgba(51, 51, 51, 0.9);
     --col-light: rgba(68, 68, 68, 0.8);
     --col-strong: #000;
     --col-accent: #cd8e00;
@@ -31,7 +31,7 @@ body {
 
 /* Dark theme colors */
 body.dark-theme {
-    --col-dark: #2f2f2f;
+    --col-dark: #262626;
     --col-faint: rgba(200, 200, 200, 0.1);
     --col-faded: rgba(255, 255, 255, 0.4);
     --col-normal: rgba(255, 255, 255, 0.6);
@@ -50,7 +50,7 @@ body.dark-theme {
         --col-inverted: rgba(100, 100, 100, 0.7);
         --col-inverted-light: rgba(180, 180, 180, 0.3);
 
-        --col-dark: #2f2f2f;
+        --col-dark: #262626;
         --col-faint: rgba(200, 200, 200, 0.1);
         --col-faded: rgba(255, 255, 255, 0.4);
         --col-normal: rgba(255, 255, 255, 0.6);
@@ -64,10 +64,10 @@ body.dark-theme {
 
     /* Override dark mode with light mode styles if the user decides to swap */
     body.light-theme {
-        --col-dark: #f8f8f8;
+        --col-dark: #fafafa;
         --col-faint: rgba(80, 80, 80, 0.1);
         --col-faded: rgba(68, 68, 68, 0.4);
-        --col-normal: rgba(51, 51, 51, 0.8);
+        --col-normal: rgba(51, 51, 51, 0.9);
         --col-light: rgba(68, 68, 68, 0.8);
         --col-strong: #000;
         --col-accent: #bc5543;
