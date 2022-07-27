@@ -40,8 +40,15 @@ themeToggle.addEventListener(\"click\", function() {
         ]
 
     let private googleAnalytics =
-        script [] [
-            rawText "!function(e,a,t,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=a.createElement(t),s=a.getElementsByTagName(t)[0],o.async=1,o.src=\"//www.google-analytics.com/analytics.js\",s.parentNode.insertBefore(o,s)}(window,document,\"script\",0,\"ga\"),ga(\"create\",\"UA-60196288-1\",\"auto\"),ga(\"send\",\"pageview\");"
+        [
+            script [ _async; _src "https://www.googletagmanager.com/gtag/js?id=G-EERBW7KV67" ] []
+            script [] [
+                rawText "window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EERBW7KV67');"
+            ]
         ]
 
     let private disqusScript (shortname : string) (id : string) (title : string) (url : string) =
@@ -175,7 +182,8 @@ themeToggle.addEventListener(\"click\", function() {
                 css (createUrl minifiedCss.Path)
 
                 // Google Analytics
-                if settings.General.IsProd then googleAnalytics
+                if settings.General.IsProd then
+                    yield! googleAnalytics
 
                 // Additional (optional) header content
                 if headerContent.IsSome then yield! headerContent.Value
@@ -396,7 +404,7 @@ themeToggle.addEventListener(\"click\", function() {
                 (sprintf
                      "https://news.ycombinator.com/submitlink?u=%s&t=%s"
                      permalink
-                     p.UrlEncodedTitle)
+                     p.Title)
                 "Share on Hacker News"
                 Icons.hackerNews
         ]
