@@ -76,7 +76,7 @@ Well there were mainly three options:
 
 Option 1 is extremely tedious and option 2 and 3 provide very weak (or basically no) type safety (because checks would be only performed at runtime).
 
-Since Go 1.18 one can use [Generics]() to tackle the issue.
+Since Go 1.18 one can use [Generics](https://go.dev/blog/intro-generics) to tackle the issue.
 
 First we can modify the `GreetHumans` function to use Generics and therefore not require any casting at all:
 
@@ -92,7 +92,7 @@ This makes it possible to pass the `heroes` slice into the `GreetHumans` functio
 
 However, sometimes it's not possible to make a function generic. Methods (functions on a type) require all type parameters to be on the type. [Parameterized methods are not allowed](https://go.googlesource.com/proposal/+/refs/heads/master/design/43651-type-parameters.md#No-parameterized-methods).
 
-The good new is that even in this case Generics can help to provide a much better conversion function then the previously listed options:
+The good news is that even in this case Generics can help to provide a much better conversion function then the previously listed options:
 
 ```
 func CastToHumans[T Human](humans []T) []Human {
